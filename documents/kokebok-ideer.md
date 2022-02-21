@@ -15,6 +15,7 @@
     - type kjøkken
     - vegansk, vegetar, glutenfritt, etc.
     - vanskelighetsgrad
+  
 - Organisering i kategorier av mat
 - Legge til støtte for en familie med forskjellige kokebøker i samme system? - - Tilgang via passord og brukernavn?
 - Gi oppskriften forskjellige attributer som:
