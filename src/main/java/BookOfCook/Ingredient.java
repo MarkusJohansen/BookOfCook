@@ -1,7 +1,6 @@
 package BookOfCook;
 
 public class Ingredient {
-    
     //*FIELDS
     String name;
     double calories;

@@ -13,34 +13,34 @@
 <SplitPane dividerPositions="0.26583850931677017" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
+        <children>
             <SplitPane dividerPositions="0.4909090909090909" layoutX="-8.0" layoutY="3.0" orientation="VERTICAL" prefHeight="552.0" prefWidth="221.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="219.0">
-                     <children>
+                    <children>
                         <CheckBox layoutX="37.0" layoutY="85.0" mnemonicParsing="false" text="CheckBox" />
                         <CheckBox layoutX="37.0" layoutY="117.0" mnemonicParsing="false" text="CheckBox" />
                         <CheckBox layoutX="37.0" layoutY="148.0" mnemonicParsing="false" text="CheckBox" />
                         <CheckBox layoutX="37.0" layoutY="179.0" mnemonicParsing="false" text="CheckBox" />
                         <Text layoutX="37.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KATEGORIER " wrappingWidth="160.13671875" />
                         <CheckBox layoutX="37.0" layoutY="43.0" mnemonicParsing="false" text="Alle kategorier" />
-                     </children>
+                    </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
+                    <children>
                         <TextField layoutX="35.0" layoutY="30.0" />
                         <Text layoutX="40.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MY fridge" wrappingWidth="139.13671875" />
-                     </children>
+                    </children>
                   </AnchorPane>
               </items>
             </SplitPane>
-         </children></AnchorPane>
+        </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
+        <children>
             <SplitPane dividerPositions="0.9397810218978102" orientation="VERTICAL" prefHeight="550.0" prefWidth="592.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
+                    <children>
                       <TitledPane animated="false" layoutX="-98.0" layoutY="-51.0" text="untitled 3">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
@@ -60,10 +60,10 @@
                             </TitledPane>
                           </panes>
                         </Accordion>
-                     </children>
+                    </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="590.0">
-                     <children>
+                    <children>
                         <ButtonBar layoutX="1.0" layoutY="2.0" prefHeight="0.0" prefWidth="588.0">
                           <buttons>
                             <Button mnemonicParsing="false" text="Button" />
@@ -74,10 +74,10 @@
                               <Button mnemonicParsing="false" text="Add new recipe" />
                           </buttons>
                         </ButtonBar>
-                     </children>
+                    </children>
                   </AnchorPane>
               </items>
             </SplitPane>
-         </children></AnchorPane>
+        </children></AnchorPane>
   </items>
 </SplitPane>
