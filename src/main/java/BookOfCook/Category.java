@@ -2,6 +2,8 @@ package BookOfCook;
 
 import java.util.ArrayList;
 
+import BookOfCook.bookAndRecipe.Recipe;
+
 public class Category {
     //*FIELDS
     String name;

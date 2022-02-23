@@ -41,7 +41,6 @@
 
 Oppskriftene i samme kokebok lagres i én .json fil, slik at det vil være mulig å lagre kokebøker lokalt eller i skyen. Dette gir lagringsoppsjon for kokebøkene; nøkkelfunksjonen i applikasjonen.
 
-
 ## Testing
 
 *Kort om hva som skal testes i appen. Merk: I den delen av prosjektet som går på testing, krever vi at den viktigste funksjonaliteten dekkes av tester, og ønsker derfor at dere tenker over dette allerede nå, slik at dere unngår å lage prosjekter som blir store og omfattende å lage tester til.*
