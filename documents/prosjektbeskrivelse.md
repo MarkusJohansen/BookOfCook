@@ -54,15 +54,32 @@ Oppskriftene i samme kokebok lagres i én .json fil, slik at det vil være mulig
 * teste støtte for flere kategorier per oppskrift
 * teste støtte for flere kategori filter samtidig
 
+🠗🠗🠗
+
+* Teste at en kategori inneholder oppskrift(er) etter man har kjørt metoden som legger oppskriften(e) til.
+* Tester at riktig kategori(er) blir returnert når filtreringsmetoden kjøres.
+* Tester at oppskrift inneholder kategori, etter oppskrift har blitt lagt til i kategori
+
 ### Oppskrifter
 
 * Teste oppretting og lagring av oppskrifter
 * teste endring og lagring av endring på oppskrifter
 
+🠗🠗🠗
+
+* Teste at oppskrifter blir lagret i .json-filer
+* Teste at oppskrifter overskriver sin ...???
+
 ### Kokebok
 
 * inneholder riktige oppskrifter.
 * skalering av ingrediensmengde og kalorier i oppskrifter.
+
+🠗🠗🠗
+
+* Teste at kokebok inneholder oppskrift etter metode for å legge til oppskrift har blitt kjørt.
+* Teste at skalering av antall personer stemmer overens med ingrediensmengden.
+* Teste at antall kalorier per person stemmer overens med ingrediensmengde.
 
 ### Kjøleskapsverkøyet
 
@@ -70,11 +87,19 @@ Oppskriftene i samme kokebok lagres i én .json fil, slik at det vil være mulig
 * sjekke at den ikke tar med oppskrifter du ikke har alle ingredienser til
 * sjekke at den virker sammen med filtre
 
+🠗🠗🠗
+
+* Teste at riktig antall oppskrifter vises basert på ingredienser etter filtreringsmetoden er kjørt
+* Teste at ingrediens blir lagt til i kjøleskapet etter legg-til metoden er kjørt
+
 ### Kjøring av app
 
 * Teste at appen fungerer
 * Teste at grensesnittet virker
 
+🠗🠗🠗
+
+* Trenger ikke tester til dette??
 ### Generelt
 
 * Validering av alle sentrale tilstander.
@@ -82,3 +107,7 @@ Oppskriftene i samme kokebok lagres i én .json fil, slik at det vil være mulig
 * Teste Skriving av fil
 * Teste korrekt innlastning av fil.
 * sjekke at brukeren ikke mister sine filer når programmet lukkes.
+
+🠗🠗🠗
+
+???
