@@ -1,4 +1,5 @@
 #*Sann vil vi at en oppskrift skal representeres etter ingrdientser
+#* husk å serialisere under testing.
 
 Cookbook = [
     {
