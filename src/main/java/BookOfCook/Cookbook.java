@@ -1,3 +1,13 @@
+
+/*
+TODO
+- shall writing to file be done in cookbook?
+- shall method for updating file be in cookbook?
+- where shall category filter be actiated?
+- add category filter
+*/
+
+
 package BookOfCook;
 
 import java.util.ArrayList;
@@ -6,16 +16,6 @@ public class Cookbook {
     String name;
     int recipeAmount;
     ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-
-    /*
-    TODO
-    - add category
-    - shall writing to file be done in cookbook?
-    - shall method for updating file be in cookbook?
-    - where shall category filter be actiated?
-    what should i add to my app?
-    - add category filter
-    */
 
     //*CONSTRUCTOR
     public Cookbook(String name) {

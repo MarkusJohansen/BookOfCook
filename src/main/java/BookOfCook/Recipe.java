@@ -1,40 +1,46 @@
+/*
+TODO
+-
+*/
+
+
+
 package BookOfCook;
 
 import java.util.*;
+
 public class Recipe {
+    private String name;                                                                                    //name of recipe
+    private int numberOfServings;                                                                           //number persons this recipe serves        
+    private double calories;                                                                                //total calories in recipe
+    private double caloriesPerPerson;                                                                       //calories per person                                                          
+    private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same type be able to set the key equal to differnt datatypes
+    private ArrayList<Category> categories = new ArrayList<Category>();                                     //list of categories for recipe 
 
-    //*FIELDS
-    private String name;
-    private int numberOfServings;
-    private double calories;
-    private double caloriesPerPerson;
-    private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();
-    private ArrayList<Category> categories = new ArrayList<Category>();
-
-    //*CONSTRUCTOR
-    public Recipe(String name, int numberOfServings) {
-        this.name = name;
-        this.numberOfServings = numberOfServings;
+    //*CONSTRUCTOR                                                                                          
+    public Recipe(String name, int numberOfServings) {  //constructor for recipe demands that recipe has a defined name and number of servings
+        this.name = name;                               //sets name of recipe
+        this.numberOfServings = numberOfServings;       //sets number of servings so we can do logical operations linked to scaling of the recipe
     }
 
-    //*GETTERS
+    //*GETTERS                  
     public String getName() {
-        return name;
+        return name;            //returns name of recipe
     }    
 
     //*CHANGING NAME
     public void setName(String name) {
-        this.name = name;
+        this.name = name;    //sets name of recipe if you want to change name
     }
 
     //*ADDING, REMOVING AND INGREDIENTS
     //add ingredient to list of ingredients in recipe
-    public void addIngredient(String name, double amount, String unit) {
-        HashMap<String,Object> ingredient = new HashMap<String,Object>();
-        ingredient.put("name", name);
-        ingredient.put("amount", amount);
-        ingredient.put("unit", unit);
-        Ingredients.add(ingredient);
+    public void addIngredient(String name, double amount, String unit) {    
+        HashMap<String,Object> ingredient = new HashMap<String,Object>();   //Creates a hasmap called ingredient that stores different properties of the ingredient
+        ingredient.put("name", name);                                       //adds the name of the ingredient to the ingredient hashmap
+        ingredient.put("amount", amount);                                   //adds the amount key, value pair to the ingrdient hashmap . describes the amount of the ingredient
+        ingredient.put("unit", unit);                                       //adds the "unit" key, value pair to the ingredient hashmap. describes the unit of the ingredient
+        Ingredients.add(ingredient);                                        //adds the ingredient to the list of ingredients
     }
 
     // remove ingredient
@@ -70,15 +76,14 @@ public class Recipe {
 
     //*SETTING AND CHANGING CALORIES
     //set calories
-    public void setCalories(double calories) {
-        this.calories = calories;
-        setCaloriesPerPerson();
+    public void setCalories(double calories, int numberOfServings) {                          
+        this.calories = calories;                                       //sets the total calories of the recipe
+        setCaloriesPerPerson(numberOfServings);                                         //sets calories per person based on the new value of calories and number of servings
     }
 
     //set calories per person
-    public void setCaloriesPerPerson() {
-        this.caloriesPerPerson = calories / numberOfServings;
-        
+    public void setCaloriesPerPerson(int numberOfServings) {                                   
+        this.caloriesPerPerson = calories / numberOfServings;          //sets calories per person based on the new value of calories and number of servings
     }
 
     //*SCALING AND CHANGING SERVINGS
@@ -95,9 +100,15 @@ public class Recipe {
             amount = amount * ratio;                                        //scales amount of ingredient by multiplying itself with the ratio 
             Ingredients.get(i).put("amount", amount);                       //sets the new amount of ingredient i in the recipe
         }
-        setCalories(calories * ratio);                                       //scales calories by multiplying itself with the ratio
+        setCalories(calories * ratio, newNumberOfServings);                                      //scales calories by multiplying itself with the ratio
         numberOfServings = newNumberOfServings;                             //updates value of number of servings to the new value
-        setCaloriesPerPerson();
+    }
+
+    //*CATEGORY METHODS
+    public void categorizeRecipe(Category category) {
+        categories.add(category);
+        category.addRecipe(this);
+        
     }
 
     //*TOSTRING METHOD
@@ -110,41 +121,14 @@ public class Recipe {
         return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
     }
 
-    //*CATEGORY METHODS
-    public void addCategory(Category category) {
-        categories.add(category);
-        category.addRecipe(this);
-        
-    }
-
     public static void main(String[] args) {
-        Recipe recipe = new Recipe("Sukker-pizza", 3);
-        Category pizza = new Category("Pizza");
-        Category italian = new Category("Italian");
-
-        recipe.addIngredient("tomater", 100, "gram");
-        recipe.addIngredient("sukker", 6, "ss");
-        recipe.addIngredient("vann", 3, "l");
-        recipe.addIngredient("mel", 4, "kg");
-        recipe.setCalories(1500);
+        Recipe recipe = new Recipe("test", 4);
+        recipe.addIngredient("test", 1, "test");
+        recipe.addIngredient("test", 1, "test");
         System.out.println(recipe);
+        System.out.println(recipe.toString());
 
-        recipe.scaleRecipe(9);
-        System.out.println(recipe);
+        
 
-        recipe.changeIngredient("mel", 8, "g");
-        System.out.println(recipe);
-
-        recipe.changeIngredientName("tomater", "tomat");
-        System.out.println(recipe);
-
-        recipe.removeIngredient("tomat");
-        System.out.println(recipe);
-
-        recipe.addCategory(pizza);
-        System.out.println(recipe);
-
-        recipe.addCategory(italian);
-        System.out.println(recipe);
     }
 }
