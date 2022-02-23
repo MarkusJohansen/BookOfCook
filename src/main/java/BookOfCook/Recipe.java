@@ -76,39 +76,41 @@ public class Recipe {
 
     //*SETTING AND CHANGING CALORIES
     //set calories
-    public void setCalories(double calories, int numberOfServings) {                          
-        this.calories = calories;                                       //sets the total calories of the recipe
-        setCaloriesPerPerson(numberOfServings);                                         //sets calories per person based on the new value of calories and number of servings
+    public void setCalories(double calories) {                          
+        this.calories = calories;               //sets the total calories of the recipe
+        setCaloriesPerPerson();                 //sets calories per person based on the new value of calories and number of servings
     }
 
     //set calories per person
-    public void setCaloriesPerPerson(int numberOfServings) {                                   
-        this.caloriesPerPerson = calories / numberOfServings;          //sets calories per person based on the new value of calories and number of servings
+    public void setCaloriesPerPerson() {          
+        this.caloriesPerPerson = calories / numberOfServings;       //sets calories per person based on the new value of calories and number of servings
     }
 
     //*SCALING AND CHANGING SERVINGS
     //change number of servings
-    public void changeNumberOfServings(int newNumberOfServings) {
-        numberOfServings = newNumberOfServings;
+    public void changeNumberOfServings(int newNumberOfServings) {   
+        numberOfServings = newNumberOfServings;                     //changes number of servings to new number of servings
     }
 
     //when numbers of servings change, change amount of ingredients and calories
     public void scaleRecipe(int newNumberOfServings) {  
-        double ratio = newNumberOfServings / numberOfServings;              //the ratio describes how many times the recipe has been scaled     
+        double ratio = newNumberOfServings / numberOfServings;              //the ratio describes how many times the recipe has been scaled
+
         for (int i = 0; i < Ingredients.size(); i++) {                      //loops through all ingredients
             double amount = (double) Ingredients.get(i).get("amount");      //gets amount of every ingredient as a double 
             amount = amount * ratio;                                        //scales amount of ingredient by multiplying itself with the ratio 
             Ingredients.get(i).put("amount", amount);                       //sets the new amount of ingredient i in the recipe
         }
-        setCalories(calories * ratio, newNumberOfServings);                                      //scales calories by multiplying itself with the ratio
+
+        setCalories(calories * ratio);                                      //scales calories by multiplying itself with the ratio
         numberOfServings = newNumberOfServings;                             //updates value of number of servings to the new value
+        setCaloriesPerPerson();                                             //sets calories per person based on the new value of number of servings
     }
 
     //*CATEGORY METHODS
-    public void categorizeRecipe(Category category) {
-        categories.add(category);
-        category.addRecipe(this);
-        
+    public void categorizeRecipe(Category category) {                   
+        categories.add(category);                                           //adds category to list of categorys in recipe
+        category.addRecipe(this);                                           //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
     }
 
     //*TOSTRING METHOD
@@ -122,13 +124,30 @@ public class Recipe {
     }
 
     public static void main(String[] args) {
-        Recipe recipe = new Recipe("test", 4);
-        recipe.addIngredient("test", 1, "test");
-        recipe.addIngredient("test", 1, "test");
+        Recipe recipe = new Recipe("Sukker-pizza", 3);
+        Category pizza = new Category("Pizza");
+        Category italian = new Category("Italian");
+
+        recipe.setCalories(1000);
+        recipe.addIngredient("tomater", 100, "gram");
+        recipe.addIngredient("sukker", 6, "ss");
+        recipe.addIngredient("vann", 3, "l");
         System.out.println(recipe);
-        System.out.println(recipe.toString());
 
-        
+        recipe.scaleRecipe(4);
+        recipe.changeIngredient("mel", 8, "g");
+        System.out.println(recipe);
 
+        recipe.changeIngredientName("tomater", "tomat");
+        System.out.println(recipe);
+
+        recipe.removeIngredient("tomat");
+        System.out.println(recipe);
+
+        recipe.categorizeRecipe(pizza);
+        System.out.println(recipe);
+
+        recipe.categorizeRecipe(italian);
+        System.out.println(recipe);
     }
 }
