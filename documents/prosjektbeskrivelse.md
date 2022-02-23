@@ -47,66 +47,23 @@ Oppskriftene i samme kokebok lagres i én .json fil, slik at det vil være mulig
 
 ### Kategorier
 
-* Teste at du får plassert oppskrifter i riktig kategori
-* teste at kategoriene tar inn flere oppskrifter og husker dette.
-* teste kategori filter
-* teste støtte for flere kategorier per oppskrift
-* teste støtte for flere kategori filter samtidig
-
-🠗🠗🠗
-
-* Teste at en kategori inneholder oppskrift(er) etter man har kjørt metoden som legger oppskriften(e) til.
-* Tester at riktig kategori(er) blir returnert når filtreringsmetoden kjøres.
-* Tester at oppskrift inneholder kategori, etter oppskrift har blitt lagt til i kategori
+* Teste at en kategori inneholder oppskrift(er) etter man har kjørt metoden som legger til oppskriften(e) i kategorien(e).
+* teste at en oppskrift inneholder en kategori etter man har kjørt metoden som legger til oppskriften(e) i kategorien(e). n-n relasjon
+* Tester at riktig oppskrifter(er) blir returnert når filtreringsmetoden kjøres. Det vil si at når kun oppskrifter som har de kategoriene vi vil hente ut, som blir returnert.
 
 ### Oppskrifter
 
-* Teste oppretting og lagring av oppskrifter
-* teste endring og lagring av endring på oppskrifter
-
-🠗🠗🠗
-
-* Teste at oppskrifter blir lagret i .json-filer
-* Teste at oppskrifter overskriver sin ...???
+* Teste at oppskrifter blir skrives til .json-filer på en korrekt måte når man bruker writeToFile metoden.
+* Teste at JSON-filen oppdateres ved endring av innhold (ingredienser, fremgangsmåte, bilde, utstyr) i en oppskrift.
 
 ### Kokebok
 
-* inneholder riktige oppskrifter.
-* skalering av ingrediensmengde og kalorier i oppskrifter.
-
-🠗🠗🠗
-
-* Teste at kokebok inneholder oppskrift etter metode for å legge til oppskrift har blitt kjørt.
-* Teste at skalering av antall personer stemmer overens med ingrediensmengden.
-* Teste at antall kalorier per person stemmer overens med ingrediensmengde.
+* Teste at kokebok inneholder oppskrift etter metode for å legge til oppskrift har blitt kjørt i kokebok.
+* Teste at skalering av antall personer stemmer overens med ingrediensmengden. alle skal få nok mat.
+* Teste at antall kalorier per person stemmer overens med ingrediensmengde og skalering av oppskrift.
 
 ### Kjøleskapsverkøyet
 
-* sjekke at den finner riktig antall oppskrifter basert på ingredienser
-* sjekke at den ikke tar med oppskrifter du ikke har alle ingredienser til
-* sjekke at den virker sammen med filtre
-
-🠗🠗🠗
-
-* Teste at riktig antall oppskrifter vises basert på ingredienser etter filtreringsmetoden er kjørt
-* Teste at ingrediens blir lagt til i kjøleskapet etter legg-til metoden er kjørt
-
-### Kjøring av app
-
-* Teste at appen fungerer
-* Teste at grensesnittet virker
-
-🠗🠗🠗
-
-* Trenger ikke tester til dette??
-### Generelt
-
-* Validering av alle sentrale tilstander.
-* sjekke innkapsling
-* Teste Skriving av fil
-* Teste korrekt innlastning av fil.
-* sjekke at brukeren ikke mister sine filer når programmet lukkes.
-
-🠗🠗🠗
-
-???
+* Teste at riktig antall oppskrifter vises basert på ingredienser etter filtreringsmetoden for kjøleskapsverktøyet er kjørt.
+* teste at alle oppskrifter som vises kan lages med de ingrediensene man oppgir at man har i kjøleskapet. kjøleskapsverktøyet skal ikke gi feilinfo om hva du får til å lage.
+* Teste at ingrediens blir lagt til i kjøleskapet etter legg-til-i-kjøleskap metoden er kjørt.
