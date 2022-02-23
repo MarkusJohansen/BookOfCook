@@ -35,6 +35,20 @@ public class Cookbook {
         return recipeAmount;
     }
 
+    //*WRITE TO FILE .txt
+    //write parsed recipe to file
+    public void writeToFile() {
+        try {
+            FileWriter fw = new FileWriter(name + ".txt");
+            for (Recipe r : recipes) {
+                fw.write(r.parsedRecipe());
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //*TOSTRING METHOD
     @Override
     public String toString() {
@@ -55,5 +69,7 @@ public class Cookbook {
         cookbook.addRecipeToCookbook(recipe2);
         cookbook.addRecipeToCookbook(recipe3);
         System.out.println(cookbook);
+
+        cookbook.writeToFile();
     }
 }

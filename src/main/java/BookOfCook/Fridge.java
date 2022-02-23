@@ -22,10 +22,9 @@ public class Fridge {
     // *METHODS FOR FOOD IN FRIDGE
     public void addFood(String name, double amount, String unit) {
         HashMap<String, Object> ingredient = new HashMap<String, Object>();
-        ingredient.put("name", name.toLowerCase()); // adds the name of the ingredient to the ingredient hashmap
-        ingredient.put("amount", amount); // adds the amount key, value pair to the ingrdient hashmap . describes the
-                                          // amount of the ingredient
-        ingredient.put("unit", unit);
+        ingredient.put("name", name.toLowerCase());                         // adds the name of the ingredient to the ingredient hashmap
+        ingredient.put("amount", amount);                                   // adds the amount key, value pair to the ingrdient hashmap . describes the   
+        ingredient.put("unit", unit);                                       // unit of the ingredient
         foodInFridge.add(ingredient);
     }
 

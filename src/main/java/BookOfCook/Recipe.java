@@ -1,5 +1,6 @@
 package BookOfCook;
 
+import java.io.*;
 import java.util.*;
 
 public class Recipe {
@@ -8,7 +9,8 @@ public class Recipe {
     private double calories;                                                                                //total calories in recipe
     private double caloriesPerPerson;                                                                       //calories per person                                                          
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
-    private ArrayList<Category> categories = new ArrayList<Category>();                                     //list of categories for recipe 
+    private ArrayList<Category> categories = new ArrayList<Category>();                                     //stores the categories of the recipe                                    
+    private ArrayList<String> steps = new ArrayList<String>();                                              //stores the steps of the recipe
 
     //*CONSTRUCTOR                                                                                          
     public Recipe(String name, int numberOfServings) {  //constructor for recipe demands that recipe has a defined name and number of servings
@@ -106,6 +108,35 @@ public class Recipe {
         category.addRecipe(this);                                           //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
     }
 
+    //*PARSED RECCIPE
+    //writes parsed string that can be written to txt file
+    public String parsedRecipe() {
+        String parsedRecipe = "";
+        String recipeSection = "============================================\n";
+
+        parsedRecipe += recipeSection;
+        parsedRecipe += name.toUpperCase() + "\n\n";                                            //adds name of recipe to parsed recipe
+        parsedRecipe += "Oppskriften er beregnet på: " + numberOfServings + " personer\n\n";    //adds number of servings to parsed recipe
+        parsedRecipe += "Calories: " + calories + "\n";                                         //adds calories to parsed recipe
+        parsedRecipe += "Calories per person: " + caloriesPerPerson + "\n\n";                   //adds calories per person to parsed recipe
+        parsedRecipe += "Ingredients: \n";      
+
+        for (int i = 0; i < Ingredients.size(); i++) {                                          //loops through all ingredients
+            parsedRecipe += "  " + Ingredients.get(i).get("name") + ": " + Ingredients.get(i).get("amount") + " " + Ingredients.get(i).get("unit") + "\n"; //adds ingredient to parsed recipe
+        }
+
+        parsedRecipe += "\n";
+
+        parsedRecipe += "Categories: \n";                                                       //adds categories to parsed recipe
+        for (int i = 0; i < categories.size(); i++) {                                           //loops through all categories
+            parsedRecipe += "  " + categories.get(i).name + "\n";                               //adds category to parsed recipe
+        }
+
+        parsedRecipe += recipeSection + "\n";
+
+        return parsedRecipe;                                                //returns parsed recipe
+    }
+
     //*TOSTRING METHOD
     @Override
     public String toString() {
@@ -125,22 +156,13 @@ public class Recipe {
         recipe.addIngredient("tomater", 100, "gram");
         recipe.addIngredient("sukker", 6, "ss");
         recipe.addIngredient("vann", 3, "l");
-        System.out.println(recipe);
-
         recipe.scaleRecipe(4);
         recipe.changeIngredient("mel", 8, "g");
-        System.out.println(recipe);
-
         recipe.changeIngredientName("tomater", "tomat");
-        System.out.println(recipe);
-
         recipe.removeIngredient("tomat");
-        System.out.println(recipe);
-
         recipe.categorizeRecipe(pizza);
-        System.out.println(recipe);
-
         recipe.categorizeRecipe(italian);
-        System.out.println(recipe);
+
+        System.out.println(recipe.parsedRecipe());
     }
 }
