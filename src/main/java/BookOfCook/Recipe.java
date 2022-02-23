@@ -1,8 +1,6 @@
-package BookOfCook.bookAndRecipe;
+package BookOfCook;
 
 import java.util.*;
-
-import BookOfCook.Category;
 public class Recipe {
 
     //*FIELDS
@@ -18,6 +16,11 @@ public class Recipe {
         this.name = name;
         this.numberOfServings = numberOfServings;
     }
+
+    //*GETTERS
+    public String getName() {
+        return name;
+    }    
 
     //*CHANGING NAME
     public void setName(String name) {
@@ -107,8 +110,18 @@ public class Recipe {
         return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
     }
 
+    //*CATEGORY METHODS
+    public void addCategory(Category category) {
+        categories.add(category);
+        category.addRecipe(this);
+        
+    }
+
     public static void main(String[] args) {
         Recipe recipe = new Recipe("Sukker-pizza", 3);
+        Category pizza = new Category("Pizza");
+        Category italian = new Category("Italian");
+
         recipe.addIngredient("tomater", 100, "gram");
         recipe.addIngredient("sukker", 6, "ss");
         recipe.addIngredient("vann", 3, "l");
@@ -117,6 +130,21 @@ public class Recipe {
         System.out.println(recipe);
 
         recipe.scaleRecipe(9);
+        System.out.println(recipe);
+
+        recipe.changeIngredient("mel", 8, "g");
+        System.out.println(recipe);
+
+        recipe.changeIngredientName("tomater", "tomat");
+        System.out.println(recipe);
+
+        recipe.removeIngredient("tomat");
+        System.out.println(recipe);
+
+        recipe.addCategory(pizza);
+        System.out.println(recipe);
+
+        recipe.addCategory(italian);
         System.out.println(recipe);
     }
 }
