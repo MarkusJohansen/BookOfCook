@@ -1,8 +1,3 @@
-/*
-TODO
--
-*/
-
 package BookOfCook;
 
 import java.util.*;
