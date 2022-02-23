@@ -14,7 +14,7 @@ public class Recipe {
     private int numberOfServings;                                                                           //number persons this recipe serves        
     private double calories;                                                                                //total calories in recipe
     private double caloriesPerPerson;                                                                       //calories per person                                                          
-    private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same type be able to set the key equal to differnt datatypes
+    private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     //list of categories for recipe 
 
     //*CONSTRUCTOR                                                                                          
