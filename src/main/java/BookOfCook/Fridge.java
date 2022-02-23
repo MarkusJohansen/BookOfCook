@@ -30,7 +30,17 @@ public class Fridge {
         return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
     }
 
-    // *METHODS FOR FOOD IN FRIDGE
+    // *VALIDATION
+    public boolean isFoodInFridge(String food){
+        for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
+            if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // *ADDING AND REMOVING FOOD
     public void addFood(String name, double amount, String unit) {
         HashMap<String, Object> ingredient = new HashMap<String, Object>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
@@ -40,16 +50,11 @@ public class Fridge {
         updateFridgeTime();                             // updates lastUpdateOfFridge time
     }
 
-    public void emptyFridge() {
-        foodInFridge.clear();       // empties the foodInFridge arrayList
-        updateFridgeTime();         // updates lastUpdateOfFridge time
-    }
-
     public void removeFood(String name) {
         boolean removedFood = false;                                            // variable for checking if any food is removed at all
 
         for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
-            if (foodInFridge.get(i).get("name").equals(name.toLowerCase())) {   //  checks if i food is equal to the parameter
+            if (isFoodInFridge(name)) {                                         //  checks if i food is equal to the parameter
                 System.out.println("Removing " + foodInFridge.get(i));          
                 foodInFridge.remove(i);                                         // removes i food
                 removedFood = true;
@@ -62,6 +67,11 @@ public class Fridge {
         }
     }
 
+    public void emptyFridge() {
+        foodInFridge.clear();       // empties the foodInFridge arrayList
+        updateFridgeTime();         // updates lastUpdateOfFridge time
+    }
+
     @Override
     public String toString() {
         return "Fridge [foodInFridge=" + foodInFridge + ", lastUpdateOfFridge=" + lastUpdateOfFridge + "]";
@@ -72,6 +82,8 @@ public class Fridge {
         f.addFood("Tomat", 2, "stk");
         f.addFood("Pepperoni", 500, "gram");
 
-        f.removeFood("Tomat");
+        System.out.println(f);
+
+        f.removeFood("pepperoni");
     }
 }
