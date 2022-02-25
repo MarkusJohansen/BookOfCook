@@ -103,10 +103,17 @@ public class Recipe {
     }
 
     //*CATEGORY METHODS
-    public void categorizeRecipe(Category category) {                   
-        categories.add(category);                                           //adds category to list of categorys in recipe
-        category.addRecipe(this);                                           //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
+    // endra fra categorize til addCategory, lettere å lese
+    public void addCategory(Category category) { 
+        if(categories.contains(category)){ 
+            return;
+        }          
+
+        categories.add(category);       //adds category to list of categorys in recipe
+        category.addRecipe(this);       //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
     }
+
+
 
     //*PARSED RECCIPE
     //writes parsed string that can be written to txt file
@@ -160,8 +167,8 @@ public class Recipe {
         recipe.changeIngredient("mel", 8, "g");
         recipe.changeIngredientName("tomater", "tomat");
         recipe.removeIngredient("tomat");
-        recipe.categorizeRecipe(pizza);
-        recipe.categorizeRecipe(italian);
+        recipe.addCategory(pizza);
+        recipe.addCategory(italian);
 
         System.out.println(recipe.parsedRecipe());
     }

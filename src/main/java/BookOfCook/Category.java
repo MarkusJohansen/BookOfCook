@@ -14,7 +14,13 @@ public class Category {
 
     //*METHODS
     public void addRecipe(Recipe recipe){
+        if(recipesInCategory.contains(recipe)){     // checks if  recipesInCategory already contains recipes
+            return;
+        }
+
         recipesInCategory.add(recipe);
+
+        recipe.addCategory(this);
     }
 
     //tostring method for category
@@ -25,5 +31,16 @@ public class Category {
             recipes += "\n" + recipesInCategory.get(i).getName();
         }
         return "Category: " + name + " has " + recipesInCategory.size() + " recipes. those are recipes for: " + recipes + "\n";
+    }
+
+    public static void main(String[] args) {
+        Category italiensk = new Category("italiensk");
+        Recipe pasta_carbonara = new Recipe("pasta carbonara", 3);
+
+        italiensk.addRecipe(pasta_carbonara);
+
+        System.out.println(italiensk);
+
+        System.out.println(pasta_carbonara);
     }
 }
