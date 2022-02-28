@@ -5,9 +5,9 @@ import java.util.*;
 import java.io.*;
 
 public class Cookbook {
-    String name;
-    int recipeAmount;
-    ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+    private String name;
+    private int recipeAmount;
+    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
 
     //*CONSTRUCTOR
@@ -51,26 +51,30 @@ public class Cookbook {
     //? er disse nødvendige
     //returns cookbook name
     public String getName() {
-        return name;
+        return name;                                //returns cookbook name
     }
 
     //returns amount of recipes in cookbook
     public int getRecipeAmount() {
-        return recipeAmount;
+        return recipeAmount;                        //returns amount of recipes in cookbook
     }
 
 
     //*WRITE TO FILE .txt
     //write recipes in cookbook as parsed strings to file
     public void writeToFile() {
-        try {
-            FileWriter fileWriter = new FileWriter(name + ".txt");
-            for (Recipe recipe : recipes) {
-                fileWriter.write(recipe.parsedRecipe());
+        try {                                                       //prøv å skrive filen
+            FileWriter fileWriter = new FileWriter(name + ".txt");  //lager et filskriver objekt som spesifiserer at filen skal hete "navnet til cookbook".txt
+
+            for (Recipe recipe : recipes) {                         //looper gjennom alle matoppskrifter i cookbook      
+                fileWriter.write(recipe.parsedRecipe());            //skriver matoppskriften til filen som en parset string gjennom parsedRecipe() metoden
             }
-            fileWriter.close();
-        }catch (IOException exception) {
-            exception.printStackTrace();
+
+            fileWriter.close();                                     //lukker skriveren og indikerer at filen er ferdigskrevet.
+        }
+        
+        catch (IOException exception) {                             //dersom det oppstår en feil ved skriving av filen fanger den opp feilen
+            exception.printStackTrace();                            //skriver ut feilen til konsollen
         }
     }
 
