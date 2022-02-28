@@ -8,7 +8,9 @@ TODO: Possible scenarios:
 - Kun tall i ingrdent amount
 - ikke tall i units
 
-
+?MULIGE LØSNINGER:
+- ikke skille mellom Tomat, tomat og tOmAt
+- solve issue with illegal symbols by regex
 */
 
 package BookOfCook;
@@ -124,6 +126,7 @@ public class Recipe {
 
 
     //*CATEGORY METHODS
+    //establishes a relation between a category and a recipe
     public void addCategory(Category category) { 
         if(categories.contains(category)){                                  //if the category already exists in the recipe
             return;                                                         //returns to avoid adding the category again
@@ -132,6 +135,7 @@ public class Recipe {
         category.addRecipe(this);                                           //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
     }
 
+    //removes relation between a category and a recipe
     public void removeCategory(Category category) {
         if(!categories.contains(category)){                                 //if the category does not exist in the recipe
             return;                                                         //returns to avoid removing non existing fcategory                 
