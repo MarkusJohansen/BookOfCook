@@ -23,6 +23,14 @@ public class Category {
         recipe.addCategory(this);
     }
 
+    public void removeRecipe(Recipe recipe){
+        if(!recipesInCategory.contains(recipe)){
+            return;
+        }
+        recipesInCategory.remove(recipe);
+        recipe.removeCategory(this);
+    }
+
     //tostring method for category
     @Override
     public String toString() {
