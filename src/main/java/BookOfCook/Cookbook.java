@@ -59,6 +59,10 @@ public class Cookbook {
         return recipeAmount;                        //returns amount of recipes in cookbook
     }
 
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;                             //returns recipes in cookbook
+    }
+
 
     //*WRITE TO FILE .txt
     //write recipes in cookbook as parsed strings to file
