@@ -1,51 +1,66 @@
 package BookOfCook;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class BookOfCookController {
+
+    //*FIELDS
+    private Cookbook cookbook;
     private ArrayList<Recipe> recipes;
 
+    //*FXML-noder
     @FXML
     private Label number;
 
     @FXML
     private GridPane recipeGrid;
 
+    @FXML
+    private TextField recipeNameBar, servesPeopleBar;
+
     //*INITIALIZATION
     public void initialize(){
-        initializeDummyRecipes();
+        initializeCookBook();
         initializeRecipeGrid();
     }
 
     private void initializeRecipeGrid() {
+        initializeRecipes();
+
         for (Recipe recipe : recipes) {
+            Recipe r = recipe; //copy recipe
+            recipeGrid.add(createRecipeBody(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
+        }
+        
+        for (Recipe recipe : cookbook.getRecipes()) {
             Recipe r = recipe; //copy recipe
             recipeGrid.add(createRecipeBody(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
         }
     }
 
-    private void initializeDummyRecipes(){
-        recipes = new ArrayList<Recipe>();
-        recipes.addAll(List.of(
-            new Recipe("Pasta", 4),
-            new Recipe("Pizza", 2),
-            new Recipe("Sushi", 1),
-            new Recipe("Hamburger", 2),
-            new Recipe("Lasagne", 3),
-            new Recipe("Pancakes", 1),
-            new Recipe("Spaghetti", 3),
-            new Recipe("Taco", 1)
-        ));
+    private void initializeCookBook(){
+        cookbook = new Cookbook("Dawg");
     }
+
+    private void initializeRecipes(){
+        recipes = new ArrayList<Recipe>();
+        recipes.addAll(cookbook.getRecipes());
+    }
+    
+    //*UPDATERS
+    public void updateRecipeGrid(){
+        recipeGrid.getChildren().clear();
+        initializeRecipeGrid();
+    }
+
 
     //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
     private Pane createRecipeBody(Recipe recipe){
@@ -97,14 +112,11 @@ public class BookOfCookController {
         return label;
     }
 
-    //*BUTTON ACTIONS
-    public void generateRandom(ActionEvent event) {
-    System.out.println("Add button was clicked");
-    //     Random rand = new Random();
-    //     int myRandom = rand.nextInt(100) + 1;
-    //     number.setText(Integer.toString(myRandom));
 
-    //     //midlertidig add pane to grid
-    //     //addRecipeToGrid();
+    //*EVENT HANDLERS
+    public void addRecipe(ActionEvent event) {
+        System.out.println("Add button was clicked");
+        cookbook.addRecipeToCookbook(new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText())));
+        updateRecipeGrid();
     }
 }
