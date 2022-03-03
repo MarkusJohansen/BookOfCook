@@ -38,8 +38,37 @@ public class Recipe {
     //get name of recipe   
     public String getName() {
         return name;                                                        //returns name of recipe
-    }    
+    } 
+    
+    //get number of servings
+    public int getNumberOfServings() {
+        return numberOfServings;                                            //returns number of servings
+    }
 
+    //get calories
+    public double getCalories() {
+        return calories;                                                    //returns calories
+    }
+
+    //get calories per person
+    public double getCaloriesPerPerson() {
+        return caloriesPerPerson;                                           //returns calories per person
+    }
+
+    //get ingredients
+    public ArrayList<HashMap<String,Object>> getIngredients() {
+        return Ingredients;                                                //returns ingredients
+    }
+
+    //get categories
+    public ArrayList<Category> getCategories() {
+        return categories;                                                 //returns categories
+    }
+
+    //get steps
+    public ArrayList<String> getSteps() {
+        return steps;                                                      //returns steps
+    }
 
     //*CHANGING NAME
     //change name of recipe
