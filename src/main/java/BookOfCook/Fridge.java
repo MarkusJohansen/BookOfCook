@@ -21,25 +21,6 @@ public class Fridge {
         return foodInFridge;
     }
 
-    // *TIME
-    public void updateFridgeTime(){     // method for updating the lastUptadeOfFridge
-        lastUpdateOfFridge = LocalDateTime.now(); 
-    }
-
-    public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
-        return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
-    }
-
-    // *VALIDATION
-    public boolean isFoodInFridge(String food){
-        for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
-            if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // *ADDING AND REMOVING FOOD
     public void addFood(String name, double amount, String unit) {
         HashMap<String, Object> ingredient = new HashMap<String, Object>();
@@ -70,6 +51,25 @@ public class Fridge {
     public void emptyFridge() {
         foodInFridge.clear();       // empties the foodInFridge arrayList
         updateFridgeTime();         // updates lastUpdateOfFridge time
+    }
+    
+    // *VALIDATION
+    public boolean isFoodInFridge(String food){
+        for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
+            if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // *TIME
+    public void updateFridgeTime(){     // method for updating the lastUptadeOfFridge
+        lastUpdateOfFridge = LocalDateTime.now(); 
+    }
+
+    public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
+        return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
     }
 
     @Override
