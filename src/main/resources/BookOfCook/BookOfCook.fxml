@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,11 +10,15 @@
 
 <AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1800.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
    <children>
-      <Label fx:id="number" layoutX="261.0" layoutY="837.0" prefHeight="86.0" prefWidth="179.0" style="-fx-background-color: #ffffff;" />
-      <Pane prefHeight="27.0" prefWidth="42.0" />
-      <Pane layoutX="675.0" layoutY="82.0" prefHeight="817.0" prefWidth="1009.0" style="-fx-background-color: #2C2C2D;">
+      <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="457.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40;">
          <children>
-            <GridPane fx:id="recipeGrid" layoutX="98.0" layoutY="106.0" prefHeight="636.0" prefWidth="768.0">
+            <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;" />
+            <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;" />
+         </children>
+      </Pane>
+      <Pane layoutX="675.0" layoutY="82.0" prefHeight="817.0" prefWidth="1009.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40px;">
+         <children>
+            <GridPane fx:id="recipeGrid" layoutX="80.0" layoutY="97.0" prefHeight="636.0" prefWidth="768.0" style="-fx-background-radius: 40;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="255.0" />
