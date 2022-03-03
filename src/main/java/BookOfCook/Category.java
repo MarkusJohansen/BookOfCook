@@ -3,42 +3,50 @@ package BookOfCook;
 import java.util.ArrayList;
 
 public class Category {
-    //*FIELDS
-    String name;                                                    // name of category
-    ArrayList<Recipe> recipesInCategory = new ArrayList<Recipe>();  // recipes in the category
+    // *FIELDS
+    String name;                                            // name of category
+    ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
 
-    //*CONSTRUCTOR
+    // *CONSTRUCTOR
     public Category(String name) {
         this.name = name.toLowerCase();
     }
 
-    //*METHODS
-    public void addRecipe(Recipe recipe){
-        if(recipesInCategory.contains(recipe)){     // checks if  recipesInCategory already contains recipes
+    // *GETTERS
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Recipe> getrecipes() {
+        return recipes;
+    }
+
+    // *METHODS
+    public void addRecipe(Recipe recipe) {
+        if (recipes.contains(recipe)) {     // checks if recipes already contains recipes
             return;
         }
 
-        recipesInCategory.add(recipe);
-
+        recipes.add(recipe);
         recipe.addCategory(this);
     }
 
-    public void removeRecipe(Recipe recipe){
-        if(!recipesInCategory.contains(recipe)){
+    public void removeRecipe(Recipe recipe) {
+        if (!recipes.contains(recipe)) {
             return;
         }
-        recipesInCategory.remove(recipe);
+        recipes.remove(recipe);
         recipe.removeCategory(this);
     }
 
-    //tostring method for category
+    // tostring method for category
     @Override
     public String toString() {
-        String recipes = "";
-        for (int i = 0; i < recipesInCategory.size(); i++) {
-            recipes += "\n" + recipesInCategory.get(i).getName();
+        String r = "";
+        for (int i = 0; i < recipes.size(); i++) {
+            r += "\n" + recipes.get(i).getName();
         }
-        return "Category: " + name + " has " + recipesInCategory.size() + " recipes. those are recipes for: " + recipes + "\n";
+        return "Category: " + name + " has " + recipes.size() + " recipes. those are recipes for: " + r + "\n";
     }
 
     public static void main(String[] args) {
