@@ -11,7 +11,7 @@ public class BookOfCookApp extends Application{
     @Override   
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Book of Cook");
-        primaryStage.getIcons().add(new Image("file:icon.png")); //!funker ikke :()
+        primaryStage.getIcons().add(new Image("file:icon.png")); //!Skal setet funker ikke :()
 
 
         Parent root = FXMLLoader.load(getClass().getResource("BookOfCook.fxml"));

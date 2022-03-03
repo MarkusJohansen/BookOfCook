@@ -1,14 +1,19 @@
 /*Stylesheet for app*/
 #body{
-    -fx-background-color: #8b8b8b;
+    -fx-background-color: #d1c6c6;
 }
 
-#btn{
+#addButton{
     -fx-width: 100px;
-    -fx-height: 50px;
-    -fx-font-size: 20px;
-    -fx-font-family: "Arial";
-    -fx-background-color: background: linear-gradient(90deg, rgba(237,52,111,1) 31%, rgba(255,198,7,1) 100%);
-    -fx-padding: 10px;
-    -fx-background-radius: 40px; /*!fungerer som border radius men gjør at du kan klikke rett utenfor*/
+    -fx-height: 100px;
+    -fx-font-size: 50px;                                                                            /*font size*/
+    -fx-font-family: "Arial";                                                                       /*Font-family of button*/
+    -fx-background-color: linear-gradient(to bottom, rgba(237,52,111,1), rgba(255,198,7,1));    /* lager en linear gradient som er korrekt for knappene vi ønsker i appdesign*/
+    -fx-background-radius: 40px;                                                                    /*!fungerer som border radius men gjør at du kan klikke rett utenfor, border radius fungerer ikke på knappen ?*/
+    -fx-text-fill: white;                                                                         /*Colors the text inside button like a +*/
+    -fx-padding: 0px 15px;                                                                          /*fixes that the button is higher than it is wide*/ 
+}
+
+#recipeBody{
+    background-color: rgb(87, 81, 81);
 }
