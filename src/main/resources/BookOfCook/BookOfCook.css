@@ -1,0 +1,14 @@
+/*Stylesheet for app*/
+#body{
+    -fx-background-color: #8b8b8b;
+}
+
+#btn{
+    -fx-width: 100px;
+    -fx-height: 50px;
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial";
+    -fx-background-color: background: linear-gradient(90deg, rgba(237,52,111,1) 31%, rgba(255,198,7,1) 100%);
+    -fx-padding: 10px;
+    -fx-background-radius: 40px; /*!fungerer som border radius men gjør at du kan klikke rett utenfor*/
+}
