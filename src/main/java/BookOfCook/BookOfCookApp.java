@@ -11,14 +11,16 @@ public class BookOfCookApp extends Application{
 
     @Override   
     public void start(Stage primaryStage) throws Exception {
+        //Styler vinduet litt
         primaryStage.setTitle("Book of Cook");
         primaryStage.getIcons().add(new Image("file:icon.png")); //!Skal setet funker ikke :()
 
-
+        //Laster inn fxml-filen
         Parent root = FXMLLoader.load(getClass().getResource("BookOfCook.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("BookOfCook.css").toExternalForm());
 
+        //Setter inn scene i vinduet og viser vinduet
         primaryStage.setScene(scene);
         primaryStage.show();        
     }

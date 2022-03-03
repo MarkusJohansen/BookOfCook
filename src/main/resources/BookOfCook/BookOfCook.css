@@ -3,6 +3,10 @@
     -fx-background-color: #1E1E1E;
 }
 
+#addButton{
+    -fx-font-size: 40px;
+}
+
 .standard-button{
     -fx-width: 100px;
     -fx-height: 100px;
@@ -14,14 +18,14 @@
     -fx-padding: 0px 15px;                                                                          /*fixes that the button is higher than it is wide*/ 
 }
 
-.view-button{
-    
-}
-
 .recipe-body{
     -fx-background-color: rgb(87, 81, 81);
     -fx-background-radius: 20px;
     -fx-padding: 20px;
     -fx-margin: 20px;
+}
 
+.recipe-header{
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
 }
