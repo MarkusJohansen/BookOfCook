@@ -17,8 +17,12 @@ public class Fridge {
     }
 
     // *GETTERS
-    public ArrayList<HashMap<String, Object>> displayFridge() {
+    public ArrayList<HashMap<String, Object>> getFoodInFridge() {
         return foodInFridge;
+    }
+
+    public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
+        return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("HH:mm - dd.MM"));
     }
 
     // *ADDING AND REMOVING FOOD
@@ -68,10 +72,6 @@ public class Fridge {
         lastUpdateOfFridge = LocalDateTime.now(); 
     }
 
-    public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
-        return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
-    }
-
     @Override
     public String toString() {
         return "Fridge [foodInFridge=" + foodInFridge + ", lastUpdateOfFridge=" + lastUpdateOfFridge + "]";
@@ -85,5 +85,7 @@ public class Fridge {
         System.out.println(f);
 
         f.removeFood("pepperoni");
+
+        System.out.println("Fridge was last updated at " + f.getFormattedFridgeTime());
     }
 }
