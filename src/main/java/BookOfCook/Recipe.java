@@ -26,6 +26,10 @@ public class Recipe {
     private ArrayList<Category> categories = new ArrayList<Category>();                                     //stores the categories of the recipe                                    
     private ArrayList<String> steps = new ArrayList<String>();                                              //stores the steps of how to make the recipe
 
+    //*GENERAL TOOLBOX METHODS
+    private String capitalize(String s) {
+        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();             //capitalizes first letter of string s and returns it
+    }
 
     //*CONSTRUCTOR                                                                                          
     public Recipe(String name, int numberOfServings) {                      //constructor for recipe demands that recipe has a defined name and number of servings
@@ -81,9 +85,13 @@ public class Recipe {
     //add ingredient to list of ingredients in recipe
     public void addIngredient(String name, double amount, String unit) {    
         HashMap<String,Object> ingredient = new HashMap<String,Object>();   //Creates a hasmap called ingredient that stores different properties of the ingredient
-        ingredient.put("name", name);                                       //adds the name of the ingredient to the ingredient hashmap
+        
+        ingredient.put("displayName", capitalize(name));                    //adds the name of the ingredient to the ingredient hashmap
+        ingredient.put("name", name.toUpperCase());                         //adds the name of the ingredient to the ingredient hashmap
         ingredient.put("amount", amount);                                   //adds the amount key, value pair to the ingrdient hashmap . describes the amount of the ingredient
-        ingredient.put("unit", unit);                                       //adds the "unit" key, value pair to the ingredient hashmap. describes the unit of the ingredient
+        ingredient.put("unit", unit.toLowerCase());                         //adds the "unit" key, value pair to the ingredient hashmap. describes the unit of the ingredient
+        
+        validateIngredient(ingredient);
         Ingredients.add(ingredient);                                        //adds the ingredient to the list of ingredients
     }
 
@@ -100,9 +108,20 @@ public class Recipe {
     //change ingredient in ingredients list
     public void changeIngredient(String name, double amount, String unit) {
         for (HashMap<String, Object> Ingredient : Ingredients) {            //loops through all ingredients
-            if (Ingredient.get("name").equals(name)) {                      //if ingredient matches name
-                Ingredient.put("amount", amount);                           //changes amount to new amount
-                Ingredient.put("unit", unit);                               //changes unit to new unit
+            HashMap<String, Object> copyOfIngredient = Ingredient;          //creates a copy of the ingredient
+
+            if (Ingredient.get("name").equals(name.toUpperCase())) {                      //if ingredient matches name
+                Ingredient.replace("amount", amount);                       //changes the amount of the ingredient
+                Ingredient.replace("unit", unit.toLowerCase());                           //changes the unit of the ingredient
+
+                try{
+                    validateIngredient(Ingredient);                                 //validates the  to check new values
+                } catch (IllegalArgumentException e) {                              //if validation fails 
+                    Ingredient = copyOfIngredient;                                  //set the ingredient back to the old values
+                    System.out.println(e.getMessage() + ": No changes was made.");   //print error message
+                }
+
+                validateIngredient(Ingredient);
                 break;  	                                                //breaks so it doesn't look for more matches. saves prossessing power
             }
         }
@@ -110,11 +129,49 @@ public class Recipe {
 
     //change ingredient name to new name
     public void changeIngredientName(String name, String newName) {
-        for (HashMap<String, Object> Ingredient : Ingredients) {            //loops through all ingredients
-            if (Ingredient.get("name").equals(name)) {                      //if ingredient matches name of ingredient to be changed
-                Ingredient.put("name", newName);                            //changes name to new name
-                break;  	                                                //breaks so it doesn't look for more matches. saves prossessing power
+        for (HashMap<String, Object> Ingredient : Ingredients) {        //loops through all ingredients
+            HashMap<String, Object> copyOfIngredient = Ingredient;      //creates a copy of the ingredient
+
+            if (Ingredient.get("name").equals(name.toUpperCase())) {                  //if ingredient matches name of ingredient to be changed
+                Ingredient.put("name", newName.toUpperCase());          //changes name to new name
+                Ingredient.put("displayName", capitalize(newName));     //changes displayname to new name
+
+                try {
+                    validateIngredient(Ingredient);                                 //validates the  to check new values
+                } catch (IllegalArgumentException e) {                              //if validation fails 
+                    Ingredient = copyOfIngredient;                                  //set the ingredient back to the old values
+                    System.out.println(e.getMessage() + ": No changes was made.");  //print error message
+                }
+
+                break;  	                                                        //breaks so it doesn't look for more matches. saves prossessing power
             }
+        }
+    }
+
+    //*VALIDATION OF INGREDIENTS
+    private void validateIngredient(HashMap<String,Object> Ingredient) {
+        nullValueCheck(Ingredient);        
+        regexCheck(Ingredient);
+    }
+
+    private void nullValueCheck(HashMap<String,Object> Ingredient) {
+        //check if values of ingredient are null
+        if (Ingredient.get("name") == null || Ingredient.get("amount") == null || Ingredient.get("unit") == null) {
+            throw new IllegalArgumentException("One or more values of the ingredient is null.");
+        }
+        
+
+    }
+
+    private void regexCheck(HashMap<String,Object> Ingredient) {
+        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {
+            throw new IllegalArgumentException("amount is not a Double or integer");
+        }
+        if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {
+            throw new IllegalArgumentException("unit contains invalid characters");
+        }
+        if (!(Ingredient.get("name").toString().matches("[A-Z ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z ]+"))) {
+            throw new IllegalArgumentException("name or displayName contains invalid characters");
         }
     }
 
@@ -226,8 +283,9 @@ public class Recipe {
     @Override
     public String toString() {
         String ingredientList = "";
-        for (int i = 0; i < Ingredients.size(); i++) {
-            ingredientList += "\n" + Ingredients.get(i).get("name") + ": " + Ingredients.get(i).get("amount") + " " + Ingredients.get(i).get("unit");
+        for(HashMap<String,Object> ingredient : Ingredients) {
+            ingredientList += "\n" + ingredient.get("displayName") + ": " + ingredient.get("amount") + " " + ingredient.get("unit");
+            //!System.out.println(ingredient.get("displayName")); virker ikke?
         }
         return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
     }
@@ -247,13 +305,13 @@ public class Recipe {
         recipe.addIngredient("sukker", 6, "ss");
         recipe.addIngredient("vann", 3, "l");
         recipe.addIngredient("mel", 100 , "kg");
-        recipe.addIngredient("pizza-kulsyre", 1, "stk");
+        recipe.addIngredient("pizza kulsyre", 1, "stk");
         System.out.println(recipe.parsedRecipe());
 
 
         //testing av skalering og endring av ingrdiens
         recipe.scaleRecipe(4);
-        recipe.changeIngredient("mel", 8, "g");
+        recipe.changeIngredient("mel", 80, "kg");
         recipe.changeIngredientName("tomater", "tomat");
         System.out.println(recipe.parsedRecipe());
 
