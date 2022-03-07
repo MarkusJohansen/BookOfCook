@@ -73,6 +73,9 @@ public class Cookbook {
         }
     }
 
+    // *WRITE TO FILE .txt
+    // write recipes in cookbook as parsed strings to file
+
     public void checkIfRecipeExists(Recipe recipe) {
         if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
             throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
@@ -124,6 +127,23 @@ public class Cookbook {
         }
     }
 
+    // *GET RECIPES IN CATEGORIES METHODS
+
+    public ArrayList<Recipe> getSortedRecipes(ArrayList<Category> categories){  // categories as parameter
+
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();     // create an output arraylist
+
+        for (Recipe recipe : recipes) {                             // loops through all recipes in cookbook
+            for (Category category : categories) {                  // loops through all categories
+                if(recipe.getCategories().contains(category)){      // checks if recipe has this category
+
+                    sortedRecipes.add(recipe);                   // if true: add recipe to sortedRecipes
+                }
+            }
+        }
+
+        return sortedRecipes;
+    }
 
     // *TOSTRING METHOD
     @Override
@@ -138,18 +158,43 @@ public class Cookbook {
 
     // *MAIN METHOD
     public static void main(String[] args) {
-        Cookbook cookbook = new Cookbook("Cookbook");
-        Recipe recipe1 = new Recipe("pizza", 2);
-        Recipe recipe2 = new Recipe("Pasta", 4);
-        Recipe recipe3 = new Recipe("Sabasta", 1);
-
+        /* Cookbook cookbook = new Cookbook("Cookbook");
+        Recipe recipe1 = new Recipe("Recipe1", 2);
+        Recipe recipe2 = new Recipe("Recipe2", 4);
+        Recipe recipe3 = new Recipe("Recipe3", 1);
         cookbook.addRecipeToCookbook(recipe1);
         cookbook.addRecipeToCookbook(recipe2);
         cookbook.addRecipeToCookbook(recipe3);
 
-
         System.out.println(cookbook);
 
-        cookbook.writeToFile();
+        cookbook.writeToFile(); */ 
+
+
+        Cookbook cookbook = new Cookbook("Cookbook");
+        Recipe pasta_carbonara = new Recipe("pasta carbonara", 2);
+        Recipe pasta_bolognese = new Recipe("pasta bolognese", 4);
+        Recipe cheeseburger = new Recipe("cheeseburger", 1);
+        Recipe vegetarburger = new Recipe("vegetarburger", 1);
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category vegetar = new Category("vegetar");
+
+        pasta_carbonara.addCategory(italiensk);
+        pasta_bolognese.addCategory(italiensk);
+        cheeseburger.addCategory(burger);
+        vegetarburger.addCategory(burger);
+        vegetarburger.addCategory(vegetar);
+
+        cookbook.addRecipeToCookbook(pasta_carbonara);
+        cookbook.addRecipeToCookbook(pasta_bolognese);
+        cookbook.addRecipeToCookbook(cheeseburger);
+        cookbook.addRecipeToCookbook(vegetarburger);
+
+        ArrayList<Category> categories = new ArrayList<>(Arrays.asList(italiensk, vegetar)); // lager en arraylist med kategorier jeg vil sortere etter
+
+        System.out.println(cookbook.getSortedRecipes(categories));
+        
     }
 }
