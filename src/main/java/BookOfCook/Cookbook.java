@@ -12,7 +12,7 @@ public class Cookbook {
     // *CONSTRUCTOR
     public Cookbook(String name) {
         setName(name);
-        this.recipeAmount = 0;                                                      // amount of recipes in cookbook
+        this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
     }
 
 
@@ -34,9 +34,9 @@ public class Cookbook {
 
     //*SETTERS
     // sets name of cookbook
-    public void setName(String name) {
-        nameIsValid(name);                                                              // checks if name is valid
-        this.name = name;
+    private void setName(String name) {
+        nameIsValid(name);                                  // checks if name is valid
+        this.name = name;                                   // sets name of cookbook                   
     }
 
     // *GETTERS
@@ -48,11 +48,11 @@ public class Cookbook {
 
     // returns amount of recipes in cookbook
     public int getRecipeAmount() {
-        return recipeAmount; // returns amount of recipes in cookbook
+        return recipeAmount;                                // returns amount of recipes in cookbook
     }
 
     public ArrayList<Recipe> getRecipes() {
-        return recipes; // returns recipes in cookbook
+        return recipes;                                     // returns recipes in cookbook
     }
 
 
@@ -68,7 +68,7 @@ public class Cookbook {
     public void duplicateRecipeNameCheck(Recipe recipe){
         for (Recipe r : recipes) {                                                                      // loops through recipes in cookbook
             if (r.getName().equals(recipe.getName())) {                                                 // checks there is another recipe with identical name in// cookbook
-                throw new IllegalArgumentException("Recipe with same name already exists in cookbook");             // describes problem in console;                             
+                throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
             }
         }
     }
@@ -118,9 +118,11 @@ public class Cookbook {
     public void writeToFile() {
         try {                                                       // prøv å skrive filen
             FileWriter fileWriter = new FileWriter(name + ".txt");  // lager et filskriver objekt som spesifiserer at filen skal hete "navnet til cookbook".txt
+
             for (Recipe recipe : recipes) {                         // looper gjennom alle matoppskrifter i cookbook
                 fileWriter.write(recipe.parsedRecipe());            // skriver matoppskriften til filen som en parset string gjennom parsedRecipe() metoden
             }
+
             fileWriter.close();                                     // lukker skriveren og indikerer at filen er ferdigskrevet.
         }catch (IOException exception) {                            // dersom det oppstår en feil ved skriving av filen fanger den opp feilen
             exception.printStackTrace();                            // skriver ut feilen til konsollen
@@ -130,18 +132,14 @@ public class Cookbook {
     // *GET RECIPES IN CATEGORIES METHODS
 
     public ArrayList<Recipe> getSortedRecipes(ArrayList<Category> categories){  // categories as parameter
-
-        ArrayList<Recipe> sortedRecipes = new ArrayList<>();     // create an output arraylist
-
-        for (Recipe recipe : recipes) {                             // loops through all recipes in cookbook
-            for (Category category : categories) {                  // loops through all categories
-                if(recipe.getCategories().contains(category)){      // checks if recipe has this category
-
-                    sortedRecipes.add(recipe);                   // if true: add recipe to sortedRecipes
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
+        for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
+            for (Category category : categories) {                              // loops through all categories
+                if(recipe.getCategories().contains(category)){                  // checks if recipe has this category
+                    sortedRecipes.add(recipe);                                  // if true: add recipe to sortedRecipes
                 }
             }
         }
-
         return sortedRecipes;
     }
 
