@@ -18,7 +18,7 @@ package BookOfCook;
 import java.util.*;
 
 public class Recipe {
-    private String name;                                                                                    //name of recipe
+    private String name, displayedName;                                                                       //name of recipe
     private int numberOfServings;                                                                           //number persons this recipe serves        
     private double calories, caloriesPerPerson;                                                             //calories in recipe, calories per person                                                                 
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
@@ -30,10 +30,19 @@ public class Recipe {
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();             //capitalizes first letter of string s and returns it
     }
 
+    private void whiteSpaceCheck(String s){
+        //check if string starts or ends with multiple white spaces
+        if (s.startsWith(" ") || s.endsWith(" ")) {
+            throw new IllegalArgumentException("String starts or ends with white spaces");
+        }
+    }
+
     //*CONSTRUCTOR                                                                                          
     public Recipe(String name, int numberOfServings) {                      //constructor for recipe demands that recipe has a defined name and number of servings
         validateConstructor(name, numberOfServings);
-        this.name = capitalize(name);                                                   //sets name of recipe
+
+        this.name = name.toUpperCase();                                     //sets name to upper case
+        this.displayedName = capitalize(name);                                //sets displayname of recipe
         this.numberOfServings = numberOfServings;                           //sets number of servings so we can do logical operations linked to scaling of the recipe
     }
 
@@ -50,9 +59,7 @@ public class Recipe {
         if (!(name.matches("[a-zA-Z\\- ]+"))) { 
             throw new IllegalArgumentException("Name cannot contain numbers or special characters");
         }
-        if(name.charAt(0) == ' ') {
-            throw new IllegalArgumentException("Name cannot start with a space");
-        }
+        whiteSpaceCheck(name);
     }
 
     public void validServings(int numberOfServings) {
@@ -103,11 +110,10 @@ public class Recipe {
     //*CHANGING NAME
     //change name of recipe
     public void setName(String name) {
-        validRecipeName(capitalize(name));
-        this.name = capitalize(name);                                             //sets name of recipe
+        validRecipeName(name);
+        this.name = name.toUpperCase();                                       //sets name of recipe
+        this.displayedName = capitalize(name);                                //sets displayname of recipe
     }
-
-
 
     //*ADDING, REMOVING AND INGREDIENTS
     //add ingredient to list of ingredients in recipe
@@ -126,7 +132,7 @@ public class Recipe {
     // remove ingredient
     public void removeIngredient(String name) {                 
         for (HashMap<String, Object> Ingredient : Ingredients) {            //loops through all ingredients
-            if (Ingredient.get("name").equals(name)) {                      //looks for a ingredient that mathces the name of the element to be removed
+            if (Ingredient.get("name").equals(name.toUpperCase())) {        //looks for a ingredient that mathces the name of the element to be removed
                 Ingredients.remove(Ingredient);                             //removes the ingredient if it matches
                 break;                                                      //breaks if match found so it doesn't look for more matches. saves prossessing power
             }
@@ -180,6 +186,7 @@ public class Recipe {
     private void validateIngredient(HashMap<String,Object> Ingredient) {
         nullValueCheck(Ingredient);        
         regexCheck(Ingredient);
+        whiteSpaceCheck(Ingredient.get("name").toString());
     }
 
     private void nullValueCheck(HashMap<String,Object> Ingredient) {
@@ -200,7 +207,6 @@ public class Recipe {
             throw new IllegalArgumentException("name or displayName contains invalid characters");
         }
     }
-
 
     //*SETTING AND CHANGING CALORIES
     //set calories
