@@ -1,6 +1,7 @@
 ============================================
-RECIPE1
+PIZZA
 
+Categories:
 Oppskriften er beregnet på: 2 personer
 
 Calories: 0.0
@@ -8,29 +9,27 @@ Calories per person: 0.0
 
 Ingredients: 
 
-Categories: 
-
-
+Steps:
 ============================================
 
 ============================================
-RECIPE2
+PASTA
 
+Categories:
 Oppskriften er beregnet på: 4 personer
 
 Calories: 0.0
 Calories per person: 0.0
 
 Ingredients: 
-    
-Categories: 
 
-
+Steps:
 ============================================
 
 ============================================
-RECIPE3
+SABASTA
 
+Categories:
 Oppskriften er beregnet på: 1 personer
 
 Calories: 0.0
@@ -38,8 +37,6 @@ Calories per person: 0.0
 
 Ingredients: 
 
-Categories: 
-
-
+Steps:
 ============================================
 

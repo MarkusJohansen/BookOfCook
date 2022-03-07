@@ -11,88 +11,93 @@ public class Recipe {
     private ArrayList<String> steps = new ArrayList<String>();                                              //stores the steps of how to make the recipe
 
     //*CONSTRUCTOR                                                                                          
-    public Recipe(String name, int numberOfServings) {                      //constructor for recipe demands that recipe has a defined name and number of servings
+    public Recipe(String name, int numberOfServings) {              //constructor for recipe demands that recipe has a defined name and number of servings
         setName(name);
         setNumberOfServings(numberOfServings);
     }
 
-    
+
     //!SJEKK HVEM SOM FAKTISK BRUKES
     //*GETTERS               
     //get name of recipe   
     public String getName() {
-        return name;                                                        //returns name of recipe
+        return name;                                                //returns name of recipe
     } 
     
     //get number of servings
     public int getNumberOfServings() {
-        return numberOfServings;                                            //returns number of servings
+        return numberOfServings;                                    //returns number of servings
     }
 
     //get calories
     public double getCalories() {
-        return calories;                                                    //returns calories
+        return calories;                                            //returns calories
     }
 
     //get calories per person
     public double getCaloriesPerPerson() {
-        return caloriesPerPerson;                                           //returns calories per person
+        return caloriesPerPerson;                                   //returns calories per person
     }
 
     //get ingredients
     public ArrayList<HashMap<String,Object>> getIngredients() {
-        return Ingredients;                                                //returns ingredients
+        return Ingredients;                                         //returns ingredients
     }
 
     //get categories
     public ArrayList<Category> getCategories() {
-        return categories;                                                 //returns categories
+        return categories;                                          //returns categories
     }
 
     //get steps
     public ArrayList<String> getSteps() {
-        return steps;                                                      //returns steps
+        return steps;                                               //returns steps
+    }
+
+    //get displayed name (BEING USED IN COOKBOOK ATM)
+    public String getDisplayedName() {
+        return displayedName;                                       //returns displayed name
     }
 
 
     //*SETTERS
     //change name of recipe
     public void setName(String name) {
-        validRecipeName(name);
-        this.name = name.toUpperCase();                                       //sets name of recipe
-        this.displayedName = capitalize(name);                                //sets displayname of recipe
+        validRecipeName(name);                                      //checks if name is valid
+        this.name = name.toUpperCase();                             //sets name of recipe
+        this.displayedName = capitalize(name);                      //sets displayname of recipe
     }
 
     //change number of servings
     public void setNumberOfServings(int numberOfServings) {
-        validServings(numberOfServings);
-        this.numberOfServings = numberOfServings;                             //sets number of servings
+        validServings(numberOfServings);                           //checks if number of servings is valid
+        this.numberOfServings = numberOfServings;                  //sets number of servings
     }
 
     //set calories
     public void setCalories(double calories) {   
-        validateCalories(calories);                       
-        this.calories = calories;                                           //sets the total calories of the recipe
-        setCaloriesPerPerson();                                             //sets calories per person based on the new value of calories and number of servings
+        validateCalories(calories);                                 //checks if calories are valid
+        this.calories = calories;                                   //sets the total calories of the recipe
+        setCaloriesPerPerson();                                     //sets calories per person based on the new value of calories and number of servings
     }
 
     //!set calories per person should be combined with setCalories
     private void setCaloriesPerPerson() {          
-        this.caloriesPerPerson = calories / numberOfServings;               //sets calories per person based on the new value of calories and number of servings
+        this.caloriesPerPerson = calories / numberOfServings;       //sets calories per person based on the new value of calories and number of servings
     }
 
 
     //*CHANGE AND MANIPULATE DATA
     //add ingredient to list of ingredients in recipe
     public void addIngredient(String name, double amount, String unit) {    
-        HashMap<String,Object> ingredient = new HashMap<String,Object>();   //Creates a hasmap called ingredient that stores different properties of the ingredient
+        HashMap<String,Object> ingredient = new HashMap<String,Object>();   //Creates a hashmap called ingredient that stores different properties of the ingredient
         
-        ingredient.put("displayName", capitalize(name));                    //adds the name of the ingredient to the ingredient hashmap
+        ingredient.put("displayName", capitalize(name));                    //adds the displayName of the ingredient to the ingredient hashmap
         ingredient.put("name", name.toUpperCase());                         //adds the name of the ingredient to the ingredient hashmap
         ingredient.put("amount", amount);                                   //adds the amount key, value pair to the ingrdient hashmap . describes the amount of the ingredient
         ingredient.put("unit", unit.toLowerCase());                         //adds the "unit" key, value pair to the ingredient hashmap. describes the unit of the ingredient
         
-        validateIngredient(ingredient);
+        validateIngredient(ingredient);                                     //checks if ingredient is valid
         Ingredients.add(ingredient);                                        //adds the ingredient to the list of ingredients
     }
 
@@ -101,7 +106,7 @@ public class Recipe {
         for (HashMap<String, Object> Ingredient : Ingredients) {            //loops through all ingredients
             if (Ingredient.get("name").equals(name.toUpperCase())) {        //looks for a ingredient that mathces the name of the element to be removed
                 Ingredients.remove(Ingredient);                             //removes the ingredient if it matches
-                break;                                                      //breaks if match found so it doesn't look for more matches. saves prossessing power
+                return;                                                      //return if match found so it doesn't look for more matches. saves prossessing power
             }
         }
     }
@@ -111,19 +116,18 @@ public class Recipe {
         for (HashMap<String, Object> Ingredient : Ingredients) {            //loops through all ingredients
             HashMap<String, Object> copyOfIngredient = Ingredient;          //creates a copy of the ingredient
 
-            if (Ingredient.get("name").equals(name.toUpperCase())) {                      //if ingredient matches name
+            if (Ingredient.get("name").equals(name.toUpperCase())) {        //if ingredient matches name
                 Ingredient.replace("amount", amount);                       //changes the amount of the ingredient
-                Ingredient.replace("unit", unit.toLowerCase());                           //changes the unit of the ingredient
+                Ingredient.replace("unit", unit.toLowerCase());             //changes the unit of the ingredient
 
                 try{
                     validateIngredient(Ingredient);                                 //validates the  to check new values
                 } catch (IllegalArgumentException e) {                              //if validation fails 
                     Ingredient = copyOfIngredient;                                  //set the ingredient back to the old values
-                    System.out.println(e.getMessage() + ": No changes was made.");   //print error message
+                    System.out.println(e.getMessage() + ": No changes was made.");  //print error message
                 }
 
-                validateIngredient(Ingredient);
-                break;  	                                                //breaks so it doesn't look for more matches. saves prossessing power
+                return;  	                                                        //return so it doesn't look for more matches. saves prossessing power
             }
         }
     }
@@ -133,7 +137,7 @@ public class Recipe {
         for (HashMap<String, Object> Ingredient : Ingredients) {        //loops through all ingredients
             HashMap<String, Object> copyOfIngredient = Ingredient;      //creates a copy of the ingredient
 
-            if (Ingredient.get("name").equals(name.toUpperCase())) {                  //if ingredient matches name of ingredient to be changed
+            if (Ingredient.get("name").equals(name.toUpperCase())) {    //if ingredient matches name of ingredient to be changed
                 Ingredient.put("name", newName.toUpperCase());          //changes name to new name
                 Ingredient.put("displayName", capitalize(newName));     //changes displayname to new name
 
@@ -144,7 +148,7 @@ public class Recipe {
                     System.out.println(e.getMessage() + ": No changes was made.");  //print error message
                 }
 
-                break;  	                                                        //breaks so it doesn't look for more matches. saves prossessing power
+                return;  	                                                        //returns so it doesn't look for more matches. saves prossessing power
             }
         }
     }
@@ -172,20 +176,20 @@ public class Recipe {
     //add step to recipe steps
     public void addStep(String step) {
         validateStep(capitalize(step));                                            
-        steps.add(capitalize(step));                                                    //adds step to list of steps in recipe
+        steps.add(capitalize(step));                                        //adds step to list of steps in recipe
     }
 
     //remove step from recipe steps by index
     public void removeStep(int step) {
         validateStepIndex(step);                                                          
-        steps.remove(step);                                                //removes step from list of steps in recipe
+        steps.remove(step);                                                 //removes step from list of steps in recipe
     }
 
 
     //*SCALE RECIPE
     //when numbers of servings change, scale amounts
     public void scaleRecipe(int newNumberOfServings) { 
-        validServings(newNumberOfServings);                                  //validates new number of servings¨
+        validServings(newNumberOfServings);                                 //validates new number of servings¨
         double ratio = newNumberOfServings / numberOfServings;              //the ratio describes how many times the recipe has been scaled
 
         for (int i = 0; i < Ingredients.size(); i++) {                      //loops through all ingredients
@@ -195,8 +199,8 @@ public class Recipe {
         }
 
         setCalories(calories * ratio);                                      //scales calories by multiplying itself with the ratio
-        setNumberOfServings(newNumberOfServings);                          //sets new number of servings
-        setCaloriesPerPerson();                                            //sets calories per person based on the new value of number of servings
+        setNumberOfServings(newNumberOfServings);                           //sets new number of servings
+        setCaloriesPerPerson();                                             //sets calories per person based on the new value of number of servings
     }
 
 
@@ -210,65 +214,65 @@ public class Recipe {
 
     //validates step
     private void validateStep(String step) {
-        if (name == null || name.equals("")) {                          //if name is null or empty
-            throw new IllegalArgumentException("Name cannot be null or empty");
+        if (step == null || step.equals("")) {                                      //if recipe step is null or empty
+            throw new IllegalArgumentException("Step cannot be null or empty");     //throw error
         }
-        whiteSpaceCheck(name);
+        whiteSpaceCheck(step);                                                      //checks if step contains white spaces trailing or leading
     }
 
     //validates Calories
-    private void validateCalories(double calories) {
-        if (calories < 0) {
-            throw new IllegalArgumentException("calories cannot be negative");
+    private void validateCalories(double calories) {                                
+        if (calories < 0) {                                                         //if calories is negative
+            throw new IllegalArgumentException("calories cannot be negative");      //throw error
         }
     }
 
     //validates Ingredient
     private void validateIngredient(HashMap<String,Object> Ingredient) {
-        nullValueCheck(Ingredient);        
-        regexCheck(Ingredient);
-        whiteSpaceCheck(Ingredient.get("name").toString());
+        nullValueCheck(Ingredient);                                                 //checks if ingredient has null values
+        regexCheck(Ingredient);                                                     //checks if ingredient has invalid characters
+        whiteSpaceCheck(Ingredient.get("name").toString());                         //checks if ingredient name has white spaces
+        whiteSpaceCheck(Ingredient.get("unit").toString());                         //checks if ingredient unit has white spaces
     }
 
     //checks if values in ingredient is null
-    private void nullValueCheck(HashMap<String,Object> Ingredient) {
-        //check if values of ingredient are null
-        if (Ingredient.get("name") == null || Ingredient.get("amount") == null || Ingredient.get("unit") == null) {
-            throw new IllegalArgumentException("One or more values of the ingredient is null.");
+    private void nullValueCheck(HashMap<String,Object> Ingredient) {                
+        if (Ingredient.get("name") == null || Ingredient.get("amount") == null || Ingredient.get("unit") == null) {     //if ingredient has null values
+            throw new IllegalArgumentException("One or more values of the ingredient is null.");                        //throw error
         }
     }
 
     //checks if values in ingredient are valid according to regex patterns
     private void regexCheck(HashMap<String,Object> Ingredient) {
-        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {
-            throw new IllegalArgumentException("amount is not a Double or integer");
+        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {      //if ingredient amount is not a number
+            throw new IllegalArgumentException("amount is not a Double or integer");                                                            //throw error
         }
-        if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {
-            throw new IllegalArgumentException("unit contains invalid characters");
+        if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {                                                                           //if ingredient unit is not a lowercase string
+            throw new IllegalArgumentException("unit contains invalid characters");                                                             //throw error
         }
-        if (!(Ingredient.get("name").toString().matches("[A-Z\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {
-            throw new IllegalArgumentException("name or displayName contains invalid characters");
+        if (!(Ingredient.get("name").toString().matches("[A-Z\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {  //if ingredient name is not a string of uppercase letters, dashes and spaces
+            throw new IllegalArgumentException("name or displayName contains invalid characters");                                              //throw error
         }
     }
 
     //validates recipe name
     public void validRecipeName(String name) {
-        if (name == null || name.equals("")) {                          //if name is null or empty
-            throw new IllegalArgumentException("Name cannot be null or empty");
+        if (name == null || name.equals("")) {                                                          //if name is null or empty
+            throw new IllegalArgumentException("Name cannot be null or empty");                         //throw error
+        }                                                                                               
+        if (!(name.matches("[a-zA-Z\\- ]+"))) {                                                         //if name contains invalid characters
+            throw new IllegalArgumentException("Name cannot contain numbers or special characters");    //throw error
         }
-        if (!(name.matches("[a-zA-Z\\- ]+"))) { 
-            throw new IllegalArgumentException("Name cannot contain numbers or special characters");
-        }
-        whiteSpaceCheck(name);
+        whiteSpaceCheck(name);                                                                          //checks if name has white spaces trailing or leading
     }
 
     //validates number of servings
     public void validServings(int numberOfServings) {
-        if (numberOfServings <= 0) {                                    //if number of servings is less than or equal to 0
-            throw new IllegalArgumentException("Number of servings must be greater than 0");
+        if (numberOfServings <= 0) {                                                                    //if number of servings is less than or equal to 0
+            throw new IllegalArgumentException("Number of servings must be greater than 0");            //throw error
         }
-        if (numberOfServings > 100) {                                   //! skal vi sette constraint? if number of servings is greater than 100
-            throw new IllegalArgumentException("Number of servings must be less than 100");
+        if (numberOfServings > 100) {                                                                   //! skal vi sette constraint? if number of servings is greater than 100
+            throw new IllegalArgumentException("Number of servings must be less than 100");             //throw error
         }
     }
 
@@ -293,7 +297,7 @@ public class Recipe {
         parsedRecipe += "Ingredients: \n";                                                      //adds ingredients section for parsed recipe
 
         for(HashMap<String, Object> Ingredient : Ingredients) {                                                                     //loops through all ingredients
-            parsedRecipe += "  " + Ingredient.get("name") + ": " + Ingredient.get("amount") + " " + Ingredient.get("unit") + "\n";  //adds indented ingredient to parsed recipe
+            parsedRecipe += "  " + Ingredient.get("displayName") + ": " + Ingredient.get("amount") + " " + Ingredient.get("unit") + "\n";  //adds indented ingredient to parsed recipe
         }
         parsedRecipe += "\n";                                                                   //adds new line to parsed recipe
 
@@ -327,7 +331,7 @@ public class Recipe {
     public String toString() {
         String ingredientList = "";
         for(HashMap<String,Object> ingredient : Ingredients) {
-            ingredientList += "\n" + ingredient.get("displayName") + ": " + ingredient.get("amount") + " " + ingredient.get("unit");
+            ingredientList += "\n" + ingredient.get("name") + ": " + ingredient.get("amount") + " " + ingredient.get("unit");
             //!System.out.println(ingredient.get("displayName")); virker ikke?
         }
         return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
