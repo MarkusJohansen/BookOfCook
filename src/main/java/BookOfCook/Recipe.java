@@ -20,8 +20,7 @@ import java.util.*;
 public class Recipe {
     private String name;                                                                                    //name of recipe
     private int numberOfServings;                                                                           //number persons this recipe serves        
-    private double calories;                                                                                //total calories in recipe
-    private double caloriesPerPerson;                                                                       //calories per person                                                          
+    private double calories, caloriesPerPerson;                                                             //calories in recipe, calories per person                                                                 
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        //uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     //stores the categories of the recipe                                    
     private ArrayList<String> steps = new ArrayList<String>();                                              //stores the steps of how to make the recipe
@@ -33,10 +32,37 @@ public class Recipe {
 
     //*CONSTRUCTOR                                                                                          
     public Recipe(String name, int numberOfServings) {                      //constructor for recipe demands that recipe has a defined name and number of servings
-        this.name = name;                                                   //sets name of recipe
+        validateConstructor(name, numberOfServings);
+        this.name = capitalize(name);                                                   //sets name of recipe
         this.numberOfServings = numberOfServings;                           //sets number of servings so we can do logical operations linked to scaling of the recipe
     }
 
+    //*RECIPE VALIDATION METHODS
+    public void validateConstructor(String name, int numberOfServings) {     //validates the constructor
+        validRecipeName(name);
+        validServings(numberOfServings);
+    }
+
+    public void validRecipeName(String name) {
+        if (name == null || name.equals("")) {                          //if name is null or empty
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (!(name.matches("[a-zA-Z\\- ]+"))) { 
+            throw new IllegalArgumentException("Name cannot contain numbers or special characters");
+        }
+        if(name.charAt(0) == ' ') {
+            throw new IllegalArgumentException("Name cannot start with a space");
+        }
+    }
+
+    public void validServings(int numberOfServings) {
+        if (numberOfServings <= 0) {                                    //if number of servings is less than or equal to 0
+            throw new IllegalArgumentException("Number of servings must be greater than 0");
+        }
+        if (numberOfServings > 100) {                                   //! skal vi sette constraint? if number of servings is greater than 100
+            throw new IllegalArgumentException("Number of servings must be less than 100");
+        }
+    }
 
     //*GETTERS               
     //get name of recipe   
@@ -77,8 +103,10 @@ public class Recipe {
     //*CHANGING NAME
     //change name of recipe
     public void setName(String name) {
-        this.name = name;                                                   //sets name of recipe if you want to change name
+        validRecipeName(capitalize(name));
+        this.name = capitalize(name);                                             //sets name of recipe
     }
+
 
 
     //*ADDING, REMOVING AND INGREDIENTS
@@ -159,8 +187,6 @@ public class Recipe {
         if (Ingredient.get("name") == null || Ingredient.get("amount") == null || Ingredient.get("unit") == null) {
             throw new IllegalArgumentException("One or more values of the ingredient is null.");
         }
-        
-
     }
 
     private void regexCheck(HashMap<String,Object> Ingredient) {
@@ -170,7 +196,7 @@ public class Recipe {
         if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {
             throw new IllegalArgumentException("unit contains invalid characters");
         }
-        if (!(Ingredient.get("name").toString().matches("[A-Z ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z ]+"))) {
+        if (!(Ingredient.get("name").toString().matches("[A-Z\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {
             throw new IllegalArgumentException("name or displayName contains invalid characters");
         }
     }
