@@ -107,12 +107,18 @@ public class Recipe {
         return steps;                                                      //returns steps
     }
 
-    //*CHANGING NAME
+    //*CHANGING NAME and servings
     //change name of recipe
     public void setName(String name) {
         validRecipeName(name);
         this.name = name.toUpperCase();                                       //sets name of recipe
         this.displayedName = capitalize(name);                                //sets displayname of recipe
+    }
+
+    //change number of servings
+    public void setNumberOfServings(int numberOfServings) {
+        validServings(numberOfServings);
+        this.numberOfServings = numberOfServings;                             //sets number of servings
     }
 
     //*ADDING, REMOVING AND INGREDIENTS
@@ -210,16 +216,23 @@ public class Recipe {
 
     //*SETTING AND CHANGING CALORIES
     //set calories
-    public void setCalories(double calories) {                          
+    public void setCalories(double calories) {   
+        validateCalories(calories);                       
         this.calories = calories;                                           //sets the total calories of the recipe
         setCaloriesPerPerson();                                             //sets calories per person based on the new value of calories and number of servings
     }
 
     //set calories per person
-    public void setCaloriesPerPerson() {          
+    private void setCaloriesPerPerson() {          
         this.caloriesPerPerson = calories / numberOfServings;               //sets calories per person based on the new value of calories and number of servings
     }
 
+    //*VALIDATION OF CALORIES
+    private void validateCalories(double calories) {
+        if (calories < 0) {
+            throw new IllegalArgumentException("calories cannot be negative");
+        }
+    }
 
     //*SCALING AND CHANGING SERVINGS
     //change number of servings
@@ -228,7 +241,8 @@ public class Recipe {
     }
 
     //when numbers of servings change, scale amounts
-    public void scaleRecipe(int newNumberOfServings) {  
+    public void scaleRecipe(int newNumberOfServings) { 
+        validServings(newNumberOfServings);                                  //validates new number of servings¨
         double ratio = newNumberOfServings / numberOfServings;              //the ratio describes how many times the recipe has been scaled
 
         for (int i = 0; i < Ingredients.size(); i++) {                      //loops through all ingredients
@@ -238,11 +252,11 @@ public class Recipe {
         }
 
         setCalories(calories * ratio);                                      //scales calories by multiplying itself with the ratio
-        numberOfServings = newNumberOfServings;                             //updates value of number of servings to the new value
-        setCaloriesPerPerson();                                             //sets calories per person based on the new value of number of servings
+        setNumberOfServings(newNumberOfServings);                          //sets new number of servings
+        setCaloriesPerPerson();                                            //sets calories per person based on the new value of number of servings
     }
 
-
+    //!VALIDATIONS missing
     //*CATEGORY METHODS
     //establishes a relation between a category and a recipe
     public void addCategory(Category category) { 
@@ -252,6 +266,7 @@ public class Recipe {
         categories.add(category);                                           //adds category to list of categorys in recipe
         category.addRecipe(this);                                           //adds recipe to list of recipes in category. establishes the n to n relationship between category and recipe
     }
+
 
     //removes relation between a category and a recipe
     public void removeCategory(Category category) {
@@ -266,14 +281,23 @@ public class Recipe {
     //*STEP METHODS
     //add step to recipe steps
     public void addStep(String step) {
-        steps.add(step);                                                    //adds step to list of steps in recipe
+        validRecipeName(capitalize(step));                                            //!validates step but has wierd name
+        steps.add(capitalize(step));                                                    //adds step to list of steps in recipe
     }
 
     //remove step from recipe steps by index
     public void removeStep(int step) {
+        validStepIndex(step);                                                          //!validates step but has wierd name
         steps.remove(step);                                                //removes step from list of steps in recipe
     }
 
+    //*STEP VALIDATIONS
+    //validates step index
+    private void validStepIndex(int step) {
+        if (step < 0 || step > steps.size()) {
+            throw new IllegalArgumentException("step index is out of bounds");
+        }
+    }
 
     //*PARSING RECIPE FOR WRITING TO .txt FILE
     //writes parsed string that can be written to txt file
