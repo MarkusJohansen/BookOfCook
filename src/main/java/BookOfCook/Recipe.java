@@ -281,22 +281,30 @@ public class Recipe {
     //*STEP METHODS
     //add step to recipe steps
     public void addStep(String step) {
-        validRecipeName(capitalize(step));                                            //!validates step but has wierd name
+        validateStep(capitalize(step));                                            //!validates step but has wierd name
         steps.add(capitalize(step));                                                    //adds step to list of steps in recipe
     }
 
     //remove step from recipe steps by index
     public void removeStep(int step) {
-        validStepIndex(step);                                                          //!validates step but has wierd name
+        validateStepIndex(step);                                                          //!validates step but has wierd name
         steps.remove(step);                                                //removes step from list of steps in recipe
     }
 
     //*STEP VALIDATIONS
     //validates step index
-    private void validStepIndex(int step) {
+    private void validateStepIndex(int step) {
         if (step < 0 || step > steps.size()) {
             throw new IllegalArgumentException("step index is out of bounds");
         }
+    }
+
+    //validates step
+    private void validateStep(String step) {
+        if (name == null || name.equals("")) {                          //if name is null or empty
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        whiteSpaceCheck(name);
     }
 
     //*PARSING RECIPE FOR WRITING TO .txt FILE
