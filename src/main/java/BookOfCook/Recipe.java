@@ -3,8 +3,8 @@ package BookOfCook;
 import java.util.*;
 
 public class Recipe {
-    private String name, displayedName;                                                                     // name of recipe that will be dealt with back end, as well as name displayed to user    
-    private int numberOfServings;                                                                           // number persons this recipe serves        
+    private String name, displayedName, description;                                                                     // name of recipe that will be dealt with back end, as well as name displayed to user    
+    private int numberOfServings, prepTime;                                                                         // number persons this recipe serves        
     private double calories, caloriesPerPerson;                                                             // calories in recipe, calories per person                                                                 
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     // stores the categories of the recipe                                    
@@ -15,7 +15,6 @@ public class Recipe {
         setName(name);
         setNumberOfServings(numberOfServings);
     }
-
 
     // !SJEKK HVEM SOM FAKTISK BRUKES
     // *GETTERS               
