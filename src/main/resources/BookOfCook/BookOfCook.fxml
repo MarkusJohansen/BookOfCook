@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -8,10 +9,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1800.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
    <children>
-      <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="457.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40;">
+      <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="436.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40;">
          <children>
             <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;">
                <children>
@@ -21,36 +24,49 @@
                <children>
                   <VBox layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
                </children></Pane>
-            <TextField layoutX="41.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" />
-            <TextField layoutX="124.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" />
-            <TextField layoutX="206.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" />
-            <Button layoutX="314.0" layoutY="775.0" mnemonicParsing="false" text="Add Ingredient" />
+            <TextField layoutX="41.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Name" />
+            <TextField layoutX="124.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Amount" />
+            <TextField layoutX="206.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Unit" />
+            <Button layoutX="296.0" layoutY="775.0" mnemonicParsing="false" onAction="#addFoodToFridge" text="Add Ingredient" />
             <Pane layoutX="-59.0" layoutY="-79.0" prefHeight="59.0" prefWidth="1800.0" style="-fx-background-color: #2C2C2D;">
                <children>
                   <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" text="Load" />
                   <Button layoutX="82.0" layoutY="17.0" mnemonicParsing="false" text="Save" />
+                  <TextField layoutX="553.0" layoutY="13.0" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
                </children>
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="675.0" layoutY="82.0" prefHeight="817.0" prefWidth="1009.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40px;">
+      <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40px;">
          <children>
-            <GridPane fx:id="recipeGrid" layoutX="80.0" layoutY="97.0" prefHeight="636.0" prefWidth="768.0" style="-fx-background-radius: 40;">
+            <GridPane fx:id="recipeGrid" layoutX="46.0" layoutY="20.0" prefHeight="761.0" prefWidth="772.0" style="-fx-background-radius: 40;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="255.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="252.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="252.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="232.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="189.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
          </children>
       </Pane>
-      <Button fx:id="addButton" layoutX="1552.0" layoutY="911.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="standard-button" text="add Recipe to cookbook" />
-      <TextField fx:id="recipeNameBar" layoutX="1105.0" layoutY="911.0" promptText="name?" />
-      <TextField fx:id="servesPeopleBar" layoutX="1331.0" layoutY="911.0" promptText="serves?" />
+      <Pane layoutX="1448.0" layoutY="88.0" prefHeight="824.0" prefWidth="338.0" style="-fx-background-color: #2C2C2D;">
+         <children>
+            <TextField fx:id="recipeNameBar" layoutX="59.0" layoutY="79.0" prefHeight="25.0" prefWidth="223.0" promptText="name?" />
+            <TextField fx:id="servesPeopleBar" layoutX="59.0" layoutY="110.0" prefHeight="25.0" prefWidth="223.0" promptText="serves?" />
+            <Button fx:id="addButton" layoutX="84.0" layoutY="770.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" prefWidth="172.0" styleClass="standard-button" text="add Recipe" />
+            <Label layoutX="52.0" layoutY="14.0" prefHeight="53.0" prefWidth="238.0" text="Recipe Creator" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Line endX="137.0" layoutX="153.0" layoutY="66.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
