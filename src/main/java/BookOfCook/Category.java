@@ -40,15 +40,20 @@ public class Category {
     }
 
     // tostring method for category
-    @Override
+    /* @Override
     public String toString() {
         String r = "";
         for (int i = 0; i < recipes.size(); i++) {
             r += "\n" + recipes.get(i).getName();
         }
         return "Category: " + name + " has " + recipes.size() + " recipes. those are recipes for: " + r + "\n";
-    }
+    } */
 
+    @Override
+    public String toString() {
+        return "Category [name=" + name + "]";
+    }
+    
     public static void main(String[] args) {
         Category italiensk = new Category("italiensk");
         Recipe pasta_carbonara = new Recipe("pasta carbonara", 3);

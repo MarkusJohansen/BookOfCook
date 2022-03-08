@@ -327,7 +327,7 @@ public class Recipe {
 
 
     // *TOSTRING METHOD
-    @Override
+    /* @Override
     public String toString() {
         String ingredientList = "";
         for(HashMap<String,Object> ingredient : Ingredients) {
@@ -335,6 +335,12 @@ public class Recipe {
             // !System.out.println(ingredient.get("displayName")); virker ikke?
         }
         return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
+    } */
+
+    @Override
+    public String toString() {
+        return "Recipe [name="
+                + name + "]";
     }
 
 
