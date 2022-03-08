@@ -8,12 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 
 public class BookOfCookController {
     private Cookbook cookbook;
@@ -34,7 +32,7 @@ public class BookOfCookController {
     private VBox fridgeList, categoryList; //!List? Listpane?
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, ingredientBar, descriptionBar;
 
 
     //*INITIALIZATION
