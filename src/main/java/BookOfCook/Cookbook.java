@@ -170,6 +170,12 @@ public class Cookbook {
         return "Cookbook: " + name + " has " + recipeAmount + " recipes. those are recipes for: " + recipelist + "\n";
     } */
 
+    @Override
+    public String toString() {
+        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes="
+                + recipes + "]";
+    }
+
 
     // *MAIN METHOD
     public static void main(String[] args) {
@@ -214,8 +220,6 @@ public class Cookbook {
         ArrayList<Category> categories = new ArrayList<>(Arrays.asList(italiensk, vegetar)); // lager en arraylist med kategorier jeg vil sortere etter
 
         System.out.println(cookbook.getSortedRecipes(categories));
-
-        System.out.println("BALBALBAL");
         
         System.out.println(cookbook.categories);
         cookbook.collectCategories();
