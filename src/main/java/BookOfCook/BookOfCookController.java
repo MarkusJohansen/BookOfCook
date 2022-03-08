@@ -3,9 +3,7 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -14,8 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+
 
 public class BookOfCookController {
     private Cookbook cookbook;
@@ -84,10 +81,9 @@ public class BookOfCookController {
         fridge = new Fridge();
     }
     
-    //!not done
     private void initializeFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
-        fridgeFood.addAll(fridge.getFoodInFridge()); //!hvordan får jeg ut food fra fridge?
+        fridgeFood.addAll(fridge.getFoodInFridge());
 
         for(HashMap<String, Object> food : fridgeFood){
             fridgeList.getChildren().add(createFoodComponent(food));
@@ -131,7 +127,7 @@ public class BookOfCookController {
         return body;
     }
 
-    private Button createViewButton(Recipe recipe){
+    private Button createViewButton(Recipe recipe){ 
         //creates a button with "View" text
         Button viewbtn = new Button("View");
 
@@ -153,18 +149,12 @@ public class BookOfCookController {
     private Label createRecipeHeader(Recipe recipe){
         //creates a label with recipe name
         Label label = new Label(recipe.getDisplayedName());
-
-        //sets style
-        label.getStyleClass().clear();
-        label.getStyleClass().add("recipe-header");
-        label.setLayoutX(80);
-        label.setLayoutY(10);
-
+        styleLabel(label, "recipe-header", 80.0, 10.0);
         return label;
     }
 
-    //!not done
-    //*DYNAMIC CREATION OF CATEGORY COMPONENTS IN LIST
+
+    //*DYNAMIC CREATION OF CATEGORY COMPONENTS
     private Pane createCategoryComponent(Category category){
         //creates pane for each category
         Pane body = new Pane();
@@ -214,9 +204,9 @@ public class BookOfCookController {
         return label;
     }
 
-    //!not done
-    //*DYNAMIC CREATION OF FRIDGE COMPONENTS IN LIST
-    private Pane createFoodComponent(HashMap<String, Object> food){//!FATAL ERROR: "Cannot find symbol"
+
+    //*DYNAMIC CREATION OF FRIDGE COMPONENTS
+    private Pane createFoodComponent(HashMap<String, Object> food){
         Pane foodBody = new Pane();
 
         //adds children
@@ -245,37 +235,10 @@ public class BookOfCookController {
     private Label createFoodLabel(String foodname, String foodamount, String foodunit){
         Label label = new Label();
         label.setText(foodname + ": " + foodamount + " " + foodunit);
-
-        label.getStyleClass().clear();
-        label.getStyleClass().add("food-label");
-        label.setLayoutX(80);
-        label.setLayoutY(10);
-
+        styleLabel(label, "food-label", 80.0, 10.0);
         return label;
     }
 
-
-    //*EVENT HANDLERS
-    public void addRecipe(ActionEvent event) {
-        System.out.println("Add button was clicked");
-        cookbook.addRecipeToCookbook(new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText())));
-        updateRecipeGrid();
-    }
-
-    //!not done
-    public void addFoodToFridge(ActionEvent event) {
-        System.out.println("Add food to fridge");
-    }
-
-    //view recipe
-    public void viewRecipe(ActionEvent event) {
-        System.out.println("View button was clicked");
-    }
-
-    //remove food from fridge
-    public void removeFood(ActionEvent event) {
-        System.out.println("Remove food button was clicked");
-    }
 
     // *RECIPEVIEW
     public void viewRecipe(Recipe recipe){
@@ -290,13 +253,12 @@ public class BookOfCookController {
         recipeView.setMaxHeight(Double.MAX_VALUE);
 
         //add children
-        createRecipeViewContent(recipe);
+        initializeViewContent(recipe);
     }
 
     //fills recipeContent-grid in recipeView, with content from recipe
-    public void createRecipeViewContent(Recipe recipe){
-        createRecipeViewTitle(recipe);
-        fillWithDataContent(recipe);
+    public void initializeViewContent(Recipe recipe){
+        addViewContent(recipe);
         addCloseButton(recipe);
     }
 
@@ -317,89 +279,75 @@ public class BookOfCookController {
         });
 
         //adds to grid
-        recipeViewContent.add(closeButton, 1, 4);
+        recipeViewContent.add(closeButton, 0, 4);
     }
 
     //create title label with recipe name
     private void createRecipeViewTitle(Recipe recipe){
-        Label label = new Label(recipe.getName());
-        label.getStyleClass().clear();
-        label.getStyleClass().add("recipe-view-title");
-        label.setLayoutX(80);
-        label.setLayoutY(10);
-
+        Label label = new Label(recipe.getDisplayedName());
+        styleLabel(label,"recipe-view-title", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 0);
     }
 
     //create description label, steps ingredient, categories and serves label
-    private void fillWithDataContent(Recipe recipe){
-        //create description content
-        Label description = new Label(recipe.getDescription());
+    private void addViewContent(Recipe recipe){
+        createRecipeViewTitle(recipe);
+        createDescriptionLabel(recipe);
+        createStepsLabel(recipe);
+        createIngredientsLabel(recipe);
+        createCategoriesLabel(recipe);
+        createServesLabel(recipe);
+        createPrepTimeLabel(recipe);
+        createCaloriesLabel(recipe);
+    }
 
-        description.getStyleClass().clear();
-        description.getStyleClass().add("recipe-view-description");
-        description.setLayoutX(80);
-        description.setLayoutY(10);
+    //create description label
+    private void createDescriptionLabel(Recipe recipe){
+        Label label = new Label(recipe.getDescription());
+        styleLabel(label, "recipe-view-description", 80.0, 10.0);
+        recipeViewBox1.add(label, 0, 2);
+    }
 
-        recipeViewBox1.add(description, 0, 3);
+    //create steps label
+    private void createStepsLabel(Recipe recipe){
+        Label label = new Label("Steps:");
+        styleLabel(label, "recipe-view-steps", 80.0, 10.0);
+        recipeViewContent.add(label, 1, 0);
+    }
 
-        //create steps content
-        Label steps = new Label(recipe.getSteps().toString());
-        
-        steps.getStyleClass().clear();
-        steps.getStyleClass().add("recipe-view-description");
-        steps.setLayoutX(80);
-        steps.setLayoutY(10);
+    //create ingredients label
+    private void createIngredientsLabel(Recipe recipe){
+        Label label = new Label("Ingredients:");
+        styleLabel(label, "recipe-view-ingredients", 80.0, 10.0);
+        recipeViewBox2.add(label, 0, 1);
+    }
 
-        recipeViewContent.add(steps, 1, 0);
+    //create categories label
+    private void createCategoriesLabel(Recipe recipe){
+        Label label = new Label("Categories:");
+        styleLabel(label, "recipe-view-categories", 80.0, 10.0);
+        recipeViewBox1.add(label, 0, 1);
+    }
 
-        //create categories content
-        Label categories = new Label(recipe.getCategories().toString());
+    //create serves label
+    private void createServesLabel(Recipe recipe){
+        Label label = new Label("Serves: " + recipe.getNumberOfServings());
+        styleLabel(label, "recipe-view-serves", 80.0, 10.0);
+        recipeViewBox2.add(label, 0, 0);
+    }
 
-        categories.getStyleClass().clear();
-        categories.getStyleClass().add("recipe-view-description");
-        categories.setLayoutX(80);
-        categories.setLayoutY(10);
+    //create prep time label
+    private void createPrepTimeLabel(Recipe recipe){
+        Label label = new Label("Prep time: " + recipe.getPrepTime());
+        styleLabel(label, "recipe-view-prep-time", 80.0, 10.0);
+        recipeViewBox1.add(label, 0, 3);
+    }
 
-        recipeViewBox1.add(categories, 0, 1);
-        
-        //create serves content
-        Label serves = new Label("Serves " + recipe.getNumberOfServings());
-        
-        serves.getStyleClass().clear();
-        serves.getStyleClass().add("recipe-view-description");
-        serves.setLayoutX(80);
-        serves.setLayoutY(10);
-
-        recipeViewContent.add(serves, 2, 1);
-
-        //creates ingredients content
-        Label ingredients = new Label(recipe.getIngredients().toString());
-
-        ingredients.getStyleClass().clear();
-        ingredients.getStyleClass().add("recipe-view-description");
-        ingredients.setLayoutX(80);
-        ingredients.setLayoutY(10);
-
-        recipeViewContent.add(ingredients, 2, 2);
-
-        Label prepTime = new Label("Prep time: " + recipe.getPrepTime());
-
-        prepTime.getStyleClass().clear();
-        prepTime.getStyleClass().add("recipe-view-description");
-        prepTime.setLayoutX(80);
-        prepTime.setLayoutY(10);
-
-        recipeViewBox1.add(prepTime, 0, 2);
-
-        Label calories = new Label("Calories: " + recipe.getCalories());
-
-        calories.getStyleClass().clear();
-        calories.getStyleClass().add("recipe-view-description");
-        calories.setLayoutX(80);
-        calories.setLayoutY(10);
-
-        recipeViewBox1.add(calories, 0, 4);
+    //create calories label
+    private void createCaloriesLabel(Recipe recipe){
+        Label label = new Label("Calories: " + recipe.getCalories());
+        styleLabel(label, "recipe-view-calories", 80.0, 10.0);
+        recipeViewBox1.add(label, 0, 5);
     }
 
     //close recipeView
@@ -407,5 +355,32 @@ public class BookOfCookController {
         recipeView.setVisible(false);
         recipeViewContent.getChildren().clear();
         recipeGrid.setVisible(true);
+    }
+
+
+    //*STYLESETTERS
+    public void styleLabel(Label label, String styleClass, Double x, Double y){
+        label.getStyleClass().clear();
+        label.getStyleClass().add(styleClass);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+    }
+
+
+    //*EVENT HANDLERS
+    public void addRecipe() {
+        System.out.println("Add button was clicked");
+        cookbook.addRecipeToCookbook(new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText())));
+        updateRecipeGrid();
+    }
+
+    //view recipe
+    public void viewRecipe() {
+        System.out.println("View button was clicked");
+    }
+
+    //remove food from fridge
+    public void removeFood() {
+        System.out.println("Remove food button was clicked");
     }
 } 
