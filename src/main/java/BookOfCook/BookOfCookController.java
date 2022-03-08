@@ -5,13 +5,17 @@ import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class BookOfCookController {
     private Cookbook cookbook;
@@ -26,13 +30,19 @@ public class BookOfCookController {
     private Label number;  
 
     @FXML
-    private GridPane recipeGrid;
+    private GridPane recipeGrid, recipeViewContent;
+
+    @FXML
+    private Pane recipeView;
 
     @FXML
     private VBox fridgeList, categoryList; //!List? Listpane?
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, ingredientBar, descriptionBar;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, ingredientBar;
+
+    @FXML
+    private TextArea descriptionBar;
 
 
     //*INITIALIZATION
@@ -134,6 +144,7 @@ public class BookOfCookController {
         //sets action
         viewbtn.setOnAction(e -> {
             System.out.println("View " + recipe.getName() + " recipe");
+            viewRecipe(recipe);
         });
 
         return viewbtn;
@@ -264,5 +275,54 @@ public class BookOfCookController {
     //remove food from fridge
     public void removeFood(ActionEvent event) {
         System.out.println("Remove food button was clicked");
+    }
+
+    // *RECIPEVIEW
+    public void viewRecipe(Recipe recipe){
+        //hide grid and show recipeview
+        recipeGrid.setVisible(false);
+        recipeView.setVisible(true);
+
+        //set recipe style
+        recipeView.getStyleClass().clear();
+        recipeView.getStyleClass().add("recipe-view");
+        recipeView.setMaxWidth(Double.MAX_VALUE);
+        recipeView.setMaxHeight(Double.MAX_VALUE);
+
+        //add children
+        createRecipeViewContent(recipe);
+    }
+
+    //fills recipeContent-grid in recipeView, with content from recipe
+    public void createRecipeViewContent(Recipe recipe){
+        
+        recipeViewContent.add(new Label(recipe.getName()), 1, 0);
+        recipeViewContent.add(new Label(Integer.toString(recipe.getNumberOfServings())), 1, 1);
+        //recipeViewContent.add(new Label(recipe.getDescription()));
+        recipeViewContent.add(new Label(recipe.getIngredients().toString()), 1, 2);
+        recipeViewContent.add(new Label(recipe.getSteps().toString()), 1, 3);
+
+        recipeViewContent.add(addCloseButton(recipe), 1, 4);
+    }
+
+    private Button addCloseButton(Recipe recipe){
+        Button closeButton = new Button("Close");
+        closeButton.getStyleClass().clear();
+        closeButton.getStyleClass().add("standard-button");
+        closeButton.setLayoutX(80);
+        closeButton.setLayoutY(170);
+
+        closeButton.setOnAction(e -> {
+            closeRecipeView();
+        });
+
+        return closeButton;
+    }
+
+    //close recipeView
+    public void closeRecipeView() {
+        recipeView.setVisible(false);
+        recipeViewContent.getChildren().clear();
+        recipeGrid.setVisible(true);
     }
 } 
