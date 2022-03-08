@@ -8,13 +8,13 @@ public class Cookbook {
     private String name;
     private int recipeAmount;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+    private ArrayList<Category> categories = new ArrayList<Category>();
 
     // *CONSTRUCTOR
     public Cookbook(String name) {
         setName(name);
         this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
     }
-
 
     // *RECIPE ADD AND REMOVE METHODS
     // adds recipe to cookbook
@@ -55,6 +55,9 @@ public class Cookbook {
         return recipes;                                     // returns recipes in cookbook
     }
 
+    public ArrayList<Category> getCategories() {
+        return categories;                                  // returns categories in cookbook
+    }
 
     // *VALIDATION METHODS
     // checks if cookbook contains recipe

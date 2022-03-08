@@ -48,13 +48,7 @@ public class BookOfCookController {
 
     private void initializeRecipeGrid() {
         initializeRecipes();
-
         for (Recipe recipe : recipes) {
-            Recipe r = recipe; //copy recipe
-            recipeGrid.add(createRecipeComponent(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
-        }
-        
-        for (Recipe recipe : cookbook.getRecipes()) {
             Recipe r = recipe; //copy recipe
             recipeGrid.add(createRecipeComponent(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
         }
@@ -85,7 +79,7 @@ public class BookOfCookController {
     //!not done
     private void initializeFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
-        fridgeFood.addAll(fridge.getFood()); //!hvordan får jeg ut food fra fridge?
+        fridgeFood.addAll(fridge.getFoodInFridge()); //!hvordan får jeg ut food fra fridge?
 
         for(HashMap<String, Object> food : fridgeFood){
             fridgeList.getChildren().add(createFoodComponent(food));
@@ -142,7 +136,6 @@ public class BookOfCookController {
         //sets action
         viewbtn.setOnAction(e -> {
             System.out.println("View " + recipe.getName() + " recipe");
-            //?viewRecipe(recipe);
         });
 
         return viewbtn;
@@ -150,7 +143,7 @@ public class BookOfCookController {
     
     private Label createRecipeHeader(Recipe recipe){
         //creates a label with recipe name
-        Label label = new Label(recipe.getName());
+        Label label = new Label(recipe.getDisplayedName());
 
         //sets style
         label.getStyleClass().clear();
