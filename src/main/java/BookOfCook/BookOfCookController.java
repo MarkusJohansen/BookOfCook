@@ -30,7 +30,7 @@ public class BookOfCookController {
     private Label number;  
 
     @FXML
-    private GridPane recipeGrid, recipeViewContent;
+    private GridPane recipeGrid, recipeViewContent, recipeViewBox1, recipeViewBox2;
 
     @FXML
     private Pane recipeView;
@@ -295,28 +295,111 @@ public class BookOfCookController {
 
     //fills recipeContent-grid in recipeView, with content from recipe
     public void createRecipeViewContent(Recipe recipe){
-        
-        recipeViewContent.add(new Label(recipe.getName()), 1, 0);
-        recipeViewContent.add(new Label(Integer.toString(recipe.getNumberOfServings())), 1, 1);
-        //recipeViewContent.add(new Label(recipe.getDescription()));
-        recipeViewContent.add(new Label(recipe.getIngredients().toString()), 1, 2);
-        recipeViewContent.add(new Label(recipe.getSteps().toString()), 1, 3);
-
-        recipeViewContent.add(addCloseButton(recipe), 1, 4);
+        createRecipeViewTitle(recipe);
+        fillWithDataContent(recipe);
+        addCloseButton(recipe);
     }
 
-    private Button addCloseButton(Recipe recipe){
+    //creates a button with "Close" text that rund closeRecipeView() when clicked
+    private void addCloseButton(Recipe recipe){
+        //creates button object
         Button closeButton = new Button("Close");
+
+        //sets style
         closeButton.getStyleClass().clear();
         closeButton.getStyleClass().add("standard-button");
         closeButton.setLayoutX(80);
         closeButton.setLayoutY(170);
 
+        //sets action
         closeButton.setOnAction(e -> {
             closeRecipeView();
         });
 
-        return closeButton;
+        //adds to grid
+        recipeViewContent.add(closeButton, 1, 4);
+    }
+
+    //create title label with recipe name
+    private void createRecipeViewTitle(Recipe recipe){
+        Label label = new Label(recipe.getName());
+        label.getStyleClass().clear();
+        label.getStyleClass().add("recipe-view-title");
+        label.setLayoutX(80);
+        label.setLayoutY(10);
+
+        recipeViewBox1.add(label, 0, 0);
+    }
+
+    //create description label, steps ingredient, categories and serves label
+    private void fillWithDataContent(Recipe recipe){
+        //create description content
+        Label description = new Label(recipe.getDescription());
+
+        description.getStyleClass().clear();
+        description.getStyleClass().add("recipe-view-description");
+        description.setLayoutX(80);
+        description.setLayoutY(10);
+
+        recipeViewBox1.add(description, 0, 3);
+
+        //create steps content
+        Label steps = new Label(recipe.getSteps().toString());
+        
+        steps.getStyleClass().clear();
+        steps.getStyleClass().add("recipe-view-description");
+        steps.setLayoutX(80);
+        steps.setLayoutY(10);
+
+        recipeViewContent.add(steps, 1, 0);
+
+        //create categories content
+        Label categories = new Label(recipe.getCategories().toString());
+
+        categories.getStyleClass().clear();
+        categories.getStyleClass().add("recipe-view-description");
+        categories.setLayoutX(80);
+        categories.setLayoutY(10);
+
+        recipeViewBox1.add(categories, 0, 1);
+        
+        //create serves content
+        Label serves = new Label("Serves " + recipe.getNumberOfServings());
+        
+        serves.getStyleClass().clear();
+        serves.getStyleClass().add("recipe-view-description");
+        serves.setLayoutX(80);
+        serves.setLayoutY(10);
+
+        recipeViewContent.add(serves, 2, 1);
+
+        //creates ingredients content
+        Label ingredients = new Label(recipe.getIngredients().toString());
+
+        ingredients.getStyleClass().clear();
+        ingredients.getStyleClass().add("recipe-view-description");
+        ingredients.setLayoutX(80);
+        ingredients.setLayoutY(10);
+
+        recipeViewContent.add(ingredients, 2, 2);
+
+        Label prepTime = new Label("Prep time: " + recipe.getPrepTime());
+
+        prepTime.getStyleClass().clear();
+        prepTime.getStyleClass().add("recipe-view-description");
+        prepTime.setLayoutX(80);
+        prepTime.setLayoutY(10);
+
+        recipeViewBox1.add(prepTime, 0, 2);
+
+        Label calories = new Label("Calories: " + recipe.getCalories());
+
+        calories.getStyleClass().clear();
+        calories.getStyleClass().add("recipe-view-description");
+        calories.setLayoutX(80);
+        calories.setLayoutY(10);
+
+        recipeViewBox1.add(calories, 0, 4);
     }
 
     //close recipeView

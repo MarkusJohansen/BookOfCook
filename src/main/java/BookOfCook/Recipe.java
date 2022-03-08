@@ -22,6 +22,16 @@ public class Recipe {
     public String getName() {
         return name;                                                // returns name of recipe
     } 
+
+    //get description of recipe
+    public String getDescription() {
+        return description;                                         // returns description of recipe
+    }
+
+    //get prepTime
+    public int getPrepTime() {
+        return prepTime;                                            // returns prepTime
+    }
     
     // get number of servings
     public int getNumberOfServings() {
