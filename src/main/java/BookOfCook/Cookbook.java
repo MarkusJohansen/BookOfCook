@@ -146,15 +146,29 @@ public class Cookbook {
         return sortedRecipes;
     }
 
+    public void collectCategories(){
+        ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
+
+        for (Recipe recipe : recipes) {                                 // lopps through all recipes
+            for (Category category : recipe.getCategories()) {          // loops through all categories in recipe
+                if(!collectedCategories.contains(category)){            // if not category already collected
+                    collectedCategories.add(category);                  // collect category
+                }
+            }
+        }
+    
+        categories = collectedCategories;
+    }
+
     // *TOSTRING METHOD
-    @Override
+    /* @Override
     public String toString() {
         String recipelist = "";
         for (int i = 0; i < recipes.size(); i++) {
             recipelist += "\n" + recipes.get(i).getDisplayedName();
         }
         return "Cookbook: " + name + " has " + recipeAmount + " recipes. those are recipes for: " + recipelist + "\n";
-    }
+    } */
 
 
     // *MAIN METHOD
@@ -171,31 +185,40 @@ public class Cookbook {
 
         cookbook.writeToFile(); */ 
 
-
         Cookbook cookbook = new Cookbook("Cookbook");
         Recipe pasta_carbonara = new Recipe("pasta carbonara", 2);
         Recipe pasta_bolognese = new Recipe("pasta bolognese", 4);
         Recipe cheeseburger = new Recipe("cheeseburger", 1);
         Recipe vegetarburger = new Recipe("vegetarburger", 1);
+        Recipe kyllingburger = new Recipe("kyllingburger", 2);
 
         Category italiensk = new Category("italiensk");
         Category burger = new Category("burger");
         Category vegetar = new Category("vegetar");
+        Category kylling = new Category("kylling");
 
         pasta_carbonara.addCategory(italiensk);
         pasta_bolognese.addCategory(italiensk);
         cheeseburger.addCategory(burger);
         vegetarburger.addCategory(burger);
         vegetarburger.addCategory(vegetar);
+        kyllingburger.addCategory(kylling);
+        kyllingburger.addCategory(burger);
 
         cookbook.addRecipeToCookbook(pasta_carbonara);
         cookbook.addRecipeToCookbook(pasta_bolognese);
         cookbook.addRecipeToCookbook(cheeseburger);
         cookbook.addRecipeToCookbook(vegetarburger);
+        cookbook.addRecipeToCookbook(kyllingburger);
 
         ArrayList<Category> categories = new ArrayList<>(Arrays.asList(italiensk, vegetar)); // lager en arraylist med kategorier jeg vil sortere etter
 
         System.out.println(cookbook.getSortedRecipes(categories));
+
+        System.out.println("BALBALBAL");
         
+        System.out.println(cookbook.categories);
+        cookbook.collectCategories();
+        System.out.println(cookbook.categories);
     }
 }
