@@ -87,6 +87,7 @@
                             <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="733.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
+                        <Pane fx:id="recipeStepView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

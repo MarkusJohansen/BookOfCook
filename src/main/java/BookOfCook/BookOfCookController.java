@@ -24,13 +24,13 @@ public class BookOfCookController {
 
     //*FXML-noder
     @FXML
-    private Label number;  
+    private Label number, label;  
 
     @FXML
     private GridPane recipeGrid, recipeViewContent, recipeViewBox1, recipeViewBox2;
 
     @FXML
-    private Pane recipeView;
+    private Pane recipeView, recipeStepView;
 
     @FXML
     private VBox fridgeList, categoryList; //!List? Listpane?
@@ -312,7 +312,8 @@ public class BookOfCookController {
     private void createStepsLabel(Recipe recipe){
         Label label = new Label("Steps:");
         styleLabel(label, "recipe-view-steps", 80.0, 10.0);
-        recipeViewContent.add(label, 1, 0);
+        recipeStepView.getChildren().clear();
+        recipeStepView.getChildren().add(label);
     }
 
     //create ingredients label
@@ -353,11 +354,16 @@ public class BookOfCookController {
     //close recipeView
     public void closeRecipeView() {
         recipeView.setVisible(false);
-        recipeViewContent.getChildren().clear();
+        recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
+        recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
         recipeGrid.setVisible(true);
+
+        //!finnes bug her som gjør at når du lukker en recipeview, så blir den ikke vist igjen, eller noen andre.
+        //!Må trikse med clearing av children i grids
+        //!skal det være
     }
 
-
+    
     //*STYLESETTERS
     public void styleLabel(Label label, String styleClass, Double x, Double y){
         label.getStyleClass().clear();
