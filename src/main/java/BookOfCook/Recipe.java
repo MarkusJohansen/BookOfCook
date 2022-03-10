@@ -3,8 +3,8 @@ package BookOfCook;
 import java.util.*;
 
 public class Recipe {
-    private String name, displayedName, description;                                                                     // name of recipe that will be dealt with back end, as well as name displayed to user    
-    private int numberOfServings, prepTime;                                                                         // number persons this recipe serves        
+    private String name, displayedName, description;                                                        // name of recipe that will be dealt with back end, as well as name displayed to user    
+    private int numberOfServings, prepTime;                                                                 // number persons this recipe serves        
     private double calories, caloriesPerPerson;                                                             // calories in recipe, calories per person                                                                 
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     // stores the categories of the recipe                                    
@@ -105,7 +105,7 @@ public class Recipe {
         for (HashMap<String, Object> Ingredient : Ingredients) {            // loops through all ingredients
             if (Ingredient.get("name").equals(name.toUpperCase())) {        // looks for a ingredient that mathces the name of the element to be removed
                 Ingredients.remove(Ingredient);                             // removes the ingredient if it matches
-                return;                                                      // return if match found so it doesn't look for more matches. saves prossessing power
+                return;                                                     // return if match found so it doesn't look for more matches. saves prossessing power
             }
         }
     }

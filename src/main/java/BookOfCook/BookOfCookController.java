@@ -2,6 +2,7 @@ package BookOfCook;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,7 +59,17 @@ public class BookOfCookController {
 
     private void initializeRecipes(){
         recipes = new ArrayList<Recipe>();
-        recipes.addAll(cookbook.getRecipes());
+
+        recipes.addAll(List.of(
+            new Recipe("Pizza", 2),
+            new Recipe("Hamburger", 1),
+            new Recipe("Spaghetti", 2),
+            new Recipe("Biff", 1)
+        )
+            
+        );
+
+        //recipes.addAll(cookbook.getRecipes());
     }
     
     private void initializeCategories(){
