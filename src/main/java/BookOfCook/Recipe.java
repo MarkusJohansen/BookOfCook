@@ -95,6 +95,14 @@ public class Recipe {
         this.caloriesPerPerson = calories / numberOfServings;       // sets calories per person based on the new value of calories and number of servings
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrepTime(int prepTime) {
+        this.prepTime = prepTime;
+    }
+
 
     // *CHANGE AND MANIPULATE DATA
     // add ingredient to list of ingredients in recipe

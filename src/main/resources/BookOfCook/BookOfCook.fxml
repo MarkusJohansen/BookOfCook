@@ -17,11 +17,11 @@
    <children>
       <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="436.0" style="-fx-background-color: #2C2C2D; -fx-background-radius: 40;">
          <children>
-            <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;">
+            <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
                   <VBox fx:id="categoryList" layoutX="26.0" layoutY="6.0" prefHeight="320.0" prefWidth="299.0" />
                </children></Pane>
-            <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;">
+            <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
                   <VBox layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
                </children></Pane>
@@ -54,9 +54,9 @@
                   <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="870.0" style="-fx-background-color: #ffffff;" visible="false">
+            <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="870.0" styleClass="level-2-panes" visible="false">
                <children>
-                  <GridPane fx:id="recipeViewContent" gridLinesVisible="true" layoutY="7.0" prefHeight="817.0" prefWidth="870.0">
+                  <GridPane fx:id="recipeViewContent" gridLinesVisible="true" layoutY="7.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-2-panes">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="277.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="292.0" />
@@ -87,7 +87,7 @@
                             <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="733.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
-                        <Pane fx:id="recipeStepView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                        <Pane fx:id="recipeStepView" prefHeight="200.0" prefWidth="200.0" styleClass="level-3-panes" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -105,13 +105,15 @@
                </font>
             </Label>
             <Line endX="137.0" layoutX="153.0" layoutY="66.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-            <TextField fx:id="categoriesBar" layoutX="59.0" layoutY="142.0" prefHeight="25.0" prefWidth="223.0" promptText="Categories" />
+            <TextField fx:id="categoryBar" layoutX="59.0" layoutY="142.0" prefHeight="25.0" prefWidth="223.0" promptText="Categories" />
             <TextField fx:id="caloriesBar" layoutX="58.0" layoutY="176.0" prefHeight="25.0" prefWidth="223.0" promptText="Calories" />
-            <TextField layoutX="58.0" layoutY="211.0" prefHeight="25.0" prefWidth="223.0" promptText="Ingredients" />
+            <TextField fx:id="IngredientNameBar" layoutX="58.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Ingredients" />
             <TextArea fx:id="stepsArea" layoutX="60.0" layoutY="437.0" prefHeight="269.0" prefWidth="223.0" promptText="steps" />
-            <TextField layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="107.0" promptText="time" />
-            <TextField layoutX="169.0" layoutY="387.0" prefHeight="25.0" prefWidth="118.0" promptText="minutes or hours" />
+            <TextField fx:id="prepTimeBar" layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="107.0" promptText="time" />
+            <TextField fx:id="timeUnitBar" layoutX="169.0" layoutY="387.0" prefHeight="25.0" prefWidth="118.0" promptText="minutes or hours" />
             <TextArea fx:id="descriptionBar" layoutX="58.0" layoutY="250.0" prefHeight="122.0" prefWidth="223.0" promptText="Description" />
+            <TextField fx:id="amountBar" layoutX="138.0" layoutY="211.0" prefHeight="25.0" prefWidth="64.0" promptText="Amount" />
+            <TextField fx:id="unitBar" layoutX="205.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Unit" />
          </children>
       </Pane>
    </children>

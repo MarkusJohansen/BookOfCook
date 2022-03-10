@@ -3,6 +3,18 @@
     -fx-background-color: #1E1E1E;
 }
 
+.level-1-panes{ /*pane level above background/body*/
+    -fx-background-color: #252526;
+}
+
+.level-2-panes{ /*panes that exists on level 1 panes*/
+    -fx-background-color: #3E3E42;
+    -fx-background-radius: 20px;
+    -fx-padding: 20px;
+    -fx-margin: 20px;
+}
+
+/**BUTTONS*/
 #addButton{
     -fx-font-size: 40px;
 }
@@ -18,14 +30,21 @@
     -fx-padding: 0px 15px;                                                                          /*fixes that the button is higher than it is wide*/ 
 }
 
-.recipe-body{
-    -fx-background-color: rgb(87, 81, 81);
-    -fx-background-radius: 20px;
-    -fx-padding: 20px;
-    -fx-margin: 20px;
+
+/**RECIPE VIEW AND RECIPE COMPONENTS IN GRID*/
+.recipe-view-text{
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: white;
 }
 
 .recipe-header{
     -fx-text-fill: white;
-    -fx-font-size: 30px;
+    -fx-font-size: 25px;
 }
+
+/*
+*styling issues
+!alle grids må være like store for at stylinga skal fungere, i oppskriftsboka
+!max width på grid er ikke tilstrekkelig. vi må ta litt mindre enn max width, for å hindre at de krasjer i hverandre
+*/
