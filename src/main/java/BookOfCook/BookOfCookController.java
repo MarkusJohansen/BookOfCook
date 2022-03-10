@@ -65,7 +65,7 @@ public class BookOfCookController {
 
     private void initializeRecipes(){
         recipes = new ArrayList<Recipe>();
-
+        recipes.addAll(cookbook.getRecipes());
         recipes.addAll(List.of(
             new Recipe("Pizza", 2),
             new Recipe("Hamburger", 1),
