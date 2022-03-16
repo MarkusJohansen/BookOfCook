@@ -4,7 +4,7 @@ package BookOfCook;
 import java.util.*;
 import java.io.*;
 
-public class Cookbook {
+public class Cookbook implements recipeContainer {
     private String name;
     private int recipeAmount;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();

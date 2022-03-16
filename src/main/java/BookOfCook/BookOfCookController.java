@@ -71,9 +71,7 @@ public class BookOfCookController {
             new Recipe("Hamburger", 1),
             new Recipe("Spaghetti", 2),
             new Recipe("Biff", 1)
-        )
-            
-        );
+        ));
 
         //recipes.addAll(cookbook.getRecipes());
     }

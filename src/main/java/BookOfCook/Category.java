@@ -2,7 +2,7 @@ package BookOfCook;
 
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements recipeContainer {
     // *FIELDS
     String name;                                            // name of category
     ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
@@ -17,8 +17,12 @@ public class Category {
         return name;
     }
 
-    public ArrayList<Recipe> getrecipes() {
+    public ArrayList<Recipe> getRecipes() {
         return recipes;
+    }
+
+    public int getRecipeAmount() {
+        return recipes.size();
     }
 
     // *METHODS
