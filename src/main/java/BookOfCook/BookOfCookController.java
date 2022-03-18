@@ -401,6 +401,8 @@ public class BookOfCookController {
     ? bruke predicates for å søke etter oppskrifter. kun de som inneholder en eller flere av ordene i søkeordet i navnet på retten
     ? bruke predicates for å filtrere etter kategorier
     ? bruke predicates for å filtrere etter ingredienser i fridge tool
+    
+    MARKUS:
     * Har linket opp kalorier med oppskrift
     * fikset total linking mot css, så endringer i style vil gå veldig mye raskere. all javaFX css styling ligger her https://openjfx.io/javadoc/11/javafx.graphics/javafx/scene/doc-files/cssref.html#typeeffect
     * Har linket opp beskrivelse med oppskrift
@@ -409,5 +411,7 @@ public class BookOfCookController {
     * made the entire grid pane a button in recipe, instead of pane with view button
     * la til hover for button, for å gi feedback som tyder på at det er en knapp.
     * removed visible grids in view mode
+
+    JULIAN: 
     */
 } 
