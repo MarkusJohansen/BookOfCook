@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,16 +27,22 @@
                <children>
                   <VBox layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
                </children></Pane>
-            <TextField layoutX="89.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Amount" />
-            <TextField layoutX="164.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Unit" />
-            <Button layoutX="274.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
+            <TextField layoutX="97.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="Amount" />
+            <Button layoutX="275.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
             <Pane layoutX="-59.0" layoutY="-79.0" prefHeight="59.0" prefWidth="1800.0" styleClass="level-1-panes">
                <children>
                   <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" styleClass="standard-button" text="Load" />
-                  <Button layoutX="149.0" layoutY="17.0" mnemonicParsing="false" styleClass="standard-button" text="Save" />
+                  <Button layoutX="93.0" layoutY="17.0" mnemonicParsing="false" styleClass="standard-button" text="Save" />
                   <TextField layoutX="553.0" layoutY="13.0" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
                </children>
             </Pane>
+            <TextField layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="name" text="name" />
+            <SplitMenuButton layoutX="185.0" layoutY="775.0" mnemonicParsing="false" text="Unit">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </SplitMenuButton>
          </children>
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">
@@ -88,7 +96,6 @@
                         <Pane fx:id="recipeStepView" prefHeight="200.0" prefWidth="200.0" styleClass="level-3-panes" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
-                  <TextField prefHeight="25.0" prefWidth="75.0" promptText="Name" />
                </children>
             </Pane>
          </children>
@@ -108,11 +115,21 @@
             <TextField fx:id="caloriesBar" layoutX="58.0" layoutY="176.0" prefHeight="25.0" prefWidth="223.0" promptText="Calories" />
             <TextField fx:id="IngredientNameBar" layoutX="58.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Ingredients" />
             <TextArea fx:id="stepsArea" layoutX="60.0" layoutY="437.0" prefHeight="269.0" prefWidth="223.0" promptText="steps" />
-            <TextField fx:id="prepTimeBar" layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="107.0" promptText="time" />
-            <TextField fx:id="timeUnitBar" layoutX="169.0" layoutY="387.0" prefHeight="25.0" prefWidth="118.0" promptText="minutes or hours" />
+            <TextField fx:id="prepTimeBar" layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="148.0" promptText="time" />
             <TextArea fx:id="descriptionBar" layoutX="58.0" layoutY="250.0" prefHeight="122.0" prefWidth="223.0" promptText="Description" />
             <TextField fx:id="amountBar" layoutX="138.0" layoutY="211.0" prefHeight="25.0" prefWidth="64.0" promptText="Amount" />
-            <TextField fx:id="unitBar" layoutX="205.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Unit" />
+            <SplitMenuButton layoutX="207.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Unit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </SplitMenuButton>
+            <SplitMenuButton layoutX="220.0" layoutY="387.0" mnemonicParsing="false" text="Unit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </SplitMenuButton>
          </children>
       </Pane>
    </children>

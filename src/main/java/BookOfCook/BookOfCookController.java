@@ -346,32 +346,21 @@ public class BookOfCookController {
         System.out.println("Add button was clicked");
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
+        recipe.setDescription(descriptionBar.getText());
+
+        if(!caloriesBar.getText().isEmpty()) {
+            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
+        }
+
+        if(!prepTimeBar.getText().isEmpty()) {
+            recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
+        }
+
+        // recipe.setCategories(categoriesBar.getText());
+        // recipe.setIngredients(ingredientsBar.getText());
+        // recipe.setSteps(stepsBar.getText());
+        
         cookbook.addRecipeToCookbook(recipe);
-        // recipe.addCategory(categoryBar.getText()); //hvordan ta inn dette
-
-        if(!descriptionBar.getText().equals(null)){
-            recipe.setDescription(descriptionBar.getText());
-        }
-
-        // if(!prepTimeBar.getText().equals(null)){
-        //     recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
-        // }
-
-        // if(!caloriesBar.getText().equals(null)){
-        //     recipe.setCalories(Double.parseDouble(caloriesBar.getText()));
-        // }
-
-        // if(!stepArea.getText().equals(null)){
-        //     recipe.addStep(stepArea.getText());
-        // }
-
-        if(!categoryBar.getText().equals(null)){
-            recipe.addCategory(new Category(categoryBar.getText()));
-        }
-
-        //ingredient
-        //recipe.addIngredient(ingredientBar.getText(), Integer.parseInt(amountBar.getText()), unitBar.getText());
-
         updateRecipeGrid();
     }
 
@@ -388,14 +377,32 @@ public class BookOfCookController {
     /*
     TODO:
     ! fix remove food function
+    ! fix button to add food to fridge
+    ! fix button to remove food from fridge
+    ! fix unit selector
+    ! koble opp legge til  ingredienser, kategorier og steg. (elementer som er i flertall i en oppskrift)
+    ! sette opp søkefelt for å søke etter oppskrifter
+    ! koble sammen tid og oppskrift
+    ! sette opp dropdown menyer for enheter
     ! fix add recipe function popout
-    ! make the entire grid pane a button in recipe, instead of pane with view button
-    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info
+    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
     ! connect the the textfields in recipe creator to the recipem object
-    ! remove grids in view mode
     ! add category components with filters, use checkbox because that i standard
     ! add number that indicates how many recipes is in the category or shown
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
+    ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
+    ? hvordan skiller vi kategorier
+    ? konvertering mellom enheter?
+    * Har linket opp kalorier med oppskrift
+    * fikset total linking mot css, så endringer i style vil gå veldig mye raskere. all javaFX css styling ligger her https://openjfx.io/javadoc/11/javafx.graphics/javafx/scene/doc-files/cssref.html#typeeffect
+    * Har linket opp beskrivelse med oppskrift
+    * byttet ut units for tid og ingredienser med dropdowns
+    * fjernet misplaced name box    
+    * made the entire grid pane a button in recipe, instead of pane with view button
+    * la til hover for button, for å gi feedback som tyder på at det er en knapp.
+    * removed visible grids in view mode
+
+
     */
 } 

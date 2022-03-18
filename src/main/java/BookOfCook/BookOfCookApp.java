@@ -21,7 +21,7 @@ public class BookOfCookApp extends Application{
 
         //Setter inn scene i vinduet og viser vinduet
         primaryStage.setScene(scene);
-        primaryStage.show();        
+        primaryStage.show();      
     }
 
     public static void main(String[] args) {
