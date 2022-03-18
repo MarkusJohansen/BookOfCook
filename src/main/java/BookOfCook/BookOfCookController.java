@@ -118,49 +118,25 @@ public class BookOfCookController {
 
 
     //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
-    private Pane createRecipeComponent(Recipe recipe){
-        //creates pane for each recipe
-        Pane body = new Pane();
+    private Button createRecipeComponent(Recipe recipe){
+        //create button object
+        Button recipeBtn = new Button(recipe.getName());
 
-        //adds children
-        body.getChildren().add(createViewButton(recipe));
-        body.getChildren().add(createRecipeHeader(recipe));
+        //style
+        recipeBtn.getStyleClass().clear();
+        recipeBtn.getStyleClass().add("recipeBtn");
+        recipeBtn.setMaxWidth(Double.MAX_VALUE);
+        recipeBtn.setMaxHeight(Double.MAX_VALUE);
 
-        //styling
-        body.getStyleClass().clear();
-        body.getStyleClass().add("level-2-panes");
-        body.setMaxWidth(Double.MAX_VALUE);
-        body.setMaxHeight(Double.MAX_VALUE);
-
-        return body;
-    }
-
-    private Button createViewButton(Recipe recipe){ 
-        //creates a button with "View" text
-        Button viewbtn = new Button("View");
-
-        //sets style
-        viewbtn.getStyleClass().clear();
-        viewbtn.getStyleClass().add("standard-button");
-        viewbtn.setLayoutX(70);
-        viewbtn.setLayoutY(155);
-
-        //sets action
-        viewbtn.setOnAction(e -> {
+        //event
+        recipeBtn.setOnAction(e -> {
             System.out.println("View " + recipe.getName() + " recipe");
             viewRecipe(recipe);
         });
 
-        return viewbtn;
+        //return
+        return recipeBtn;
     }
-    
-    private Label createRecipeHeader(Recipe recipe){
-        //creates a label with recipe name
-        Label label = new Label(recipe.getDisplayedName());
-        styleLabel(label, "recipe-header", 8.0, 10.0);
-        return label;
-    }
-
 
     //*DYNAMIC CREATION OF CATEGORY COMPONENTS
     private Pane createCategoryComponent(Category category){
@@ -411,10 +387,15 @@ public class BookOfCookController {
 
     /*
     TODO:
-    - fix remove food function
-    - fix add recipe function popout
-    - make the entire grid pane a button in recipe, instead of pane with view button
-    - setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info
-    - make the rec
+    ! fix remove food function
+    ! fix add recipe function popout
+    ! make the entire grid pane a button in recipe, instead of pane with view button
+    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info
+    ! connect the the textfields in recipe creator to the recipem object
+    ! remove grids in view mode
+    ! add category components with filters, use checkbox because that i standard
+    ! add number that indicates how many recipes is in the category or shown
+    ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
+    ? picture support
     */
 } 

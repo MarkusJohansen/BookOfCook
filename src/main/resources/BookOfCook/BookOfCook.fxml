@@ -39,11 +39,10 @@
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">
          <children>
-            <GridPane fx:id="recipeGrid" layoutX="51.0" layoutY="25.0" prefHeight="761.0" prefWidth="772.0" style="-fx-background-radius: 40;">
+            <GridPane fx:id="recipeGrid" layoutX="51.0" layoutY="25.0" prefHeight="761.0" prefWidth="772.0" style="-fx-background-radius: 40;" styleClass="recipeGrid">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="255.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="252.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="252.0" />
               </columnConstraints>
               <rowConstraints>
@@ -55,7 +54,7 @@
             </GridPane>
             <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="870.0" styleClass="level-2-panes" visible="false">
                <children>
-                  <GridPane fx:id="recipeViewContent" gridLinesVisible="true" layoutY="7.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-2-panes">
+                  <GridPane fx:id="recipeViewContent" layoutY="7.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-2-panes">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="277.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="292.0" />
@@ -99,12 +98,12 @@
             <TextField fx:id="recipeNameBar" layoutX="58.0" layoutY="79.0" prefHeight="25.0" prefWidth="223.0" promptText="name?*" />
             <TextField fx:id="servesPeopleBar" layoutX="58.0" layoutY="110.0" prefHeight="25.0" prefWidth="223.0" promptText="Serves?*" />
             <Button fx:id="addButton" layoutX="156.0" layoutY="740.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" prefWidth="29.0" styleClass="standard-button" text="+" />
-            <Label layoutX="52.0" layoutY="14.0" prefHeight="53.0" prefWidth="238.0" text="Recipe Creator" textFill="WHITE">
+            <Label layoutX="52.0" layoutY="14.0" prefHeight="53.0" prefWidth="238.0" text="Recipe Creator">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Line endX="137.0" layoutX="153.0" layoutY="66.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
+            <Line endX="137.0" layoutX="153.0" layoutY="66.0" startX="-100.0" strokeWidth="3.0" />
             <TextField fx:id="categoryBar" layoutX="59.0" layoutY="142.0" prefHeight="25.0" prefWidth="223.0" promptText="Categories" />
             <TextField fx:id="caloriesBar" layoutX="58.0" layoutY="176.0" prefHeight="25.0" prefWidth="223.0" promptText="Calories" />
             <TextField fx:id="IngredientNameBar" layoutX="58.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Ingredients" />
