@@ -376,6 +376,7 @@ public class BookOfCookController {
 
     /*
     TODO:
+    
     ! fix remove food function
     ! fix button to add food to fridge
     ! fix button to remove food from fridge
@@ -392,6 +393,10 @@ public class BookOfCookController {
     ! add fridge functionality
     ! add category functionality
     !? do we have full on validation? check fields keyword.
+    ! fix load cookbook function
+    ! fix save cookbook functionality
+
+
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
@@ -401,6 +406,8 @@ public class BookOfCookController {
     ? bruke predicates for å søke etter oppskrifter. kun de som inneholder en eller flere av ordene i søkeordet i navnet på retten
     ? bruke predicates for å filtrere etter kategorier
     ? bruke predicates for å filtrere etter ingredienser i fridge tool
+    ? hvem skriver dokumentasjonen
+    ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
     
     MARKUS:
     * Har linket opp kalorier med oppskrift
@@ -411,6 +418,7 @@ public class BookOfCookController {
     * made the entire grid pane a button in recipe, instead of pane with view button
     * la til hover for button, for å gi feedback som tyder på at det er en knapp.
     * removed visible grids in view mode
+    * endret css til lighttheme atm for å se endringer bedre
 
     JULIAN: 
     */
