@@ -1,14 +1,14 @@
 /*Stylesheet for app*/
 #body{
-    -fx-background-color: #1E1E1E;
+    -fx-background-color: #dfdfdf;
 }
 
 .level-1-panes{ /*pane level above background/body*/
-    -fx-background-color: #252526;
+    -fx-background-color: #afafaf;
 }
 
 .level-2-panes{ /*panes that exists on level 1 panes*/
-    -fx-background-color: #3E3E42;
+    -fx-background-color: #9e9e9e;
     -fx-background-radius: 20px;
     -fx-padding: 20px;
     -fx-margin: 20px;

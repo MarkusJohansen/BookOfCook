@@ -157,7 +157,7 @@ public class BookOfCookController {
     private Label createRecipeHeader(Recipe recipe){
         //creates a label with recipe name
         Label label = new Label(recipe.getDisplayedName());
-        styleLabel(label, "recipe-header", 80.0, 10.0);
+        styleLabel(label, "recipe-header", 8.0, 10.0);
         return label;
     }
 
@@ -264,7 +264,6 @@ public class BookOfCookController {
         initializeViewContent(recipe);
     }
 
-    //fills recipeContent-grid in recipeView, with content from recipe
     public void initializeViewContent(Recipe recipe){
         createRecipeViewTitle(recipe);
         createDescriptionLabel(recipe);
@@ -277,7 +276,6 @@ public class BookOfCookController {
         addCloseButton(recipe);
     }
 
-    //creates a button with "Close" text that rund closeRecipeView() when clicked
     private void addCloseButton(Recipe recipe){
         //creates button object
         Button closeButton = new Button("Close");
@@ -297,44 +295,38 @@ public class BookOfCookController {
         recipeViewContent.add(closeButton, 0, 4);
     }
 
-    //create title label with recipe name
     private void createRecipeViewTitle(Recipe recipe){
         Label label = new Label(recipe.getDisplayedName());
         styleLabel(label,"recipe-header", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 0);
     }
 
-    //*COLUMN 1
-    //create description label
+    //first column in recipeview
     private void createDescriptionLabel(Recipe recipe){
         Label label = new Label(recipe.getDescription());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 2);
     }
 
-    //create categories label
     private void createCategoriesLabel(Recipe recipe){
         Label label = new Label("Categories:");
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 1);
     }
 
-    //create prep time label
     private void createPrepTimeLabel(Recipe recipe){
         Label label = new Label("Prep time: " + recipe.getPrepTime());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 3);
     }
 
-    //create calories label
     private void createCaloriesLabel(Recipe recipe){
         Label label = new Label("Calories: " + recipe.getCalories());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 5);
     }
 
-    //*COLUMN 2
-    //create steps label
+    //second column in recipeview
     private void createStepsLabel(Recipe recipe){
         Label label = new Label("Steps:");
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
@@ -342,21 +334,18 @@ public class BookOfCookController {
         recipeStepView.getChildren().add(label);
     }
 
-    //*COLUMN 3
-    //create serves label
+    //third column in recipeview
     private void createServesLabel(Recipe recipe){
         Label label = new Label("Serves: " + recipe.getNumberOfServings());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox2.add(label, 0, 0);
     }
 
-    //create ingredients label
     private void createIngredientsLabel(Recipe recipe){
         Label label = new Label("Ingredients:");
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox2.add(label, 0, 1);
     }
-
 
     //close recipeView
     public void closeRecipeView() {
@@ -366,7 +355,7 @@ public class BookOfCookController {
         recipeGrid.setVisible(true);
     }
 
-    
+
     //*STYLESETTERS
     public void styleLabel(Label label, String styleClass, Double x, Double y){
         label.getStyleClass().clear();
@@ -410,7 +399,6 @@ public class BookOfCookController {
         updateRecipeGrid();
     }
 
-
     //view recipe
     public void viewRecipe() {
         System.out.println("View button was clicked");
@@ -420,4 +408,13 @@ public class BookOfCookController {
     public void removeFood() {
         System.out.println("Remove food button was clicked");
     }
+
+    /*
+    TODO:
+    - fix remove food function
+    - fix add recipe function popout
+    - make the entire grid pane a button in recipe, instead of pane with view button
+    - setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info
+    - make the rec
+    */
 } 
