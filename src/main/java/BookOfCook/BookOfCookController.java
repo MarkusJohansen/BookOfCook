@@ -387,13 +387,20 @@ public class BookOfCookController {
     ! fix add recipe function popout
     ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
     ! connect the the textfields in recipe creator to the recipem object
-    ! add category components with filters, use checkbox because that i standard
+    ! add category components with filters, use checkbox because that are standard
     ! add number that indicates how many recipes is in the category or shown
+    ! add fridge functionality
+    ! add category functionality
+    !? do we have full on validation? check fields keyword.
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
     ? hvordan skiller vi kategorier
     ? konvertering mellom enheter?
+    ? egen kategori for uncategorized?
+    ? bruke predicates for å søke etter oppskrifter. kun de som inneholder en eller flere av ordene i søkeordet i navnet på retten
+    ? bruke predicates for å filtrere etter kategorier
+    ? bruke predicates for å filtrere etter ingredienser i fridge tool
     * Har linket opp kalorier med oppskrift
     * fikset total linking mot css, så endringer i style vil gå veldig mye raskere. all javaFX css styling ligger her https://openjfx.io/javadoc/11/javafx.graphics/javafx/scene/doc-files/cssref.html#typeeffect
     * Har linket opp beskrivelse med oppskrift
@@ -402,7 +409,5 @@ public class BookOfCookController {
     * made the entire grid pane a button in recipe, instead of pane with view button
     * la til hover for button, for å gi feedback som tyder på at det er en knapp.
     * removed visible grids in view mode
-
-
     */
 } 
