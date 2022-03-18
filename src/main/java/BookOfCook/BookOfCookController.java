@@ -24,7 +24,7 @@ public class BookOfCookController {
 
     //*FXML-noder
     @FXML
-    private Label number, label;  
+    private Label number, label, recipeAmount;  
 
     @FXML
     private GridPane recipeGrid, recipeViewContent, recipeViewBox1, recipeViewBox2;
@@ -57,6 +57,7 @@ public class BookOfCookController {
             Recipe r = recipe; //copy recipe
             recipeGrid.add(createRecipeComponent(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
         }
+        updateNumberOfRecipes();
     }
 
     private void initializeCookBook(){
@@ -115,6 +116,11 @@ public class BookOfCookController {
         fridgeList.getChildren().clear();
         initializeFridge();
     }
+
+    public void updateNumberOfRecipes(){
+        recipeAmount.setText(String.valueOf("Currently showing " + cookbook.getRecipeAmount() + "/" + cookbook.getRecipeAmount() + " recipes."));
+    }
+    
 
 
     //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
@@ -374,9 +380,17 @@ public class BookOfCookController {
         System.out.println("Remove food button was clicked");
     }
 
+    public void load() {
+        System.out.println("Load button was clicked");
+    }
+
+    public void save() {
+        System.out.println("Save button was clicked");
+    }
+
     /*
     TODO:
-    
+
     ! fix remove food function
     ! fix button to add food to fridge
     ! fix button to remove food from fridge
@@ -395,7 +409,6 @@ public class BookOfCookController {
     !? do we have full on validation? check fields keyword.
     ! fix load cookbook function
     ! fix save cookbook functionality
-
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
@@ -419,7 +432,10 @@ public class BookOfCookController {
     * la til hover for button, for å gi feedback som tyder på at det er en knapp.
     * removed visible grids in view mode
     * endret css til lighttheme atm for å se endringer bedre
-
+    * linked load btn to load function
+    * linked save btn to save function
+    * created label for showing amount of recipes in the cookbook, as well as how many you are showing
     JULIAN: 
+    
     */
 } 

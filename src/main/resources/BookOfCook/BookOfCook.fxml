@@ -31,8 +31,8 @@
             <Button layoutX="275.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
             <Pane layoutX="-59.0" layoutY="-79.0" prefHeight="59.0" prefWidth="1800.0" styleClass="level-1-panes">
                <children>
-                  <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" styleClass="standard-button" text="Load" />
-                  <Button layoutX="93.0" layoutY="17.0" mnemonicParsing="false" styleClass="standard-button" text="Save" />
+                  <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#load" styleClass="standard-button" text="Load" />
+                  <Button layoutX="93.0" layoutY="17.0" mnemonicParsing="false" onAction="#save" styleClass="standard-button" text="Save" />
                   <TextField layoutX="553.0" layoutY="13.0" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
                </children>
             </Pane>
@@ -47,7 +47,7 @@
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">
          <children>
-            <GridPane fx:id="recipeGrid" layoutX="51.0" layoutY="25.0" prefHeight="761.0" prefWidth="772.0" style="-fx-background-radius: 40;" styleClass="recipeGrid">
+            <GridPane fx:id="recipeGrid" layoutX="51.0" layoutY="25.0" prefHeight="707.0" prefWidth="772.0" style="-fx-background-radius: 40;" styleClass="recipeGrid">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="255.0" />
@@ -100,6 +100,11 @@
                   </GridPane>
                </children>
             </Pane>
+            <Label id="recipeAmount" fx:id="recipeAmount" layoutX="339.0" layoutY="750.0" prefHeight="27.0" prefWidth="390.0" text="Currently showing x/y recipes" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutX="1448.0" layoutY="88.0" prefHeight="824.0" prefWidth="338.0" styleClass="level-1-panes">
