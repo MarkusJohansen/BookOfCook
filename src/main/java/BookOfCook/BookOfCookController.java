@@ -1,6 +1,7 @@
 package BookOfCook;
 
 import java.util.ArrayList;
+import java.util.Arrays; // !<--
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BookOfCookController {
 
     //*FXML-noder
     @FXML
-    private Label number, label;  
+    private Label number, label, recipeAmount;  
 
     @FXML
     private GridPane recipeGrid, recipeViewContent, recipeViewBox1, recipeViewBox2;
@@ -57,28 +58,54 @@ public class BookOfCookController {
             Recipe r = recipe; //copy recipe
             recipeGrid.add(createRecipeComponent(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
         }
+        updateNumberOfRecipes();
     }
 
     private void initializeCookBook(){
         cookbook = new Cookbook("Dawg");
+        cookbook.addRecipeToCookbook(new Recipe("Pizza", 2));
+        cookbook.addRecipeToCookbook(new Recipe("Hamburger", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Spaghetti", 2));
+        cookbook.addRecipeToCookbook(new Recipe("Biff", 1));
     }
 
     private void initializeRecipes(){
         recipes = new ArrayList<Recipe>();
         recipes.addAll(cookbook.getRecipes());
-        recipes.addAll(List.of(
+        /*recipes.addAll(List.of(
             new Recipe("Pizza", 2),
             new Recipe("Hamburger", 1),
             new Recipe("Spaghetti", 2),
             new Recipe("Biff", 1)
-        ));
+        ));*/
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        recipes.get(0).addCategory(italiensk);
+        recipes.get(1).addCategory(burger);
+        recipes.get(2).addCategory(italiensk);
+        recipes.get(3).addCategory(kjøtt);
+
+        System.out.println(recipes.get(0).getCategories());
+        System.out.println(recipes.get(1).getCategories());
+
+        cookbook.collectCategories();
+
+        System.out.println("nig " + cookbook.getCategories());
 
         //recipes.addAll(cookbook.getRecipes());
     }
     
     private void initializeCategories(){
+
         categories = new ArrayList<Category>();
+        cookbook.collectCategories();
+
         categories.addAll(cookbook.getCategories());
+
+        System.out.println(cookbook.getCategories());
 
         for(Category category : categories){
             categoryList.getChildren().add(createCategoryComponent(category));
@@ -115,6 +142,11 @@ public class BookOfCookController {
         fridgeList.getChildren().clear();
         initializeFridge();
     }
+
+    public void updateNumberOfRecipes(){
+        recipeAmount.setText(String.valueOf("Currently showing " + cookbook.getRecipeAmount() + "/" + cookbook.getRecipeAmount() + " recipes."));
+    }
+    
 
 
     //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
@@ -374,9 +406,17 @@ public class BookOfCookController {
         System.out.println("Remove food button was clicked");
     }
 
+    public void load() {
+        System.out.println("Load button was clicked");
+    }
+
+    public void save() {
+        System.out.println("Save button was clicked");
+    }
+
     /*
     TODO:
-    
+
     ! fix remove food function
     ! fix button to add food to fridge
     ! fix button to remove food from fridge
@@ -395,7 +435,6 @@ public class BookOfCookController {
     !? do we have full on validation? check fields keyword.
     ! fix load cookbook function
     ! fix save cookbook functionality
-
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
@@ -419,7 +458,10 @@ public class BookOfCookController {
     * la til hover for button, for å gi feedback som tyder på at det er en knapp.
     * removed visible grids in view mode
     * endret css til lighttheme atm for å se endringer bedre
-
+    * linked load btn to load function
+    * linked save btn to save function
+    * created label for showing amount of recipes in the cookbook, as well as how many you are showing
     JULIAN: 
+    
     */
 } 
