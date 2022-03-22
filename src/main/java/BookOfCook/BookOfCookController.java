@@ -1,9 +1,7 @@
 package BookOfCook;
 
 import java.util.ArrayList;
-import java.util.Arrays; 
 import java.util.HashMap;
-import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,10 +35,10 @@ public class BookOfCookController {
     private VBox fridgeList, categoryList; //!List? Listpane?
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, ingredientBar, caloriesBar, amountBar, unitBar;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar;
 
     @FXML
-    private TextArea descriptionBar;
+    private TextArea descriptionArea, stepsArea;
 
 
     //*INITIALIZATION
@@ -88,12 +86,12 @@ public class BookOfCookController {
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
-        System.out.println(recipes.get(0).getCategories());
-        System.out.println(recipes.get(1).getCategories());
+        //System.out.println(recipes.get(0).getCategories());
+        //System.out.println(recipes.get(1).getCategories());
 
         cookbook.collectCategories();
 
-        System.out.println("nig " + cookbook.getCategories());
+        //System.out.println("nig " + cookbook.getCategories());
 
         //recipes.addAll(cookbook.getRecipes());
     }
@@ -105,7 +103,7 @@ public class BookOfCookController {
 
         categories.addAll(cookbook.getCategories());
 
-        System.out.println(cookbook.getCategories());
+        //System.out.println(cookbook.getCategories());
 
         for(Category category : categories){
             categoryList.getChildren().add(createCategoryComponent(category));
@@ -379,7 +377,7 @@ public class BookOfCookController {
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
         Category category = new Category(categoryBar.getText());
 
-        recipe.setDescription(descriptionBar.getText());
+        recipe.setDescription(descriptionArea.getText());
 
         if(!caloriesBar.getText().equals("")){
             recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
@@ -391,8 +389,8 @@ public class BookOfCookController {
 
         // recipe.setIngredients(ingredientBar.getText());
 
-        recipe.setSteps(stepArea.getText());
-        
+        recipe.addStep(stepsArea.getText());
+
         cookbook.addRecipeToCookbook(recipe);
         updateRecipeGrid();
     }
@@ -419,8 +417,6 @@ public class BookOfCookController {
     TODO:
 
     ! fix remove food function
-    ! fix button to add food to fridge
-    ! fix button to remove food from fridge
     ! fix unit selector
     ! koble opp legge til  ingredienser, kategorier og steg. (elementer som er i flertall i en oppskrift)
     ! sette opp søkefelt for å søke etter oppskrifter
@@ -464,6 +460,12 @@ public class BookOfCookController {
     * created label for showing amount of recipes in the cookbook, as well as how many you are showing
 
     JULIAN: 
-    
+
+        GJØR:
+        * fix button to add food to fridge
+        * fix button to remove food from fridge
+
+        FERDIG
+
     */
 } 
