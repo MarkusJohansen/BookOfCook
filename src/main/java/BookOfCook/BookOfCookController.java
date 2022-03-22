@@ -392,7 +392,7 @@ public class BookOfCookController {
         boolean stepsEmpty = stepsArea.getText().isEmpty();
 
         // checks if all requiret input fields are empty
-        if(!recipeNameEmpty && servesPeopleEmpty && stepsEmpty) {
+        if(!recipeNameEmpty && !servesPeopleEmpty && !stepsEmpty) {
 
             /*recipe.setName(recipeNameBar.getText());
             recipe.setNumberOfServings(Integer.parseInt(servesPeopleBar.getText()));
