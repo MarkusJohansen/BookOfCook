@@ -161,6 +161,18 @@ public class Cookbook implements recipeContainer {
         categories = collectedCategories;
     }
 
+    //*RECIPE SEARCH METHODS
+    // searches for recipes in cookbook with name containing searchString:
+    public ArrayList<Recipe> searchRecipes(String searchString) {
+        ArrayList<Recipe> searchResults = new ArrayList<>();
+        for (Recipe recipe : recipes) {
+            if (recipe.getName().contains(searchString.toLowerCase())) {
+                searchResults.add(recipe);
+            } 
+        }
+        return searchResults;
+    }
+
     // *TOSTRING METHOD
     /* @Override
     public String toString() {

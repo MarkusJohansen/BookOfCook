@@ -1,9 +1,7 @@
 package BookOfCook;
 
 import java.util.ArrayList;
-import java.util.Arrays; 
 import java.util.HashMap;
-import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -377,48 +375,24 @@ public class BookOfCookController {
     public void addRecipe() {
         System.out.println("Add button was clicked");
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        Category category = new Category(categoryBar.getText());
 
         recipe.setDescription(descriptionArea.getText());
 
-        // recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar
-        // descriptionArea, stepsArea
-
-        boolean recipeNameEmpty = recipeNameBar.getText().isEmpty();
-        boolean servesPeopleEmpty = servesPeopleBar.getText().isEmpty();
-        boolean categoryEmpty = categoryBar.getText().isEmpty();
-        boolean caloriesEmpty = caloriesBar.getText().isEmpty();
-        boolean descriptionEmpty = descriptionArea.getText().isEmpty();
-        boolean prepTimeEmpty = prepTimeBar.getText().isEmpty();
-        boolean stepsEmpty = stepsArea.getText().isEmpty();
-
-        // checks if all requiret input fields are empty
-        if(!recipeNameEmpty && !servesPeopleEmpty && !stepsEmpty) {
-
-            /*recipe.setName(recipeNameBar.getText());
-            recipe.setNumberOfServings(Integer.parseInt(servesPeopleBar.getText()));
-            //recipe.setName(recipeNameBar.getText());*/
-
-            System.out.println(stepsArea.getText());
-
-            if(!caloriesBar.getText().isEmpty()) {
-                recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
-            }
-    
-            if(!prepTimeBar.getText().isEmpty()) {
-                recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
-            }
-    
-            // recipe.setCategories(categoriesBar.getText());
-            // recipe.setIngredients(ingredientsBar.getText());
-            // recipe.setSteps(stepsBar.getText());
-            
-            cookbook.addRecipeToCookbook(recipe);
-            updateRecipeGrid();
-        } else{
-            System.out.println("Did not fill out mandatory fields!");
+        if(!caloriesBar.getText().equals("")){
+            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
         }
 
+        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
         
+        recipe.addCategory(category);
+
+        // recipe.setIngredients(ingredientBar.getText());
+
+        recipe.addStep(stepsArea.getText());
+
+        cookbook.addRecipeToCookbook(recipe);
+        updateRecipeGrid();
     }
 
     //view recipe
