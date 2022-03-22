@@ -377,20 +377,21 @@ public class BookOfCookController {
     public void addRecipe() {
         System.out.println("Add button was clicked");
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        Category category = new Category(categoryBar.getText());
 
         recipe.setDescription(descriptionBar.getText());
 
-        if(!caloriesBar.getText().isEmpty()) {
+        if(!caloriesBar.getText().equals("")){
             recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
         }
 
-        if(!prepTimeBar.getText().isEmpty()) {
-            recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
-        }
+        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
+        
+        recipe.addCategory(category);
 
-        // recipe.setCategories(categoriesBar.getText());
-        // recipe.setIngredients(ingredientsBar.getText());
-        // recipe.setSteps(stepsBar.getText());
+        // recipe.setIngredients(ingredientBar.getText());
+
+        recipe.setSteps(stepArea.getText());
         
         cookbook.addRecipeToCookbook(recipe);
         updateRecipeGrid();
