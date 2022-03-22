@@ -272,10 +272,10 @@ public class BookOfCookController {
 
     public void initializeViewContent(Recipe recipe){
         createRecipeViewTitle(recipe);
-        createDescriptionLabel(recipe);
-        createStepsLabel(recipe);
-        createIngredientsLabel(recipe);
-        createCategoriesLabel(recipe);
+        createDescriptionLabel(recipe); //! fungerer ikke optimalt
+        createStepsLabel(recipe);       //! fungerer ikke optimalt
+        createIngredientsLabel(recipe); //! fungerer ikke
+        createCategoriesLabel(recipe);  //! fungerer ikke optimalt
         createServesLabel(recipe);
         createPrepTimeLabel(recipe);
         createCaloriesLabel(recipe);
@@ -315,7 +315,7 @@ public class BookOfCookController {
     }
 
     private void createCategoriesLabel(Recipe recipe){
-        Label label = new Label("Categories:");
+        Label label = new Label("Categories:" + recipe.getCategories());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 1);
     }
@@ -334,7 +334,7 @@ public class BookOfCookController {
 
     //second column in recipeview
     private void createStepsLabel(Recipe recipe){
-        Label label = new Label("Steps:");
+        Label label = new Label("Steps:" + recipe.getSteps());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeStepView.getChildren().clear();
         recipeStepView.getChildren().add(label);
@@ -418,7 +418,7 @@ public class BookOfCookController {
 
     ! fix remove food function
     ! fix unit selector
-    ! koble opp legge til  ingredienser, kategorier og steg. (elementer som er i flertall i en oppskrift)
+    ! koble opp legge til  ingredienser
     ! sette opp søkefelt for å søke etter oppskrifter
     ! koble sammen tid og oppskrift
     ! sette opp dropdown menyer for enheter
@@ -426,12 +426,13 @@ public class BookOfCookController {
     ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
     ! connect the the textfields in recipe creator to the recipem object
     ! add category components with filters, use checkbox because that are standard
-    ! add number that indicates how many recipes is in the category or shown
     ! add fridge functionality
     ! add category functionality
     !? do we have full on validation? check fields keyword.
     ! fix load cookbook function
     ! fix save cookbook functionality
+    !steps ikke linket med view
+    ! categories ikke linket med view
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
@@ -457,7 +458,9 @@ public class BookOfCookController {
     * endret css til lighttheme atm for å se endringer bedre
     * linked load btn to load function
     * linked save btn to save function
+    * laget searchbar metode for søk i cookbook
     * created label for showing amount of recipes in the cookbook, as well as how many you are showing
+    * linket opp kategorier med oppskriftview
 
     JULIAN: 
 
