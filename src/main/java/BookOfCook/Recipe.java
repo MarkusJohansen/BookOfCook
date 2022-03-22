@@ -100,12 +100,13 @@ public class Recipe {
     }
 
     public void setPrepTime(int timeInMinutes) { //prep time in hours
+
         if (timeInMinutes > 60) {
             //time in min to hours and minutes
             this.prepTime = Integer.toString(timeInMinutes / 60) + "h " + Integer.toString(timeInMinutes % 60) + "min";
+        } else {
+            this.prepTime = Integer.toString(timeInMinutes) + "min";
         }
-        this.prepTime = Integer.toString(timeInMinutes) + "min";
-        System.out.println(prepTime);
     }
 
 
