@@ -3,9 +3,9 @@ package BookOfCook;
 import java.util.*;
 
 public class Recipe {
-    private String name, displayedName, description;                                                        // name of recipe that will be dealt with back end, as well as name displayed to user    
-    private int numberOfServings, prepTime;                                                                 // number persons this recipe serves        
-    private double calories, caloriesPerPerson;                                                             // calories in recipe, calories per person                                                                 
+    private String name, displayedName, description, prepTime;                                                        // name of recipe that will be dealt with back end, as well as name displayed to user    
+    private int numberOfServings;                                                                 // number persons this recipe serves        
+    private double calories, caloriesPerPerson;     
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     // stores the categories of the recipe                                    
     private ArrayList<String> steps = new ArrayList<String>();                                              // stores the steps of how to make the recipe
@@ -29,7 +29,7 @@ public class Recipe {
     }
 
     //get prepTime
-    public int getPrepTime() {
+    public String getPrepTime() {
         return prepTime;                                            // returns prepTime
     }
     
@@ -99,8 +99,13 @@ public class Recipe {
         this.description = description;
     }
 
-    public void setPrepTime(int prepTime) {
-        this.prepTime = prepTime;
+    public void setPrepTime(int timeInMinutes) { //prep time in hours
+        if (timeInMinutes > 60) {
+            //time in min to hours and minutes
+            this.prepTime = Integer.toString(timeInMinutes / 60) + "h " + Integer.toString(timeInMinutes % 60) + "min";
+        }
+        this.prepTime = Integer.toString(timeInMinutes) + "min";
+        System.out.println(prepTime);
     }
 
 
