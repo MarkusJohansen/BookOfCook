@@ -123,7 +123,7 @@
             <TextField fx:id="IngredientNameBar" layoutX="58.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="Ingredients" />
             <TextArea fx:id="stepsArea" layoutX="60.0" layoutY="437.0" prefHeight="269.0" prefWidth="223.0" promptText="steps" />
             <TextField fx:id="prepTimeBar" layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="148.0" promptText="time" />
-            <TextArea fx:id="descriptionBar" layoutX="58.0" layoutY="250.0" prefHeight="122.0" prefWidth="223.0" promptText="Description" />
+            <TextArea fx:id="descriptionArea" layoutX="58.0" layoutY="250.0" prefHeight="122.0" prefWidth="223.0" promptText="Description" />
             <TextField fx:id="amountBar" layoutX="138.0" layoutY="211.0" prefHeight="25.0" prefWidth="64.0" promptText="Amount" />
             <SplitMenuButton layoutX="207.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Unit">
                <items>
