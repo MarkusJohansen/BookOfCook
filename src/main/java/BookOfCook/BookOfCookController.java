@@ -1,6 +1,7 @@
 package BookOfCook;
 
 import java.util.ArrayList;
+import java.util.Arrays; // !<--
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,24 +63,49 @@ public class BookOfCookController {
 
     private void initializeCookBook(){
         cookbook = new Cookbook("Dawg");
+        cookbook.addRecipeToCookbook(new Recipe("Pizza", 2));
+        cookbook.addRecipeToCookbook(new Recipe("Hamburger", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Spaghetti", 2));
+        cookbook.addRecipeToCookbook(new Recipe("Biff", 1));
     }
 
     private void initializeRecipes(){
         recipes = new ArrayList<Recipe>();
         recipes.addAll(cookbook.getRecipes());
-        recipes.addAll(List.of(
+        /*recipes.addAll(List.of(
             new Recipe("Pizza", 2),
             new Recipe("Hamburger", 1),
             new Recipe("Spaghetti", 2),
             new Recipe("Biff", 1)
-        ));
+        ));*/
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        recipes.get(0).addCategory(italiensk);
+        recipes.get(1).addCategory(burger);
+        recipes.get(2).addCategory(italiensk);
+        recipes.get(3).addCategory(kjøtt);
+
+        System.out.println(recipes.get(0).getCategories());
+        System.out.println(recipes.get(1).getCategories());
+
+        cookbook.collectCategories();
+
+        System.out.println("nig " + cookbook.getCategories());
 
         //recipes.addAll(cookbook.getRecipes());
     }
     
     private void initializeCategories(){
+
         categories = new ArrayList<Category>();
+        cookbook.collectCategories();
+
         categories.addAll(cookbook.getCategories());
+
+        System.out.println(cookbook.getCategories());
 
         for(Category category : categories){
             categoryList.getChildren().add(createCategoryComponent(category));

@@ -153,6 +153,7 @@ public class Cookbook implements recipeContainer {
             for (Category category : recipe.getCategories()) {          // loops through all categories in recipe
                 if(!collectedCategories.contains(category)){            // if not category already collected
                     collectedCategories.add(category);                  // collect category
+                    System.out.println("collected " + category);
                 }
             }
         }
