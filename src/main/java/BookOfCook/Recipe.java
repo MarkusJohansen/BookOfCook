@@ -350,15 +350,6 @@ public class Recipe {
 
 
     // *TOSTRING METHOD
-    /* @Override
-    public String toString() {
-        String ingredientList = "";
-        for(HashMap<String,Object> ingredient : Ingredients) {
-            ingredientList += "\n" + ingredient.get("name") + ": " + ingredient.get("amount") + " " + ingredient.get("unit");
-            // !System.out.println(ingredient.get("displayName")); virker ikke?
-        }
-        return "Recipe: " + name + " serves " + numberOfServings + " people. It contains " + ingredientList + "\nand is categorized as: " + categories + "\nCalories: " + calories + " kcal" + "\nwhich is " + caloriesPerPerson + " kcal per person" + "\n" ;
-    } */
 
     @Override
     public String toString() {

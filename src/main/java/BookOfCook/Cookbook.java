@@ -166,7 +166,7 @@ public class Cookbook implements recipeContainer {
     public ArrayList<Recipe> searchRecipes(String searchString) {
         ArrayList<Recipe> searchResults = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            if (recipe.getName().contains(searchString.toLowerCase())) {
+            if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {
                 searchResults.add(recipe);
             } 
         }
@@ -174,35 +174,14 @@ public class Cookbook implements recipeContainer {
     }
 
     // *TOSTRING METHOD
-    /* @Override
-    public String toString() {
-        String recipelist = "";
-        for (int i = 0; i < recipes.size(); i++) {
-            recipelist += "\n" + recipes.get(i).getDisplayedName();
-        }
-        return "Cookbook: " + name + " has " + recipeAmount + " recipes. those are recipes for: " + recipelist + "\n";
-    } */
-
     @Override
     public String toString() {
         return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes="
                 + recipes + "]";
     }
 
-
     // *MAIN METHOD
     public static void main(String[] args) {
-        /* Cookbook cookbook = new Cookbook("Cookbook");
-        Recipe recipe1 = new Recipe("Recipe1", 2);
-        Recipe recipe2 = new Recipe("Recipe2", 4);
-        Recipe recipe3 = new Recipe("Recipe3", 1);
-        cookbook.addRecipeToCookbook(recipe1);
-        cookbook.addRecipeToCookbook(recipe2);
-        cookbook.addRecipeToCookbook(recipe3);
-
-        System.out.println(cookbook);
-
-        cookbook.writeToFile(); */ 
 
         Cookbook cookbook = new Cookbook("Cookbook");
         Recipe pasta_carbonara = new Recipe("pasta carbonara", 2);
