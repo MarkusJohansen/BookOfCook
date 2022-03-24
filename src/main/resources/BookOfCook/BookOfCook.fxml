@@ -37,21 +37,7 @@
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">
          <children>
-            <GridPane fx:id="recipeGrid" layoutX="51.0" layoutY="25.0" prefHeight="707.0" prefWidth="772.0" style="-fx-background-radius: 40;" styleClass="recipeGrid">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="255.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="252.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="189.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
+            <ListView fx:id="recipeList" layoutY="-1.0" prefHeight="745.0" prefWidth="870.0" />
             <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="870.0" styleClass="level-2-panes" visible="false">
                <children>
                   <GridPane fx:id="recipeViewContent" layoutY="7.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-2-panes">

@@ -57,7 +57,7 @@ public class BookOfCookController {
         initializeRecipes();
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
-            recipeGrid.add(createRecipeComponent(r), recipes.indexOf(recipe) % 3,  recipes.indexOf(recipe) / 3);
+            recipeList.getItems().add(createRecipeComponent(r));
         }
         updateNumberOfRecipes();
     }
@@ -162,7 +162,7 @@ public class BookOfCookController {
 
 
     //*UPDATERS
-    public void updateRecipeGrid(){
+    public void updateRecipeList(){
         recipeGrid.getChildren().clear();
         updateCategories();
         initializeRecipeGrid();
@@ -440,9 +440,10 @@ public class BookOfCookController {
         if(recipes.size() > 18){
             //add row to the bottom of the recipeGrid grid
             recipeGrid.addRow(recipes.size() - 18);
-            recipeGrid.setMaxHeight();
+
+            //! HVORDAN  recipeGrid.setMaxHeight();
         }
-        updateRecipeGrid();
+        updateRecipeList();
     }
 
     //view recipe
