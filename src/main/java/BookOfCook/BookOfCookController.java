@@ -454,63 +454,45 @@ public class BookOfCookController {
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
 
+
+    fridge
+    ! add fridge 
     ! fix remove food function
-    ! koble opp legge til  ingredienser
-    ! sette opp dropdown menyer for enheter
-    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
+    ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
+
+    category
+    ! add category 
     ! add category components with filters, use checkbox because that are standard
-    ! add fridge functionality
-    ! add category functionality
-    !? do we have full on validation? check fields keyword.
+    ? hvordan skiller vi kategorier
+    ? bruke predicates for å filtrere etter kategorier
+
+    skriving til fil
     ! fix load cookbook function
-    ! fix save cookbook functionality
-    ! steps ikke linket med view
-    ! gjøre om name til recipes om til lowercase
+    ! fix save cookbook 
+
+    recipe grid
     ! finne en metode for å sørge for at oppskrifter ikke stables i grid, men at vi heller kan scrolle
     ! finne en metdoe for å gjøre fonten mindre og få teksten til å bryte linjer dersom den er for lang til å vises
+    
+    recipe creator og editor
     ! la recipe ta inn 'æøå som symboler i navns
-
-    ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
+    ! steps ikke linket med view
+    ! koble opp legge til ingredienser
+    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
+    ! fix remove recipe function
+    ! sette opp dropdown menyer for enheter
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
-    ? hvordan skiller vi kategorier
-    ? bruke predicates for å søke etter oppskrifter. kun de som inneholder en eller flere av ordene i søkeordet i navnet på retten
-    ? bruke predicates for å filtrere etter kategorier
-    ? bruke predicates for å filtrere etter ingredienser i fridge tool
+
+    i klassene
+    ! gjøre om name til recipes om til lowercase
+    !? do we have full on validation? check fields keyword.
+
+    logistikk
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
-    ? kjøre searchbar på button click isteden?
-    ? kjøre searchbar på enter?
-    ? kjøre searchbar på enter og button click?
+
+    søkefelt
     ? knapp for å fjerne all text fra search field?
-    
-    MARKUS:
-    * Har linket opp kalorier med oppskrift
-    * fikset total linking mot css, så endringer i style vil gå veldig mye raskere. all javaFX css styling ligger her https://openjfx.io/javadoc/11/javafx.graphics/javafx/scene/doc-files/cssref.html#typeeffect
-    * Har linket opp beskrivelse med oppskrift
-    * byttet ut units for tid og ingredienser med dropdowns
-    * fjernet misplaced name box    
-    * made the entire grid pane a button in recipe, instead of pane with view button
-    * la til hover for button, for å gi feedback som tyder på at det er en knapp.
-    * removed visible grids in view mode
-    * endret css til lighttheme atm for å se endringer bedre
-    * linked load btn to load function
-    * linked save btn to save function
-    * laget searchbar metode for søk i cookbook
-    * created label for showing amount of recipes in the cookbook, as well as how many you are showing
-    * linket opp kategorier med oppskriftview
-    * koblet opp searchfield til å kjøre on key typed med search metoden
-    * koblet sammen tid og oppskrift
-    * linket categories med view
-    * satt opp gui med searchbar resultater
-
-    JULIAN: 
-
-        GJØR:
-        * fix button to add food to fridge
-        * fix button to remove food from fridge
-
-        FERDIG
-
     */
 } 
