@@ -36,7 +36,7 @@ public class BookOfCookController {
     private ListView fridgeList, categoryList;
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
 
     @FXML
     private TextArea descriptionArea, stepsArea;
@@ -449,6 +449,19 @@ public class BookOfCookController {
                 recipeGrid.add(createRecipeComponent(r), searchedRecipes.indexOf(r) % 3,  searchedRecipes.indexOf(r) / 3);
             }
         }
+    }
+
+    public void addFood() {
+        System.out.println("add food button");
+
+        if(fridgeNameInput.getText() == "" || fridgeAmountInput.getText() == "" || fridgeUnitInput.getText() == ""){
+
+            throw new IllegalArgumentException("bøsj");
+        }
+
+        /* System.out.println(fridgeNameInput.getText());
+        System.out.println(fridgeAmountInput.getText());
+        System.out.println(fridgeUnitInput.getText()); */
     }
 
     //Files
