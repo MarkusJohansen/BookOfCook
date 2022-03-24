@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 
 public class BookOfCookController {
     private Cookbook cookbook;
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
     private ArrayList<Category> categories;
     private Fridge fridge;
@@ -35,7 +35,7 @@ public class BookOfCookController {
     private VBox fridgeList, categoryList; //!List? Listpane?
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar;
 
     @FXML
     private TextArea descriptionArea, stepsArea;
@@ -274,10 +274,10 @@ public class BookOfCookController {
 
     public void initializeViewContent(Recipe recipe){
         createRecipeViewTitle(recipe);
-        createDescriptionLabel(recipe);
-        createStepsLabel(recipe);
-        createIngredientsLabel(recipe);
-        createCategoriesLabel(recipe);
+        createDescriptionLabel(recipe); //! fungerer ikke optimalt
+        createStepsLabel(recipe);       //! fungerer ikke optimalt
+        createIngredientsLabel(recipe); //! fungerer ikke
+        createCategoriesLabel(recipe);  //! fungerer ikke optimalt
         createServesLabel(recipe);
         createPrepTimeLabel(recipe);
         createCaloriesLabel(recipe);
@@ -317,7 +317,7 @@ public class BookOfCookController {
     }
 
     private void createCategoriesLabel(Recipe recipe){
-        Label label = new Label("Categories:");
+        Label label = new Label("Categories:" + recipe.getCategories());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox1.add(label, 0, 1);
     }
@@ -336,7 +336,7 @@ public class BookOfCookController {
 
     //second column in recipeview
     private void createStepsLabel(Recipe recipe){
-        Label label = new Label("Steps:");
+        Label label = new Label("Steps:" + recipe.getSteps());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeStepView.getChildren().clear();
         recipeStepView.getChildren().add(label);
@@ -407,6 +407,20 @@ public class BookOfCookController {
         System.out.println("Remove food button was clicked");
     }
 
+    //search for food
+    public void searchFood() {
+        System.out.println("Search food bar was used was clicked");
+        searchedRecipes = cookbook.searchRecipes(searchBar.getText());
+        System.out.println(searchedRecipes);
+        if(searchedRecipes.size() > 0){
+            recipeGrid.getChildren().clear();
+            for(Recipe r : searchedRecipes){
+                recipeGrid.add(createRecipeComponent(r), searchedRecipes.indexOf(r) % 3,  searchedRecipes.indexOf(r) / 3);
+            }
+        }
+    }
+
+    //Files
     public void load() {
         System.out.println("Load button was clicked");
     }
@@ -416,36 +430,34 @@ public class BookOfCookController {
     }
 
     /*
-    TODO:
+    TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
 
     ! fix remove food function
-    ! fix unit selector
-    ! koble opp legge til  ingredienser, kategorier og steg. (elementer som er i flertall i en oppskrift)
-    ! sette opp søkefelt for å søke etter oppskrifter
-    ! koble sammen tid og oppskrift
+    ! koble opp legge til  ingredienser
     ! sette opp dropdown menyer for enheter
-    ! fix add recipe function popout
     ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
-    ! connect the the textfields in recipe creator to the recipem object
     ! add category components with filters, use checkbox because that are standard
-    ! add number that indicates how many recipes is in the category or shown
     ! add fridge functionality
     ! add category functionality
     !? do we have full on validation? check fields keyword.
     ! fix load cookbook function
     ! fix save cookbook functionality
+    ! steps ikke linket med view
+    ! gjøre om name til recipes om til lowercase
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
     ? hvordan skiller vi kategorier
-    ? konvertering mellom enheter?
-    ? egen kategori for uncategorized?
     ? bruke predicates for å søke etter oppskrifter. kun de som inneholder en eller flere av ordene i søkeordet i navnet på retten
     ? bruke predicates for å filtrere etter kategorier
     ? bruke predicates for å filtrere etter ingredienser i fridge tool
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
+    ? kjøre searchbar på button click isteden?
+    ? kjøre searchbar på enter?
+    ? kjøre searchbar på enter og button click?
+    ? knapp for å fjerne all text fra search field?
     
     MARKUS:
     * Har linket opp kalorier med oppskrift
@@ -459,7 +471,13 @@ public class BookOfCookController {
     * endret css til lighttheme atm for å se endringer bedre
     * linked load btn to load function
     * linked save btn to save function
+    * laget searchbar metode for søk i cookbook
     * created label for showing amount of recipes in the cookbook, as well as how many you are showing
+    * linket opp kategorier med oppskriftview
+    * koblet opp searchfield til å kjøre on key typed med search metoden
+    * koblet sammen tid og oppskrift
+    * linket categories med view
+    * satt opp gui med searchbar resultater
 
     JULIAN: 
 

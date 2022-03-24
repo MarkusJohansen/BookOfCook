@@ -21,20 +21,13 @@
          <children>
             <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
-                  <VBox fx:id="categoryList" layoutX="26.0" layoutY="6.0" prefHeight="320.0" prefWidth="299.0" />
+                  <VBox fx:id="categoryList" layoutX="38.0" layoutY="6.0" prefHeight="320.0" prefWidth="299.0" />
                </children></Pane>
             <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
                   <VBox fx:id="fridgeList" layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
                </children></Pane>
             <Button layoutX="275.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
-            <Pane layoutX="-59.0" layoutY="-79.0" prefHeight="59.0" prefWidth="1800.0" styleClass="level-1-panes">
-               <children>
-                  <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#load" styleClass="standard-button" text="Load" />
-                  <Button layoutX="93.0" layoutY="17.0" mnemonicParsing="false" onAction="#save" styleClass="standard-button" text="Save" />
-                  <TextField layoutX="553.0" layoutY="13.0" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
-               </children>
-            </Pane>
             <TextField layoutX="40.0" layoutY="775.0" prefHeight="25.0" prefWidth="223.0" promptText="name" text="name" />
          </children>
       </Pane>
@@ -124,6 +117,13 @@
                   <MenuItem mnemonicParsing="false" text="Action 2" />
                </items>
             </SplitMenuButton>
+         </children>
+      </Pane>
+      <Pane layoutX="86.0" layoutY="3.0" prefHeight="59.0" prefWidth="1800.0" styleClass="level-1-panes">
+         <children>
+            <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#load" styleClass="standard-button" text="Load" />
+            <Button layoutX="93.0" layoutY="17.0" mnemonicParsing="false" onAction="#save" styleClass="standard-button" text="Save" />
+            <TextField fx:id="searchBar" layoutX="553.0" layoutY="13.0" onKeyTyped="#searchFood" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
          </children>
       </Pane>
    </children>
