@@ -64,7 +64,23 @@ public class BookOfCookController {
         cookbook.addRecipeToCookbook(new Recipe("Pizza", 2));
         cookbook.addRecipeToCookbook(new Recipe("Hamburger", 1));
         cookbook.addRecipeToCookbook(new Recipe("Spaghetti", 2));
-        cookbook.addRecipeToCookbook(new Recipe("Biff", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Enchiladas", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Entrecote", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Mousaka", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Tika masala", 1));
+        cookbook.addRecipeToCookbook(new Recipe("garam masala", 1));
+        cookbook.addRecipeToCookbook(new Recipe("smalahove", 1));
+        cookbook.addRecipeToCookbook(new Recipe("ribbe", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("Pinnekjøtt", 1)); //!Ikke lov med æøå
+        // cookbook.addRecipeToCookbook(new Recipe("kjøttkaker", 1));
+        cookbook.addRecipeToCookbook(new Recipe("lasagne", 1));
+        cookbook.addRecipeToCookbook(new Recipe("croissant", 1));
+        cookbook.addRecipeToCookbook(new Recipe("french toast", 1));
+        cookbook.addRecipeToCookbook(new Recipe("bacon and eggs", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Spam", 1));
+        cookbook.addRecipeToCookbook(new Recipe("tomatsuppe", 1));
+        cookbook.addRecipeToCookbook(new Recipe("pulled Pork", 1));
+        cookbook.addRecipeToCookbook(new Recipe("Tacos", 1));
     }
 
     private void initializeRecipes(){
@@ -442,6 +458,10 @@ public class BookOfCookController {
     ! fix save cookbook functionality
     ! steps ikke linket med view
     ! gjøre om name til recipes om til lowercase
+    ! finne en metode for å sørge for at oppskrifter ikke stables i grid, men at vi heller kan scrolle
+    ! finne en metdoe for å gjøre fonten mindre og få teksten til å bryte linjer dersom den er for lang til å vises
+    ! la recipe ta inn 'æøå som symboler i navns
+    ! oppskrift grid er beregnet på 18 oppskrifter, hvordan løse problemet?
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?

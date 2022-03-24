@@ -51,7 +51,7 @@
     -fx-font-family: "Arial";                                                                       /*Font-family of button*/
     -fx-background-color: linear-gradient(to bottom right, rgb(0, 219, 248), rgb(98, 0, 190));    /* lager en linear gradient som er korrekt for knappene vi ønsker i appdesign*/
     -fx-background-radius: 40px;                                                                    /*!fungerer som border radius men gjør at du kan klikke rett utenfor, border radius fungerer ikke på knappen ?*/
-    -fx-text-fill: white;                                                                         /*Colors the text inside button like a +*/
+    -fx-text-fill: white;                                                                       /*Colors the text inside button like a +*/
     -fx-padding: 0px 15px;                                                                          /*fixes that the button is higher than it is wide*/ 
 }
 
@@ -65,7 +65,7 @@
 
 .recipe-header{
     -fx-text-fill: white;
-    -fx-font-size: 25px;
+    -fx-font-size: 23px;
 }
 
 /*
