@@ -25,7 +25,7 @@
                </children></Pane>
             <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
-                  <VBox layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
+                  <VBox fx:id="fridgeList" layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
                </children></Pane>
             <Button layoutX="256.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
             <TextField layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="223.0" promptText="name" text="name" />
