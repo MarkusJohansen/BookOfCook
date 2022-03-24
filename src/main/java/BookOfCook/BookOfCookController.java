@@ -112,6 +112,8 @@ public class BookOfCookController {
     
     private void initializeFridge(){
         fridge = new Fridge();
+        fridge.addFood("tomater", 4, "stk");
+        fridge.addFood("melk", 2, "L");
     }
     
     private void initializeFridgeFood(){
