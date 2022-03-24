@@ -226,7 +226,7 @@ public class BookOfCookController {
         Pane foodBody = new Pane();
 
         //adds children
-        foodBody.getChildren().add(createFoodLabel("!foodname", "!amount", "!unit")); //!TO
+        foodBody.getChildren().add(createFoodLabel("food.get()", "!amount", "!unit")); //!TO
         foodBody.getChildren().add(createDeleteX("!foodname"));
 
         return foodBody;
