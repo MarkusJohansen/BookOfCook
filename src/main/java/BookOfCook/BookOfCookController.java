@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -32,7 +33,7 @@ public class BookOfCookController {
     private Pane recipeView, recipeStepView;
 
     @FXML
-    private VBox fridgeList, categoryList; //!List? Listpane?
+    private ListView fridgeList, categoryList;
 
     @FXML
     private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar;
@@ -122,13 +123,26 @@ public class BookOfCookController {
         //System.out.println(cookbook.getCategories());
 
         for(Category category : categories){
-            categoryList.getChildren().add(createCategoryComponent(category));
+            categoryList.getItems().add(createCategoryComponent(category));
         }
     }
     
     private void initializeFridge(){
         fridge = new Fridge();
         fridge.addFood("tomater", 4, "stk");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("melk", 2, "L");
         fridge.addFood("melk", 2, "L");
     }
     
@@ -139,12 +153,7 @@ public class BookOfCookController {
         System.out.println(fridgeFood);
 
         for(HashMap<String, Object> food : fridgeFood){
-
-            System.out.println(food.get("name"));
-            System.out.println(food.get("amount"));
-            System.out.println(food.get("unit"));
-
-            //fridgeList.getChildren().add(createFoodComponent(food.get("name"), food.get("amount"), food.get("unit")));
+            fridgeList.getItems().add(createFoodComponent(food.get("name").toString(), food.get("amount").getClass().getSimpleName(), food.get("unit").toString()));
         }
     }
 
@@ -157,12 +166,12 @@ public class BookOfCookController {
     }
 
     private void updateCategories(){
-        categoryList.getChildren().clear();
+        categoryList.getItems().clear();
         initializeCategories();
     }
 
     public void updatefridge(){
-        fridgeList.getChildren().clear();
+        fridgeList.getItems().clear();
         initializeFridge();
     }
 
@@ -199,7 +208,7 @@ public class BookOfCookController {
         Pane body = new Pane(); 
 
         //adds children
-        body.getChildren().add(createCategoryLabel(category));
+        //body.getChildren().add(createCategoryLabel(category));
         body.getChildren().add(createCategoryCheckbox(category));
 
         //styling
@@ -216,10 +225,10 @@ public class BookOfCookController {
         CheckBox checkbox = new CheckBox(category.getName());
 
         //sets style
-        checkbox.getStyleClass().clear();
+        /* checkbox.getStyleClass().clear();
         checkbox.getStyleClass().add("category-checkbox");
-        checkbox.setLayoutX(10);
-        checkbox.setLayoutY(10);
+        checkbox.setLayoutX(0);
+        checkbox.setLayoutY(0); */
 
         //on checkbox click
         checkbox.setOnAction(e -> {
@@ -250,7 +259,7 @@ public class BookOfCookController {
 
         //adds children
         foodBody.getChildren().add(createFoodLabel(food, amount, unit)); //!TO
-        foodBody.getChildren().add(createDeleteX("!foodname"));
+        foodBody.getChildren().add(createDeleteX(food));
 
         return foodBody;
     }
@@ -260,8 +269,8 @@ public class BookOfCookController {
 
         removeFoodBtn.getStyleClass().clear();
         removeFoodBtn.getStyleClass().add("standard-button");
-        removeFoodBtn.setLayoutX(80);
-        removeFoodBtn.setLayoutY(170);
+        removeFoodBtn.setLayoutX(10);
+        removeFoodBtn.setLayoutY(0);
 
         removeFoodBtn.setOnAction(e -> {
             System.out.println("Delete food " + foodname);
