@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextArea?>
@@ -21,14 +22,17 @@
          <children>
             <Pane layoutX="41.0" layoutY="38.0" prefHeight="331.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
-                  <VBox fx:id="categoryList" layoutX="38.0" layoutY="6.0" prefHeight="320.0" prefWidth="299.0" />
+                  <ListView fx:id="categoryList" layoutX="14.0" layoutY="14.0" prefHeight="302.0" prefWidth="325.0" />
                </children></Pane>
             <Pane layoutX="41.0" layoutY="422.0" prefHeight="341.0" prefWidth="351.0" styleClass="level-2-panes">
                <children>
-                  <VBox fx:id="fridgeList" layoutX="7.0" layoutY="20.0" prefHeight="302.0" prefWidth="338.0" />
+                  <VBox layoutX="241.0" layoutY="20.0" prefHeight="302.0" prefWidth="96.0" />
+                  <ListView fx:id="fridgeList" layoutX="14.0" layoutY="14.0" prefHeight="313.0" prefWidth="325.0" />
                </children></Pane>
-            <Button layoutX="256.0" layoutY="775.0" mnemonicParsing="false" styleClass="standard-button" text="Add Ingredient" />
-            <TextField layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="223.0" promptText="name" text="name" />
+            <Button fx:id="fridgeAddButton" layoutX="256.0" layoutY="775.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="standard-button" text="Add Ingredient" />
+            <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
+            <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
+            <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
          </children>
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">
