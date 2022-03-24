@@ -10,7 +10,7 @@ public class BookOfCookApp extends Application{
     
     @Override   
     public void start(Stage primaryStage) throws Exception {
-        //Styler vinduet litt
+        //Styler vinduet littr
         primaryStage.setTitle("Book of Cook");
         //primaryStage.getIcons().add(new Image("../../resources/BookOfCook/icon.png")); //!Skal setet funker ikke :()
 

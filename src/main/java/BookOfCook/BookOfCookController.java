@@ -140,8 +140,11 @@ public class BookOfCookController {
 
         for(HashMap<String, Object> food : fridgeFood){
 
-            System.out.println(food.get("name"), food.get("amount"), food.get("unit")));
-            fridgeList.getChildren().add(createFoodComponent(food.get("name"), food.get("amount"), food.get("unit")));
+            System.out.println(food.get("name"));
+            System.out.println(food.get("amount"));
+            System.out.println(food.get("unit"));
+
+            //fridgeList.getChildren().add(createFoodComponent(food.get("name"), food.get("amount"), food.get("unit")));
         }
     }
 
