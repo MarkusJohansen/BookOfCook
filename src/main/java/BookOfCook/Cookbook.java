@@ -34,7 +34,7 @@ public class Cookbook implements recipeContainer {
 
     //*SETTERS
     // sets name of cookbook
-    private void setName(String name) {
+    public void setName(String name) {
         nameIsValid(name);                                  // checks if name is valid
         this.name = name;                                   // sets name of cookbook                   
     }
@@ -61,14 +61,14 @@ public class Cookbook implements recipeContainer {
 
     // *VALIDATION METHODS
     // checks if cookbook contains recipe
-    public void duplicateRecipeCheck(Recipe recipe) {
+    private void duplicateRecipeCheck(Recipe recipe) {
         if (recipes.contains(recipe)) {                                                             // checks if recipe already exists in cookbook
             throw new IllegalArgumentException("Recipe already exists in cookbook");                // describes problem in console and throws ERROR
         }
     }
 
     // checks if recipe name already exists in cookbook
-    public void duplicateRecipeNameCheck(Recipe recipe){
+    private void duplicateRecipeNameCheck(Recipe recipe){
         for (Recipe r : recipes) {                                                                      // loops through recipes in cookbook
             if (r.getName().equals(recipe.getName())) {                                                 // checks there is another recipe with identical name in// cookbook
                 throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
@@ -76,16 +76,15 @@ public class Cookbook implements recipeContainer {
         }
     }
 
-    // *WRITE TO FILE .txt
-    // write recipes in cookbook as parsed strings to file
 
-    public void checkIfRecipeExists(Recipe recipe) {
+    private void checkIfRecipeExists(Recipe recipe) {
         if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
             throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
         }
     }
 
-    public void nameIsValid(String name) {
+
+    private void nameIsValid(String name) {
         if (name.isEmpty()) {                                                                           // checks if name is empty
             throw new IllegalArgumentException("Name cannot be empty");                                 // describes problem in console;
         }
@@ -116,7 +115,7 @@ public class Cookbook implements recipeContainer {
     }
 
 
-    // *WRITE TO FILE .txt
+    //! *WRITE TO FILE .txt ikke klar funksjon enda
     // write recipes in cookbook as parsed strings to file
     public void writeToFile() {
         try {                                                       // prøv å skrive filen

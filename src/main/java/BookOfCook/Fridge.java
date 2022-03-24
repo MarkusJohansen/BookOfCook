@@ -25,7 +25,7 @@ public class Fridge {
         return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("HH:mm - dd.MM"));
     }
 
-    // *ADDING AND REMOVING FOOD
+    //*ADDING AND REMOVING FOOD 
     public void addFood(String name, double amount, String unit/*, Cookbook cookbook*/) {
         /* for (Recipe r : cookbook.getRecipes()) {
             for (HashMap<String, Object> i : r) {
@@ -63,7 +63,7 @@ public class Fridge {
     }
     
     // *VALIDATION
-    public boolean isFoodInFridge(String food){
+    private boolean isFoodInFridge(String food){
         for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
             if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
                 return true;
@@ -72,7 +72,7 @@ public class Fridge {
         return false;
     }
 
-    // *TIME
+    //! *TIME er det noe vi trenger? 
     public void updateFridgeTime(){     // method for updating the lastUptadeOfFridge
         lastUpdateOfFridge = LocalDateTime.now(); 
     }

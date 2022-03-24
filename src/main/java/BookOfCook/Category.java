@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Category implements recipeContainer {
     // *FIELDS
-    String name;                                            // name of category
-    ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
+    private String name;                                            // name of category
+    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
 
     // *CONSTRUCTOR
     public Category(String name) {

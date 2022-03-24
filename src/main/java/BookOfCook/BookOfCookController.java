@@ -453,6 +453,7 @@ public class BookOfCookController {
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
+    Ny oppdagede bugs:
 
 
     fridge
@@ -461,7 +462,6 @@ public class BookOfCookController {
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
 
     category
-    ! add category 
     ! add category components with filters, use checkbox because that are standard
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
@@ -486,13 +486,21 @@ public class BookOfCookController {
 
     i klassene
     ! gjøre om name til recipes om til lowercase
-    !? do we have full on validation? check fields keyword.
+    !? do we have full on validation?
 
     logistikk
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
 
     søkefelt
+    ! må oppdatere hvor mange av totalt oppskrifter den viser
     ? knapp for å fjerne all text fra search field?
+
+
+    MARKUS HAR GJORT:
+    * gått over privacy declarators i Recipe klassen
+    * gått over privacy declarators i Cookbook klassen
+    * gått over privacy declarators i Category klassen
+    * gått over privacy declarators i Fridge klassen
     */
 } 

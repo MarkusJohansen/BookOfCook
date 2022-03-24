@@ -90,7 +90,6 @@ public class Recipe {
         setCaloriesPerPerson();                                     // sets calories per person based on the new value of calories and number of servings
     }
 
-    // !set calories per person should be combined with setCalories
     private void setCaloriesPerPerson() {          
         this.caloriesPerPerson = calories / numberOfServings;       // sets calories per person based on the new value of calories and number of servings
     }
@@ -100,7 +99,6 @@ public class Recipe {
     }
 
     public void setPrepTime(int timeInMinutes) { //prep time in hours
-
         if (timeInMinutes > 60) {
             //time in min to hours and minutes
             this.prepTime = Integer.toString(timeInMinutes / 60) + "h " + Integer.toString(timeInMinutes % 60) + "min";
@@ -134,7 +132,7 @@ public class Recipe {
         }
     }
 
-    // change ingredient amount and unit in ingredients list
+    //! change ingredient amount and unit in ingredients list SKAL VI BRUKE DISSE
     public void changeIngredient(String name, double amount, String unit) {
         for (HashMap<String, Object> Ingredient : Ingredients) {            // loops through all ingredients
             HashMap<String, Object> copyOfIngredient = Ingredient;          // creates a copy of the ingredient
@@ -155,7 +153,7 @@ public class Recipe {
         }
     }
 
-    // change ingredient name to new name
+    //! change ingredient name to new name SKAL VI BRUKE DISSE
     public void changeIngredientName(String name, String newName) {
         for (HashMap<String, Object> Ingredient : Ingredients) {        // loops through all ingredients
             HashMap<String, Object> copyOfIngredient = Ingredient;      // creates a copy of the ingredient
@@ -279,7 +277,7 @@ public class Recipe {
     }
 
     // validates recipe name
-    public void validRecipeName(String name) {
+    private void validRecipeName(String name) {
         if (name == null || name.equals("")) {                                                          // if name is null or empty
             throw new IllegalArgumentException("Name cannot be null or empty");                         // throw error
         }                                                                                               
@@ -290,7 +288,7 @@ public class Recipe {
     }
 
     // validates number of servings
-    public void validServings(int numberOfServings) {
+    private void validServings(int numberOfServings) {
         if (numberOfServings <= 0) {                                                                    // if number of servings is less than or equal to 0
             throw new IllegalArgumentException("Number of servings must be greater than 0");            // throw error
         }
@@ -300,7 +298,7 @@ public class Recipe {
     }
 
 
-    // *PARSING RECIPE FOR WRITING TO .txt FILE
+    //! *PARSING RECIPE FOR WRITING TO .txt FILE ER DENNE NØDVENDIG?
     public String parsedRecipe() {
         String parsedRecipe = "";                                                               // Creates empty string that will be built up
         String recipeSection = "============================================\n";                // Creates a FATLINE to separate different sections.
@@ -310,7 +308,7 @@ public class Recipe {
         parsedRecipe += "Categories:";                                                          // adds categories section for parsed recipe
 
         for(Category category : categories) {                                                   // loops through all categories
-            parsedRecipe += "  " + category.name + ",";                                         // adds category to parsed recipe
+            parsedRecipe += "  " + category.getName() + ",";                                         // adds category to parsed recipe
         }
 
         parsedRecipe += "\n";  
