@@ -121,12 +121,7 @@ public class BookOfCookController {
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
-        //System.out.println(recipes.get(0).getCategories());
-        //System.out.println(recipes.get(1).getCategories());
-
         cookbook.collectCategories();
-
-        //System.out.println("nig " + cookbook.getCategories());
 
         //recipes.addAll(cookbook.getRecipes());
     }
@@ -149,29 +144,19 @@ public class BookOfCookController {
         fridge = new Fridge();
         fridge.addFood("tomater", 4, "stk");
         fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("melk", 2, "L");
+        fridge.addFood("ost", 400, "g");
+        fridge.addFood("egg", 8, "stk");
+        fridge.addFood("rømme", 3, "dL");
+        fridge.addFood("ketchup", 5, "dL");
+        fridge.addFood("pastaskruer", 1, "kg");
     }
     
     private void initializeFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
         fridgeFood.addAll(fridge.getFoodInFridge());
 
-        System.out.println(fridgeFood);
-
         for(HashMap<String, Object> food : fridgeFood){
-            fridgeList.getItems().add(createFoodComponent(food.get("name").toString(), food.get("amount").getClass().getSimpleName(), food.get("unit").toString()));
+            fridgeList.getItems().add(createFoodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
     }
 
@@ -190,7 +175,8 @@ public class BookOfCookController {
 
     public void updatefridge(){
         fridgeList.getItems().clear();
-        initializeFridge();
+
+        initializeFridgeFood();
     }
 
     public void updateNumberOfRecipes(){
@@ -297,7 +283,9 @@ public class BookOfCookController {
 
         removeFoodBtn.setOnAction(e -> {
             System.out.println("Delete food " + foodname);
-            //?deleteFood();
+            fridge.removeFood(foodname);
+
+            updatefridge();
         });
 
         return removeFoodBtn;
@@ -480,17 +468,23 @@ public class BookOfCookController {
         numbersOfRecipesInArray(searchedRecipes);
     }
 
-    public void addFood() {
+    public void fridgeAddFood() {
         System.out.println("add food button");
 
-        if(fridgeNameInput.getText() == "" || fridgeAmountInput.getText() == "" || fridgeUnitInput.getText() == ""){
+         if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0 || fridgeUnitInput.getText().length() == 0){
 
-            throw new IllegalArgumentException("bøsj");
+            System.out.println("Not all textfields filled in");
+            return;
         }
 
-        /* System.out.println(fridgeNameInput.getText());
-        System.out.println(fridgeAmountInput.getText());
-        System.out.println(fridgeUnitInput.getText()); */
+        if(fridge.isFoodInFridge(fridgeNameInput.getText())){
+            System.out.println("That type of food is already in your fridge");
+            return;
+        }
+
+        fridge.addFood(fridgeNameInput.getText(), Double.parseDouble(fridgeAmountInput.getText()), fridgeUnitInput.getText());
+        
+        updatefridge();
     }
 
     //Files
@@ -508,8 +502,6 @@ public class BookOfCookController {
 
 
     fridge
-    ! add fridge 
-    ! fix remove food function
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
 
     category
@@ -547,11 +539,16 @@ public class BookOfCookController {
     ? knapp for å fjerne all text fra search field?
 
 
-    MARKUS HAR GJORT:
+    MARKUS HAR GJORT: ikke en dritt
     * gått over privacy declarators i Recipe klassen
     * gått over privacy declarators i Cookbook klassen
     * gått over privacy declarators i Category klassen
     * gått over privacy declarators i Fridge klassen
-    * lagde metode for å oppdatere antall viste oppskrifter label, for søk, filtrering etc.
+    * fikset oppdatering av antall recipes label
+
+    JULIAN HAR GJORT: masse
+    * add fridge 
+    * fix remove food function
+    
     */
 } 

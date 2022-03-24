@@ -29,10 +29,10 @@
                   <VBox layoutX="241.0" layoutY="20.0" prefHeight="302.0" prefWidth="96.0" />
                   <ListView fx:id="fridgeList" layoutX="14.0" layoutY="14.0" prefHeight="313.0" prefWidth="325.0" />
                </children></Pane>
-            <Button fx:id="fridgeAddButton" layoutX="256.0" layoutY="775.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="standard-button" text="Add Ingredient" />
+            <Button fx:id="fridgeAddButton" layoutX="256.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add Ingredient" />
             <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
-            <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
-            <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
+            <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="amount" />
+            <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="unit" />
          </children>
       </Pane>
       <Pane layoutX="550.0" layoutY="82.0" prefHeight="817.0" prefWidth="870.0" styleClass="level-1-panes">

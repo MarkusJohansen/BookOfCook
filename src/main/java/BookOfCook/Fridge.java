@@ -27,6 +27,11 @@ public class Fridge {
 
     //*ADDING AND REMOVING FOOD 
     public void addFood(String name, double amount, String unit/*, Cookbook cookbook*/) {
+
+        if(isFoodInFridge(name)){
+            System.out.println("Food " + name + " is already in fridge.");
+        }
+
         /* for (Recipe r : cookbook.getRecipes()) {
             for (HashMap<String, Object> i : r) {
                 
@@ -41,14 +46,14 @@ public class Fridge {
     }
 
     public void removeFood(String name) {
-        boolean removedFood = false;                                            // variable for checking if any food is removed at all
+        boolean removedFood = false;
 
-        for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
-            if (isFoodInFridge(name)) {                                         //  checks if i food is equal to the parameter
+        for (int i = 0; i < foodInFridge.size(); i++){                          // iterates through foodInFridge
+            if(foodInFridge.get(i).get("name") == name){                        // checks if food is equal to name
                 System.out.println("Removing " + foodInFridge.get(i));          
                 foodInFridge.remove(i);                                         // removes i food
                 removedFood = true;
-                updateFridgeTime();                                             // updates lastUpdateOfFridge time
+                updateFridgeTime();   
             }
         }
 
@@ -63,7 +68,7 @@ public class Fridge {
     }
     
     // *VALIDATION
-    private boolean isFoodInFridge(String food){
+    public boolean isFoodInFridge(String food){
         for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
             if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
                 return true;
