@@ -20,6 +20,7 @@ public class BookOfCookController {
     private ArrayList<HashMap<String, Object>> fridgeFood;
     private ArrayList<Category> categories;
     private Fridge fridge;
+    private int numbersOfRecipesShown;
 
 
     //*FXML-noder
@@ -44,6 +45,7 @@ public class BookOfCookController {
 
     //*INITIALIZATION
     public void initialize(){
+        //! fungerer ikke searchBar.requestFocus();
         initializeCookBook();
         initializeRecipeGrid();
         initializeFridge();
@@ -82,6 +84,22 @@ public class BookOfCookController {
         cookbook.addRecipeToCookbook(new Recipe("tomatsuppe", 1));
         cookbook.addRecipeToCookbook(new Recipe("pulled Pork", 1));
         cookbook.addRecipeToCookbook(new Recipe("Tacos", 1));
+        cookbook.addRecipeToCookbook(new Recipe("shepeards pie", 1));
+        cookbook.addRecipeToCookbook(new Recipe("kylling taco", 1));
+        cookbook.addRecipeToCookbook(new Recipe("quesedillas", 1));
+        cookbook.addRecipeToCookbook(new Recipe("fajitas", 1));
+        cookbook.addRecipeToCookbook(new Recipe("vegetarburger", 1));
+        cookbook.addRecipeToCookbook(new Recipe("omelett", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("eggerore", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("ballestein", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("kaviar", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("leverpostei", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("makrell i tomat", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("kanelboller", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("skoleboller", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("kanelknute", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("cote de beoff", 1));
+        // cookbook.addRecipeToCookbook(new Recipe("spareribs", 1));
     }
 
     private void initializeRecipes(){
@@ -176,9 +194,14 @@ public class BookOfCookController {
     }
 
     public void updateNumberOfRecipes(){
-        recipeAmount.setText(String.valueOf("Currently showing " + cookbook.getRecipeAmount() + "/" + cookbook.getRecipeAmount() + " recipes."));
+        numbersOfRecipesShown = recipes.size();
+        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + cookbook.getRecipeAmount() + " recipes."));
     }
-    
+
+    public void numbersOfRecipesInArray(ArrayList<Recipe> recipeArray){
+        numbersOfRecipesShown = recipes.size();
+        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + cookbook.getRecipeAmount() + " recipes."));
+    }
 
 
     //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
@@ -370,7 +393,7 @@ public class BookOfCookController {
     private void createStepsLabel(Recipe recipe){
         Label label = new Label("Steps:" + recipe.getSteps());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeStepView.getChildren().clear();
+        // recipeStepView.getChildren().clear();
         recipeStepView.getChildren().add(label);
     }
 
@@ -426,6 +449,11 @@ public class BookOfCookController {
         recipe.addStep(stepsArea.getText());
 
         cookbook.addRecipeToCookbook(recipe);
+        if(recipes.size() > 18){
+            //add row to the bottom of the recipeGrid grid
+            recipeGrid.addRow(recipes.size() - 18);
+            recipeGrid.setMaxHeight();
+        }
         updateRecipeGrid();
     }
 
@@ -449,6 +477,7 @@ public class BookOfCookController {
                 recipeGrid.add(createRecipeComponent(r), searchedRecipes.indexOf(r) % 3,  searchedRecipes.indexOf(r) / 3);
             }
         }
+        numbersOfRecipesInArray(searchedRecipes);
     }
 
     public void addFood() {
@@ -515,7 +544,6 @@ public class BookOfCookController {
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
 
     søkefelt
-    ! må oppdatere hvor mange av totalt oppskrifter den viser
     ? knapp for å fjerne all text fra search field?
 
 
@@ -524,5 +552,6 @@ public class BookOfCookController {
     * gått over privacy declarators i Cookbook klassen
     * gått over privacy declarators i Category klassen
     * gått over privacy declarators i Fridge klassen
+    * lagde metode for å oppdatere antall viste oppskrifter label, for søk, filtrering etc.
     */
 } 
