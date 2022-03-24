@@ -24,7 +24,7 @@
     -fx-border-width: 5px;
     -fx-border-radius: 20px;
     -fx-text-fill: #ffffff;
-    -fx-font-size: 30px;
+    -fx-font-size: 20px;
     -fx-font-family: "Arial";
     -fx-alignment: CENTER;                                                          /*Font-family of button*/
 }

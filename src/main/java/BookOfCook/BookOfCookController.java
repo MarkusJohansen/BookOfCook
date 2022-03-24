@@ -427,7 +427,6 @@ public class BookOfCookController {
     public void searchFood() {
         System.out.println("Search food bar was used was clicked");
         searchedRecipes = cookbook.searchRecipes(searchBar.getText());
-        System.out.println(searchedRecipes);
         if(searchedRecipes.size() > 0){
             recipeGrid.getChildren().clear();
             for(Recipe r : searchedRecipes){
@@ -463,7 +462,6 @@ public class BookOfCookController {
     ! finne en metode for å sørge for at oppskrifter ikke stables i grid, men at vi heller kan scrolle
     ! finne en metdoe for å gjøre fonten mindre og få teksten til å bryte linjer dersom den er for lang til å vises
     ! la recipe ta inn 'æøå som symboler i navns
-    ! oppskrift grid er beregnet på 18 oppskrifter, hvordan løse problemet?
 
     ? hva skjer om vi legger til flere recipes en det som kan vises samtidig?
     ? legge edit og lage recipe tool i et popupvindu?
