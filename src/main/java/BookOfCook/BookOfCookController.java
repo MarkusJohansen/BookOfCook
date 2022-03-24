@@ -34,7 +34,7 @@ public class BookOfCookController {
     private Pane recipeView, recipeStepView;
 
     @FXML
-    private ListView fridgeList, categoryList;
+    private ListView fridgeList, categoryList, recipeList;
 
     @FXML
     private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
@@ -440,7 +440,7 @@ public class BookOfCookController {
         if(recipes.size() > 18){
             //add row to the bottom of the recipeGrid grid
             recipeGrid.addRow(recipes.size() - 18);
-            recipeGrid.setMaxHeight();
+            //recipeGrid.setMaxHeight();
         }
         updateRecipeGrid();
     }
