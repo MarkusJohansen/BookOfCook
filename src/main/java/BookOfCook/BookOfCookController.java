@@ -136,8 +136,12 @@ public class BookOfCookController {
         fridgeFood = new ArrayList<HashMap<String, Object>>();
         fridgeFood.addAll(fridge.getFoodInFridge());
 
+        System.out.println(fridgeFood);
+
         for(HashMap<String, Object> food : fridgeFood){
-            fridgeList.getChildren().add(createFoodComponent(food));
+
+            System.out.println(food.get("name"), food.get("amount"), food.get("unit")));
+            fridgeList.getChildren().add(createFoodComponent(food.get("name"), food.get("amount"), food.get("unit")));
         }
     }
 
@@ -238,11 +242,11 @@ public class BookOfCookController {
 
 
     //*DYNAMIC CREATION OF FRIDGE COMPONENTS
-    private Pane createFoodComponent(HashMap<String, Object> food){
+    private Pane createFoodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
 
         //adds children
-        foodBody.getChildren().add(createFoodLabel("!foodname", "!amount", "!unit")); //!TO
+        foodBody.getChildren().add(createFoodLabel(food, amount, unit)); //!TO
         foodBody.getChildren().add(createDeleteX("!foodname"));
 
         return foodBody;
