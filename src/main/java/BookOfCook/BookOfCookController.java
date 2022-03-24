@@ -260,11 +260,9 @@ public class BookOfCookController {
 
         removeFoodBtn.setOnAction(e -> {
             System.out.println("Delete food " + foodname);
-
             fridge.removeFood(foodname);
 
             updatefridge();
-            //?deleteFood();
         });
 
         return removeFoodBtn;
@@ -475,8 +473,6 @@ public class BookOfCookController {
 
 
     fridge
-    ! add fridge 
-    ! fix remove food function
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
 
     category
@@ -522,7 +518,8 @@ public class BookOfCookController {
     * gått over privacy declarators i Fridge klassen
 
     JULIAN HAR GJORT: masse
+    * add fridge 
+    * fix remove food function
     
-
     */
 } 
