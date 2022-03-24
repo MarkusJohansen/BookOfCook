@@ -159,7 +159,7 @@ public class BookOfCookController {
             fridgeList.getItems().add(createFoodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
     }
-
+    
 
     //*UPDATERS
     public void updateRecipeGrid(){
