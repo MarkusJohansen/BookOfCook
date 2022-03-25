@@ -89,7 +89,6 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("omelett", 1));
     }
 
-    
     private void initRecipes(){
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
@@ -227,20 +226,6 @@ public class BookOfCookController {
 
         return checkbox;
     }
-
-    private Label categLabel(Category category){
-        //creates a label with category name
-        Label label = new Label(category.getName());
-
-        //sets style
-        label.getStyleClass().clear();
-        label.getStyleClass().add("category-header");
-        label.setLayoutX(10);
-        label.setLayoutY(10);
-
-        return label;
-    }
-
 
     //*DYNAMIC CREATION OF FRIDGE COMPONENTS
     private Pane foodComponent(String food, String amount, String unit){
