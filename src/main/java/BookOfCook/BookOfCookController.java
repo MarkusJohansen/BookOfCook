@@ -28,13 +28,13 @@ public class BookOfCookController {
     private Label number, label, recipeAmount;  
 
     @FXML
-    private GridPane recipeGrid, recipeViewContent, recipeViewBox1, recipeViewBox2;
+    private GridPane recipeViewContent, recipeViewBox1, recipeViewBox2;
 
     @FXML
     private Pane recipeView, recipeStepView;
 
     @FXML
-    private ListView fridgeList, categoryList;
+    private ListView fridgeList, categoryList, recipeList;
 
     @FXML
     private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
@@ -47,13 +47,13 @@ public class BookOfCookController {
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
         initializeCookBook();
-        initializeRecipeGrid();
+        initializerecipeList();
         initializeFridge();
         initializeCategories();
         initializeFridgeFood();
     }
 
-    private void initializeRecipeGrid() {
+    private void initializerecipeList() {
         initializeRecipes();
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
@@ -163,9 +163,9 @@ public class BookOfCookController {
 
     //*UPDATERS
     public void updateRecipeList(){
-        recipeGrid.getChildren().clear();
+        recipeList.getItems().clear();
         updateCategories();
-        initializeRecipeGrid();
+        initializerecipeList();
     }
 
     private void updateCategories(){
@@ -302,7 +302,7 @@ public class BookOfCookController {
     // *RECIPEVIEW
     public void viewRecipe(Recipe recipe){
         //hide grid and show recipeview
-        recipeGrid.setVisible(false);
+        recipeList.setVisible(false);
         recipeView.setVisible(true);
 
         //set recipe style
@@ -316,14 +316,20 @@ public class BookOfCookController {
     }
 
     public void initializeViewContent(Recipe recipe){
-        createRecipeViewTitle(recipe);
-        createDescriptionLabel(recipe); //! fungerer ikke optimalt
-        createStepsLabel(recipe);       //! fungerer ikke optimalt
+        // createStepsLabel(recipe);       //! fungerer ikke optimalt
+
+        //column 1
+        viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
+        viewLabel("Categories:" + recipe.getCategories(), recipeViewBox1, 0, 1);
+        viewLabel(recipe.getDescription(), recipeViewBox1, 0, 2);       
+        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 0, 3);
+        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 0, 5);
+
+        //column 2
+        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox2, 0, 0); 
         createIngredientsLabel(recipe); //! fungerer ikke
-        createCategoriesLabel(recipe);  //! fungerer ikke optimalt
-        createServesLabel(recipe);
-        createPrepTimeLabel(recipe);
-        createCaloriesLabel(recipe);
+
+        //btns
         addCloseButton(recipe);
     }
 
@@ -339,6 +345,7 @@ public class BookOfCookController {
 
         //sets action
         closeButton.setOnAction(e -> {
+            System.out.println("Close recipe view for: " + recipe.getName());
             closeRecipeView();
         });
 
@@ -346,36 +353,6 @@ public class BookOfCookController {
         recipeViewContent.add(closeButton, 0, 4);
     }
 
-    private void createRecipeViewTitle(Recipe recipe){
-        Label label = new Label(recipe.getDisplayedName());
-        styleLabel(label,"recipe-header", 80.0, 10.0);
-        recipeViewBox1.add(label, 0, 0);
-    }
-
-    //first column in recipeview
-    private void createDescriptionLabel(Recipe recipe){
-        Label label = new Label(recipe.getDescription());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox1.add(label, 0, 2);
-    }
-
-    private void createCategoriesLabel(Recipe recipe){
-        Label label = new Label("Categories:" + recipe.getCategories());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox1.add(label, 0, 1);
-    }
-
-    private void createPrepTimeLabel(Recipe recipe){
-        Label label = new Label("Prep time: " + recipe.getPrepTime());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox1.add(label, 0, 3);
-    }
-
-    private void createCaloriesLabel(Recipe recipe){
-        Label label = new Label("Calories: " + recipe.getCalories());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox1.add(label, 0, 5);
-    }
 
     //second column in recipeview
     private void createStepsLabel(Recipe recipe){
@@ -385,17 +362,16 @@ public class BookOfCookController {
         recipeStepView.getChildren().add(label);
     }
 
-    //third column in recipeview
-    private void createServesLabel(Recipe recipe){
-        Label label = new Label("Serves: " + recipe.getNumberOfServings());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox2.add(label, 0, 0);
-    }
-
     private void createIngredientsLabel(Recipe recipe){
         Label label = new Label("Ingredients:");
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox2.add(label, 0, 1);
+    }
+
+    private void viewLabel(String content, Object parent, int row, int column){
+        Label label = new Label(content);
+        styleLabel(label, "recipe-view-text", 80.0, 10.0);
+        ((GridPane)parent).add(label, column, row);
     }
 
     //close recipeView
@@ -403,7 +379,7 @@ public class BookOfCookController {
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
         recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
-        recipeGrid.setVisible(true);
+        recipeList.setVisible(true);
     }
 
 
@@ -435,14 +411,7 @@ public class BookOfCookController {
         // recipe.setIngredients(ingredientBar.getText());
 
         recipe.addStep(stepsArea.getText());
-
         cookbook.addRecipeToCookbook(recipe);
-        if(recipes.size() > 18){
-            //add row to the bottom of the recipeGrid grid
-            recipeGrid.addRow(recipes.size() - 18);
-
-            //! HVORDAN  recipeGrid.setMaxHeight();
-        }
         updateRecipeList();
     }
 
@@ -461,9 +430,9 @@ public class BookOfCookController {
         System.out.println("Search food bar was used was clicked");
         searchedRecipes = cookbook.searchRecipes(searchBar.getText());
         if(searchedRecipes.size() > 0){
-            recipeGrid.getChildren().clear();
+            recipeList.getItems().clear();
             for(Recipe r : searchedRecipes){
-                recipeGrid.add(createRecipeComponent(r), searchedRecipes.indexOf(r) % 3,  searchedRecipes.indexOf(r) / 3);
+                recipeList.getItems().add(createRecipeComponent(r));
             }
         }
         numbersOfRecipesInArray(searchedRecipes);
@@ -472,7 +441,7 @@ public class BookOfCookController {
     public void fridgeAddFood() {
         System.out.println("add food button");
 
-         if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0 || fridgeUnitInput.getText().length() == 0){
+        if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0 || fridgeUnitInput.getText().length() == 0){
 
             System.out.println("Not all textfields filled in");
             return;
@@ -515,7 +484,6 @@ public class BookOfCookController {
     ! fix save cookbook 
 
     recipe grid
-    ! finne en metode for å sørge for at oppskrifter ikke stables i grid, men at vi heller kan scrolle
     ! finne en metdoe for å gjøre fonten mindre og få teksten til å bryte linjer dersom den er for lang til å vises
     
     recipe creator og editor
@@ -546,6 +514,9 @@ public class BookOfCookController {
     * gått over privacy declarators i Category klassen
     * gått over privacy declarators i Fridge klassen
     * fikset oppdatering av antall recipes label
+    * fikset convertering fra grid til list for recipes
+    * fikset skjuling av nummereringslabel i recipe list
+    * fikk kvittet meg med tretti linjer kode. lagde viewlabel component
 
     JULIAN HAR GJORT: masse
     * add fridge 
