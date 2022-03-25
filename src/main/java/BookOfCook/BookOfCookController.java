@@ -303,7 +303,9 @@ public class BookOfCookController {
     public void viewRecipe(Recipe recipe){
         //hide grid and show recipeview
         recipeList.setVisible(false);
+        recipeAmount.setVisible(false);
         recipeView.setVisible(true);
+        
 
         //set recipe style
         recipeView.getStyleClass().clear();
@@ -331,6 +333,7 @@ public class BookOfCookController {
 
         //btns
         addCloseButton(recipe);
+        addRemoveBtn(recipe);
     }
 
     private void addCloseButton(Recipe recipe){
@@ -351,6 +354,25 @@ public class BookOfCookController {
 
         //adds to grid
         recipeViewContent.add(closeButton, 0, 4);
+    }
+
+    private void addRemoveBtn(Recipe recipe){
+        //creates button object
+        Button removeButton = new Button("Remove");
+
+        //sets style
+        removeButton.getStyleClass().clear();
+        removeButton.getStyleClass().add("standard-button");
+        removeButton.setLayoutX(80);
+        removeButton.setLayoutY(170);
+
+        //sets action
+        removeButton.setOnAction(e -> {
+            removeRecipe(recipe);
+        });
+
+        //adds to grid
+        recipeViewContent.add(removeButton, 1, 3);
     }
 
 
@@ -380,6 +402,7 @@ public class BookOfCookController {
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
         recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
         recipeList.setVisible(true);
+        recipeAmount.setVisible(true);
     }
 
 
@@ -423,6 +446,14 @@ public class BookOfCookController {
     //remove food from fridge
     public void removeFood() {
         System.out.println("Remove food button was clicked");
+    }
+
+    //remove recipe
+    public void removeRecipe(Recipe recipe){
+        System.out.println("Remove recipe button was clicked");
+        cookbook.removeRecipe(recipe);
+        updateRecipeList();
+        closeRecipeView();
     }
 
     //search for food

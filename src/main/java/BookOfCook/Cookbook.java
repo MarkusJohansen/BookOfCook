@@ -26,7 +26,7 @@ public class Cookbook implements recipeContainer {
     }
 
     // removes recipe from cookbook and updates recipe amount
-    public void removeRecipeFromCookbook(Recipe recipe) {
+    public void removeRecipe(Recipe recipe) {
         checkIfRecipeExists(recipe);                        // checks if recipe exists
         recipes.remove(recipe);                             // removes recipe from cookbook
         recipeAmount--;                                     // updates amount of recipes in cookbook
