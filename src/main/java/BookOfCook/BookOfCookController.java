@@ -482,9 +482,6 @@ public class BookOfCookController {
     skriving til fil
     ! fix load cookbook function
     ! fix save cookbook 
-
-    recipe grid
-    ! finne en metdoe for å gjøre fonten mindre og få teksten til å bryte linjer dersom den er for lang til å vises
     
     recipe creator og editor
     ! la recipe ta inn 'æøå som symboler i navns
@@ -508,7 +505,7 @@ public class BookOfCookController {
     ? knapp for å fjerne all text fra search field?
 
 
-    MARKUS HAR GJORT: ikke en dritt
+    MARKUS HAR GJORT:
     * gått over privacy declarators i Recipe klassen
     * gått over privacy declarators i Cookbook klassen
     * gått over privacy declarators i Category klassen
@@ -517,10 +514,19 @@ public class BookOfCookController {
     * fikset convertering fra grid til list for recipes
     * fikset skjuling av nummereringslabel i recipe list
     * fikk kvittet meg med tretti linjer kode. lagde viewlabel component
+    * fikset litt styling 60/30/10 regel og darkmode
+    * fjernet nivå 2 panes
 
-    JULIAN HAR GJORT: masse
+
+    JULIAN HAR GJORT: 
     * add fridge 
     * fix remove food function
+    * sandra
+    * mora si
+    * donald trump
+    * billy
+    * faren til billy
+    * munken
     
     */
 } 

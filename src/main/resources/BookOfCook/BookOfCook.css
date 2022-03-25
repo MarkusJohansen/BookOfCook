@@ -1,31 +1,23 @@
 /*Stylesheet for app*/
+
 #body{
-    -fx-background-color: #dfdfdf;  
+    -fx-background-color: #3D3D3D;  
 }
 
 .level-1-panes{ /*pane level above background/body*/
-    -fx-background-color: #afafaf;
+    -fx-background-color: #444444;
     -fx-background-radius: 20px;
-}
-
-.level-2-panes{ /*panes that exists on level 1 panes*/
-    -fx-background-color: #9e9e9e;
-    -fx-background-radius: 20px;
-    -fx-padding: 20px;
-    -fx-margin: 20px;
 }
 
 /**recipe component*/    
 .recipeBtn{
-    -fx-background-color: #8a8a8a;
+    -fx-background-color: linear-gradient(to bottom right, #FF5796 , #fa9e35);
     -fx-background-radius: 20px;
     -fx-padding: 20px;
-    -fx-border-color: #000000;
-    -fx-border-width: 5px;
     -fx-border-radius: 20px;
     -fx-text-fill: #ffffff;
     -fx-font-size: 20px;
-    -fx-font-family: "Arial";
+    -fx-font-family: "Inter", "Arial";
     -fx-alignment: CENTER;                                                          /*Font-family of button*/
 }
 
@@ -48,8 +40,8 @@
     -fx-width: 100px;
     -fx-height: 100px;
     -fx-font-size: 20px;                                                                            /*font size*/
-    -fx-font-family: "Arial";                                                                       /*Font-family of button*/
-    -fx-background-color: linear-gradient(to bottom right, rgb(0, 219, 248), rgb(98, 0, 190));    /* lager en linear gradient som er korrekt for knappene vi ønsker i appdesign*/
+    -fx-font-family: "Inter", "Arial";                                                                       /*Font-family of button*/
+    -fx-background-color: linear-gradient(to bottom right, #FF5796 , #fa9e35);    /* lager en linear gradient som er korrekt for knappene vi ønsker i appdesign*/
     -fx-background-radius: 40px;                                                                    /*!fungerer som border radius men gjør at du kan klikke rett utenfor, border radius fungerer ikke på knappen ?*/
     -fx-text-fill: white;                                                                       /*Colors the text inside button like a +*/
     -fx-padding: 0px 15px;                                                                          /*fixes that the button is higher than it is wide*/ 
@@ -59,7 +51,7 @@
 /**RECIPE VIEW AND RECIPE COMPONENTS IN GRID*/
 .recipe-view-text{
     -fx-font-size: 20px;
-    -fx-font-family: "Arial";
+    -fx-font-family: "Inter", "Arial";
     -fx-text-fill: white;
 }
 
@@ -67,9 +59,3 @@
     -fx-text-fill: white;
     -fx-font-size: 23px;
 }
-
-/*
-*styling issues
-!alle grids må være like store for at stylinga skal fungere, i oppskriftsboka
-!max width på grid er ikke tilstrekkelig. vi må ta litt mindre enn max width, for å hindre at de krasjer i hverandre
-*/
