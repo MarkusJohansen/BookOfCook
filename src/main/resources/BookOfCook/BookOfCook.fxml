@@ -27,7 +27,7 @@
                <children>
                   <ListView fx:id="fridgeList" layoutX="35.0" layoutY="14.0" prefHeight="313.0" prefWidth="281.0" />
                </children></Pane>
-            <Button fx:id="fridgeAddButton" layoutX="256.0" layoutY="775.0" mnemonicParsing="false" onAction="#addFood" styleClass="standard-button" text="Add Ingredient" />
+            <Button fx:id="fridgeAddButton" layoutX="256.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add Ingredient" />
             <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
             <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="amount" />
             <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="unit" />
