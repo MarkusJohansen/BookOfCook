@@ -17,7 +17,7 @@ public class Fridge {
     }
 
     // *GETTERS
-    public ArrayList<HashMap<String, Object>> getFoodInFridge() {
+    public ArrayList<HashMap<String, Object>> getFood() {
         return foodInFridge;
     }
 

@@ -21,7 +21,7 @@ public class Category implements recipeContainer {
         return recipes;
     }
 
-    public int getRecipeAmount() {
+    public int getAmount() {
         return recipes.size();
     }
 

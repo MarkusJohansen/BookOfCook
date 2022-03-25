@@ -18,7 +18,7 @@ public class Cookbook implements recipeContainer {
 
     // *RECIPE ADD AND REMOVE METHODS
     // adds recipe to cookbook
-    public void addRecipeToCookbook(Recipe recipe) {
+    public void addRecipe(Recipe recipe) {
         duplicateRecipeCheck(recipe);                                                   // checks if recipe already exists
         duplicateRecipeNameCheck(recipe);                                               // checks for recipes with duplicate names
         recipes.add(recipe);                                                            // adds recipe to cookbook
@@ -47,7 +47,7 @@ public class Cookbook implements recipeContainer {
     }
 
     // returns amount of recipes in cookbook
-    public int getRecipeAmount() {
+    public int getAmount() {
         return recipeAmount;                                // returns amount of recipes in cookbook
     }
 
@@ -145,7 +145,7 @@ public class Cookbook implements recipeContainer {
         return sortedRecipes;
     }
 
-    public void collectCategories(){
+    public void categCollect(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
 
         for (Recipe recipe : recipes) {                                 // lopps through all recipes
@@ -202,18 +202,18 @@ public class Cookbook implements recipeContainer {
         kyllingburger.addCategory(kylling);
         kyllingburger.addCategory(burger);
 
-        cookbook.addRecipeToCookbook(pasta_carbonara);
-        cookbook.addRecipeToCookbook(pasta_bolognese);
-        cookbook.addRecipeToCookbook(cheeseburger);
-        cookbook.addRecipeToCookbook(vegetarburger);
-        cookbook.addRecipeToCookbook(kyllingburger);
+        cookbook.addRecipe(pasta_carbonara);
+        cookbook.addRecipe(pasta_bolognese);
+        cookbook.addRecipe(cheeseburger);
+        cookbook.addRecipe(vegetarburger);
+        cookbook.addRecipe(kyllingburger);
 
         ArrayList<Category> categories = new ArrayList<>(Arrays.asList(italiensk, vegetar)); // lager en arraylist med kategorier jeg vil sortere etter
 
         System.out.println(cookbook.getSortedRecipes(categories));
         
         System.out.println(cookbook.categories);
-        cookbook.collectCategories();
+        cookbook.categCollect();
         System.out.println(cookbook.categories);
     }
 }

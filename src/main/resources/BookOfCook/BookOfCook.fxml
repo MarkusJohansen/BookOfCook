@@ -23,7 +23,7 @@
             <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
             <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="amount" />
             <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="unit" />
-            <ListView fx:id="categoryList" layoutX="55.0" layoutY="14.0" prefHeight="302.0" prefWidth="281.0" />
+            <ListView fx:id="categList" layoutX="55.0" layoutY="14.0" prefHeight="302.0" prefWidth="281.0" />
             <ListView fx:id="fridgeList" layoutX="51.0" layoutY="377.0" prefHeight="313.0" prefWidth="281.0" />
          </children>
       </Pane>

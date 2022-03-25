@@ -12,16 +12,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class BookOfCookController {
-    private Cookbook cookbook;
+    private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
     private ArrayList<Category> categories;
     private Fridge fridge;
     private int numbersOfRecipesShown;
-
 
     //*FXML-noder
     @FXML
@@ -34,7 +32,7 @@ public class BookOfCookController {
     private Pane recipeView, recipeStepView;
 
     @FXML
-    private ListView fridgeList, categoryList, recipeList;
+    private ListView fridgeList, categList, recipeList;
 
     @FXML
     private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
@@ -46,65 +44,55 @@ public class BookOfCookController {
     //*INITIALIZATION
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
-        initializeCookBook();
-        initializerecipeList();
-        initializeFridge();
-        initializeCategories();
-        initializeFridgeFood();
+        initbook();
+        initRecipeList();
+        initFridge();
+        initCateg();
+        initFridgeFood();
     }
 
-    private void initializerecipeList() {
-        initializeRecipes();
+    private void initRecipeList() {
+        initRecipes();
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
-            recipeList.getItems().add(createRecipeComponent(r));
+            recipeList.getItems().add(recipeComponent(r));
         }
-        updateNumberOfRecipes();
+        updateAmount();
     }
 
-    private void initializeCookBook(){
-        cookbook = new Cookbook("Dawg");
-        cookbook.addRecipeToCookbook(new Recipe("Pizza", 2));
-        cookbook.addRecipeToCookbook(new Recipe("Hamburger", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Spaghetti", 2));
-        cookbook.addRecipeToCookbook(new Recipe("Enchiladas", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Entrecote", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Mousaka", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Tika masala", 1));
-        cookbook.addRecipeToCookbook(new Recipe("garam masala", 1));
-        cookbook.addRecipeToCookbook(new Recipe("smalahove", 1));
-        cookbook.addRecipeToCookbook(new Recipe("ribbe", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("Pinnekjøtt", 1)); //!Ikke lov med æøå
-        // cookbook.addRecipeToCookbook(new Recipe("kjøttkaker", 1));
-        cookbook.addRecipeToCookbook(new Recipe("lasagne", 1));
-        cookbook.addRecipeToCookbook(new Recipe("croissant", 1));
-        cookbook.addRecipeToCookbook(new Recipe("french toast", 1));
-        cookbook.addRecipeToCookbook(new Recipe("bacon and eggs", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Spam", 1));
-        cookbook.addRecipeToCookbook(new Recipe("tomatsuppe", 1));
-        cookbook.addRecipeToCookbook(new Recipe("pulled Pork", 1));
-        cookbook.addRecipeToCookbook(new Recipe("Tacos", 1));
-        cookbook.addRecipeToCookbook(new Recipe("shepeards pie", 1));
-        cookbook.addRecipeToCookbook(new Recipe("kylling taco", 1));
-        cookbook.addRecipeToCookbook(new Recipe("quesedillas", 1));
-        cookbook.addRecipeToCookbook(new Recipe("fajitas", 1));
-        cookbook.addRecipeToCookbook(new Recipe("vegetarburger", 1));
-        cookbook.addRecipeToCookbook(new Recipe("omelett", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("eggerore", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("ballestein", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("kaviar", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("leverpostei", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("makrell i tomat", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("kanelboller", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("skoleboller", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("kanelknute", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("cote de beoff", 1));
-        // cookbook.addRecipeToCookbook(new Recipe("spareribs", 1));
+    private void initbook(){
+        book = new Cookbook("foo");
+        book.addRecipe(new Recipe("Pizza", 2));
+        book.addRecipe(new Recipe("Hamburger", 1));
+        book.addRecipe(new Recipe("Spaghetti", 2));
+        book.addRecipe(new Recipe("Enchiladas", 1));
+        book.addRecipe(new Recipe("Entrecote", 1));
+        book.addRecipe(new Recipe("Mousaka", 1));
+        book.addRecipe(new Recipe("Tika masala", 1));
+        book.addRecipe(new Recipe("garam masala", 1));
+        book.addRecipe(new Recipe("smalahove", 1));
+        book.addRecipe(new Recipe("ribbe", 1));
+        // book.addRecipe(new Recipe("Pinnekjøtt", 1)); //!Ikke lov med æøå
+        book.addRecipe(new Recipe("lasagne", 1));
+        book.addRecipe(new Recipe("croissant", 1));
+        book.addRecipe(new Recipe("french toast", 1));
+        book.addRecipe(new Recipe("bacon and eggs", 1));
+        book.addRecipe(new Recipe("Spam", 1));
+        book.addRecipe(new Recipe("tomatsuppe", 1));
+        book.addRecipe(new Recipe("pulled Pork", 1));
+        book.addRecipe(new Recipe("Tacos", 1));
+        book.addRecipe(new Recipe("shepeards pie", 1));
+        book.addRecipe(new Recipe("kylling taco", 1));
+        book.addRecipe(new Recipe("quesedillas", 1));
+        book.addRecipe(new Recipe("fajitas", 1));
+        book.addRecipe(new Recipe("vegetarburger", 1));
+        book.addRecipe(new Recipe("omelett", 1));
     }
 
-    private void initializeRecipes(){
+    
+    private void initRecipes(){
         recipes = new ArrayList<Recipe>();
-        recipes.addAll(cookbook.getRecipes());
+        recipes.addAll(book.getRecipes());
         /*recipes.addAll(List.of(
             new Recipe("Pizza", 2),
             new Recipe("Hamburger", 1),
@@ -121,26 +109,25 @@ public class BookOfCookController {
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
-        cookbook.collectCategories();
+        book.categCollect();
 
-        //recipes.addAll(cookbook.getRecipes());
+        //recipes.addAll(book.getRecipes());
     }
     
-    private void initializeCategories(){
+    private void initCateg(){
 
         categories = new ArrayList<Category>();
-        cookbook.collectCategories();
+        book.categCollect();
 
-        categories.addAll(cookbook.getCategories());
+        categories.addAll(book.getCategories());
 
-        //System.out.println(cookbook.getCategories());
-
+        //System.out.println(book.getCategories());
         for(Category category : categories){
-            categoryList.getItems().add(createCategoryComponent(category));
+            categList.getItems().add(categComponent(category));
         }
     }
     
-    private void initializeFridge(){
+    private void initFridge(){
         fridge = new Fridge();
         fridge.addFood("tomater", 4, "stk");
         fridge.addFood("melk", 2, "L");
@@ -151,12 +138,12 @@ public class BookOfCookController {
         fridge.addFood("pastaskruer", 1, "kg");
     }
     
-    private void initializeFridgeFood(){
+    private void initFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
-        fridgeFood.addAll(fridge.getFoodInFridge());
+        fridgeFood.addAll(fridge.getFood());
 
         for(HashMap<String, Object> food : fridgeFood){
-            fridgeList.getItems().add(createFoodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
+            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
     }
     
@@ -164,34 +151,34 @@ public class BookOfCookController {
     //*UPDATERS
     public void updateRecipeList(){
         recipeList.getItems().clear();
-        updateCategories();
-        initializerecipeList();
+        updateCategList();
+        initRecipeList();
     }
 
-    private void updateCategories(){
-        categoryList.getItems().clear();
-        initializeCategories();
+    private void updateCategList(){
+        categList.getItems().clear();
+        initCateg();
     }
 
     public void updatefridge(){
         fridgeList.getItems().clear();
-
-        initializeFridgeFood();
+        initFridgeFood();
     }
 
-    public void updateNumberOfRecipes(){
+    //! maybe only one of these
+    public void updateAmount(){
         numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + cookbook.getRecipeAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes."));
     }
 
-    public void numbersOfRecipesInArray(ArrayList<Recipe> recipeArray){
+    public void updateAmountLabel(ArrayList<Recipe> recipeArray){
         numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + cookbook.getRecipeAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
     }
 
 
-    //*DYNAMIC CREATION OF RECIPE COMPONENTS IN GRID
-    private Button createRecipeComponent(Recipe recipe){
+    //*RECIPE LIST
+    private Button recipeComponent(Recipe recipe){
         //create button object
         Button recipeBtn = new Button(recipe.getName());
 
@@ -211,14 +198,13 @@ public class BookOfCookController {
         return recipeBtn;
     }
 
-    //*DYNAMIC CREATION OF CATEGORY COMPONENTS
-    private Pane createCategoryComponent(Category category){
+    //*CATEGORY COMPONENTS
+    private Pane categComponent(Category category){
         //creates pane for each category
         Pane body = new Pane(); 
 
         //adds children
-        //body.getChildren().add(createCategoryLabel(category));
-        body.getChildren().add(createCategoryCheckbox(category));
+        body.getChildren().add(categCheckBox(category));
 
         //styling
         body.getStyleClass().clear();
@@ -229,15 +215,9 @@ public class BookOfCookController {
         return body;
     }
 
-    private CheckBox createCategoryCheckbox(Category category){
+    private CheckBox categCheckBox(Category category){
         //creates a checkbox with category name
         CheckBox checkbox = new CheckBox(category.getName());
-
-        //sets style
-        /* checkbox.getStyleClass().clear();
-        checkbox.getStyleClass().add("category-checkbox");
-        checkbox.setLayoutX(0);
-        checkbox.setLayoutY(0); */
 
         //on checkbox click
         checkbox.setOnAction(e -> {
@@ -248,7 +228,7 @@ public class BookOfCookController {
         return checkbox;
     }
 
-    private Label createCategoryLabel(Category category){
+    private Label categLabel(Category category){
         //creates a label with category name
         Label label = new Label(category.getName());
 
@@ -263,7 +243,7 @@ public class BookOfCookController {
 
 
     //*DYNAMIC CREATION OF FRIDGE COMPONENTS
-    private Pane createFoodComponent(String food, String amount, String unit){
+    private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
 
         //adds children
@@ -314,10 +294,10 @@ public class BookOfCookController {
         recipeView.setMaxHeight(Double.MAX_VALUE);
 
         //add children
-        initializeViewContent(recipe);
+        initViewContent(recipe);
     }
 
-    public void initializeViewContent(Recipe recipe){
+    public void initViewContent(Recipe recipe){
         // createStepsLabel(recipe);       //! fungerer ikke optimalt
 
         //column 1
@@ -377,7 +357,7 @@ public class BookOfCookController {
 
 
     //second column in recipeview
-    private void createStepsLabel(Recipe recipe){
+    private void stepsLabel(Recipe recipe){
         Label label = new Label("Steps:" + recipe.getSteps());
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         // recipeStepView.getChildren().clear();
@@ -434,7 +414,7 @@ public class BookOfCookController {
         // recipe.setIngredients(ingredientBar.getText());
 
         recipe.addStep(stepsArea.getText());
-        cookbook.addRecipeToCookbook(recipe);
+        book.addRecipe(recipe);
         updateRecipeList();
     }
 
@@ -451,7 +431,7 @@ public class BookOfCookController {
     //remove recipe
     public void removeRecipe(Recipe recipe){
         System.out.println("Remove recipe button was clicked");
-        cookbook.removeRecipe(recipe);
+        book.removeRecipe(recipe);
         updateRecipeList();
         closeRecipeView();
     }
@@ -459,14 +439,14 @@ public class BookOfCookController {
     //search for food
     public void searchFood() {
         System.out.println("Search food bar was used was clicked");
-        searchedRecipes = cookbook.searchRecipes(searchBar.getText());
+        searchedRecipes = book.searchRecipes(searchBar.getText());
         if(searchedRecipes.size() > 0){
             recipeList.getItems().clear();
             for(Recipe r : searchedRecipes){
-                recipeList.getItems().add(createRecipeComponent(r));
+                recipeList.getItems().add(recipeComponent(r));
             }
         }
-        numbersOfRecipesInArray(searchedRecipes);
+        updateAmountLabel(searchedRecipes);
     }
 
     public void fridgeAddFood() {
@@ -507,12 +487,13 @@ public class BookOfCookController {
 
     category
     ! add category components with filters, use checkbox because that are standard
+    ! legge til ny oppskrift sørger for duplikate categories
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
 
     skriving til fil
-    ! fix load cookbook function
-    ! fix save cookbook 
+    ! fix load book function
+    ! fix save book 
     
     recipe creator og editor
     ! la recipe ta inn 'æøå som symboler i navns
@@ -538,7 +519,7 @@ public class BookOfCookController {
 
     MARKUS HAR GJORT:
     * gått over privacy declarators i Recipe klassen
-    * gått over privacy declarators i Cookbook klassen
+    * gått over privacy declarators i book klassen
     * gått over privacy declarators i Category klassen
     * gått over privacy declarators i Fridge klassen
     * fikset oppdatering av antall recipes label
