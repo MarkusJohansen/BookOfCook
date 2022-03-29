@@ -20,6 +20,7 @@ public class BookOfCookController {
     private ArrayList<Category> categories;
     private Fridge fridge;
     private int numbersOfRecipesShown;
+    private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
 
     //*FXML-noder
     @FXML
@@ -102,6 +103,10 @@ public class BookOfCookController {
         Category italiensk = new Category("italiensk");
         Category burger = new Category("burger");
         Category kjøtt = new Category("kjøtt");
+        Category indisk = new Category("indisk");
+        Category frokost = new Category("frokost");
+        Category meksikansk = new Category("meksikansk");
+        Category kylling = new Category("kylling");
 
         recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
@@ -221,7 +226,16 @@ public class BookOfCookController {
         //on checkbox click
         checkbox.setOnAction(e -> {
             System.out.println("Checkbox clicked");
-            //?start filter();
+            if(checkbox.isSelected()){
+                categoriesClicked.add(category);
+            }else{
+                categoriesClicked.remove(category);
+            }
+
+            System.out.println("CategoriesClicked: " + categoriesClicked);
+
+            filterRecipes(categoriesClicked);
+            
         });
 
         return checkbox;
@@ -422,7 +436,7 @@ public class BookOfCookController {
     }
 
     //search for food
-    public void searchFood() {
+    public void searchFood() { // !rart navn på metode darkus??
         System.out.println("Search food bar was used was clicked");
         searchedRecipes = book.searchRecipes(searchBar.getText());
         if(searchedRecipes.size() > 0){
@@ -432,6 +446,24 @@ public class BookOfCookController {
             }
         }
         updateAmountLabel(searchedRecipes);
+    }
+
+    //filter recipes with categories
+    public void filterRecipes(ArrayList<Category> categoriesClicked) {
+        recipeList.getItems().clear();
+        if(categoriesClicked.size() == 0){
+            initRecipeList();
+            return;
+        }
+
+        ArrayList<Recipe> sortedRecipes = book.getSortedRecipesAllCategories(categoriesClicked);
+        if(sortedRecipes.size() == 0){
+        }
+
+        for(Recipe r : sortedRecipes){
+            recipeList.getItems().add(recipeComponent(r));
+        }
+        updateAmountLabel(sortedRecipes);
     }
 
     public void fridgeAddFood() {
@@ -471,7 +503,6 @@ public class BookOfCookController {
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
 
     category
-    ! add category components with filters, use checkbox because that are standard
     ! legge til ny oppskrift sørger for duplikate categories
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
@@ -518,12 +549,14 @@ public class BookOfCookController {
     JULIAN HAR GJORT: 
     * add fridge 
     * fix remove food function
+    * add category components with filters, use checkbox because that are standard
+
     * sandra
     * mora si
     * donald trump
     * billy
     * faren til billy
-    * munken
+    * munken 
     
     */
 } 

@@ -133,6 +133,7 @@ public class Cookbook implements recipeContainer {
 
     // *GET RECIPES IN CATEGORIES METHODS
 
+    // metode som returnerer alle recipes som inneholder minst én av kategoriene
     public ArrayList<Recipe> getSortedRecipes(ArrayList<Category> categories){  // categories as parameter
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
         for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
@@ -144,6 +145,27 @@ public class Cookbook implements recipeContainer {
         }
         return sortedRecipes;
     }
+
+    // * denne vi bruker nå VVV
+    // metode som returnerer alle recipes som inneholder alle kategoriene
+    public ArrayList<Recipe> getSortedRecipesAllCategories(ArrayList<Category> categories){  // categories as parameter
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
+        for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
+            boolean containsAllCategories = true;                              // sets temporary variable to true
+            for (Category category : categories) {                              // loops through all categories
+                if(!recipe.getCategories().contains(category)){                  // checks if recipe does not contain this category
+                    containsAllCategories = false;                                // if: set false
+                }
+            }
+            if(containsAllCategories){
+                sortedRecipes.add(recipe);                                     // if still true, add recipe to output array
+            }
+        }
+        System.out.println(sortedRecipes);
+        return sortedRecipes;
+    }
+
+
 
     public void categCollect(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
