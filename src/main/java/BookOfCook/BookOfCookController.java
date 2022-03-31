@@ -371,7 +371,7 @@ public class BookOfCookController {
     }
 
 
-    //*STYLESETTERS
+    //*STYLING
     public void styleLabel(Label label, String styleClass, Double x, Double y){
         label.getStyleClass().clear();
         label.getStyleClass().add(styleClass);
