@@ -360,8 +360,6 @@ public class BookOfCookController {
         closeRecipeView();
     }
 
-
-
     //-----------------------------------------------------------
     //*CATEGORY FUNCTIONALITY
     //-----------------------------------------------------------
@@ -439,7 +437,7 @@ public class BookOfCookController {
     private Label createFoodLabel(String foodname, String foodamount, String foodunit){
         Label label = new Label();
         label.setText(foodname + ": " + foodamount + " " + foodunit);
-        styleLabel(label, "food-label", 80.0, 10.0);
+        styleLabel(label, "list-label", 80.0, 10.0);
         return label;
     }
 
