@@ -14,6 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class BookOfCookController {
+    //-------------------
+    //*FIELDS
+    //-------------------
+
     private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
@@ -22,7 +26,9 @@ public class BookOfCookController {
     private int numbersOfRecipesShown;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
 
+    //-------------------------------------
     //*FXML-noder
+    //-------------------------------------
     @FXML
     private Label number, label, recipeAmount;  
 
@@ -42,7 +48,10 @@ public class BookOfCookController {
     private TextArea descriptionArea, stepsArea;
 
 
+
+    //-------------------------------------
     //*INITIALIZATION
+    //-------------------------------------
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
         initbook();
@@ -151,8 +160,28 @@ public class BookOfCookController {
         }
     }
     
+    public void initViewContent(Recipe recipe){
+        //column 1
+        viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
+        viewLabel("Categories:" + recipe.getCategories(), recipeViewBox1, 0, 1);
+        viewLabel(recipe.getDescription(), recipeViewBox1, 0, 2);       
+        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 0, 3);
+        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 0, 5);
 
+        //column 2
+        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox2, 0, 0); 
+        //! createIngredientsLabel(recipe); //! fungerer ikke
+
+        //btns
+        closeBtn(recipe);
+        removeBtn(recipe);
+    }
+
+
+
+    //-------------------------------------
     //*UPDATERS
+    //-------------------------------------
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
@@ -181,7 +210,118 @@ public class BookOfCookController {
     }
 
 
-    //*RECIPE LIST
+
+    //-------------------------------------
+    //*STYLING
+    //-------------------------------------
+    public void styleLabel(Label label, String styleClass, Double x, Double y){
+        label.getStyleClass().clear();
+        label.getStyleClass().add(styleClass);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+    }
+
+
+
+    //-------------------------------------
+    //*RECIPE VIEW FUNCTIONALITY
+    //-------------------------------------
+
+    //opens recipe view and builds the content
+    public void viewRecipe(Recipe recipe){
+        //hide grid and show recipeview
+        recipeList.setVisible(false);
+        recipeAmount.setVisible(false);
+        recipeView.setVisible(true);
+        
+
+        //set recipe style
+        recipeView.getStyleClass().clear();
+        recipeView.getStyleClass().add("recipe-view");
+        recipeView.setMaxWidth(Double.MAX_VALUE);
+        recipeView.setMaxHeight(Double.MAX_VALUE);
+
+        //add children
+        initViewContent(recipe);
+    }
+
+    //close recipeView
+    public void closeRecipeView() {
+        recipeView.setVisible(false);
+        recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
+        recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
+        recipeList.setVisible(true);
+        recipeAmount.setVisible(true);
+    }
+    
+    //shorthand method for creating labels in recipe viewmode
+    private void viewLabel(String content, Object parent, int row, int column){
+        Label label = new Label(content);
+        styleLabel(label, "recipe-view-text", 80.0, 10.0);
+        ((GridPane)parent).add(label, column, row);
+    }
+
+    //creates a close Btn for closing recipe view
+    private void closeBtn(Recipe recipe){
+        //creates button object
+        Button btn = new Button("Close");
+
+        //sets style
+        btn.getStyleClass().clear();
+        btn.getStyleClass().add("standard-button");
+        btn.setLayoutX(80);
+        btn.setLayoutY(170);
+
+        //sets action
+        btn.setOnAction(e -> {
+            System.out.println("Close recipe view for: " + recipe.getName());
+            closeRecipeView();
+        });
+
+        //adds to grid
+        recipeViewContent.add(btn, 0, 4);
+    }
+
+    //creates a remove Btn in recipe view, for removing the recipe from the cookbook
+    private void removeBtn(Recipe recipe){
+        //creates button object
+        Button removeButton = new Button("Remove");
+
+        //sets style
+        removeButton.getStyleClass().clear();
+        removeButton.getStyleClass().add("standard-button");
+        removeButton.setLayoutX(80);
+        removeButton.setLayoutY(170);
+
+        //sets action
+        removeButton.setOnAction(e -> {
+            removeRecipe(recipe);
+        });
+
+        //adds to grid
+        recipeViewContent.add(removeButton, 1, 3);
+    }
+
+    //!virker ikke og har ingen funksjon atm
+    private void stepsLabel(Recipe recipe){
+        Label label = new Label("Steps:" + recipe.getSteps());
+        styleLabel(label, "recipe-view-text", 80.0, 10.0);
+        // recipeStepView.getChildren().clear();
+        recipeStepView.getChildren().add(label);
+    }
+
+    //!virker ikke og har ingen funksjon atm
+    private void createIngredientsLabel(Recipe recipe){
+        Label label = new Label("Ingredients:");
+        styleLabel(label, "recipe-view-text", 80.0, 10.0);
+        recipeViewBox2.add(label, 0, 1);
+    }
+
+
+
+    //-----------------------------------------------------------
+    //*RECIPE CREATION FUNCTIONALITY
+    //-----------------------------------------------------------
     private Button recipeComponent(Recipe recipe){
         //create button object
         Button recipeBtn = new Button(recipe.getName());
@@ -202,7 +342,19 @@ public class BookOfCookController {
         return recipeBtn;
     }
 
-    //*CATEGORY COMPONENTS
+    //remove recipe
+    public void removeRecipe(Recipe recipe){
+        System.out.println("Remove recipe button was clicked");
+        book.removeRecipe(recipe);
+        updateRecipeList();
+        closeRecipeView();
+    }
+
+
+
+    //-----------------------------------------------------------
+    //*CATEGORY FUNCTIONALITY
+    //-----------------------------------------------------------
     private Pane categComponent(Category category){
         //creates pane for each category
         Pane body = new Pane(); 
@@ -241,7 +393,11 @@ public class BookOfCookController {
         return checkbox;
     }
 
-    //*DYNAMIC CREATION OF FRIDGE COMPONENTS
+
+
+    //---------------------------------------------------
+    //*FRIDGE FUNCTIONALITY
+    //---------------------------------------------------
     private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
 
@@ -277,124 +433,17 @@ public class BookOfCookController {
         return label;
     }
 
-
-    // *RECIPEVIEW
-    public void viewRecipe(Recipe recipe){
-        //hide grid and show recipeview
-        recipeList.setVisible(false);
-        recipeAmount.setVisible(false);
-        recipeView.setVisible(true);
-        
-
-        //set recipe style
-        recipeView.getStyleClass().clear();
-        recipeView.getStyleClass().add("recipe-view");
-        recipeView.setMaxWidth(Double.MAX_VALUE);
-        recipeView.setMaxHeight(Double.MAX_VALUE);
-
-        //add children
-        initViewContent(recipe);
-    }
-
-    public void initViewContent(Recipe recipe){
-        // createStepsLabel(recipe);       //! fungerer ikke optimalt
-
-        //column 1
-        viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
-        viewLabel("Categories:" + recipe.getCategories(), recipeViewBox1, 0, 1);
-        viewLabel(recipe.getDescription(), recipeViewBox1, 0, 2);       
-        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 0, 3);
-        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 0, 5);
-
-        //column 2
-        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox2, 0, 0); 
-        createIngredientsLabel(recipe); //! fungerer ikke
-
-        //btns
-        addCloseButton(recipe);
-        addRemoveBtn(recipe);
-    }
-
-    private void addCloseButton(Recipe recipe){
-        //creates button object
-        Button closeButton = new Button("Close");
-
-        //sets style
-        closeButton.getStyleClass().clear();
-        closeButton.getStyleClass().add("standard-button");
-        closeButton.setLayoutX(80);
-        closeButton.setLayoutY(170);
-
-        //sets action
-        closeButton.setOnAction(e -> {
-            System.out.println("Close recipe view for: " + recipe.getName());
-            closeRecipeView();
-        });
-
-        //adds to grid
-        recipeViewContent.add(closeButton, 0, 4);
-    }
-
-    private void addRemoveBtn(Recipe recipe){
-        //creates button object
-        Button removeButton = new Button("Remove");
-
-        //sets style
-        removeButton.getStyleClass().clear();
-        removeButton.getStyleClass().add("standard-button");
-        removeButton.setLayoutX(80);
-        removeButton.setLayoutY(170);
-
-        //sets action
-        removeButton.setOnAction(e -> {
-            removeRecipe(recipe);
-        });
-
-        //adds to grid
-        recipeViewContent.add(removeButton, 1, 3);
+    //remove food from fridge
+    public void removeFood() {
+        System.out.println("Remove food button was clicked");
     }
 
 
-    //second column in recipeview
-    private void stepsLabel(Recipe recipe){
-        Label label = new Label("Steps:" + recipe.getSteps());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        // recipeStepView.getChildren().clear();
-        recipeStepView.getChildren().add(label);
-    }
 
-    private void createIngredientsLabel(Recipe recipe){
-        Label label = new Label("Ingredients:");
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox2.add(label, 0, 1);
-    }
+    //---------------------------------------------------
+    //*FILE WRITING FUNCTIONALITY
+    //---------------------------------------------------
 
-    private void viewLabel(String content, Object parent, int row, int column){
-        Label label = new Label(content);
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        ((GridPane)parent).add(label, column, row);
-    }
-
-    //close recipeView
-    public void closeRecipeView() {
-        recipeView.setVisible(false);
-        recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
-        recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
-        recipeList.setVisible(true);
-        recipeAmount.setVisible(true);
-    }
-
-
-    //*STYLING
-    public void styleLabel(Label label, String styleClass, Double x, Double y){
-        label.getStyleClass().clear();
-        label.getStyleClass().add(styleClass);
-        label.setLayoutX(x);
-        label.setLayoutY(y);
-    }
-
-
-    //*EVENT HANDLERS
     public void addRecipe() {
         System.out.println("Add button was clicked");
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
@@ -417,23 +466,9 @@ public class BookOfCookController {
         updateRecipeList();
     }
 
-    //view recipe
-    public void viewRecipe() {
-        System.out.println("View button was clicked");
-    }
-
-    //remove food from fridge
-    public void removeFood() {
-        System.out.println("Remove food button was clicked");
-    }
-
-    //remove recipe
-    public void removeRecipe(Recipe recipe){
-        System.out.println("Remove recipe button was clicked");
-        book.removeRecipe(recipe);
-        updateRecipeList();
-        closeRecipeView();
-    }
+    //------------------------------------------------
+    //*RECIPE SEARCH FUNCTIONALITY
+    //------------------------------------------------
 
     //search for food
     public void searchFood() { // !rart navn på metode darkus??
@@ -507,16 +542,15 @@ public class BookOfCookController {
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
 
+
     skriving til fil
     ! fix load book function
     ! fix save book 
     
     recipe creator og editor
-    ! la recipe ta inn 'æøå som symboler i navns
     ! steps ikke linket med view
     ! koble opp legge til ingredienser
     ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
-    ! fix remove recipe function
     ! sette opp dropdown menyer for enheter
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
@@ -544,6 +578,10 @@ public class BookOfCookController {
     * fikk kvittet meg med tretti linjer kode. lagde viewlabel component
     * fikset litt styling 60/30/10 regel og darkmode
     * fjernet nivå 2 panes
+    * la recipe ta inn 'æøå som symboler i navns
+    * fix remove recipe function
+
+
 
 
     JULIAN HAR GJORT: 

@@ -281,7 +281,7 @@ public class Recipe {
         if (name == null || name.equals("")) {                                                          // if name is null or empty
             throw new IllegalArgumentException("Name cannot be null or empty");                         // throw error
         }                                                                                               
-        if (!(name.matches("[a-zA-Z\\- ]+"))) {                                                         // if name contains invalid characters
+        if (!(name.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
             throw new IllegalArgumentException("Name cannot contain numbers or special characters");    // throw error
         }
         whiteSpaceCheck(name);                                                                          // checks if name has white spaces trailing or leading
