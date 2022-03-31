@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -47,6 +48,9 @@ public class BookOfCookController {
     @FXML
     private TextArea descriptionArea, stepsArea;
 
+    @FXML
+    private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge;
+
 
 
     //-------------------------------------
@@ -59,6 +63,7 @@ public class BookOfCookController {
         initFridge();
         initCateg();
         initFridgeFood();
+        initUnitBoxes();
     }
 
     private void initRecipeList() {
@@ -175,6 +180,11 @@ public class BookOfCookController {
         //btns
         closeBtn(recipe);
         removeBtn(recipe);
+    }
+
+    public void initUnitBoxes(){
+        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
     }
 
 
@@ -504,7 +514,7 @@ public class BookOfCookController {
     public void fridgeAddFood() {
         System.out.println("add food button");
 
-        if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0 || fridgeUnitInput.getText().length() == 0){
+        if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0){
 
             System.out.println("Not all textfields filled in");
             return;
@@ -515,7 +525,7 @@ public class BookOfCookController {
             return;
         }
 
-        fridge.addFood(fridgeNameInput.getText(), Double.parseDouble(fridgeAmountInput.getText()), fridgeUnitInput.getText());
+        fridge.addFood(fridgeNameInput.getText(), Double.parseDouble(fridgeAmountInput.getText()), unitComboBoxFridge.getValue());
         
         updatefridge();
     }
@@ -536,6 +546,7 @@ public class BookOfCookController {
 
     fridge
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
+    ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg ?
 
     category
     ! legge til ny oppskrift sørger for duplikate categories
@@ -551,7 +562,6 @@ public class BookOfCookController {
     ! steps ikke linket med view
     ! koble opp legge til ingredienser
     ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
-    ! sette opp dropdown menyer for enheter
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
 
@@ -580,7 +590,8 @@ public class BookOfCookController {
     * fjernet nivå 2 panes
     * la recipe ta inn 'æøå som symboler i navns
     * fix remove recipe function
-
+    * sette opp dropdown menyer for enheter i Fridge og Recipe
+    * fikk dropdown menyer for enheter i fridge til å fungere
 
 
 

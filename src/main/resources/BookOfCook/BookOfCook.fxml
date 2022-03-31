@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,12 +18,22 @@
    <children>
       <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
          <children>
-            <Button fx:id="fridgeAddButton" layoutX="236.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add food" />
+            <Button fx:id="fridgeAddButton" layoutX="254.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add food" />
             <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
             <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="amount" />
-            <TextField fx:id="fridgeUnitInput" layoutX="163.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="unit" />
-            <ListView fx:id="categList" layoutX="51.0" layoutY="110.0" prefHeight="302.0" prefWidth="281.0" />
+            <ListView fx:id="categList" layoutX="51.0" layoutY="70.0" prefHeight="302.0" prefWidth="281.0" />
             <ListView fx:id="fridgeList" layoutX="51.0" layoutY="446.0" prefHeight="313.0" prefWidth="281.0" />
+            <ComboBox fx:id="unitComboBoxFridge" layoutX="161.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="unit" />
+            <Label layoutX="54.0" layoutY="29.0" prefHeight="33.0" prefWidth="281.0" text="Categories" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="27.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="404.0" prefHeight="33.0" prefWidth="281.0" text="Fridge" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="27.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutX="501.0" layoutY="92.0" prefHeight="817.0" prefWidth="599.0" styleClass="level-1-panes">
@@ -91,13 +100,8 @@
             <TextArea fx:id="stepsArea" layoutX="60.0" layoutY="437.0" prefHeight="269.0" prefWidth="223.0" promptText="steps" />
             <TextField fx:id="prepTimeBar" layoutX="60.0" layoutY="387.0" prefHeight="25.0" prefWidth="220.0" promptText="time" />
             <TextArea fx:id="descriptionArea" layoutX="58.0" layoutY="250.0" prefHeight="122.0" prefWidth="223.0" promptText="Description" />
-            <TextField fx:id="amountBar" layoutX="138.0" layoutY="211.0" prefHeight="25.0" prefWidth="64.0" promptText="Amount" />
-            <SplitMenuButton accessibleRole="CHECK_MENU_ITEM" layoutX="207.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Unit">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </SplitMenuButton>
+            <TextField fx:id="amountBar" layoutX="136.0" layoutY="211.0" prefHeight="25.0" prefWidth="66.0" promptText="Amount" />
+            <ComboBox fx:id="unitComboBoxRecipe" layoutX="202.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" promptText="unit" />
          </children>
       </Pane>
       <Pane layoutX="1.0" layoutY="-1.0" prefHeight="63.0" prefWidth="1485.0" styleClass="level-1-panes">
