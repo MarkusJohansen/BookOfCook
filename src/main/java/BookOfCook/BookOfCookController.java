@@ -381,7 +381,7 @@ public class BookOfCookController {
 
     private CheckBox categCheckBox(Category category){
         //creates a checkbox with category name
-        CheckBox checkbox = new CheckBox(category.getName());
+        CheckBox checkbox = new CheckBox(category.getName());        
 
         //on checkbox click
         checkbox.setOnAction(e -> {

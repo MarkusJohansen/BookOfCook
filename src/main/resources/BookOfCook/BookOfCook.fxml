@@ -38,7 +38,7 @@
       </Pane>
       <Pane layoutX="501.0" layoutY="92.0" prefHeight="817.0" prefWidth="599.0" styleClass="level-1-panes">
          <children>
-            <ListView fx:id="recipeList" layoutY="-1.0" prefHeight="745.0" prefWidth="599.0" styleClass="listViews" />
+            <ListView fx:id="recipeList" layoutX="35.0" layoutY="41.0" prefHeight="703.0" prefWidth="534.0" styleClass="listViews" />
             <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="599.0" styleClass="level-1-panes" visible="false">
                <children>
                   <GridPane fx:id="recipeViewContent" layoutY="7.0" prefHeight="817.0" prefWidth="599.0" styleClass="level-2-panes">

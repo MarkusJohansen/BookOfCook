@@ -74,11 +74,7 @@
 }
 
 .list-label{
-    -fx-font-size: 15px;
+    -fx-font-size: 16px;
     -fx-font-family: "Inter", "Arial";
-    -fx-text-fill: white;
-}
-
-.category-body{
     -fx-text-fill: white;
 }
