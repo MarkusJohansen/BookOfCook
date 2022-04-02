@@ -168,18 +168,21 @@ public class BookOfCookController {
     public void initViewContent(Recipe recipe){
         //column 1
         viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
-        viewLabel("Categories:" + recipe.getCategories(), recipeViewBox1, 0, 1);
-        viewLabel(recipe.getDescription(), recipeViewBox1, 0, 2);       
-        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 0, 3);
-        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 0, 5);
+        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
+        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox1, 2, 0); 
+        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
+        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
 
         //column 2
-        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox2, 0, 0); 
-        //! createIngredientsLabel(recipe); //! fungerer ikke
+        viewCateg(recipe, recipeViewBox2, 0, 0);
+        viewSteps(recipe, recipeViewBox2, 1, 0);
+        viewIngred(recipe, recipeViewBox2, 2, 0);
 
         //btns
         closeBtn(recipe);
         removeBtn(recipe);
+
+        //fikse steps, ingred og steps inn i list views fordi de er arrays
     }
 
     public void initUnitBoxes(){
@@ -231,8 +234,6 @@ public class BookOfCookController {
         label.setLayoutY(y);
     }
 
-
-
     //-------------------------------------
     //*RECIPE VIEW FUNCTIONALITY
     //-------------------------------------
@@ -269,6 +270,45 @@ public class BookOfCookController {
         Label label = new Label(content);
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
+    }
+
+    //shorthand method for creating list and fill them with categories in recipe viewmode
+    private void viewCateg(Recipe recipe, Object parent, int row, int column){
+        ListView<String> listView = new ListView<String>();
+
+        //add categories to listview
+        for(Category category : recipe.getCategories()){
+            listView.getItems().add(category.getName());
+        }
+
+        listView.getStyleClass().add("recipe-view-list");
+        ((GridPane)parent).add(listView, column, row);
+    }
+
+    //shorthand method for creating list and fill them with ingredients in recipe viewmode
+    private void viewIngred(Recipe recipe, Object parent, int row, int column){
+        ListView<String> listView = new ListView<String>();
+
+        //add ingredients to listview
+        for(HashMap<String, Object> ingredient : recipe.getIngredients()){
+            listView.getItems().add(ingredient.get("name").toString() + " " + ingredient.get("amount").toString() + " " + ingredient.get("unit").toString());
+        }
+
+        listView.getStyleClass().add("recipe-view-list");
+        ((GridPane)parent).add(listView, column, row);
+    }
+
+    //shorthand method for creating list and fill them with steps in recipe viewmode
+    private void viewSteps(Recipe recipe, Object parent, int row, int column){
+        ListView<String> listView = new ListView<String>();
+
+        //add steps to listview
+        for(String step : recipe.getSteps()){
+            listView.getItems().add(step);
+        }
+
+        listView.getStyleClass().add("recipe-view-list");
+        ((GridPane)parent).add(listView, column, row);
     }
 
     //creates a close Btn for closing recipe view
@@ -309,7 +349,7 @@ public class BookOfCookController {
         });
 
         //adds to grid
-        recipeViewContent.add(removeButton, 1, 3);
+        recipeViewContent.add(removeButton, 1, 4);
     }
 
     //!virker ikke og har ingen funksjon atm
@@ -326,7 +366,6 @@ public class BookOfCookController {
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         recipeViewBox2.add(label, 0, 1);
     }
-
 
 
     //-----------------------------------------------------------
