@@ -2,6 +2,7 @@ package BookOfCook;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,6 +28,12 @@ public class BookOfCookController {
     private int numbersOfRecipesShown;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
 
+    //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
+    private ArrayList<String> stepsCreator = new ArrayList<String>();  
+    private ArrayList<String> categoryCreator = new ArrayList<String>();
+    private ArrayList<HashMap<String, Object>> IngredCreator = new ArrayList<HashMap<String, Object>>();
+    
+
     //-------------------------------------
     //*FXML-noder
     //-------------------------------------
@@ -40,10 +47,10 @@ public class BookOfCookController {
     private Pane recipeView, recipeStepView;
 
     @FXML
-    private ListView fridgeList, categList, recipeList;
+    private ListView fridgeList, categList, recipeList, categCreatorList, ingredCreatorList, stepCreatorList;
 
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredientNameBar, amountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
+    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredNameBar, ingredAmountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
 
     @FXML
     private TextArea descriptionArea, stepsArea;
@@ -391,12 +398,128 @@ public class BookOfCookController {
         return recipeBtn;
     }
 
+    public void addRecipe() {
+        System.out.println("Add button was clicked");
+
+        //create new recipe object 
+        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+
+        //
+        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
+        recipe.setDescription(descriptionArea.getText());
+
+        //optional info
+        if(!caloriesBar.getText().equals("")){
+            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
+        }
+
+        //add to the arrays using the buttons. and adding them to list
+        addStepsToRecipe(recipe);
+        addIngredientsToRecipe(recipe);
+        addCategoriesToRecipe(recipe);
+
+        //add to the cookbook
+        book.addRecipe(recipe);
+
+        //update the recipe list by adding new component
+        updateRecipeList();
+    }
+
     //remove recipe
     public void removeRecipe(Recipe recipe){
         System.out.println("Remove recipe button was clicked");
         book.removeRecipe(recipe);
         updateRecipeList();
         closeRecipeView();
+    }
+
+    //*adding recipe steps */
+    public void addStepCreator(){
+        //create step object with name from textfield, then add step to list in creator
+        String step = stepsArea.getText();
+        stepsCreator.add(step);
+        updateStepCreatorList();
+        //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+    }
+
+    private void updateStepCreatorList() {
+        stepsArea.clear();
+        stepCreatorList.getItems().clear();
+        for(String step : stepsCreator){
+            stepCreatorList.getItems().add(step);
+        }
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe() 
+    public void addStepsToRecipe(Recipe recipe){
+        //loop through items in list
+        for(String s : stepsCreator){
+            //if the step is already in the list, do not add it again
+            recipe.addStep(s);
+        }
+        stepsCreator.clear(); //clear the list for next use
+        stepCreatorList.getItems().clear(); //clear the list for next use
+    }
+
+    //*adding recipe ingredients */
+    public void addIngredientCreator(){
+        HashMap<String, Object> ingredient = new HashMap<String, Object>();
+
+        ingredient.put("name", ingredNameBar.getText());
+        ingredient.put("amount", Integer.parseInt(ingredAmountBar.getText()));
+        ingredient.put("unit", unitComboBoxRecipe.getValue());
+
+        IngredCreator.add(ingredient);
+        updateIngredCreatorList();
+    }
+
+    private void updateIngredCreatorList() {
+        ingredNameBar.clear();
+        ingredAmountBar.clear();
+        unitComboBoxRecipe.getSelectionModel().clearSelection();
+        ingredCreatorList.getItems().clear();
+        for(HashMap<String, Object> ingredient : IngredCreator){
+            ingredCreatorList.getItems().add(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"));
+        }
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
+    public void addIngredientsToRecipe(Recipe recipe){
+        //loop through items in list
+        for(HashMap<String, Object> ingredient : IngredCreator){
+            //if the step is already in the list, do not add it again
+            recipe.addIngredient((String) ingredient.get("name"), (int) ingredient.get("amount"), (String) ingredient.get("unit")); //add ingredient to recipe
+        }
+        IngredCreator.clear(); //clear the list for next use
+        ingredCreatorList.getItems().clear(); //clear the list for next use
+    }
+
+    //*adding recipe categories */
+    public void addCategoryCreator(){
+        //create category object with name from textfield, then add category to list in creator
+        String categoryName = categoryBar.getText();
+        categoryCreator.add(categoryName);
+        updateCategCreatorList();
+        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+    }
+
+    private void updateCategCreatorList() {
+        categoryBar.clear();
+        categCreatorList.getItems().clear();
+        for(String category : categoryCreator){
+            categCreatorList.getItems().add(category);
+        }
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
+    public void addCategoriesToRecipe(Recipe recipe){
+        //loop through items in list
+        for(String category : categoryCreator){
+            //if the step is already in the list, do not add it again
+            recipe.addCategory(new Category(category)); //add category to recipe
+        }
+        categoryCreator.clear(); //clear the list for next use
+        categCreatorList.getItems().clear(); //clear the list for next use
     }
 
     //-----------------------------------------------------------
@@ -439,8 +562,6 @@ public class BookOfCookController {
 
         return checkbox;
     }
-
-
 
     //---------------------------------------------------
     //*FRIDGE FUNCTIONALITY
@@ -485,33 +606,9 @@ public class BookOfCookController {
         System.out.println("Remove food button was clicked");
     }
 
-
-
     //---------------------------------------------------
     //*FILE WRITING FUNCTIONALITY
     //---------------------------------------------------
-
-    public void addRecipe() {
-        System.out.println("Add button was clicked");
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
-        Category category = new Category(categoryBar.getText());
-
-        recipe.setDescription(descriptionArea.getText());
-
-        if(!caloriesBar.getText().equals("")){
-            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
-        }
-
-        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
-        
-        recipe.addCategory(category);
-
-        // recipe.setIngredients(ingredientBar.getText());
-
-        recipe.addStep(stepsArea.getText());
-        book.addRecipe(recipe);
-        updateRecipeList();
-    }
 
     //------------------------------------------------
     //*RECIPE SEARCH FUNCTIONALITY
@@ -629,8 +726,6 @@ public class BookOfCookController {
     * fix remove recipe function
     * sette opp dropdown menyer for enheter i Fridge og Recipe
     * fikk dropdown menyer for enheter i fridge til å fungere
-
-
 
     JULIAN HAR GJORT: 
     * add fridge 
