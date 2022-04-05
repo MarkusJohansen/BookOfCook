@@ -271,7 +271,7 @@ public class Recipe {
         if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {                                                                           // if ingredient unit is not a lowercase string
             throw new IllegalArgumentException("unit contains invalid characters");                                                             // throw error
         }
-        if (!(Ingredient.get("name").toString().matches("[A-Z\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {  // if ingredient name is not a string of uppercase letters, dashes and spaces
+        if (!(Ingredient.get("name").toString().matches("[A-ZæøåÆØÅ\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {  // if ingredient name is not a string of uppercase letters, dashes and spaces
             throw new IllegalArgumentException("name or displayName contains invalid characters");                                              // throw error
         }
     }

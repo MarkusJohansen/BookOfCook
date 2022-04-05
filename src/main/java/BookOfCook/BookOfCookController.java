@@ -675,40 +675,22 @@ public class BookOfCookController {
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
-    Ny oppdagede bugs:
 
 
-    fridge
-    ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
-    ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg ?
-
-    category
+    ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
     ! legge til ny oppskrift sørger for duplikate categories
+    ! fix load book
+    ! fix save book
+    ! skalering av oppskrifts, funksjon
+    ! fridge filter av og på funksjon (i det hele tatt funksjon)
+    ! 
+    ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
-
-
-    skriving til fil
-    ! fix load book function
-    ! fix save book 
-    
-    recipe creator og editor
-    ! steps ikke linket med view
-    ! koble opp legge til ingredienser
-    ! setup connection with textfields, so that when you click on a recipe, the textfields are filled with the recipe info for editing
     ? legge edit og lage recipe tool i et popupvindu?
     ? picture support
-
-    i klassene
-    ! gjøre om name til recipes om til lowercase
-    !? do we have full on validation?
-
-    logistikk
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
-
-    søkefelt
-    ? knapp for å fjerne all text fra search field?
 
 
     MARKUS HAR GJORT:
@@ -726,6 +708,12 @@ public class BookOfCookController {
     * fix remove recipe function
     * sette opp dropdown menyer for enheter i Fridge og Recipe
     * fikk dropdown menyer for enheter i fridge til å fungere
+    * fikset listviews i recipe view mode
+    * satte opp listviews i recipe creator
+    * koblet opp steps med recipe i creator
+    * koblet opp ingredients med recipe i creator
+    * koblet opp categories med recipe i creator
+
 
     JULIAN HAR GJORT: 
     * add fridge 
