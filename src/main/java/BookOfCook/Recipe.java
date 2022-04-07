@@ -50,17 +50,17 @@ public class Recipe {
 
     // get ingredients
     public ArrayList<HashMap<String,Object>> getIngredients() {
-        return Ingredients;                                         // returns ingredients
+        return new ArrayList<HashMap<String,Object>>(Ingredients);                                         // returns ingredients
     }
 
     // get categories
     public ArrayList<Category> getCategories() {
-        return categories;                                          // returns categories
+        return new ArrayList<Category>(categories);                                          // returns categories
     }
 
     // get steps
     public ArrayList<String> getSteps() {
-        return steps;                                               // returns steps
+        return new ArrayList<String>(steps);                                               // returns steps
     }
 
     // get displayed name (BEING USED IN COOKBOOK ATM)

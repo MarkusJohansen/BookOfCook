@@ -18,7 +18,7 @@ public class Fridge {
 
     // *GETTERS
     public ArrayList<HashMap<String, Object>> getFood() {
-        return foodInFridge;
+        return new ArrayList<HashMap<String, Object>>(foodInFridge);
     }
 
     public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
