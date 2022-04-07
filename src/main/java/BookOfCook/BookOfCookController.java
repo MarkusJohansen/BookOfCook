@@ -89,12 +89,14 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("Hamburger", 1));
         book.addRecipe(new Recipe("Spaghetti", 2));
         book.addRecipe(new Recipe("Enchiladas", 1));
-        book.addRecipe(new Recipe("Entrecote", 1));
-        book.addRecipe(new Recipe("Mousaka", 1));
-        book.addRecipe(new Recipe("Tika masala", 1));
-        book.addRecipe(new Recipe("garam masala", 1));
-        book.addRecipe(new Recipe("smalahove", 1));
-        book.addRecipe(new Recipe("ribbe", 1));
+
+        book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
+        book.getRecipes().get(0).setCalories(2002);
+        book.getRecipes().get(0).setDescription("En fantastisk pizza");
+        book.getRecipes().get(0).addStep("Frem i en skål");
+        book.getRecipes().get(0).addStep("Frem i en skål");
+        book.getRecipes().get(0).addStep("Frem i en skål");
+        book.getRecipes().get(0).setPrepTime("10 minuter");;
     }
 
     //initializes the recipe ArrayList
@@ -662,7 +664,7 @@ public class BookOfCookController {
     //------------------------------------------------
 
     //search for food
-    public void searchFood() { // !rart navn på metode darkus??
+    public void searchFood() {
         System.out.println("Search food bar was used was clicked");
         searchedRecipes = book.searchRecipes(searchBar.getText());
         if(searchedRecipes.size() > 0){
@@ -722,8 +724,6 @@ public class BookOfCookController {
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
-
-
     ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
     ! legge til ny oppskrift sørger for duplikate categories
     ! fix load book
@@ -742,7 +742,6 @@ public class BookOfCookController {
     ? picture support
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
-
 
     MARKUS HAR GJORT:
     * gått over privacy declarators i Recipe klassen
@@ -764,7 +763,6 @@ public class BookOfCookController {
     * koblet opp steps med recipe i creator
     * koblet opp ingredients med recipe i creator
     * koblet opp categories med recipe i creator
-
 
     JULIAN HAR GJORT: 
     * add fridge 
