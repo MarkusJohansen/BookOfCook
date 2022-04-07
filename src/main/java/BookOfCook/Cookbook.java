@@ -52,11 +52,11 @@ public class Cookbook implements recipeContainer {
     }
 
     public ArrayList<Recipe> getRecipes() {
-        return recipes;                                     // returns recipes in cookbook
+        return new ArrayList<Recipe>(recipes);            // returns all recipes in cookbook     
     }
 
     public ArrayList<Category> getCategories() {
-        return categories;                                  // returns categories in cookbook
+        return new ArrayList<Category>(categories);                                  // returns categories in cookbook
     }
 
     // *VALIDATION METHODS

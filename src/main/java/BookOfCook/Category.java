@@ -18,7 +18,7 @@ public class Category implements recipeContainer {
     }
 
     public ArrayList<Recipe> getRecipes() {
-        return recipes;
+        return new ArrayList<Recipe>(recipes);
     }
 
     public int getAmount() {

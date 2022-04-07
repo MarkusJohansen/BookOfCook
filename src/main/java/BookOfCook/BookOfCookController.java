@@ -489,6 +489,10 @@ public class BookOfCookController {
     public void addCategoriesToRecipe(Recipe recipe){
         //loop through items in list
         for(String category : categoryCreator){
+            book.categCollect();
+            if(book.getCategories().contains(category)){
+
+            }
             //if the step is already in the list, do not add it again
             recipe.addCategory(new Category(category)); //add category to recipe
         }
