@@ -499,31 +499,50 @@ public class BookOfCookController {
         //create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
-        updateCategCreatorList();
-        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-    }
 
-    private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
         for(String category : categoryCreator){
             categCreatorList.getItems().add(category);
         }
+
+        //updateCategCreatorList();
+        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
+
+    /*private void updateCategCreatorList() {       KOMMENTERT UT METODE
+        categoryBar.clear();
+        categCreatorList.getItems().clear();
+        for(String category : categoryCreator){
+            categCreatorList.getItems().add(category);
+        }
+    }*/
 
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
+        //book.categCollect();
         //loop through items in list
-        for(String category : categoryCreator){
-            book.categCollect();
-            if(book.getCategories().contains(category)){
 
+        for(String category : categoryCreator){
+            boolean categoryExists = false;
+            
+            for(Category c : book.getCategories()){
+
+                if(c.getName().equals(category)){
+                    categoryExists = true;
+                    recipe.addCategory(c);
+                }
+            }
+
+            if(!categoryExists){
+                recipe.addCategory(new Category(category));
             }
             //if the step is already in the list, do not add it again
-            recipe.addCategory(new Category(category)); //add category to recipe
         }
         categoryCreator.clear(); //clear the list for next use
         categCreatorList.getItems().clear(); //clear the list for next use
+
+        System.out.println(book.getCategories());
     }
 
     //-----------------------------------------------------------
