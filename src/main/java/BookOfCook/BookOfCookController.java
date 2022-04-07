@@ -57,7 +57,6 @@ public class BookOfCookController {
     private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
 
 
-
     //-------------------------------------
     //*INITIALIZATION
     //-------------------------------------
@@ -418,11 +417,74 @@ public class BookOfCookController {
         closeRecipeView();
     }
 
+    public Button removeCategoryList(String target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " category from recipe creation");
+                categoryCreator.remove(target);
+                updateCategCreatorList();
+            });
+    
+            return btn;
+    }
+
+    public Button removeStepList(String target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " step from recipe creation");
+                stepsCreator.remove(target);
+                updateStepCreatorList();
+            });
+    
+            return btn;
+    }
+
+    public Button removeIngredientList(HashMap<String, Object> target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " ingredient from recipe creation");
+                IngredCreator.remove(target);
+                updateIngredCreatorList();
+            });
+    
+            return btn;
+    }
+
     //*adding recipe steps */
+    public Pane createRemovable(String content, Button btn){
+        Pane pane = new Pane();
+        Label label = new Label(content);
+
+        styleLabel(label, "list-label", 80.0, 10.0); 
+
+        pane.getChildren().add(label);
+        pane.getChildren().add(btn);
+
+        return pane;
+    }
+
     public void addStepCreator(){
         //create step object with name from textfield, then add step to list in creator
-        String step = stepsArea.getText();
-        stepsCreator.add(step);
+        String stepContent = stepsArea.getText();
+        stepsCreator.add(stepContent);
         updateStepCreatorList();
         //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
@@ -431,7 +493,7 @@ public class BookOfCookController {
         stepsArea.clear();
         stepCreatorList.getItems().clear();
         for(String step : stepsCreator){
-            stepCreatorList.getItems().add(step);
+            stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
         }
     }
 
@@ -463,7 +525,7 @@ public class BookOfCookController {
         ingredAmountBar.clear();
         ingredCreatorList.getItems().clear();
         for(HashMap<String, Object> ingredient : IngredCreator){
-            ingredCreatorList.getItems().add(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"));
+            ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
         }
     }
 
@@ -483,24 +545,18 @@ public class BookOfCookController {
         //create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
-
-        categoryBar.clear();
-        categCreatorList.getItems().clear();
-        for(String category : categoryCreator){
-            categCreatorList.getItems().add(category);
-        }
-
-        //updateCategCreatorList();
+        updateCategCreatorList();
         //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
-    /*private void updateCategCreatorList() {       KOMMENTERT UT METODE
+    //!bug gjør at ting ikke
+    private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
         for(String category : categoryCreator){
-            categCreatorList.getItems().add(category);
+            categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
         }
-    }*/
+    }
 
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
@@ -575,13 +631,13 @@ public class BookOfCookController {
         Pane foodBody = new Pane();
 
         //adds children
-        foodBody.getChildren().add(createFoodLabel(food, amount, unit)); //!TO
+        foodBody.getChildren().add(createFoodLabel(food, amount, unit));
         foodBody.getChildren().add(createDeleteX(food));
 
         return foodBody;
     }
 
-    private Button createDeleteX(String foodname){
+    private Button createDeleteX(String string){
         Button removeFoodBtn = new Button("X");
 
         removeFoodBtn.getStyleClass().clear();
@@ -590,8 +646,8 @@ public class BookOfCookController {
         removeFoodBtn.setLayoutY(0);
 
         removeFoodBtn.setOnAction(e -> {
-            System.out.println("Delete food " + foodname);
-            fridge.removeFood(foodname);
+            System.out.println("Delete food " + string);
+            fridge.removeFood(string);
 
             updatefridge();
         });
@@ -688,7 +744,11 @@ public class BookOfCookController {
     ! fix save book
     ! skalering av oppskrifts, funksjon
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
-    ! fungerer flere 
+
+    !fil skriving og lesing
+    !få fridge fungere
+    !edit recipe funksjon (kan vurdere)
+
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
