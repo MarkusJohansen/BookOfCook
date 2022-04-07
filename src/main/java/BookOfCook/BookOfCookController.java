@@ -187,7 +187,19 @@ public class BookOfCookController {
 
     private void updateCategList(){
         categList.getItems().clear();
-        initCateg();
+
+        book.categCollect();
+
+        categories.addAll(book.getCategories());
+
+        //System.out.println(book.getCategories());
+        for(Category category : categories){
+            categList.getItems().add(categComponent(category));
+        }
+
+        System.out.println(book.getCategories());
+
+        //initCateg();
     }
 
     public void updatefridge(){
@@ -392,6 +404,10 @@ public class BookOfCookController {
 
         //update the recipe list by adding new component
         updateRecipeList();
+        updateCategList();
+        book.categCollect();       
+
+        System.out.println(book.getCategories());
     }
 
     //remove recipe
@@ -493,24 +509,22 @@ public class BookOfCookController {
 
         for(String category : categoryCreator){
             boolean categoryExists = false;
-            
-            for(Category c : book.getCategories()){
 
-                if(c.getName().equals(category)){
-                    categoryExists = true;
-                    recipe.addCategory(c);
+            if(book.checkIfCategoryExist(category)){
+                for(Category c : book.getCategories()){
+                    if(category.equals(c.getName())){
+                        recipe.addCategory(c);
+                        System.out.println("adding category that alerady exists: " + c);
+                    }
                 }
-            }
-
-            if(!categoryExists){
+            }else{
                 recipe.addCategory(new Category(category));
+                System.out.println("adding new category: " + category);
             }
             //if the step is already in the list, do not add it again
         }
         categoryCreator.clear(); //clear the list for next use
         categCreatorList.getItems().clear(); //clear the list for next use
-
-        System.out.println(book.getCategories());
     }
 
     //-----------------------------------------------------------
