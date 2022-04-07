@@ -14,9 +14,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="923.0" prefWidth="1485.0" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
+<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="944.0" prefWidth="1613.0" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
    <children>
-      <Pane layoutX="55.0" layoutY="79.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
+      <Pane layoutX="62.0" layoutY="85.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
          <children>
             <Button fx:id="fridgeAddButton" layoutX="254.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add food" />
             <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
@@ -36,7 +36,7 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="472.0" layoutY="79.0" prefHeight="817.0" prefWidth="599.0" styleClass="level-1-panes">
+      <Pane layoutX="459.0" layoutY="98.0" prefHeight="817.0" prefWidth="599.0" styleClass="level-1-panes">
          <children>
             <ListView fx:id="recipeList" layoutX="35.0" layoutY="41.0" prefHeight="703.0" prefWidth="534.0" styleClass="listViews" />
             <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="599.0" styleClass="level-1-panes" visible="false">
@@ -67,9 +67,12 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="707.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="402.0" minHeight="0.0" prefHeight="206.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="225.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
                      </children>
@@ -83,31 +86,32 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="1088.0" layoutY="89.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
+      <Pane layoutX="1110.0" layoutY="85.0" prefHeight="824.0" prefWidth="476.0" styleClass="level-1-panes">
          <children>
-            <TextField fx:id="recipeNameBar" layoutX="46.0" layoutY="78.0" prefHeight="25.0" prefWidth="314.0" promptText="name?*" />
-            <TextField fx:id="servesPeopleBar" layoutX="46.0" layoutY="109.0" prefHeight="25.0" prefWidth="314.0" promptText="Serves?*" />
-            <Button fx:id="addButton" layoutX="203.0" layoutY="785.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" styleClass="standard-button" text="+" />
-            <Label layoutX="96.0" layoutY="14.0" prefHeight="53.0" prefWidth="238.0" text="Recipe Creator" textFill="WHITE">
+            <TextField fx:id="recipeNameBar" layoutX="34.0" layoutY="78.0" prefHeight="25.0" prefWidth="407.0" promptText="Name" />
+            <TextField fx:id="servesPeopleBar" layoutX="34.0" layoutY="109.0" prefHeight="25.0" prefWidth="407.0" promptText="Number of servings" />
+            <Button fx:id="addButton" layoutX="236.0" layoutY="762.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" styleClass="standard-button" text="+" />
+            <Label layoutX="94.0" layoutY="13.0" prefHeight="53.0" prefWidth="238.0" text="Recipe Creator" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
             <Line endX="137.0" layoutX="206.0" layoutY="67.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
-            <TextField fx:id="categoryBar" layoutX="41.0" layoutY="251.0" prefHeight="25.0" prefWidth="249.0" promptText="Categories" />
-            <TextField fx:id="caloriesBar" layoutX="41.0" layoutY="283.0" prefHeight="25.0" prefWidth="320.0" promptText="Calories" />
-            <TextField fx:id="ingredNameBar" layoutX="46.0" layoutY="444.0" prefHeight="25.0" prefWidth="86.0" promptText="Ingredients" />
-            <TextField fx:id="prepTimeBar" layoutX="45.0" layoutY="558.0" prefHeight="25.0" prefWidth="314.0" promptText="time" />
-            <TextArea fx:id="descriptionArea" layoutX="45.0" layoutY="480.0" prefHeight="63.0" prefWidth="314.0" promptText="Description" />
-            <TextField fx:id="ingredAmountBar" layoutX="136.0" layoutY="444.0" prefHeight="25.0" prefWidth="66.0" promptText="Amount" />
-            <ComboBox fx:id="unitComboBoxRecipe" layoutX="205.0" layoutY="444.0" prefHeight="25.0" prefWidth="75.0" promptText="unit" />
-            <Button layoutX="303.0" layoutY="444.0" mnemonicParsing="false" onAction="#addIngredientCreator" text="Button" />
-            <ListView fx:id="stepCreatorList" layoutX="45.0" layoutY="594.0" prefHeight="105.0" prefWidth="314.0" />
-            <ListView fx:id="ingredCreatorList" layoutX="44.0" layoutY="321.0" prefHeight="114.0" prefWidth="314.0" />
-            <Button layoutX="319.0" layoutY="731.0" mnemonicParsing="false" onAction="#addStepCreator" text="Button" />
-            <ListView fx:id="categCreatorList" layoutX="44.0" layoutY="143.0" prefHeight="95.0" prefWidth="314.0" />
-            <Button layoutX="308.0" layoutY="251.0" mnemonicParsing="false" onAction="#addCategoryCreator" text="Button" />
-            <TextArea fx:id="stepsArea" layoutX="47.0" layoutY="712.0" prefHeight="63.0" prefWidth="256.0" promptText="Step" />
+            <TextField fx:id="categoryBar" layoutX="34.0" layoutY="251.0" prefHeight="25.0" prefWidth="256.0" promptText="Category" />
+            <TextField fx:id="caloriesBar" layoutX="35.0" layoutY="283.0" prefHeight="25.0" prefWidth="407.0" promptText="Calories (optional)" />
+            <TextField fx:id="ingredNameBar" layoutX="30.0" layoutY="444.0" prefHeight="25.0" prefWidth="99.0" promptText="Ingredient" />
+            <TextField fx:id="prepTimeBar" layoutX="33.0" layoutY="558.0" prefHeight="25.0" prefWidth="256.0" promptText="Time in minutes" />
+            <TextArea fx:id="descriptionArea" layoutX="32.0" layoutY="480.0" prefHeight="63.0" prefWidth="407.0" promptText="Description" />
+            <TextField fx:id="ingredAmountBar" layoutX="138.0" layoutY="444.0" prefHeight="25.0" prefWidth="75.0" promptText="Amount" />
+            <ComboBox fx:id="unitComboBoxRecipe" layoutX="223.0" layoutY="444.0" prefHeight="25.0" prefWidth="75.0" promptText="unit" />
+            <Button layoutX="307.0" layoutY="444.0" mnemonicParsing="false" onAction="#addIngredientCreator" prefHeight="25.0" prefWidth="135.0" styleClass="standard-button" text="Add" />
+            <ListView fx:id="stepCreatorList" layoutX="33.0" layoutY="594.0" prefHeight="75.0" prefWidth="407.0" styleClass="recipe-creator-list" />
+            <ListView fx:id="ingredCreatorList" layoutX="32.0" layoutY="321.0" prefHeight="114.0" prefWidth="407.0" styleClass="recipe-creator-list" />
+            <Button layoutX="353.0" layoutY="700.0" mnemonicParsing="false" onAction="#addStepCreator" prefHeight="25.0" prefWidth="86.0" styleClass="standard-button" text="Add" />
+            <ListView fx:id="categCreatorList" layoutX="32.0" layoutY="143.0" prefHeight="95.0" prefWidth="407.0" styleClass="recipe-creator-list" />
+            <Button layoutX="306.0" layoutY="251.0" mnemonicParsing="false" onAction="#addCategoryCreator" prefHeight="25.0" prefWidth="135.0" styleClass="standard-button" text="Add" />
+            <TextArea fx:id="stepsArea" layoutX="34.0" layoutY="681.0" prefHeight="63.0" prefWidth="310.0" promptText="Step" />
+            <ComboBox fx:id="timeUnitComboBoxRecipe" layoutX="304.0" layoutY="558.0" prefHeight="25.0" prefWidth="135.0" promptText="Hours/ Minutes" />
          </children>
       </Pane>
       <Pane layoutX="1.0" layoutY="-1.0" prefHeight="63.0" prefWidth="1485.0" styleClass="level-1-panes">

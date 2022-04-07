@@ -2,8 +2,6 @@ package BookOfCook;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -56,24 +54,27 @@ public class BookOfCookController {
     private TextArea descriptionArea, stepsArea;
 
     @FXML
-    private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge;
+    private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
 
 
 
     //-------------------------------------
     //*INITIALIZATION
     //-------------------------------------
+
+    //initializes the controller
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
         initbook();
-        initRecipeList();
+        initRecipeComponents();
         initFridge();
         initCateg();
         initFridgeFood();
         initUnitBoxes();
     }
 
-    private void initRecipeList() {
+    //inititializes the recipe components in the GUI
+    private void initRecipeComponents() {
         initRecipes();
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
@@ -82,6 +83,7 @@ public class BookOfCookController {
         updateAmount();
     }
 
+    //initializes the book components in the GUI
     private void initbook(){
         book = new Cookbook("foo");
         book.addRecipe(new Recipe("Pizza", 2));
@@ -94,54 +96,27 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("garam masala", 1));
         book.addRecipe(new Recipe("smalahove", 1));
         book.addRecipe(new Recipe("ribbe", 1));
-        // book.addRecipe(new Recipe("Pinnekjøtt", 1)); //!Ikke lov med æøå
-        book.addRecipe(new Recipe("lasagne", 1));
-        book.addRecipe(new Recipe("croissant", 1));
-        book.addRecipe(new Recipe("french toast", 1));
-        book.addRecipe(new Recipe("bacon and eggs", 1));
-        book.addRecipe(new Recipe("Spam", 1));
-        book.addRecipe(new Recipe("tomatsuppe", 1));
-        book.addRecipe(new Recipe("pulled Pork", 1));
-        book.addRecipe(new Recipe("Tacos", 1));
-        book.addRecipe(new Recipe("shepeards pie", 1));
-        book.addRecipe(new Recipe("kylling taco", 1));
-        book.addRecipe(new Recipe("quesedillas", 1));
-        book.addRecipe(new Recipe("fajitas", 1));
-        book.addRecipe(new Recipe("vegetarburger", 1));
-        book.addRecipe(new Recipe("omelett", 1));
     }
 
+    //initializes the recipe ArrayList
     private void initRecipes(){
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
-        /*recipes.addAll(List.of(
-            new Recipe("Pizza", 2),
-            new Recipe("Hamburger", 1),
-            new Recipe("Spaghetti", 2),
-            new Recipe("Biff", 1)
-        ));*/
-
+    }
+    
+    //initializes the category components in the GUI
+    private void initCateg(){
+        categories = new ArrayList<Category>();
+        
         Category italiensk = new Category("italiensk");
         Category burger = new Category("burger");
         Category kjøtt = new Category("kjøtt");
-        Category indisk = new Category("indisk");
-        Category frokost = new Category("frokost");
-        Category meksikansk = new Category("meksikansk");
-        Category kylling = new Category("kylling");
 
         recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
-        book.categCollect();
-
-        //recipes.addAll(book.getRecipes());
-    }
-    
-    private void initCateg(){
-
-        categories = new ArrayList<Category>();
         book.categCollect();
 
         categories.addAll(book.getCategories());
@@ -152,6 +127,7 @@ public class BookOfCookController {
         }
     }
     
+    //initializes the frige object and the fridge food components in the GUI
     private void initFridge(){
         fridge = new Fridge();
         fridge.addFood("tomater", 4, "stk");
@@ -163,10 +139,10 @@ public class BookOfCookController {
         fridge.addFood("pastaskruer", 1, "kg");
     }
     
+    //initializes the food in fridge
     private void initFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
         fridgeFood.addAll(fridge.getFood());
-
         for(HashMap<String, Object> food : fridgeFood){
             fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
@@ -181,9 +157,9 @@ public class BookOfCookController {
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
 
         //column 2
-        viewCateg(recipe, recipeViewBox2, 0, 0);
-        viewSteps(recipe, recipeViewBox2, 1, 0);
-        viewIngred(recipe, recipeViewBox2, 2, 0);
+        viewCateg(recipe);
+        viewSteps(recipe);
+        viewIngred(recipe);
 
         //btns
         closeBtn(recipe);
@@ -195,6 +171,7 @@ public class BookOfCookController {
     public void initUnitBoxes(){
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
 
@@ -205,7 +182,7 @@ public class BookOfCookController {
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
-        initRecipeList();
+        initRecipeComponents();
     }
 
     private void updateCategList(){
@@ -228,8 +205,6 @@ public class BookOfCookController {
         numbersOfRecipesShown = recipes.size();
         recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
     }
-
-
 
     //-------------------------------------
     //*STYLING
@@ -280,21 +255,27 @@ public class BookOfCookController {
     }
 
     //shorthand method for creating list and fill them with categories in recipe viewmode
-    private void viewCateg(Recipe recipe, Object parent, int row, int column){
+    private void viewCateg(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add category label to grid
+        viewLabel("Categories", recipeViewBox2, 0, 0);
 
         //add categories to listview
         for(Category category : recipe.getCategories()){
             listView.getItems().add(category.getName());
         }
-
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+
+        (recipeViewBox2).add(listView, 0, 1);
     }
 
     //shorthand method for creating list and fill them with ingredients in recipe viewmode
-    private void viewIngred(Recipe recipe, Object parent, int row, int column){
+    private void viewIngred(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add ingredients label to grid
+        viewLabel("Ingredients", recipeViewBox2, 2, 0);
 
         //add ingredients to listview
         for(HashMap<String, Object> ingredient : recipe.getIngredients()){
@@ -302,12 +283,15 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+        (recipeViewBox2).add(listView, 0, 3);
     }
 
     //shorthand method for creating list and fill them with steps in recipe viewmode
-    private void viewSteps(Recipe recipe, Object parent, int row, int column){
+    private void viewSteps(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add steps label to grid
+        viewLabel("Steps", recipeViewBox2, 4, 0);
 
         //add steps to listview
         for(String step : recipe.getSteps()){
@@ -315,7 +299,7 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+        (recipeViewBox2).add(listView, 0, 5);
     }
 
     //creates a close Btn for closing recipe view
@@ -359,21 +343,6 @@ public class BookOfCookController {
         recipeViewContent.add(removeButton, 1, 4);
     }
 
-    //!virker ikke og har ingen funksjon atm
-    private void stepsLabel(Recipe recipe){
-        Label label = new Label("Steps:" + recipe.getSteps());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        // recipeStepView.getChildren().clear();
-        recipeStepView.getChildren().add(label);
-    }
-
-    //!virker ikke og har ingen funksjon atm
-    private void createIngredientsLabel(Recipe recipe){
-        Label label = new Label("Ingredients:");
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox2.add(label, 0, 1);
-    }
-
 
     //-----------------------------------------------------------
     //*RECIPE CREATION FUNCTIONALITY
@@ -405,7 +374,7 @@ public class BookOfCookController {
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
         //
-        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
+        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
         //optional info
@@ -476,7 +445,6 @@ public class BookOfCookController {
     private void updateIngredCreatorList() {
         ingredNameBar.clear();
         ingredAmountBar.clear();
-        unitComboBoxRecipe.getSelectionModel().clearSelection();
         ingredCreatorList.getItems().clear();
         for(HashMap<String, Object> ingredient : IngredCreator){
             ingredCreatorList.getItems().add(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"));
@@ -654,7 +622,7 @@ public class BookOfCookController {
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
-            initRecipeList();
+            initRecipeComponents();
             return;
         }
 
@@ -706,7 +674,7 @@ public class BookOfCookController {
     ! fix save book
     ! skalering av oppskrifts, funksjon
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
-    ! 
+    ! fungerer flere 
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier

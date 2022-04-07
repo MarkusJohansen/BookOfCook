@@ -98,13 +98,8 @@ public class Recipe {
         this.description = description;
     }
 
-    public void setPrepTime(int timeInMinutes) { //prep time in hours
-        if (timeInMinutes > 60) {
-            //time in min to hours and minutes
-            this.prepTime = Integer.toString(timeInMinutes / 60) + "h " + Integer.toString(timeInMinutes % 60) + "min";
-        } else {
-            this.prepTime = Integer.toString(timeInMinutes) + "min";
-        }
+    public void setPrepTime(String time) { //prep time in hours
+        prepTime = time; // sets
     }
 
 
@@ -196,7 +191,7 @@ public class Recipe {
 
     // add step to recipe steps
     public void addStep(String step) {
-        validateStep(capitalize(step));                                            
+        validateStep(step);                                                 // checks if step is valid
         steps.add(capitalize(step));                                        // adds step to list of steps in recipe
     }
 
@@ -297,42 +292,7 @@ public class Recipe {
         }
     }
 
-
-    //! *PARSING RECIPE FOR WRITING TO .txt FILE ER DENNE NØDVENDIG?
-    public String parsedRecipe() {
-        String parsedRecipe = "";                                                               // Creates empty string that will be built up
-        String recipeSection = "============================================\n";                // Creates a FATLINE to separate different sections.
-
-        parsedRecipe += recipeSection;                                                          // adds FATLINE to parsed recipe start                                        
-        parsedRecipe += name.toUpperCase() + "\n\n";                                            // adds name of recipe to parsed recipe
-        parsedRecipe += "Categories:";                                                          // adds categories section for parsed recipe
-
-        for(Category category : categories) {                                                   // loops through all categories
-            parsedRecipe += "  " + category.getName() + ",";                                         // adds category to parsed recipe
-        }
-
-        parsedRecipe += "\n";  
-        parsedRecipe += "Oppskriften er beregnet på: " + numberOfServings + " personer\n\n";    // adds number of servings to parsed recipe
-        parsedRecipe += "Calories: " + calories + "\n";                                         // adds calories to parsed recipe
-        parsedRecipe += "Calories per person: " + caloriesPerPerson + "\n\n";                   // adds calories per person to parsed recipe
-        parsedRecipe += "Ingredients: \n";                                                      // adds ingredients section for parsed recipe
-
-        for(HashMap<String, Object> Ingredient : Ingredients) {                                                                     // loops through all ingredients
-            parsedRecipe += "  " + Ingredient.get("displayName") + ": " + Ingredient.get("amount") + " " + Ingredient.get("unit") + "\n";  // adds indented ingredient to parsed recipe
-        }
-        parsedRecipe += "\n";                                                                   // adds new line to parsed recipe
-
-        parsedRecipe += "Steps:";                                                               // adds Steps section for parsed recipe
-        for(String step : steps) {                                                              // loops through all steps
-            parsedRecipe += "\n* " + step;                                                      // adds step to parsed recipe
-        }
-        parsedRecipe += "\n";                                                                   // adds new line to parsed recipe
-
-        parsedRecipe += recipeSection + "\n";                                                   // adds FATLINE to parsed recipe end and an extra new line
-        return parsedRecipe;                                                                    // returns parsed recipe
-    }
-
-
+    
     // *GENERAL TOOLBOX METHODS
     // capitalizes first letter and makes rest of string lowercase. good for displayed names in app
     private String capitalize(String s) {
@@ -348,51 +308,8 @@ public class Recipe {
 
 
     // *TOSTRING METHOD
-
     @Override
     public String toString() {
         return "Recipe [name=" + name + "]";
-    }
-
-
-    // *MAIN METHOD FOR TESTING
-    public static void main(String[] args) {
-        Recipe recipe = new Recipe("Sukker-pizza", 3);
-        Category pizza = new Category("Pizza");
-        Category italian = new Category("Italian");
-        Category dessert = new Category("Dessert");
-
-        // adds base ingredients and calories to recipe
-        recipe.setCalories(1000);
-        recipe.addIngredient("tomater", 100, "gram");
-        recipe.addIngredient("sukker", 6, "ss");
-        recipe.addIngredient("vann", 3, "l");
-        recipe.addIngredient("mel", 100 , "kg");
-        recipe.addIngredient("pizza kulsyre", 1, "stk");
-        System.out.println(recipe.parsedRecipe());
-
-        // testing av skalering og endring av ingrdiens
-        recipe.scaleRecipe(4);
-        recipe.changeIngredient("mel", 80, "kg");
-        recipe.changeIngredientName("tomater", "tomat");
-        System.out.println(recipe.parsedRecipe());
-
-        // tester fjerning av ingredient og legge til kategorier
-        recipe.removeIngredient("tomat");
-        recipe.addCategory(pizza);
-        recipe.addCategory(italian);
-        recipe.addCategory(dessert);
-        recipe.removeCategory(dessert);
-        System.out.println(recipe.parsedRecipe());
-
-        // legger til steg in recipe
-        recipe.addStep("Putt tomater i en kasse");
-        recipe.addStep("Putt sukker i en kasse");
-        recipe.addStep("Putt vann i en kasse");
-        recipe.addStep("Putt mel i en kasse");
-        recipe.addStep("Kjøh!");
-        recipe.addStep("ferri");
-        recipe.removeStep(0);
-        System.out.println(recipe.parsedRecipe());
     }
 }
