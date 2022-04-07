@@ -75,14 +75,13 @@
 
 .list-label{
     -fx-font-size: 16px;
-    -fx-font-family: "Inter", "Arial";
+    -fx-font-family: "Inter ", "Arial";
     -fx-text-fill: white;
 }
 
 
 .recipe-creator-list{
     -fx-background-color: #9a9a9a;
-    -fx-padding: 10px;                                                   /*Font-family of button*/
 }
 
 .recipe-creator-list .list-cell{

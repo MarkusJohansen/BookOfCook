@@ -464,10 +464,11 @@ public class BookOfCookController {
 
         return pane;
     }
-    
+
     public void addStepCreator(){
         //create step object with name from textfield, then add step to list in creator
-        stepCreatorList.getItems().add(stepsArea.getText());
+        String stepContent = stepsArea.getText();
+        stepsCreator.add(stepContent);
         updateStepCreatorList();
         //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
@@ -528,24 +529,18 @@ public class BookOfCookController {
         //create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
-
-        categoryBar.clear();
-        categCreatorList.getItems().clear();
-        for(String category : categoryCreator){
-            categCreatorList.getItems().add(category);
-        }
-
-        //updateCategCreatorList();
+        updateCategCreatorList();
         //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
-    /*private void updateCategCreatorList() {       KOMMENTERT UT METODE
+    //!bug gjør at ting ikke
+    private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
         for(String category : categoryCreator){
             categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
         }
-    }*/
+    }
 
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
