@@ -54,7 +54,7 @@ public class BookOfCookController {
     private TextArea descriptionArea, stepsArea;
 
     @FXML
-    private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge;
+    private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
 
 
 
@@ -157,9 +157,9 @@ public class BookOfCookController {
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
 
         //column 2
-        viewCateg(recipe, recipeViewBox2, 0, 0);
-        viewSteps(recipe, recipeViewBox2, 1, 0);
-        viewIngred(recipe, recipeViewBox2, 2, 0);
+        viewCateg(recipe);
+        viewSteps(recipe);
+        viewIngred(recipe);
 
         //btns
         closeBtn(recipe);
@@ -171,6 +171,7 @@ public class BookOfCookController {
     public void initUnitBoxes(){
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
 
@@ -254,21 +255,27 @@ public class BookOfCookController {
     }
 
     //shorthand method for creating list and fill them with categories in recipe viewmode
-    private void viewCateg(Recipe recipe, Object parent, int row, int column){
+    private void viewCateg(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add category label to grid
+        viewLabel("Categories", recipeViewBox2, 0, 0);
 
         //add categories to listview
         for(Category category : recipe.getCategories()){
             listView.getItems().add(category.getName());
         }
-
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+
+        (recipeViewBox2).add(listView, 0, 1);
     }
 
     //shorthand method for creating list and fill them with ingredients in recipe viewmode
-    private void viewIngred(Recipe recipe, Object parent, int row, int column){
+    private void viewIngred(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add ingredients label to grid
+        viewLabel("Ingredients", recipeViewBox2, 2, 0);
 
         //add ingredients to listview
         for(HashMap<String, Object> ingredient : recipe.getIngredients()){
@@ -276,12 +283,15 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+        (recipeViewBox2).add(listView, 0, 3);
     }
 
     //shorthand method for creating list and fill them with steps in recipe viewmode
-    private void viewSteps(Recipe recipe, Object parent, int row, int column){
+    private void viewSteps(Recipe recipe){
         ListView<String> listView = new ListView<String>();
+
+        //add steps label to grid
+        viewLabel("Steps", recipeViewBox2, 4, 0);
 
         //add steps to listview
         for(String step : recipe.getSteps()){
@@ -289,7 +299,7 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        ((GridPane)parent).add(listView, column, row);
+        (recipeViewBox2).add(listView, 0, 5);
     }
 
     //creates a close Btn for closing recipe view
@@ -333,21 +343,6 @@ public class BookOfCookController {
         recipeViewContent.add(removeButton, 1, 4);
     }
 
-    //!virker ikke og har ingen funksjon atm
-    private void stepsLabel(Recipe recipe){
-        Label label = new Label("Steps:" + recipe.getSteps());
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        // recipeStepView.getChildren().clear();
-        recipeStepView.getChildren().add(label);
-    }
-
-    //!virker ikke og har ingen funksjon atm
-    private void createIngredientsLabel(Recipe recipe){
-        Label label = new Label("Ingredients:");
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
-        recipeViewBox2.add(label, 0, 1);
-    }
-
 
     //-----------------------------------------------------------
     //*RECIPE CREATION FUNCTIONALITY
@@ -379,7 +374,7 @@ public class BookOfCookController {
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
         //
-        recipe.setPrepTime(Integer.parseInt(prepTimeBar.getText()));
+        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
         //optional info
@@ -450,7 +445,6 @@ public class BookOfCookController {
     private void updateIngredCreatorList() {
         ingredNameBar.clear();
         ingredAmountBar.clear();
-        unitComboBoxRecipe.getSelectionModel().clearSelection();
         ingredCreatorList.getItems().clear();
         for(HashMap<String, Object> ingredient : IngredCreator){
             ingredCreatorList.getItems().add(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"));
@@ -661,7 +655,7 @@ public class BookOfCookController {
     ! fix save book
     ! skalering av oppskrifts, funksjon
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
-    ! 
+    ! fungerer flere 
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier

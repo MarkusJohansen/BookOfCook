@@ -67,9 +67,12 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="707.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="402.0" minHeight="0.0" prefHeight="206.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="783.0" minHeight="10.0" prefHeight="225.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
                      </children>
