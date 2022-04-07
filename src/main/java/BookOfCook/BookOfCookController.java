@@ -189,6 +189,7 @@ public class BookOfCookController {
 
         book.categCollect();
 
+        categories.clear();
         categories.addAll(book.getCategories());
 
         //System.out.println(book.getCategories());
@@ -581,6 +582,8 @@ public class BookOfCookController {
         }
         categoryCreator.clear(); //clear the list for next use
         categCreatorList.getItems().clear(); //clear the list for next use
+
+        System.out.println("inneholder " + recipe.getCategories());
     }
 
     //-----------------------------------------------------------
