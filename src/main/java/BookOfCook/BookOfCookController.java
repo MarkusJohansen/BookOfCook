@@ -2,8 +2,6 @@ package BookOfCook;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -63,17 +61,20 @@ public class BookOfCookController {
     //-------------------------------------
     //*INITIALIZATION
     //-------------------------------------
+
+    //initializes the controller
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
         initbook();
-        initRecipeList();
+        initRecipeComponents();
         initFridge();
         initCateg();
         initFridgeFood();
         initUnitBoxes();
     }
 
-    private void initRecipeList() {
+    //inititializes the recipe components in the GUI
+    private void initRecipeComponents() {
         initRecipes();
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
@@ -82,6 +83,7 @@ public class BookOfCookController {
         updateAmount();
     }
 
+    //initializes the book components in the GUI
     private void initbook(){
         book = new Cookbook("foo");
         book.addRecipe(new Recipe("Pizza", 2));
@@ -94,54 +96,27 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("garam masala", 1));
         book.addRecipe(new Recipe("smalahove", 1));
         book.addRecipe(new Recipe("ribbe", 1));
-        // book.addRecipe(new Recipe("Pinnekjøtt", 1)); //!Ikke lov med æøå
-        book.addRecipe(new Recipe("lasagne", 1));
-        book.addRecipe(new Recipe("croissant", 1));
-        book.addRecipe(new Recipe("french toast", 1));
-        book.addRecipe(new Recipe("bacon and eggs", 1));
-        book.addRecipe(new Recipe("Spam", 1));
-        book.addRecipe(new Recipe("tomatsuppe", 1));
-        book.addRecipe(new Recipe("pulled Pork", 1));
-        book.addRecipe(new Recipe("Tacos", 1));
-        book.addRecipe(new Recipe("shepeards pie", 1));
-        book.addRecipe(new Recipe("kylling taco", 1));
-        book.addRecipe(new Recipe("quesedillas", 1));
-        book.addRecipe(new Recipe("fajitas", 1));
-        book.addRecipe(new Recipe("vegetarburger", 1));
-        book.addRecipe(new Recipe("omelett", 1));
     }
 
+    //initializes the recipe ArrayList
     private void initRecipes(){
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
-        /*recipes.addAll(List.of(
-            new Recipe("Pizza", 2),
-            new Recipe("Hamburger", 1),
-            new Recipe("Spaghetti", 2),
-            new Recipe("Biff", 1)
-        ));*/
-
+    }
+    
+    //initializes the category components in the GUI
+    private void initCateg(){
+        categories = new ArrayList<Category>();
+        
         Category italiensk = new Category("italiensk");
         Category burger = new Category("burger");
         Category kjøtt = new Category("kjøtt");
-        Category indisk = new Category("indisk");
-        Category frokost = new Category("frokost");
-        Category meksikansk = new Category("meksikansk");
-        Category kylling = new Category("kylling");
 
         recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
-        book.categCollect();
-
-        //recipes.addAll(book.getRecipes());
-    }
-    
-    private void initCateg(){
-
-        categories = new ArrayList<Category>();
         book.categCollect();
 
         categories.addAll(book.getCategories());
@@ -152,6 +127,7 @@ public class BookOfCookController {
         }
     }
     
+    //initializes the frige object and the fridge food components in the GUI
     private void initFridge(){
         fridge = new Fridge();
         fridge.addFood("tomater", 4, "stk");
@@ -163,10 +139,10 @@ public class BookOfCookController {
         fridge.addFood("pastaskruer", 1, "kg");
     }
     
+    //initializes the food in fridge
     private void initFridgeFood(){
         fridgeFood = new ArrayList<HashMap<String, Object>>();
         fridgeFood.addAll(fridge.getFood());
-
         for(HashMap<String, Object> food : fridgeFood){
             fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
@@ -205,7 +181,7 @@ public class BookOfCookController {
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
-        initRecipeList();
+        initRecipeComponents();
     }
 
     private void updateCategList(){
@@ -228,8 +204,6 @@ public class BookOfCookController {
         numbersOfRecipesShown = recipes.size();
         recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
     }
-
-
 
     //-------------------------------------
     //*STYLING
@@ -631,7 +605,7 @@ public class BookOfCookController {
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
-            initRecipeList();
+            initRecipeComponents();
             return;
         }
 
