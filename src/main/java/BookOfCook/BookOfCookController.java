@@ -60,7 +60,6 @@ public class BookOfCookController {
     //-------------------------------------
     //*INITIALIZATION
     //-------------------------------------
-
     //initializes the controller
     public void initialize(){
         //! fungerer ikke searchBar.requestFocus();
@@ -96,7 +95,7 @@ public class BookOfCookController {
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).setPrepTime("10 minuter");;
+        book.getRecipes().get(0).setPrepTime("10 minuter");
     }
 
     //initializes the recipe ArrayList
@@ -175,8 +174,6 @@ public class BookOfCookController {
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
-
-
     //-------------------------------------
     //*UPDATERS
     //-------------------------------------
@@ -207,6 +204,31 @@ public class BookOfCookController {
         recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
     }
 
+    private void updateStepCreatorList() {
+        stepsArea.clear();
+        stepCreatorList.getItems().clear();
+        for(String step : stepsCreator){
+            stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
+        }
+    }
+
+    private void updateIngredCreatorList() {
+        ingredNameBar.clear();
+        ingredAmountBar.clear();
+        ingredCreatorList.getItems().clear();
+        for(HashMap<String, Object> ingredient : IngredCreator){
+            ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
+        }
+    }
+
+    private void updateCategCreatorList() {
+        categoryBar.clear();
+        categCreatorList.getItems().clear();
+        for(String category : categoryCreator){
+            categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
+        }
+    }
+
     //-------------------------------------
     //*STYLING
     //-------------------------------------
@@ -217,10 +239,273 @@ public class BookOfCookController {
         label.setLayoutY(y);
     }
 
+    
     //-------------------------------------
-    //*RECIPE VIEW FUNCTIONALITY
+    //*REMOVE METHODS
     //-------------------------------------
+    public void removeRecipe(Recipe recipe){
+        System.out.println("Remove recipe button was clicked");
+        book.removeRecipe(recipe);
+        updateRecipeList();
+        closeRecipeView();
+    }
 
+    public Button removeCategoryList(String target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " category from recipe creation");
+                categoryCreator.remove(target);
+                updateCategCreatorList();
+            });
+    
+            return btn;
+    }
+
+    public Button removeStepList(String target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " step from recipe creation");
+                stepsCreator.remove(target);
+                updateStepCreatorList();
+            });
+    
+            return btn;
+    }
+
+    public Button removeIngredientList(HashMap<String, Object> target){
+            Button btn = new Button("X");
+    
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("standard-button");
+            btn.setLayoutX(10);
+            btn.setLayoutY(0);
+    
+            btn.setOnAction(e -> {
+                System.out.println("Deleted " + target + " ingredient from recipe creation");
+                IngredCreator.remove(target);
+                updateIngredCreatorList();
+            });
+    
+            return btn;
+    }
+
+
+    //-------------------------------------
+    //*BUTTONS
+    //-------------------------------------
+    //creates a close Btn for closing recipe view
+    private void closeBtn(Recipe recipe){
+        //creates button object
+        Button btn = new Button("Close");
+
+        //sets style
+        btn.getStyleClass().clear();
+        btn.getStyleClass().add("standard-button");
+        btn.setLayoutX(80);
+        btn.setLayoutY(170);
+
+        //sets action
+        btn.setOnAction(e -> {
+            System.out.println("Close recipe view for: " + recipe.getName());
+            closeRecipeView();
+        });
+
+        //adds to grid
+        recipeViewContent.add(btn, 0, 4);
+    }
+
+    //creates a remove Btn in recipe view, for removing the recipe from the cookbook
+    private void removeBtn(Recipe recipe){
+        //creates button object
+        Button removeButton = new Button("Remove");
+
+        //sets style
+        removeButton.getStyleClass().clear();
+        removeButton.getStyleClass().add("standard-button");
+        removeButton.setLayoutX(80);
+        removeButton.setLayoutY(170);
+
+        //sets action
+        removeButton.setOnAction(e -> {
+            removeRecipe(recipe);
+        });
+
+        //adds to grid
+        recipeViewContent.add(removeButton, 1, 4);
+    }
+
+
+    //-------------------------------------
+    //*ADD METHODS
+    //-------------------------------------
+    public void addRecipe() {
+        System.out.println("Add button was clicked");
+
+        //create new recipe object 
+        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+
+        //
+        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
+        recipe.setDescription(descriptionArea.getText());
+
+        //optional info
+        if(!caloriesBar.getText().equals("")){
+            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
+        }
+
+        //add to the arrays using the buttons. and adding them to list
+        addStepsToRecipe(recipe);
+        addIngredientsToRecipe(recipe);
+        addCategoriesToRecipe(recipe);
+
+        //add to the cookbook
+        book.addRecipe(recipe);
+
+        //update the recipe list by adding new component
+        updateRecipeList();
+    }
+
+    public void addStepCreator(){
+        //create step object with name from textfield, then add step to list in creator
+        String stepContent = stepsArea.getText();
+        stepsCreator.add(stepContent);
+        updateStepCreatorList();
+        //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe() 
+    public void addStepsToRecipe(Recipe recipe){
+        //loop through items in list
+        for(String s : stepsCreator){
+            //if the step is already in the list, do not add it again
+            recipe.addStep(s);
+        }
+        stepsCreator.clear(); //clear the list for next use
+        stepCreatorList.getItems().clear(); //clear the list for next use
+    }
+
+    public void addIngredientCreator(){
+        HashMap<String, Object> ingredient = new HashMap<String, Object>();
+
+        ingredient.put("name", ingredNameBar.getText());
+        ingredient.put("amount", Integer.parseInt(ingredAmountBar.getText()));
+        ingredient.put("unit", unitComboBoxRecipe.getValue());
+
+        IngredCreator.add(ingredient);
+        updateIngredCreatorList();
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
+    public void addIngredientsToRecipe(Recipe recipe){
+        //loop through items in list
+        for(HashMap<String, Object> ingredient : IngredCreator){
+            //if the step is already in the list, do not add it again
+            recipe.addIngredient((String) ingredient.get("name"), (int) ingredient.get("amount"), (String) ingredient.get("unit")); //add ingredient to recipe
+        }
+        IngredCreator.clear(); //clear the list for next use
+        ingredCreatorList.getItems().clear(); //clear the list for next use
+    }
+
+    public void addCategoryCreator(){
+        //create category object with name from textfield, then add category to list in creator
+        String categoryName = categoryBar.getText();
+        categoryCreator.add(categoryName);
+        updateCategCreatorList();
+        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+    }
+
+    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
+    public void addCategoriesToRecipe(Recipe recipe){
+        //book.categCollect();
+        //loop through items in list
+
+        for(String category : categoryCreator){
+            boolean categoryExists = false;
+            
+            for(Category c : book.getCategories()){
+
+                if(c.getName().equals(category)){
+                    categoryExists = true;
+                    recipe.addCategory(c);
+                }
+            }
+
+            if(!categoryExists){
+                recipe.addCategory(new Category(category));
+            }
+            //if the step is already in the list, do not add it again
+        }
+        categoryCreator.clear(); //clear the list for next use
+        categCreatorList.getItems().clear(); //clear the list for next use
+
+        System.out.println(book.getCategories());
+    }
+
+    //-------------------------------------
+    //*COMPONENTS
+    //-------------------------------------
+    private Pane categComponent(Category category){
+        //creates pane for each category
+        Pane body = new Pane(); 
+
+        //adds children
+        body.getChildren().add(categCheckBox(category));
+
+        //styling
+        body.getStyleClass().clear();
+        body.getStyleClass().add("category-body");
+        body.setMaxWidth(Double.MAX_VALUE);
+        body.setMaxHeight(Double.MAX_VALUE);
+
+        return body;
+    }
+
+    private Pane foodComponent(String food, String amount, String unit){
+        Pane foodBody = new Pane();
+
+        //adds children
+        foodBody.getChildren().add(createFoodLabel(food, amount, unit));
+        foodBody.getChildren().add(createDeleteX(food));
+
+        return foodBody;
+    }
+
+    private Button recipeComponent(Recipe recipe){
+        //create button object
+        Button recipeBtn = new Button(recipe.getName());
+
+        //style
+        recipeBtn.getStyleClass().clear();
+        recipeBtn.getStyleClass().add("recipeBtn");
+        recipeBtn.setMaxWidth(Double.MAX_VALUE);
+        recipeBtn.setMaxHeight(Double.MAX_VALUE);
+
+        //event
+        recipeBtn.setOnAction(e -> {
+            System.out.println("View " + recipe.getName() + " recipe");
+            viewRecipe(recipe);
+        });
+
+        //return
+        return recipeBtn;
+    }
+
+
+    //-----------------------------------------------------------
+    //*RECIPE VIEW
+    //-----------------------------------------------------------
     //opens recipe view and builds the content
     public void viewRecipe(Recipe recipe){
         //hide grid and show recipeview
@@ -303,293 +588,6 @@ public class BookOfCookController {
         (recipeViewBox2).add(listView, 0, 5);
     }
 
-    //creates a close Btn for closing recipe view
-    private void closeBtn(Recipe recipe){
-        //creates button object
-        Button btn = new Button("Close");
-
-        //sets style
-        btn.getStyleClass().clear();
-        btn.getStyleClass().add("standard-button");
-        btn.setLayoutX(80);
-        btn.setLayoutY(170);
-
-        //sets action
-        btn.setOnAction(e -> {
-            System.out.println("Close recipe view for: " + recipe.getName());
-            closeRecipeView();
-        });
-
-        //adds to grid
-        recipeViewContent.add(btn, 0, 4);
-    }
-
-    //creates a remove Btn in recipe view, for removing the recipe from the cookbook
-    private void removeBtn(Recipe recipe){
-        //creates button object
-        Button removeButton = new Button("Remove");
-
-        //sets style
-        removeButton.getStyleClass().clear();
-        removeButton.getStyleClass().add("standard-button");
-        removeButton.setLayoutX(80);
-        removeButton.setLayoutY(170);
-
-        //sets action
-        removeButton.setOnAction(e -> {
-            removeRecipe(recipe);
-        });
-
-        //adds to grid
-        recipeViewContent.add(removeButton, 1, 4);
-    }
-
-
-    //-----------------------------------------------------------
-    //*RECIPE CREATION FUNCTIONALITY
-    //-----------------------------------------------------------
-    private Button recipeComponent(Recipe recipe){
-        //create button object
-        Button recipeBtn = new Button(recipe.getName());
-
-        //style
-        recipeBtn.getStyleClass().clear();
-        recipeBtn.getStyleClass().add("recipeBtn");
-        recipeBtn.setMaxWidth(Double.MAX_VALUE);
-        recipeBtn.setMaxHeight(Double.MAX_VALUE);
-
-        //event
-        recipeBtn.setOnAction(e -> {
-            System.out.println("View " + recipe.getName() + " recipe");
-            viewRecipe(recipe);
-        });
-
-        //return
-        return recipeBtn;
-    }
-
-    public void addRecipe() {
-        System.out.println("Add button was clicked");
-
-        //create new recipe object 
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
-
-        //
-        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
-        recipe.setDescription(descriptionArea.getText());
-
-        //optional info
-        if(!caloriesBar.getText().equals("")){
-            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
-        }
-
-        //add to the arrays using the buttons. and adding them to list
-        addStepsToRecipe(recipe);
-        addIngredientsToRecipe(recipe);
-        addCategoriesToRecipe(recipe);
-
-        //add to the cookbook
-        book.addRecipe(recipe);
-
-        //update the recipe list by adding new component
-        updateRecipeList();
-    }
-
-    //remove recipe
-    public void removeRecipe(Recipe recipe){
-        System.out.println("Remove recipe button was clicked");
-        book.removeRecipe(recipe);
-        updateRecipeList();
-        closeRecipeView();
-    }
-
-    public Button removeCategoryList(String target){
-            Button btn = new Button("X");
-    
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
-            btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " category from recipe creation");
-                categoryCreator.remove(target);
-                updateCategCreatorList();
-            });
-    
-            return btn;
-    }
-
-    public Button removeStepList(String target){
-            Button btn = new Button("X");
-    
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
-            btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " step from recipe creation");
-                stepsCreator.remove(target);
-                updateStepCreatorList();
-            });
-    
-            return btn;
-    }
-
-    public Button removeIngredientList(HashMap<String, Object> target){
-            Button btn = new Button("X");
-    
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
-            btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " ingredient from recipe creation");
-                IngredCreator.remove(target);
-                updateIngredCreatorList();
-            });
-    
-            return btn;
-    }
-
-    //*adding recipe steps */
-    public Pane createRemovable(String content, Button btn){
-        Pane pane = new Pane();
-        Label label = new Label(content);
-
-        styleLabel(label, "list-label", 80.0, 10.0); 
-
-        pane.getChildren().add(label);
-        pane.getChildren().add(btn);
-
-        return pane;
-    }
-
-    public void addStepCreator(){
-        //create step object with name from textfield, then add step to list in creator
-        String stepContent = stepsArea.getText();
-        stepsCreator.add(stepContent);
-        updateStepCreatorList();
-        //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
-    }
-
-    private void updateStepCreatorList() {
-        stepsArea.clear();
-        stepCreatorList.getItems().clear();
-        for(String step : stepsCreator){
-            stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
-        }
-    }
-
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe() 
-    public void addStepsToRecipe(Recipe recipe){
-        //loop through items in list
-        for(String s : stepsCreator){
-            //if the step is already in the list, do not add it again
-            recipe.addStep(s);
-        }
-        stepsCreator.clear(); //clear the list for next use
-        stepCreatorList.getItems().clear(); //clear the list for next use
-    }
-
-    //*adding recipe ingredients */
-    public void addIngredientCreator(){
-        HashMap<String, Object> ingredient = new HashMap<String, Object>();
-
-        ingredient.put("name", ingredNameBar.getText());
-        ingredient.put("amount", Integer.parseInt(ingredAmountBar.getText()));
-        ingredient.put("unit", unitComboBoxRecipe.getValue());
-
-        IngredCreator.add(ingredient);
-        updateIngredCreatorList();
-    }
-
-    private void updateIngredCreatorList() {
-        ingredNameBar.clear();
-        ingredAmountBar.clear();
-        ingredCreatorList.getItems().clear();
-        for(HashMap<String, Object> ingredient : IngredCreator){
-            ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
-        }
-    }
-
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
-    public void addIngredientsToRecipe(Recipe recipe){
-        //loop through items in list
-        for(HashMap<String, Object> ingredient : IngredCreator){
-            //if the step is already in the list, do not add it again
-            recipe.addIngredient((String) ingredient.get("name"), (int) ingredient.get("amount"), (String) ingredient.get("unit")); //add ingredient to recipe
-        }
-        IngredCreator.clear(); //clear the list for next use
-        ingredCreatorList.getItems().clear(); //clear the list for next use
-    }
-
-    //*adding recipe categories */
-    public void addCategoryCreator(){
-        //create category object with name from textfield, then add category to list in creator
-        String categoryName = categoryBar.getText();
-        categoryCreator.add(categoryName);
-        updateCategCreatorList();
-        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-    }
-
-    //!bug gjør at ting ikke
-    private void updateCategCreatorList() {
-        categoryBar.clear();
-        categCreatorList.getItems().clear();
-        for(String category : categoryCreator){
-            categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
-        }
-    }
-
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
-    public void addCategoriesToRecipe(Recipe recipe){
-        //book.categCollect();
-        //loop through items in list
-
-        for(String category : categoryCreator){
-            boolean categoryExists = false;
-            
-            for(Category c : book.getCategories()){
-
-                if(c.getName().equals(category)){
-                    categoryExists = true;
-                    recipe.addCategory(c);
-                }
-            }
-
-            if(!categoryExists){
-                recipe.addCategory(new Category(category));
-            }
-            //if the step is already in the list, do not add it again
-        }
-        categoryCreator.clear(); //clear the list for next use
-        categCreatorList.getItems().clear(); //clear the list for next use
-
-        System.out.println(book.getCategories());
-    }
-
-    //-----------------------------------------------------------
-    //*CATEGORY FUNCTIONALITY
-    //-----------------------------------------------------------
-    private Pane categComponent(Category category){
-        //creates pane for each category
-        Pane body = new Pane(); 
-
-        //adds children
-        body.getChildren().add(categCheckBox(category));
-
-        //styling
-        body.getStyleClass().clear();
-        body.getStyleClass().add("category-body");
-        body.setMaxWidth(Double.MAX_VALUE);
-        body.setMaxHeight(Double.MAX_VALUE);
-
-        return body;
-    }
-
     private CheckBox categCheckBox(Category category){
         //creates a checkbox with category name
         CheckBox checkbox = new CheckBox(category.getName());        
@@ -613,16 +611,18 @@ public class BookOfCookController {
     }
 
     //---------------------------------------------------
-    //*FRIDGE FUNCTIONALITY
+    //*OTHER METHODS
     //---------------------------------------------------
-    private Pane foodComponent(String food, String amount, String unit){
-        Pane foodBody = new Pane();
+    public Pane createRemovable(String content, Button btn){
+        Pane pane = new Pane();
+        Label label = new Label(content);
 
-        //adds children
-        foodBody.getChildren().add(createFoodLabel(food, amount, unit));
-        foodBody.getChildren().add(createDeleteX(food));
+        styleLabel(label, "list-label", 80.0, 10.0); 
 
-        return foodBody;
+        pane.getChildren().add(label);
+        pane.getChildren().add(btn);
+
+        return pane;
     }
 
     private Button createDeleteX(String string){
@@ -654,14 +654,6 @@ public class BookOfCookController {
     public void removeFood() {
         System.out.println("Remove food button was clicked");
     }
-
-    //---------------------------------------------------
-    //*FILE WRITING FUNCTIONALITY
-    //---------------------------------------------------
-
-    //------------------------------------------------
-    //*RECIPE SEARCH FUNCTIONALITY
-    //------------------------------------------------
 
     //search for food
     public void searchFood() {
