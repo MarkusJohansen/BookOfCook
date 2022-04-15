@@ -59,6 +59,15 @@ public class Cookbook implements recipeContainer {
         return new ArrayList<Category>(categories);                                  // returns categories in cookbook
     }
 
+    public boolean checkIfCategoryExist(String c){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).getName().equals(c)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     // *VALIDATION METHODS
     // checks if cookbook contains recipe
     private void duplicateRecipeCheck(Recipe recipe) {
