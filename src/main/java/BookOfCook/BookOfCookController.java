@@ -93,6 +93,8 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("Enchiladas", 1));
 
         book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
+        book.getRecipes().get(0).addIngredient("ost", 1, "stk");
+        book.getRecipes().get(0).addIngredient("salt", 1, "stk");
         book.getRecipes().get(0).setCalories(2002);
         book.getRecipes().get(0).setDescription("En fantastisk pizza");
         book.getRecipes().get(0).addStep("Frem i en skål");
@@ -761,13 +763,10 @@ public class BookOfCookController {
         );
         Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
-        if (file.exists()) {
-            System.out.println("File already exists");
-            return;
-        }else {
-            book.save(file);
-            System.out.println("Cookbook saved successfully");
-        }
+
+        book.save(file);
+        System.out.println("Cookbook saved successfully");
+        
     }
 
     /*

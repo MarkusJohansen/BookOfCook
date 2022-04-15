@@ -194,55 +194,60 @@ public class Cookbook implements recipeContainer {
         if (file.exists()) {
             try {
                 Scanner scanner = new Scanner(file);
-                // while (scanner.hasNextLine()) {
-                //     String line = scanner.nextLine();
-                //     String[] parts = line.split(",");
-                //     Recipe recipe = new Recipe(parts[0], parts[1], parts[2], parts[3], parts[4]);
-                //     recipes.add(recipe);
-                // }
-
-                //while there is a next line(row) in csv file
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
 
-                    //splits the line into parts. Each part is a string and has to be converted from that to correct data type
+                    //line 1
                     String[] parts = line.split(",");
+                    String name = parts[0];
+                    int servings = Integer.parseInt(parts[1]);
+                    Recipe recipe = new Recipe(name, servings);
+                    recipe.setDescription(parts[2]);
+                    recipe.setCalories(Double.parseDouble(parts[3]));
+                    recipe.setPrepTime(parts[4]);
 
-                    //constructs object with name and serving amounts
-                    Recipe recipe = new Recipe(parts[0], Integer.parseInt(parts[1]));
-
-                    //adds categories in  parts[2] to categories
-                    for (String category : parts[2].split(";")) {
-                        recipe.addCategory(new Category(category));
+                    //line 2 categories
+                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+                    parts = line.split(",");
+                    for (String part : parts) {
+                        recipe.addCategory(new Category(part));
                     }
+                    //line 3 ingredients
+                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+                    String[] ingredients = line.split("}"); //splits the ingredients into an array  
+                    for (String ingredient : ingredients) {
+                        ingredient = ingredient.replace("{", "");  //removes curly brackets
 
-                    //adds description string in parts[3] as description
-                    recipe.setDescription(parts[3]);
+                        //if the ingredientstring starts with comma, then start from the second character in string
+                        if(ingredient.startsWith(",")){
+                            ingredient = ingredient.substring(1);
+                        }
 
-                    //adds ingredients in parts[4] as ingredients
-                    for (String ingredient : parts[4].split(";")) {
-                        String[] ingredientParts = ingredient.split(",");
-                        //parse string to double
-                        recipe.addIngredient(ingredientParts[0], Double.parseDouble(ingredientParts[1]), ingredientParts[2]);
+                        String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
+                        
+                        //slice ingredName from '=' to the end
+                        Double amount = Double.parseDouble(ingredientParts[0].substring(ingredientParts[0].indexOf("=")+1));
+                        String unit = ingredientParts[1].substring(ingredientParts[0].indexOf("="));
+                        String ingredName = ingredientParts[3].substring(ingredientParts[0].indexOf("="));
+
+                        //add ingredient to recipe
+                        recipe.addIngredient(ingredName, amount, unit);
+                        System.out.println("succesfully added ingredient: " + ingredName + ' ' + amount + ' ' + unit);
                     }
-
-                    //adds steps in parts[5] to recipe Object
-                    for (String step : parts[5].split(";")) {
+                    //line 4 instructions
+                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+                    String[] instructions = line.split("}"); //splits the instructions into an array
+                    for(String step : instructions){
                         recipe.addStep(step);
                     }
-
-                    //adds calories double in parts[6] to recipe Object
-                    recipe.setCalories(Double.parseDouble(parts[6]));
-
-                    //sets preparing time in parts[7] to recipe Object
-                    recipe.setPrepTime(parts[7]);
-
-                    //adds recipe to cookbook
+                    //add recipe to cookbook
                     recipes.add(recipe);
                 }
-                scanner.close();
+
+            scanner.close();
+
             } catch (FileNotFoundException e) {
-                System.out.println("File not found");
+                e.printStackTrace();
             }
         }
     }
@@ -253,7 +258,13 @@ public class Cookbook implements recipeContainer {
             FileWriter fileWriter = new FileWriter(file);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             for (Recipe r : recipes) {
-                bufferedWriter.write(r.getName() + "," + r.getNumberOfServings() + "," + r.getCategories() + "," + r.getDescription() + "," + r.getIngredients() + "," + r.getSteps() + "," + r.getCalories() + "," + r.getPrepTime());
+                bufferedWriter.write(r.getName() + "," + r.getNumberOfServings() + "," + r.getDescription() + "," + r.getCalories() + "," + r.getPrepTime());
+                bufferedWriter.newLine();
+                bufferedWriter.write(r.getCategories() + "");
+                bufferedWriter.newLine();
+                bufferedWriter.write(r.getIngredients() + "");
+                bufferedWriter.newLine();
+                bufferedWriter.write(r.getSteps() + "");
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
