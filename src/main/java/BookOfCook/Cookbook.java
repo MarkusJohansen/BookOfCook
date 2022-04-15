@@ -123,39 +123,21 @@ public class Cookbook implements recipeContainer {
         }
     }
 
+    // // *GET RECIPES IN CATEGORIES METHODS
+    // // metode som returnerer alle recipes som inneholder minst én av kategoriene
+    // public ArrayList<Recipe> getSortedRecipes(ArrayList<Category> categories){  // categories as parameter
+    //     ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
+    //     for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
+    //         for (Category category : categories) {                              // loops through all categories
+    //             if(recipe.getCategories().contains(category)){                  // checks if recipe has this category
+    //                 sortedRecipes.add(recipe);                                  // if true: add recipe to sortedRecipes
+    //             }
+    //         }
+    //     }
+    //     return sortedRecipes;
+    // }
 
-    //! *WRITE TO FILE .txt ikke klar funksjon enda
-    // write recipes in cookbook as parsed strings to file
-    public void writeToFile() {
-        try {                                                       // prøv å skrive filen
-            FileWriter fileWriter = new FileWriter(name + ".txt");  // lager et filskriver objekt som spesifiserer at filen skal hete "navnet til cookbook".txt
-
-            for (Recipe recipe : recipes) {                         // looper gjennom alle matoppskrifter i cookbook
-                fileWriter.write(recipe.parsedRecipe());            // skriver matoppskriften til filen som en parset string gjennom parsedRecipe() metoden
-            }
-
-            fileWriter.close();                                     // lukker skriveren og indikerer at filen er ferdigskrevet.
-        }catch (IOException exception) {                            // dersom det oppstår en feil ved skriving av filen fanger den opp feilen
-            exception.printStackTrace();                            // skriver ut feilen til konsollen
-        }
-    }
-
-    // *GET RECIPES IN CATEGORIES METHODS
-
-    // metode som returnerer alle recipes som inneholder minst én av kategoriene
-    public ArrayList<Recipe> getSortedRecipes(ArrayList<Category> categories){  // categories as parameter
-        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
-        for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
-            for (Category category : categories) {                              // loops through all categories
-                if(recipe.getCategories().contains(category)){                  // checks if recipe has this category
-                    sortedRecipes.add(recipe);                                  // if true: add recipe to sortedRecipes
-                }
-            }
-        }
-        return sortedRecipes;
-    }
-
-    // * denne vi bruker nå VVV
+    // * denne vi bruker nå
     // metode som returnerer alle recipes som inneholder alle kategoriene
     public ArrayList<Recipe> getSortedRecipesAllCategories(ArrayList<Category> categories){  // categories as parameter
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
@@ -173,8 +155,6 @@ public class Cookbook implements recipeContainer {
         System.out.println(sortedRecipes);
         return sortedRecipes;
     }
-
-
 
     public void categCollect(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
@@ -203,49 +183,82 @@ public class Cookbook implements recipeContainer {
         return searchResults;
     }
 
-    // *TOSTRING METHOD
+    //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
         return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes="
                 + recipes + "]";
     }
 
-    // *MAIN METHOD
-    
-    public static void main(String[] args) {
+    public void load(File file) {
+        if (file.exists()) {
+            try {
+                Scanner scanner = new Scanner(file);
+                // while (scanner.hasNextLine()) {
+                //     String line = scanner.nextLine();
+                //     String[] parts = line.split(",");
+                //     Recipe recipe = new Recipe(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                //     recipes.add(recipe);
+                // }
 
-        Cookbook cookbook = new Cookbook("Cookbook");
-        Recipe pasta_carbonara = new Recipe("pasta carbonara", 2);
-        Recipe pasta_bolognese = new Recipe("pasta bolognese", 4);
-        Recipe cheeseburger = new Recipe("cheeseburger", 1);
-        Recipe vegetarburger = new Recipe("vegetarburger", 1);
-        Recipe kyllingburger = new Recipe("kyllingburger", 2);
+                //while there is a next line(row) in csv file
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
 
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category vegetar = new Category("vegetar");
-        Category kylling = new Category("kylling");
+                    //splits the line into parts. Each part is a string and has to be converted from that to correct data type
+                    String[] parts = line.split(",");
 
-        pasta_carbonara.addCategory(italiensk);
-        pasta_bolognese.addCategory(italiensk);
-        cheeseburger.addCategory(burger);
-        vegetarburger.addCategory(burger);
-        vegetarburger.addCategory(vegetar);
-        kyllingburger.addCategory(kylling);
-        kyllingburger.addCategory(burger);
+                    //constructs object with name and serving amounts
+                    Recipe recipe = new Recipe(parts[0], Integer.parseInt(parts[1]));
 
-        cookbook.addRecipe(pasta_carbonara);
-        cookbook.addRecipe(pasta_bolognese);
-        cookbook.addRecipe(cheeseburger);
-        cookbook.addRecipe(vegetarburger);
-        cookbook.addRecipe(kyllingburger);
+                    //adds categories in  parts[2] to categories
+                    for (String category : parts[2].split(";")) {
+                        recipe.addCategory(new Category(category));
+                    }
 
-        ArrayList<Category> categories = new ArrayList<>(Arrays.asList(italiensk, vegetar)); // lager en arraylist med kategorier jeg vil sortere etter
+                    //adds description string in parts[3] as description
+                    recipe.setDescription(parts[3]);
 
-        System.out.println(cookbook.getSortedRecipes(categories));
-        
-        System.out.println(cookbook.categories);
-        cookbook.categCollect();
-        System.out.println(cookbook.categories);
+                    //adds ingredients in parts[4] as ingredients
+                    for (String ingredient : parts[4].split(";")) {
+                        String[] ingredientParts = ingredient.split(",");
+                        //parse string to double
+                        recipe.addIngredient(ingredientParts[0], Double.parseDouble(ingredientParts[1]), ingredientParts[2]);
+                    }
+
+                    //adds steps in parts[5] to recipe Object
+                    for (String step : parts[5].split(";")) {
+                        recipe.addStep(step);
+                    }
+
+                    //adds calories double in parts[6] to recipe Object
+                    recipe.setCalories(Double.parseDouble(parts[6]));
+
+                    //sets preparing time in parts[7] to recipe Object
+                    recipe.setPrepTime(parts[7]);
+
+                    //adds recipe to cookbook
+                    recipes.add(recipe);
+                }
+                scanner.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            }
+        }
+    }
+
+    //write recipes in cookbook as csv file
+    public void save(File file) {
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (Recipe r : recipes) {
+                bufferedWriter.write(r.getName() + "," + r.getNumberOfServings() + "," + r.getCategories() + "," + r.getDescription() + "," + r.getIngredients() + "," + r.getSteps() + "," + r.getCalories() + "," + r.getPrepTime());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
+        }
     }
 }

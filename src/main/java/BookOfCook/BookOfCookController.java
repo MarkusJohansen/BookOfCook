@@ -1,5 +1,6 @@
 package BookOfCook;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.fxml.FXML;
@@ -12,6 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class BookOfCookController {
     //-------------------
@@ -62,7 +66,6 @@ public class BookOfCookController {
     //-------------------------------------
     //initializes the controller
     public void initialize(){
-        //! fungerer ikke searchBar.requestFocus();
         initbook();
         initRecipeComponents();
         initFridge();
@@ -71,7 +74,7 @@ public class BookOfCookController {
         initUnitBoxes();
     }
 
-    //inititializes the recipe components in the GUI
+    //inititializes the recipe components in the GUI, from the cookbook
     private void initRecipeComponents() {
         initRecipes();
         for (Recipe recipe : recipes) {
@@ -81,7 +84,7 @@ public class BookOfCookController {
         updateAmount();
     }
 
-    //initializes the book components in the GUI
+    //initializes the cookbook, and adds dummy recipes
     private void initbook(){
         book = new Cookbook("foo");
         book.addRecipe(new Recipe("Pizza", 2));
@@ -206,7 +209,7 @@ public class BookOfCookController {
         initFridgeFood();
     }
 
-    //! maybe only one of these
+    //! maybe only one of these,
     public void updateAmount(){
         numbersOfRecipesShown = recipes.size();
         recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes."));
@@ -443,6 +446,7 @@ public class BookOfCookController {
         //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
+    //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
         //book.categCollect();
@@ -722,13 +726,48 @@ public class BookOfCookController {
         updatefridge();
     }
 
-    //Files
+    //*FILE WRITING
     public void load() {
         System.out.println("Load button was clicked");
+        //open csv file and read it, then renitialize the cookbook
+        //let the user choose the file
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Cookbook");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage); 
+
+
+        //if the user chooses a file, initialize the cookbook
+        if(file != null){
+            book.load(file);
+            updateAmount();
+            updateRecipeList();
+            updateCategList();
+            System.out.println("Cookbook loaded successfully");
+        }
     }
 
+    //can save to file
     public void save() {
         System.out.println("Save button was clicked");
+        //create filechooser and save the cookbook at prefered location in new stage
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Cookbook");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+        if (file.exists()) {
+            System.out.println("File already exists");
+            return;
+        }else {
+            book.save(file);
+            System.out.println("Cookbook saved successfully");
+        }
     }
 
     /*
@@ -736,7 +775,7 @@ public class BookOfCookController {
     ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
     ! legge til ny oppskrift sørger for duplikate categories
     ! fix load book
-    ! fix save book
+    * fix save book
     ! skalering av oppskrifts, funksjon
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
 
@@ -752,38 +791,5 @@ public class BookOfCookController {
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
 
-    MARKUS HAR GJORT:
-    * gått over privacy declarators i Recipe klassen
-    * gått over privacy declarators i book klassen
-    * gått over privacy declarators i Category klassen
-    * gått over privacy declarators i Fridge klassen
-    * fikset oppdatering av antall recipes label
-    * fikset convertering fra grid til list for recipes
-    * fikset skjuling av nummereringslabel i recipe list
-    * fikk kvittet meg med tretti linjer kode. lagde viewlabel component
-    * fikset litt styling 60/30/10 regel og darkmode
-    * fjernet nivå 2 panes
-    * la recipe ta inn 'æøå som symboler i navns
-    * fix remove recipe function
-    * sette opp dropdown menyer for enheter i Fridge og Recipe
-    * fikk dropdown menyer for enheter i fridge til å fungere
-    * fikset listviews i recipe view mode
-    * satte opp listviews i recipe creator
-    * koblet opp steps med recipe i creator
-    * koblet opp ingredients med recipe i creator
-    * koblet opp categories med recipe i creator
-
-    JULIAN HAR GJORT: 
-    * add fridge 
-    * fix remove food function
-    * add category components with filters, use checkbox because that are standard
-
-    * sandra
-    * mora si
-    * donald trump
-    * billy
-    * faren til billy
-    * munken 
-    
     */
 } 
