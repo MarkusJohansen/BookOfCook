@@ -55,7 +55,7 @@ public class Category implements recipeContainer {
 
     @Override
     public String toString() {
-        return "Category [name=" + name + "]";
+        return name;
     }
     
     public static void main(String[] args) {
