@@ -17,7 +17,6 @@ public class BookOfCookController {
     //-------------------
     //*FIELDS
     //-------------------
-
     private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
@@ -31,31 +30,23 @@ public class BookOfCookController {
     private ArrayList<String> categoryCreator = new ArrayList<String>();
     private ArrayList<HashMap<String, Object>> IngredCreator = new ArrayList<HashMap<String, Object>>();
     
-
     //-------------------------------------
     //*FXML-noder
     //-------------------------------------
     @FXML
     private Label number, label, recipeAmount;  
-
     @FXML
     private GridPane recipeViewContent, recipeViewBox1, recipeViewBox2;
-
     @FXML
     private Pane recipeView, recipeStepView;
-
     @FXML
     private ListView fridgeList, categList, recipeList, categCreatorList, ingredCreatorList, stepCreatorList;
-
     @FXML
     private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredNameBar, ingredAmountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
-
     @FXML
     private TextArea descriptionArea, stepsArea;
-
     @FXML
     private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
-
 
     //-------------------------------------
     //*INITIALIZATION
@@ -175,8 +166,6 @@ public class BookOfCookController {
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
-
-
     //-------------------------------------
     //*UPDATERS
     //-------------------------------------
@@ -241,7 +230,6 @@ public class BookOfCookController {
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
         
-
         //set recipe style
         recipeView.getStyleClass().clear();
         recipeView.getStyleClass().add("recipe-view");
@@ -356,7 +344,6 @@ public class BookOfCookController {
         //adds to grid
         recipeViewContent.add(removeButton, 1, 4);
     }
-
 
     //-----------------------------------------------------------
     //*RECIPE CREATION FUNCTIONALITY
@@ -679,6 +666,12 @@ public class BookOfCookController {
     //------------------------------------------------
     //*RECIPE SEARCH FUNCTIONALITY
     //------------------------------------------------
+
+    //* ALL FILTER SHIT
+
+    public void mainFilter(ArrayList<Recipe> recipes){
+        
+    }
 
     //search for food
     public void searchFood() {
