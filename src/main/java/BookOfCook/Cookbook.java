@@ -220,7 +220,7 @@ public class Cookbook implements recipeContainer {
 
                         //if the ingredientstring starts with comma, then start from the second character in string
                         if(ingredient.startsWith(",")){
-                            ingredient = ingredient.substring(1);
+                            ingredient = ingredient.substring(0);
                         }
 
                         String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
