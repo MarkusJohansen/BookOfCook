@@ -110,6 +110,7 @@ public class BookOfCookController {
 
         recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
+        recipes.get(2).addCategory(burger);
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
@@ -688,7 +689,7 @@ public class BookOfCookController {
         updateAmountLabel(sortedRecipes);
     }
 
-    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
+    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
 
     /*public ArrayList<Recipe> mainFilter(ArrayList<Recipe> recipes){
 
@@ -762,23 +763,29 @@ public class BookOfCookController {
 
         book.save(file);
         System.out.println("Cookbook saved successfully");
+        
     }
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
     ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
     ! legge til ny oppskrift sørger for duplikate categories
-    !(halveis ferdig) fix load book
+    ! fix load book
     * fix save book
     ! skalering av oppskrifts, funksjon
-    ! fridge filter av og på funksjon (i det hele tatt funksjon
+    ! fridge filter av og på funksjon (i det hele tatt funksjon)
+
+    !fil skriving og lesing
     !få fridge fungere
     !edit recipe funksjon (kan vurdere)
 
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
+    ? legge edit og lage recipe tool i et popupvindu?
+    ? picture support
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
+
     */
 } 
