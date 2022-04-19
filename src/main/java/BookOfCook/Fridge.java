@@ -31,12 +31,6 @@ public class Fridge {
         if(isFoodInFridge(name)){
             System.out.println("Food " + name + " is already in fridge.");
         }
-
-        /* for (Recipe r : cookbook.getRecipes()) {
-            for (HashMap<String, Object> i : r) {
-                
-            }
-        } */    
         HashMap<String, Object> ingredient = new HashMap<String, Object>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
         ingredient.put("amount", amount);               // adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
