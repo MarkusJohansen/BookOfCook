@@ -91,7 +91,7 @@ public class BookOfCookController {
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).setPrepTime("10 minuter");
+        book.getRecipes().get(0).setPrepTime("10 minutter");
     }
 
     //initializes the recipe ArrayList
@@ -355,7 +355,6 @@ public class BookOfCookController {
         recipeViewContent.add(removeButton, 1, 4);
     }
 
-
     //-------------------------------------
     //*ADD METHODS
     //-------------------------------------
@@ -613,13 +612,10 @@ public class BookOfCookController {
             }else{
                 categoriesClicked.remove(category);
             }
-
             System.out.println("CategoriesClicked: " + categoriesClicked);
 
             filterRecipes(categoriesClicked);
-            
         });
-
         return checkbox;
     }
 
@@ -631,10 +627,8 @@ public class BookOfCookController {
         Label label = new Label(content);
 
         styleLabel(label, "list-label", 80.0, 10.0); 
-
         pane.getChildren().add(label);
         pane.getChildren().add(btn);
-
         return pane;
     }
 
@@ -649,10 +643,8 @@ public class BookOfCookController {
         removeFoodBtn.setOnAction(e -> {
             System.out.println("Delete food " + string);
             fridge.removeFood(string);
-
             updatefridge();
         });
-
         return removeFoodBtn;
     }
 
@@ -663,10 +655,7 @@ public class BookOfCookController {
         return label;
     }
 
-    //remove food from fridge
-    public void removeFood() {
-        System.out.println("Remove food button was clicked");
-    }
+    //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
 
     //search for food
     public void searchFood() {
@@ -698,6 +687,23 @@ public class BookOfCookController {
         }
         updateAmountLabel(sortedRecipes);
     }
+
+    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
+
+    /*public ArrayList<Recipe> mainFilter(ArrayList<Recipe> recipes){
+
+        if(){ // SØKE
+
+        }
+
+        if(){ // KATEGORIER
+
+        }
+
+        if(){ // KJØLESKAP
+        }
+
+    }*/
 
     public void fridgeAddFood() {
         System.out.println("add food button");
