@@ -43,29 +43,8 @@ public class Category implements recipeContainer {
         recipe.removeCategory(this);
     }
 
-    // tostring method for category
-    /* @Override
-    public String toString() {
-        String r = "";
-        for (int i = 0; i < recipes.size(); i++) {
-            r += "\n" + recipes.get(i).getName();
-        }
-        return "Category: " + name + " has " + recipes.size() + " recipes. those are recipes for: " + r + "\n";
-    } */
-
     @Override
     public String toString() {
         return name;
-    }
-    
-    public static void main(String[] args) {
-        Category italiensk = new Category("italiensk");
-        Recipe pasta_carbonara = new Recipe("pasta carbonara", 3);
-
-        italiensk.addRecipe(pasta_carbonara);
-
-        System.out.println(italiensk);
-
-        System.out.println(pasta_carbonara);
     }
 }

@@ -157,7 +157,7 @@ public class BookOfCookController {
         //column 1
         viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
         viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
-        viewLabel("Serves: " + recipe.getNumberOfServings(), recipeViewBox1, 2, 0); 
+        viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
 
