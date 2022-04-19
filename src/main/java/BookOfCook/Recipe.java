@@ -5,7 +5,7 @@ import java.util.*;
 public class Recipe {
     private String name, displayedName, description, prepTime;                                                        // name of recipe that will be dealt with back end, as well as name displayed to user    
     private int numberOfServings;                                                                 // number persons this recipe serves        
-    private double calories, caloriesPerPerson;     
+    private double calories, CalPerServing;     
     private ArrayList<HashMap<String,Object>> Ingredients = new ArrayList<HashMap<String,Object>>();        // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories = new ArrayList<Category>();                                     // stores the categories of the recipe                                    
     private ArrayList<String> steps = new ArrayList<String>();                                              // stores the steps of how to make the recipe
@@ -13,7 +13,7 @@ public class Recipe {
     // *CONSTRUCTOR                                                                                          
     public Recipe(String name, int numberOfServings) {              // constructor for recipe demands that recipe has a defined name and number of servings
         setName(name);
-        setNumberOfServings(numberOfServings);
+        setServings(numberOfServings);
     }
 
     // !SJEKK HVEM SOM FAKTISK BRUKES
@@ -34,7 +34,7 @@ public class Recipe {
     }
     
     // get number of servings
-    public int getNumberOfServings() {
+    public int getServings() {
         return numberOfServings;                                    // returns number of servings
     }
 
@@ -44,8 +44,8 @@ public class Recipe {
     }
 
     // get calories per person
-    public double getCaloriesPerPerson() {
-        return caloriesPerPerson;                                   // returns calories per person
+    public double getCalPerServing() {
+        return CalPerServing;                                   // returns calories per person
     }
 
     // get ingredients
@@ -63,7 +63,7 @@ public class Recipe {
         return new ArrayList<String>(steps);                                               // returns steps
     }
 
-    // get displayed name (BEING USED IN COOKBOOK ATM)
+    //! get displayed name (BEING USED IN COOKBOOK ATM)
     public String getDisplayedName() {
         return displayedName;                                       // returns displayed name
     }
@@ -78,7 +78,7 @@ public class Recipe {
     }
 
     // change number of servings
-    public void setNumberOfServings(int numberOfServings) {
+    public void setServings(int numberOfServings) {
         validServings(numberOfServings);                           // checks if number of servings is valid
         this.numberOfServings = numberOfServings;                  // sets number of servings
     }
@@ -87,11 +87,11 @@ public class Recipe {
     public void setCalories(double calories) {   
         validateCalories(calories);                                 // checks if calories are valid
         this.calories = calories;                                   // sets the total calories of the recipe
-        setCaloriesPerPerson();                                     // sets calories per person based on the new value of calories and number of servings
+        setCalPerServing();                                     // sets calories per person based on the new value of calories and number of servings
     }
 
-    private void setCaloriesPerPerson() {          
-        this.caloriesPerPerson = calories / numberOfServings;       // sets calories per person based on the new value of calories and number of servings
+    private void setCalPerServing() {          
+        this.CalPerServing = calories / numberOfServings;       // sets calories per person based on the new value of calories and number of servings
     }
 
     public void setDescription(String description) {
@@ -204,7 +204,7 @@ public class Recipe {
 
     // *SCALE RECIPE
     // when numbers of servings change, scale amounts
-    public void scaleRecipe(int newNumberOfServings) { 
+    public void scale(int newNumberOfServings) { 
         validServings(newNumberOfServings);                                 // validates new number of servings¨
         double ratio = newNumberOfServings / numberOfServings;              // the ratio describes how many times the recipe has been scaled
 
@@ -215,8 +215,8 @@ public class Recipe {
         }
 
         setCalories(calories * ratio);                                      // scales calories by multiplying itself with the ratio
-        setNumberOfServings(newNumberOfServings);                           // sets new number of servings
-        setCaloriesPerPerson();                                             // sets calories per person based on the new value of number of servings
+        setServings(newNumberOfServings);                           // sets new number of servings
+        setCalPerServing();                                             // sets calories per person based on the new value of number of servings
     }
 
 

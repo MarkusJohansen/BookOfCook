@@ -19,7 +19,7 @@ public class Cookbook implements recipeContainer {
     // *RECIPE ADD AND REMOVE METHODS
     // adds recipe to cookbook
     public void addRecipe(Recipe recipe) {
-        duplicateRecipeCheck(recipe);                                                   // checks if recipe already exists
+        duplicateRecipeCheck(recipe);             //! necessay ? checks if recipe already exists
         duplicateRecipeNameCheck(recipe);                                               // checks for recipes with duplicate names
         recipes.add(recipe);                                                            // adds recipe to cookbook
         recipeAmount++;                                                                 // updates amount of recipes in cookbook
@@ -85,13 +85,11 @@ public class Cookbook implements recipeContainer {
         }
     }
 
-
     private void checkIfRecipeExists(Recipe recipe) {
         if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
             throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
         }
     }
-
 
     private void nameIsValid(String name) {
         if (name.isEmpty()) {                                                                           // checks if name is empty
@@ -167,7 +165,6 @@ public class Cookbook implements recipeContainer {
                 }
             }
         }
-    
         categories = collectedCategories;
     }
 
@@ -258,7 +255,7 @@ public class Cookbook implements recipeContainer {
             FileWriter fileWriter = new FileWriter(file);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             for (Recipe r : recipes) {
-                bufferedWriter.write(r.getName() + "," + r.getNumberOfServings() + "," + r.getDescription() + "," + r.getCalories() + "," + r.getPrepTime());
+                bufferedWriter.write(r.getName() + "," + r.getServings() + "," + r.getDescription() + "," + r.getCalories() + "," + r.getPrepTime());
                 bufferedWriter.newLine();
                 bufferedWriter.write(r.getCategories() + "");
                 bufferedWriter.newLine();
