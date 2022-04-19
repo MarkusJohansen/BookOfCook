@@ -19,7 +19,7 @@ public class Cookbook implements recipeContainer {
     // *RECIPE ADD AND REMOVE METHODS
     // adds recipe to cookbook
     public void addRecipe(Recipe recipe) {
-        duplicateRecipeCheck(recipe);                                                   // checks if recipe already exists
+        duplicateRecipeCheck(recipe);             //! necessay ? checks if recipe already exists
         duplicateRecipeNameCheck(recipe);                                               // checks for recipes with duplicate names
         recipes.add(recipe);                                                            // adds recipe to cookbook
         recipeAmount++;                                                                 // updates amount of recipes in cookbook

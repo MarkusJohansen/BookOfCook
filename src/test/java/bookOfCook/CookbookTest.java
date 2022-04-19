@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,11 +27,18 @@ public class CookbookTest {
     }
 
     @Test
-    @DisplayName("Test add recipe")
+    @DisplayName("Test add recipe and recipeAmount")
     public void RecipeContainment() {
         cookbook.addRecipe(recipe);
         assertTrue(cookbook.getRecipes().contains(recipe));
         assertFalse(cookbook.getRecipes().contains(recipe2));
+        assertTrue(cookbook.getAmount() == 2);
+        assertTrue(cookbook.getRecipes().size() == 2);
+
+        //throw exceptions if recipe is duplicate
+        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(recipe));
+        assertThrows(NullPointerException.class, () -> cookbook.addRecipe(null));
+        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(new Recipe("Milkshake", 2))); 
     }
 
     @Test
@@ -52,6 +61,16 @@ public class CookbookTest {
         Cookbook cookbook = new Cookbook("cookbook");
         assertTrue(cookbook.getRecipes().isEmpty());
     }
+
+    @Test
+    @DisplayName("Test searchRecipes")
+    public void testSearchRecipe() {
+        cookbook.addRecipe(recipe);
+        cookbook.addRecipe(recipe2);
+        assertFalse(cookbook.searchRecipes("Pizza").contains(recipe));
+        assertTrue(cookbook.searchRecipes("Pizza").contains(recipe2));
+    }
+    //!__________________________________________________________________
 
     //! trenger vi setname funksjonen?
     @Test
@@ -81,27 +100,29 @@ public class CookbookTest {
         assertTrue(cookbook.getCategCollect().contains(recipe2.getCategory()));
     }
 
-    @Test
-    @DisplayName("Test searchRecipes")
-    public void testSearchRecipe() {
-        cookbook.addRecipe(recipe);
-        cookbook.addRecipe(recipe2);
-        assertFalse(cookbook.searchRecipes("Pizza").contains(recipe));
-        assertTrue(cookbook.searchRecipes("Pizza").contains(recipe2));
-    }
-
     //?ikke satt opp properly
     @Test
     @DisplayName("Test Save")
     public void testSave() {
         cookbook.addRecipe(recipe);
         cookbook.addRecipe(recipe2);
-        cookbook.save();
-        assertTrue(cookbook.getRecipes().contains(recipe));
-        assertTrue(cookbook.getRecipes().contains(recipe2));
+
+        File file = new File("cookbook.csv");
+        cookbook.save(file);
+
+        assertTrue(file.exists());
+        assertTrue(file.isFile());
+        assertTrue(file.canRead());
+        assertTrue(file.canWrite());
+        assertTrue(file.canExecute());
+        assertTrue(file.length() > 0);
+
+        //!Hvordan fikse dette: open file and check if it contains the recipe
+        //assertTrue(file.contains(recipe));
+        //assertTrue(file.contains(recipe2));
     }
 
-    //?ikke satt opp properly
+    //?hvordan teste?
     @Test
     @DisplayName("Test Load")
     public void testLoad() {

@@ -130,7 +130,6 @@ public class RecipeTest {
         recipe.removeCategory(category);
         assertFalse(category.getRecipes().contains(recipe));
         assertFalse(recipe.getCategories().contains(category));
-
        //?vi har dobbelt opp med metoder her. ser at vi har add/remove category metoder i recipe og vice versa i category
     }
 
