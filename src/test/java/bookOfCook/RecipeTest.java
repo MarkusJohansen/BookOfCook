@@ -138,7 +138,19 @@ public class RecipeTest {
     @Test
     @DisplayName("Test recipe instructions")
     public void checkRecipeInstructions() {
-        assertTrue(recipe.getInstructions().contains("Mix"));
-        assertTrue(recipe.getInstructions().contains("Bake"));
+        assertTrue(recipe.getSteps() == null);
+        assertFalse(recipe.getSteps().contains("Mix"));
+        recipe.addStep("Mix");
+        assertTrue(recipe.getSteps().contains("Mix"));
+        recipe.addStep("Bake");
+        assertTrue(recipe.getSteps().contains("Bake"));
+        recipe.removeStep(0);
+        assertFalse(recipe.getSteps().contains("Mix"));
+        assertTrue(recipe.getSteps().contains("Bake"));
+
+        //test if invalid step throws exception
+        assertThrows(IllegalArgumentException.class, () -> recipe.addStep(""));
+        assertThrows(IllegalArgumentException.class, () -> recipe.addStep(null));
+        assertThrows(IllegalArgumentException.class, () -> recipe.removeStep(-1));
     }
 }
