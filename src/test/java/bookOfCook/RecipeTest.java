@@ -19,15 +19,14 @@ public class RecipeTest {
     @BeforeEach 
     public void setup() {
         //set up before each test
-        Recipe recipe = new Recipe("Milkshake", 3);
-        Recipe recipe2 = new Recipe("Pizza", 2);
+        recipe = new Recipe("Milkshake", 3);
+        recipe2 = new Recipe("Pizza", 2);
         Recipe recipe3 = new Recipe("Burger", 2);
     }
 
     @Test
     @DisplayName("Test recipe name")
     public void checkRecipeName() {
-        recipe = new Recipe("Milkshake", 3); //!setup fungerer ikke
         recipe.setName("Fransk løk suppe");
         assertTrue(recipe.getName().equals("Fransk løk suppe".toUpperCase()));
 
@@ -60,6 +59,7 @@ public class RecipeTest {
         assertTrue(recipe.getDescription() == "Milkshake is a drink made from milk and sugar.");
     }
 
+    //! hvorfor funker ikke denne? feil i koden i funksjonen?
     @Test
     @DisplayName("Test Calorie methods")
     public void checkCalorieMethods() {

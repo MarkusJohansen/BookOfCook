@@ -19,17 +19,17 @@ import BookOfCook.Recipe;
 
 public class CookbookTest {
     //JUnit tests for Cookbook class
-    private Cookbook cookbook = new Cookbook("Book");
-    private Recipe recipe1 = new Recipe("Milkshake", 3);
-    private Recipe recipe2 = new Recipe("Pizza", 2);
-    Category category1 = new Category("Category1");
+    private Cookbook cookbook;
+    private Recipe recipe1;
+    private Recipe recipe2;
+    private Category category1 = new Category("Category1");
     Category category2 = new Category("Category2");
 
     @BeforeEach
     public void setup() {
-        Cookbook cookbook = new Cookbook("cookbook");
-        Recipe recipe1 = new Recipe("Test recipe", 2);
-        Recipe recipe2 = new Recipe("Test recipeeeeee", 2);
+        cookbook = new Cookbook("Book");
+        recipe1 = new Recipe("Milkshake", 3);
+        recipe2 = new Recipe("Pizza", 2);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CookbookTest {
     //!__________________________________________________________________
 
     //! trenger vi setname funksjonen?
-    //* synes ikke det, vi bruker den vel ikke heller
+    //! synes ikke det, vi bruker den vel ikke heller
     @Test
     @DisplayName("Test set name og get name")
     public void testSetName() {
@@ -89,7 +89,7 @@ public class CookbookTest {
     }
 
     //! skjønner ikke hva denne funksjonen gjør, kan du forklare? evt endre navn
-    //* funksjonen filtrerer ut recipene etter gitte kategorier
+    //! funksjonen filtrerer ut recipene etter gitte kategorier
     @Test
     @DisplayName("Test getSortedRecipesAllCategories")
     public void testGetSortedRecipesAllCategories() {
@@ -103,7 +103,7 @@ public class CookbookTest {
     }
 
     //! skjønner ikke hva denne funksjonen gjør, kan du forklare? evt endre navn
-    //* funksjonen henter alle kategoriene til recipene i kokeboka
+    //! funksjonen henter alle kategoriene til recipene i kokeboka
     @Test
     @DisplayName("Test categCollect")
     public void testcollectCategories() {
