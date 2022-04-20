@@ -2,7 +2,7 @@ package BookOfCook;
 
 import java.util.ArrayList;
 
-public class Category {
+public class Category extends Validator {
     // *FIELDS
     private String name;                                            // name of category
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category

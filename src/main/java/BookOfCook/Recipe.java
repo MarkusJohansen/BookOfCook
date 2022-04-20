@@ -84,19 +84,19 @@ public class Recipe extends Validator{
     // *SETTERS
     // change name of recipe
     public void setName(String name) {
-        validRecipeName(name);                                      // checks if name is valid
+        numbersOrSpecials(name);                                      // checks if name is valid
         this.name = name.toUpperCase();                             // sets name of recipe
     }
 
     // change number of servings
     public void setServings(int numberOfServings) {
-        validServings(numberOfServings);                            // checks if number of servings is valid
+        negativeOrZero((double) numberOfServings);                            // checks if number of servings is valid
         this.numberOfServings = numberOfServings;                   // sets number of servings
     }
 
     // set calories
     public void setCalories(double calories) {   
-        negativeCheck(calories);                                 // checks if calories are valid
+        negative(calories);                                 // checks if calories are valid
         this.calories = calories;                                   // sets the total calories of the recipe
         setCalPerServing();                                         // sets calories per person based on the new value of calories and number of servings
     }
@@ -163,7 +163,7 @@ public class Recipe extends Validator{
 
     // remove step from recipe steps by index
     public void removeStep(int step) {
-        validIndex(steps, step); //! error her removes step from list of steps in recipe                                                          
+        validIndex(steps, step);                                            //! error her removes step from list of steps in recipe                                                          
         steps.remove(step);                                                 // removes step from list of steps in recipe
     }
 
@@ -171,7 +171,7 @@ public class Recipe extends Validator{
     //! *SCALE RECIPE har ikke støtte men burde ha det, da dette er det mest mattematisk logiske vi dealer med
     // when numbers of servings change, scale amounts
     public void scale(int newNumberOfServings) { 
-        validServings(newNumberOfServings);                                 // validates new number of servings¨
+        negativeOrZero((double) newNumberOfServings);                                 // validates new number of servings¨
         double ratio = newNumberOfServings / numberOfServings;              // the ratio describes how many times the recipe has been scaled
 
         for (int i = 0; i < ingredients.size(); i++) {                      // loops through all ingredients
