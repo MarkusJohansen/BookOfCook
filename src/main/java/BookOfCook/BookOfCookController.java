@@ -77,7 +77,7 @@ public class BookOfCookController {
 
     //initializes the cookbook, and adds dummy recipes
     private void initbook(){
-        book = new Cookbook("foo");
+        book = new Cookbook();
         book.addRecipe(new Recipe("Pizza", 2));
         book.addRecipe(new Recipe("Hamburger", 1));
         book.addRecipe(new Recipe("Spaghetti", 2));
@@ -91,7 +91,7 @@ public class BookOfCookController {
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
         book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).setPrepTime("10 minuter");
+        book.getRecipes().get(0).setPrepTime("10 minutter");
     }
 
     //initializes the recipe ArrayList
@@ -110,6 +110,7 @@ public class BookOfCookController {
 
         recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
+        recipes.get(2).addCategory(burger);
         recipes.get(2).addCategory(italiensk);
         recipes.get(3).addCategory(kjøtt);
 
@@ -354,7 +355,6 @@ public class BookOfCookController {
         //adds to grid
         recipeViewContent.add(removeButton, 1, 4);
     }
-
 
     //-------------------------------------
     //*ADD METHODS
@@ -613,13 +613,10 @@ public class BookOfCookController {
             }else{
                 categoriesClicked.remove(category);
             }
-
             System.out.println("CategoriesClicked: " + categoriesClicked);
 
             filterRecipes(categoriesClicked);
-            
         });
-
         return checkbox;
     }
 
@@ -631,10 +628,8 @@ public class BookOfCookController {
         Label label = new Label(content);
 
         styleLabel(label, "list-label", 80.0, 10.0); 
-
         pane.getChildren().add(label);
         pane.getChildren().add(btn);
-
         return pane;
     }
 
@@ -649,10 +644,8 @@ public class BookOfCookController {
         removeFoodBtn.setOnAction(e -> {
             System.out.println("Delete food " + string);
             fridge.removeFood(string);
-
             updatefridge();
         });
-
         return removeFoodBtn;
     }
 
@@ -663,10 +656,7 @@ public class BookOfCookController {
         return label;
     }
 
-    //remove food from fridge
-    public void removeFood() {
-        System.out.println("Remove food button was clicked");
-    }
+    //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
 
     //search for food
     public void searchFood() {
@@ -698,6 +688,23 @@ public class BookOfCookController {
         }
         updateAmountLabel(sortedRecipes);
     }
+
+    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
+
+    /*public ArrayList<Recipe> mainFilter(ArrayList<Recipe> recipes){
+
+        if(){ // SØKE
+
+        }
+
+        if(){ // KATEGORIER
+
+        }
+
+        if(){ // KJØLESKAP
+        }
+
+    }*/
 
     public void fridgeAddFood() {
         System.out.println("add food button");
@@ -756,23 +763,29 @@ public class BookOfCookController {
 
         book.save(file);
         System.out.println("Cookbook saved successfully");
+        
     }
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
     ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
     ! legge til ny oppskrift sørger for duplikate categories
-    !(halveis ferdig) fix load book
+    ! fix load book
     * fix save book
     ! skalering av oppskrifts, funksjon
-    ! fridge filter av og på funksjon (i det hele tatt funksjon
+    ! fridge filter av og på funksjon (i det hele tatt funksjon)
+
+    !fil skriving og lesing
     !få fridge fungere
     !edit recipe funksjon (kan vurdere)
 
     ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
     ? bruke predicates for å filtrere etter kategorier
+    ? legge edit og lage recipe tool i et popupvindu?
+    ? picture support
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
+
     */
 } 

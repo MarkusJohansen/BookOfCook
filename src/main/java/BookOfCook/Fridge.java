@@ -21,22 +21,19 @@ public class Fridge {
         return new ArrayList<HashMap<String, Object>>(foodInFridge);
     }
 
+    //! DENNE BRUKER VI ALDRI, FJERNE?
     public String getFormattedFridgeTime(){     // method for formatting lastUpdateOfFridge to a readable format
         return lastUpdateOfFridge.format(DateTimeFormatter.ofPattern("HH:mm - dd.MM"));
     }
 
     //*ADDING AND REMOVING FOOD 
-    public void addFood(String name, double amount, String unit/*, Cookbook cookbook*/) {
-
+    public void addFood(String name, double amount, String unit) {
         if(isFoodInFridge(name)){
-            System.out.println("Food " + name + " is already in fridge.");
+            throw new IllegalStateException("Food " + name + " is already in fridge.");
         }
 
-        /* for (Recipe r : cookbook.getRecipes()) {
-            for (HashMap<String, Object> i : r) {
-                
-            }
-        } */    
+        System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
+        
         HashMap<String, Object> ingredient = new HashMap<String, Object>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
         ingredient.put("amount", amount);               // adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
@@ -47,7 +44,6 @@ public class Fridge {
 
     public void removeFood(String name) {
         boolean removedFood = false;
-
         for (int i = 0; i < foodInFridge.size(); i++){                          // iterates through foodInFridge
             if(foodInFridge.get(i).get("name") == name){                        // checks if food is equal to name
                 System.out.println("Removing " + foodInFridge.get(i));          
@@ -56,12 +52,12 @@ public class Fridge {
                 updateFridgeTime();   
             }
         }
-
         if (!removedFood) {                                                     // checks if any food removed at all
             System.out.println("No food matching input '" + name + "' in fridge");
         }
     }
 
+    //! DENNE BRUKER VI ALDRI, FJERNE?
     public void emptyFridge() {
         foodInFridge.clear();       // empties the foodInFridge arrayList
         updateFridgeTime();         // updates lastUpdateOfFridge time
@@ -88,14 +84,26 @@ public class Fridge {
     }
 
     public static void main(String[] args) {
-        Fridge f = new Fridge();
-        f.addFood("Tomat", 2, "stk");
-        f.addFood("Pepperoni", 500, "gram");
+        Fridge fridge = new Fridge();
+        
+        fridge.addFood("milk", 1.0, "L");
+        fridge.addFood("pasta", 0.5, "Kg");
 
-        System.out.println(f);
+        HashMap<String, Object> milk = new HashMap<String, Object>();
+        milk.put("name", "milk");
+        milk.put("amount", 1);
+        milk.put("unit", "L");
 
-        f.removeFood("pepperoni");
+        HashMap<String, Object> pasta = new HashMap<String, Object>();
+        milk.put("name", "pasta");
+        milk.put("amount", 0.5);
+        milk.put("unit", "kg");
 
-        System.out.println("Fridge was last updated at " + f.getFormattedFridgeTime());
+        System.out.println(fridge.getFood());
+        System.out.println(fridge.getFood().contains(milk));
+
+        fridge.removeFood(milk.get("name").toString());
+
+        System.out.println(fridge.getFood());
     }
 }
