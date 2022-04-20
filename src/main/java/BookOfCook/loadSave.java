@@ -2,7 +2,7 @@ package BookOfCook;
 
 import java.io.File;
 
-public interface loadSave {
+public interface LoadSave {
 
     public void save(File file, Cookbook book);
 

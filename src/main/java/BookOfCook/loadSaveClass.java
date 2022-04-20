@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class loadSaveClass implements loadSave {
+public class LoadSaveClass implements LoadSave {
 
     public void save(File file, Cookbook book) {
         System.out.println("Saving...");

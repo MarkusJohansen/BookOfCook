@@ -2,7 +2,7 @@ package BookOfCook;
 
 import java.util.ArrayList;
 
-public class Category implements recipeContainer {
+public class Category {
     // *FIELDS
     private String name;                                            // name of category
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
