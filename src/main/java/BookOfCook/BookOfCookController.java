@@ -78,9 +78,12 @@ public class BookOfCookController {
         updateAmount();
     }
 
-    //initializes the cookbook, and adds dummy recipes
     private void initbook(){
         book = new Cookbook();
+    }
+
+    private void initFridge(){
+        fridge = new Fridge();
     }
     
     //initializes the category components in the GUI
@@ -90,11 +93,6 @@ public class BookOfCookController {
         for(Category category : book.getCategories()){
             categList.getItems().add(categComponent(category));
         }
-    }
-    
-    //initializes the frige object and the fridge food components in the GUI
-    private void initFridge(){
-        fridge = new Fridge();
     }
     
     //initializes the food in fridge
@@ -113,16 +111,13 @@ public class BookOfCookController {
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
-
         //column 2
         viewCateg(recipe);
         viewSteps(recipe);
         viewIngred(recipe);
-
         //btns
         closeBtn(recipe);
         removeBtn(recipe);
-
         //fikse steps, ingred og steps inn i list views fordi de er arrays
     }
 
