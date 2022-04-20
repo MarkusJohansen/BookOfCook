@@ -21,10 +21,6 @@ public class Category implements recipeContainer {
         return new ArrayList<Recipe>(recipes);
     }
 
-    //! TRENGER VI DENNE? VI BRUKER DEN ALDRI
-    public int getAmount() {
-        return recipes.size();
-    }
 
     // *METHODS
     public void addRecipe(Recipe recipe) {
