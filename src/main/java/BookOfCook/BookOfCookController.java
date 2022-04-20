@@ -2,6 +2,7 @@ package BookOfCook;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -78,10 +79,34 @@ public class BookOfCookController {
     //initializes the cookbook, and adds dummy recipes
     private void initbook(){
         book = new Cookbook();
-        book.addRecipe(new Recipe("Pizza", 2));
-        book.addRecipe(new Recipe("Hamburger", 1));
-        book.addRecipe(new Recipe("Spaghetti", 2));
-        book.addRecipe(new Recipe("Enchiladas", 1));
+
+        HashMap<String, Object> ost = new HashMap<String, Object>() {{
+            put("name", "ost");
+            put("amount", 1);
+            put("unit", "kg");
+        }};
+        HashMap<String, Object> melk = new HashMap<String, Object>() {{
+            put("name", "melk");
+            put("amount", 2);
+            put("unit", "L");
+        }};
+
+        HashMap<String, Object> tomat = new HashMap<String, Object>() {{
+            put("name", "tomat");
+            put("amount", 5);
+            put("unit", "stk");
+        }};
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        // DUMMYOPPSKRIFTER
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        
+        /*book.addRecipe(new Recipe("Spaghetti", 2));
+        book.addRecipe(new Recipe("Enchiladas", 1));*/
 
         book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
         book.getRecipes().get(0).addIngredient("ost", 1, "stk");
@@ -103,16 +128,12 @@ public class BookOfCookController {
     //initializes the category components in the GUI
     private void initCateg(){
         categories = new ArrayList<Category>();
-        
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category kjøtt = new Category("kjøtt");
 
-        recipes.get(0).addCategory(italiensk);
+        /*recipes.get(0).addCategory(italiensk);
         recipes.get(1).addCategory(burger);
         recipes.get(2).addCategory(burger);
         recipes.get(2).addCategory(italiensk);
-        recipes.get(3).addCategory(kjøtt);
+        recipes.get(3).addCategory(kjøtt);*/
 
         book.collectCategories();
 
@@ -147,7 +168,7 @@ public class BookOfCookController {
     
     public void initViewContent(Recipe recipe){
         //column 1
-        viewLabel(recipe.getDisplayedName(), recipeViewBox1, 0, 0);
+        viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
         viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
@@ -363,7 +384,7 @@ public class BookOfCookController {
         System.out.println("Add button was clicked");
 
         //create new recipe object 
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        //Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());

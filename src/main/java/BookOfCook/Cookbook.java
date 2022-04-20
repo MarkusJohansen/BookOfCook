@@ -9,13 +9,12 @@ public class Cookbook {
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private ArrayList<Category> categories = new ArrayList<Category>();
 
-    // *CONSTRUCTOR
     public Cookbook() {
         this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
     }
 
-    // *RECIPE ADD AND REMOVE METHODS
-    // adds recipe to cookbook
+    // *ADD AND REMOVE METHODS
+    
     public void addRecipe(Recipe recipe) {
         duplicateRecipeCheck(recipe);             //! necessay ? checks if recipe already exists
         duplicateRecipeNameCheck(recipe);                                               // checks for recipes with duplicate names
@@ -31,9 +30,7 @@ public class Cookbook {
     }
 
     // *GETTERS
-    // ? er disse nødvendige
 
-    // returns amount of recipes in cookbook
     public int getAmount() {
         return recipeAmount;                                // returns amount of recipes in cookbook
     }
@@ -125,7 +122,7 @@ public class Cookbook {
     //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
-        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
+        return "Cookbook [categories=" + categories + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
     }
 
     public void load(File file) {
@@ -139,7 +136,7 @@ public class Cookbook {
                     String[] parts = line.split(",");
                     String name = parts[0];
                     int servings = Integer.parseInt(parts[1]);
-                    Recipe recipe = new Recipe(name, servings);
+                    Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
                     recipe.setDescription(parts[2]);
                     recipe.setCalories(Double.parseDouble(parts[3]));
                     recipe.setPrepTime(parts[4]);
