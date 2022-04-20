@@ -2,7 +2,7 @@ package BookOfCook;
 
 import java.util.*;
 
-public class Recipe {
+public class Recipe extends Validator{
     private String name, description, prepTime;             // name of recipe that will be dealt with back end, as well as name displayed to user    
     private int numberOfServings;                           // number persons this recipe serves        
     private double calories, CalPerServing;                 // optional for user.
@@ -96,7 +96,7 @@ public class Recipe {
 
     // set calories
     public void setCalories(double calories) {   
-        validateCalories(calories);                                 // checks if calories are valid
+        negativeCheck(calories);                                 // checks if calories are valid
         this.calories = calories;                                   // sets the total calories of the recipe
         setCalPerServing();                                         // sets calories per person based on the new value of calories and number of servings
     }
@@ -157,13 +157,13 @@ public class Recipe {
 
     // add step to recipe steps
     public void addStep(String step) {
-        validateStep(step);                                                 // checks if step is valid
+        nullOrEmpty(step);                                                 // checks if step is valid
         steps.add(capitalize(step));                                        // adds step to list of steps in recipe
     }
 
     // remove step from recipe steps by index
     public void removeStep(int step) {
-        validateStepIndex(step);                                                          
+        validIndex(steps, step); //! error her removes step from list of steps in recipe                                                          
         steps.remove(step);                                                 // removes step from list of steps in recipe
     }
 
@@ -186,94 +186,7 @@ public class Recipe {
     }
 
 
-    //! *VALIDATIONS burde disse flyttes over i egen klasse og kunne brukes i andre klasser
-    //! kan føre til mindre validerings metoder hvis man sjekker det samme om og om igjen
-    //! kan se mer ryddig ut
-    // validates step index
-    private void validateStepIndex(int step) {
-        if (step < 0 || step > steps.size()) {
-            throw new IllegalArgumentException("step index is out of bounds");
-        }
-    }
-
-    // validates step
-    private void validateStep(String step) {
-        if (step == null || step.equals("")) {                                      // if recipe step is null or empty
-            throw new IllegalArgumentException("Step cannot be null or empty");     // throw error
-        }
-        whiteSpaceCheck(step);                                                      // checks if step contains white spaces trailing or leading
-    }
-
-    // validates Calories
-    private void validateCalories(double calories) {                                
-        if (calories < 0) {                                                         // if calories is negative
-            throw new IllegalArgumentException("calories cannot be negative");      // throw error
-        }
-    }
-
-    // validates Ingredient
-    private void validateIngredient(HashMap<String,Object> Ingredient) {
-        nullValueCheck(Ingredient);                                                 // checks if ingredient has null values
-        regexCheck(Ingredient);                                                     // checks if ingredient has invalid characters
-        whiteSpaceCheck(Ingredient.get("name").toString());                    // checks if ingredient name has white spaces
-        whiteSpaceCheck(Ingredient.get("unit").toString());                    // checks if ingredient unit has white spaces
-    }
-
-    // checks if values in ingredient is null
-    private void nullValueCheck(HashMap<String,Object> Ingredient) {                
-        if (Ingredient.get("name") == null || Ingredient.get("amount") == null || Ingredient.get("unit") == null) {     // if ingredient has null values
-            throw new IllegalArgumentException("One or more values of the ingredient is null.");                        // throw error
-        }
-    }
-
-    // checks if values in ingredient are valid according to regex patterns
-    private void regexCheck(HashMap<String,Object> Ingredient) {
-        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {      // if ingredient amount is not a number
-            throw new IllegalArgumentException("amount is not a Double or integer");                                                            // throw error
-        }
-        if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {                                                                           // if ingredient unit is not a lowercase string
-            throw new IllegalArgumentException("unit contains invalid characters");                                                             // throw error
-        }
-        if (!(Ingredient.get("name").toString().matches("[A-ZæøåÆØÅ\\- ]+") || Ingredient.get("displayName").toString().matches("[a-zA-Z\\- ]+"))) {  // if ingredient name is not a string of uppercase letters, dashes and spaces
-            throw new IllegalArgumentException("name or displayName contains invalid characters");                                              // throw error
-        }
-    }
-
-    // validates recipe name
-    private void validRecipeName(String name) {
-        if (name == null || name.equals("")) {                                                          // if name is null or empty
-            throw new IllegalArgumentException("Name cannot be null or empty");                         // throw error
-        }                                                                                               
-        if (!(name.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
-            throw new IllegalArgumentException("Name cannot contain numbers or special characters");    // throw error
-        }
-        whiteSpaceCheck(name);                                                                          // checks if name has white spaces trailing or leading
-    }
-
-    // validates number of servings
-    private void validServings(int numberOfServings) {
-        if (numberOfServings <= 0) {                                                                    // if number of servings is less than or equal to 0
-            throw new IllegalArgumentException("Number of servings must be greater than 0");            // throw error
-        }
-        if (numberOfServings > 100) {                                                                   // ! skal vi sette constraint? if number of servings is greater than 100
-            throw new IllegalArgumentException("Number of servings must be less than 100");             // throw error
-        }
-    }
-    
-    // *GENERAL TOOLBOX METHODS
-    // capitalizes first letter and makes rest of string lowercase. good for displayed names in app
-    private String capitalize(String s) {
-        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();             // capitalizes first letter of string s and returns it
-    }
-
-    // check if string starts or ends with multiple white spaces
-    private void whiteSpaceCheck(String s){
-        if (s.startsWith(" ") || s.endsWith(" ")) {
-            throw new IllegalArgumentException("String starts or ends with white spaces");
-        }
-    }
-
-    // *TOSTRING METHOD
+    //! *TOSTRING METHOD brukes ikke
     @Override
     public String toString() {
         return "Recipe [name=" + name + "]";

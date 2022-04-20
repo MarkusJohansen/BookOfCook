@@ -78,20 +78,20 @@ public class BookOfCookController {
     //initializes the cookbook, and adds dummy recipes
     private void initbook(){
         book = new Cookbook();
-        book.addRecipe(new Recipe("Pizza", 2));
-        book.addRecipe(new Recipe("Hamburger", 1));
-        book.addRecipe(new Recipe("Spaghetti", 2));
-        book.addRecipe(new Recipe("Enchiladas", 1));
+        // book.addRecipe(new Recipe("Pizza", 2));
+        // book.addRecipe(new Recipe("Hamburger", 1));
+        // book.addRecipe(new Recipe("Spaghetti", 2));
+        // book.addRecipe(new Recipe("Enchiladas", 1));
 
-        book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
-        book.getRecipes().get(0).addIngredient("ost", 1, "stk");
-        book.getRecipes().get(0).addIngredient("salt", 1, "stk");
-        book.getRecipes().get(0).setCalories(2002);
-        book.getRecipes().get(0).setDescription("En fantastisk pizza");
-        book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).addStep("Frem i en skål");
-        book.getRecipes().get(0).setPrepTime("10 minutter");
+        // book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
+        // book.getRecipes().get(0).addIngredient("ost", 1, "stk");
+        // book.getRecipes().get(0).addIngredient("salt", 1, "stk");
+        // book.getRecipes().get(0).setCalories(2002);
+        // book.getRecipes().get(0).setDescription("En fantastisk pizza");
+        // book.getRecipes().get(0).addStep("Frem i en skål");
+        // book.getRecipes().get(0).addStep("Frem i en skål");
+        // book.getRecipes().get(0).addStep("Frem i en skål");
+        // book.getRecipes().get(0).setPrepTime("10 minutter");
     }
 
     //initializes the recipe ArrayList
@@ -104,15 +104,15 @@ public class BookOfCookController {
     private void initCateg(){
         categories = new ArrayList<Category>();
         
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category kjøtt = new Category("kjøtt");
+        // Category italiensk = new Category("italiensk");
+        // Category burger = new Category("burger");
+        // Category kjøtt = new Category("kjøtt");
 
-        recipes.get(0).addCategory(italiensk);
-        recipes.get(1).addCategory(burger);
-        recipes.get(2).addCategory(burger);
-        recipes.get(2).addCategory(italiensk);
-        recipes.get(3).addCategory(kjøtt);
+        // recipes.get(0).addCategory(italiensk);
+        // recipes.get(1).addCategory(burger);
+        // recipes.get(2).addCategory(burger);
+        // recipes.get(2).addCategory(italiensk);
+        // recipes.get(3).addCategory(kjøtt);
 
         book.collectCategories();
 
@@ -183,7 +183,7 @@ public class BookOfCookController {
     private void updateCategList(){
         categList.getItems().clear();
 
-        book.collectCategories();
+        book.categCollect();
 
         categories.clear();
         categories.addAll(book.getCategories());
@@ -365,6 +365,7 @@ public class BookOfCookController {
         //create new recipe object 
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
+        //
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
@@ -384,7 +385,7 @@ public class BookOfCookController {
         //update the recipe list by adding new component
         updateRecipeList();
         updateCategList();
-        book.collectCategories();       
+        book.categCollect();       
 
         System.out.println(book.getCategories());
     }
@@ -441,7 +442,7 @@ public class BookOfCookController {
     //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
-        //book.collectCategories();
+        //book.categCollect();
         //loop through items in list
 
         for(String category : categoryCreator){
@@ -678,7 +679,7 @@ public class BookOfCookController {
             return;
         }
 
-        ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
+        ArrayList<Recipe> sortedRecipes = book.getSortedRecipesAllCategories(categoriesClicked);
         if(sortedRecipes.size() == 0){
         }
 
@@ -785,6 +786,5 @@ public class BookOfCookController {
     ? picture support
     ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
-
     */
 } 
