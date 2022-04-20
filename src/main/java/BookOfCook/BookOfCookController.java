@@ -198,18 +198,18 @@ public class BookOfCookController {
     //! maybe only one of these,
     public void updateAmount(){
         numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes.")); //!
     }
 
     public void updateAmountLabel(ArrayList<Recipe> recipeArray){
         numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes.")); //!
     }
 
     private void updateStepCreatorList() {
         stepsArea.clear();
         stepCreatorList.getItems().clear();
-        for(String step : stepsCreator){
+        for(String step : stepsCreator){    //!dette skal være init
             stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
         }
     }
@@ -218,7 +218,7 @@ public class BookOfCookController {
         ingredNameBar.clear();
         ingredAmountBar.clear();
         ingredCreatorList.getItems().clear();
-        for(HashMap<String, Object> ingredient : IngredCreator){
+        for(HashMap<String, Object> ingredient : IngredCreator){ //! dette skal være init
             ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
         }
     }
@@ -226,7 +226,7 @@ public class BookOfCookController {
     private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
-        for(String category : categoryCreator){
+        for(String category : categoryCreator){ //!dette skal være init
             categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
         }
     }
@@ -734,7 +734,6 @@ public class BookOfCookController {
 
         book.save(file);
         System.out.println("Cookbook saved successfully");
-        
     }
 
     /*
