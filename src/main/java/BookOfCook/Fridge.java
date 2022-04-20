@@ -3,7 +3,7 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Fridge {
+public class Fridge extends Validator{
     // *FIELDS
     private ArrayList<HashMap<String, Object>> foodInFridge = new ArrayList<HashMap<String, Object>>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
 

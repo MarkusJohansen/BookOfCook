@@ -720,7 +720,7 @@ public class BookOfCookController {
 
     //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
 
-    /*public ArrayList<Recipe> mainFilter(ArrayList<Recipe> recipes){
+    /*public ArrayList<Recipe> filter(ArrayList<Recipe> recipes){
 
         if(){ // SØKE
 

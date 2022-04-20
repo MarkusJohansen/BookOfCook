@@ -7,8 +7,8 @@ public class Validator {
 
 
     //*GENERAL METHODS
-    // validates index
-    public void validIndex(ArrayList<Object> collection, int index) {
+    //! validates index sliter med arrayet
+    public void validIndex(ArrayList<Object> collection, int index) {   
         if (index < 0 || index > collection.size()) {
             throw new IllegalArgumentException("index is out of bounds");
         }
@@ -24,13 +24,13 @@ public class Validator {
                 throw new IllegalArgumentException("string cannot be empty or just whitespace");   // throw error
             }
             if (((String) object).trim().length() == ((String) object).length()) {                  // if string                                 // if string is empty
-                throw new IllegalArgumentException("string cannot have trailing or leading whitespace"); // throw error// throw error
+                throw new IllegalArgumentException("String: \"" + ((String) object) + "\"cannot have trailing or leading whitespace"); // throw error// throw error
             }
         }
     }
 
     // validates number
-    public void negativeCheck(double calories) {                                
+    public void negative(double calories) {                                
         if (calories < 0) {                                                         // if calories is negative
             throw new IllegalArgumentException("number cannot be negative");      // throw error
         }
@@ -42,39 +42,34 @@ public class Validator {
         for (String key : Ingredient.keySet()) {
             nullOrEmpty(Ingredient.get(key));
         }
-        regexCheck(Ingredient);                                                     // checks if ingredient has invalid characters                 // checks if ingredient unit has white spaces
+        ingredRegex(Ingredient);                                                     // checks if ingredient has invalid characters                 // checks if ingredient unit has white spaces
     }
 
     // checks if values in ingredient are valid according to regex patterns
-    public void regexCheck(HashMap<String,Object> Ingredient) {
+    public void ingredRegex(HashMap<String,Object> Ingredient) {
         if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {      // if ingredient amount is not a number
             throw new IllegalArgumentException("amount is not a Double or integer");                                                            // throw error
         }
-        if (!(Ingredient.get("unit").toString().matches("[a-z]+"))) {                                                                           // if ingredient unit is not a lowercase string
-            throw new IllegalArgumentException("unit contains invalid characters");                                                             // throw error
+        try {
+            numbersOrSpecials((String) Ingredient.get("name"));
+            numbersOrSpecials((String) Ingredient.get("Unit"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("name or unit contains invalid characters");
         }
-        if (!(Ingredient.get("name").toString().matches("[A-ZæøåÆØÅ\\- ]+"))) {  // if ingredient name is not a string of uppercase letters, dashes and spaces
-            throw new IllegalArgumentException("name or displayName contains invalid characters");                                              // throw error
-        }
-        noNumbersOrSpecials(Ingredient.get("name"));
     }
 
     // validates recipe name
-    public void noNumbersOrSpecials(String name) {
-        nullOrEmpty(name);                                                                                                                          // checks if name is null or empty                                                                                            
-        if (!(name.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
-            throw new IllegalArgumentException("Name cannot contain numbers or special characters");    // throw error
+    public void numbersOrSpecials(String s) {
+        nullOrEmpty(s);                                                                                                                          // checks if s is null or empty                                                                                            
+        if (!(s.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
+            throw new IllegalArgumentException("String cannot contain numbers or special characters");    // throw error
         }
     }
 
-    //*RECIPE METHODS
     // validates number of servings
-    public void validServings(int numberOfServings) {
+    public void negativeOrZero(Double numberOfServings) {
         if (numberOfServings <= 0) {                                                                    // if number of servings is less than or equal to 0
-            throw new IllegalArgumentException("Number of servings must be greater than 0");            // throw error
-        }
-        if (numberOfServings > 100) {                                                                   // ! skal vi sette constraint? if number of servings is greater than 100
-            throw new IllegalArgumentException("Number of servings must be less than 100");             // throw error
+            throw new IllegalArgumentException("number cant be negative or zero"); // throw error            // throw error
         }
     }
     
