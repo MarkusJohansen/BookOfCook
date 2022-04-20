@@ -125,8 +125,7 @@ public class Cookbook implements recipeContainer {
     //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
-        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes="
-                + recipes + "]";
+        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
     }
 
     public void load(File file) {
@@ -149,7 +148,7 @@ public class Cookbook implements recipeContainer {
                     line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
                     parts = line.split(",");
                     for (String part : parts) {
-                        recipe.addCategory(new Category(part));
+                        recipe.addCategory(new Category(part)); //!lager nye categorier
                     }
                     //line 3 ingredients
                     line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
@@ -188,27 +187,6 @@ public class Cookbook implements recipeContainer {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    //write recipes in cookbook as csv file
-    public void save(File file) {
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (Recipe r : recipes) {
-                bufferedWriter.write(r.getName() + "," + r.getServings() + "," + r.getDescription() + "," + r.getCalories() + "," + r.getPrepTime());
-                bufferedWriter.newLine();
-                bufferedWriter.write(r.getCategories() + "");
-                bufferedWriter.newLine();
-                bufferedWriter.write(r.getIngredients() + "");
-                bufferedWriter.newLine();
-                bufferedWriter.write(r.getSteps() + "");
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-        } catch (IOException e) {
-            System.out.println("Error writing to file");
         }
     }
 }

@@ -17,10 +17,10 @@ public class CategoryTest {
     
     @BeforeEach
     public void setup() {
-       category1 = new Category("Category1");
-       recipe1 = new Recipe("Milkshake", 1);
+        category1 = new Category("Category1");
+        recipe1 = new Recipe("Milkshake", 1);
     }
- 
+
     @Test
     @DisplayName("Test add and remove recipe from category")
     public void testAddRemoveRecipe() {
