@@ -247,8 +247,8 @@ public class Recipe {
     private void validateIngredient(HashMap<String,Object> Ingredient) {
         nullValueCheck(Ingredient);                                                 // checks if ingredient has null values
         regexCheck(Ingredient);                                                     // checks if ingredient has invalid characters
-        whiteSpaceCheck(Ingredient.get("name").toString());                         // checks if ingredient name has white spaces
-        whiteSpaceCheck(Ingredient.get("unit").toString());                         // checks if ingredient unit has white spaces
+        whiteSpaceCheck(Ingredient.get("name").toString());                    // checks if ingredient name has white spaces
+        whiteSpaceCheck(Ingredient.get("unit").toString());                    // checks if ingredient unit has white spaces
     }
 
     // checks if values in ingredient is null
@@ -291,7 +291,6 @@ public class Recipe {
             throw new IllegalArgumentException("Number of servings must be less than 100");             // throw error
         }
     }
-
     
     // *GENERAL TOOLBOX METHODS
     // capitalizes first letter and makes rest of string lowercase. good for displayed names in app
@@ -305,7 +304,6 @@ public class Recipe {
             throw new IllegalArgumentException("String starts or ends with white spaces");
         }
     }
-
 
     // *TOSTRING METHOD
     @Override

@@ -78,38 +78,8 @@ public class Cookbook implements recipeContainer {
         }
     }
 
-    private void nameIsValid(String name) {
-        if (name.isEmpty()) {                                                                           // checks if name is empty
-            throw new IllegalArgumentException("Name cannot be empty");                                 // describes problem in console;
-        }
-        // checks if name contains numbers
-        if (name.matches(".*\\d+.*")) {                                                                 // checks if name contains numbers
-            throw new IllegalArgumentException("Name cannot contain numbers");                           // describes problem in console;
-        }
-
-        // checks if name contains special characters
-        if (name.matches(".*[^a-zA-Z0-9 ].*")) {                                                       // checks if name contains special characters
-            throw new IllegalArgumentException("Name cannot contain special characters");                // describes problem in console;
-        }
-
-        // checks if name contains spaces
-        if (name.contains(" ")) {                                                                      // checks if name contains spaces
-            throw new IllegalArgumentException("Name cannot contain spaces");                           // describes problem in console;
-        }
-
-        //checks if name starts or ends with whitespace
-        if (name.startsWith(" ") || name.endsWith(" ")) {                                              // checks if name starts or ends with whitespace
-            throw new IllegalArgumentException("Name cannot start or end with whitespace");             // describes problem in console;
-        }
-
-        //? checks if name is too short
-        if (name.length() < 3) {                                                                       // checks if name is too short
-            throw new IllegalArgumentException("Name must be at least 3 characters long");              // describes problem in console;
-        }
-    }
-
     // metode som returnerer alle recipes som inneholder alle kategoriene
-    public ArrayList<Recipe> getSortedRecipesAllCategories(ArrayList<Category> categories){  // categories as parameter
+    public ArrayList<Recipe> filterByCategories(ArrayList<Category> categories){  // categories as parameter
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
         for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
             boolean containsAllCategories = true;                              // sets temporary variable to true
@@ -126,7 +96,7 @@ public class Cookbook implements recipeContainer {
         return sortedRecipes;
     }
 
-    public void categCollect(){
+    public void collectCategories(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
 
         for (Recipe recipe : recipes) {                                 // lopps through all recipes
