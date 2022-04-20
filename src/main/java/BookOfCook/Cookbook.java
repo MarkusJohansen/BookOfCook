@@ -155,8 +155,7 @@ public class Cookbook implements recipeContainer {
     //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
-        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes="
-                + recipes + "]";
+        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
     }
 
     public void load(File file) {

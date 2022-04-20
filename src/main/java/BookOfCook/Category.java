@@ -9,7 +9,7 @@ public class Category implements recipeContainer {
 
     // *CONSTRUCTOR
     public Category(String name) {
-        this.name = name.toLowerCase();
+        this.name = name;
     }
 
     // *GETTERS
