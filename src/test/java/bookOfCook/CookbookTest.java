@@ -77,30 +77,25 @@ public class CookbookTest {
         assertFalse(cookbook.searchRecipes("Pizza").contains(recipe1));
         assertTrue(cookbook.searchRecipes("Pizza").contains(recipe2));
     }
-    //!__________________________________________________________________
 
-    //! skjønner ikke hva denne funksjonen gjør, kan du forklare? evt endre navn
-    //! funksjonen filtrerer ut recipene etter gitte kategorier
     @Test
     @DisplayName("Test getSortedRecipesAllCategories")
-    public void testGetSortedRecipesAllCategories() {
+    public void testfilterByCategories() {
         recipe1.addCategory(category1);
         recipe1.addCategory(category2);
         recipe2.addCategory(category1);
         cookbook.addRecipe(recipe1);
         cookbook.addRecipe(recipe2);
-        assertEquals(cookbook.getSortedRecipesAllCategories(new ArrayList<>(Arrays.asList(category1))), new ArrayList<>(Arrays.asList(recipe1, recipe2)));
-        assertEquals(cookbook.getSortedRecipesAllCategories(new ArrayList<>(Arrays.asList(category1, category2))), new ArrayList<>(Arrays.asList(recipe1)));
+        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(category1))), new ArrayList<>(Arrays.asList(recipe1, recipe2)));
+        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(category1, category2))), new ArrayList<>(Arrays.asList(recipe1)));
     }
 
-    //! skjønner ikke hva denne funksjonen gjør, kan du forklare? evt endre navn
-    //! funksjonen henter alle kategoriene til recipene i kokeboka
     @Test
-    @DisplayName("Test categCollect")
+    @DisplayName("Test collectCategories")
     public void testcollectCategories() {
         cookbook.addRecipe(recipe1);
         recipe1.addCategory(category1);
-        cookbook.categCollect();
+        cookbook.collectCategories();
         assertEquals(cookbook.getCategories(), new ArrayList<>(Arrays.asList(category1)));
     }
 
