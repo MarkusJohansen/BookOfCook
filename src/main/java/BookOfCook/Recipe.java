@@ -66,7 +66,7 @@ public class Recipe {
     }
 
     // get ingredients
-    public ArrayList<HashMap<String,Object>> getingredients() {
+    public ArrayList<HashMap<String,Object>> getIngredients() {
         return new ArrayList<HashMap<String,Object>>(ingredients);  // returns ingredients
     }
 
