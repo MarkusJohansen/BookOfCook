@@ -28,7 +28,7 @@ public class CookbookTest {
     @BeforeEach
     public void setup() {
         cookbook = new Cookbook();
-        recipe1 = new Recipe("Milkshake", 3);
+        recipe1 = new Recipe("Milkshake", 3, );
         recipe2 = new Recipe("Pizza", 2);
     }
 

@@ -44,4 +44,6 @@ public class Category extends Validator {
     public String toString() {
         return name;
     }
+
+    //! validering af sjekk om du kan bruke metoder 
 }

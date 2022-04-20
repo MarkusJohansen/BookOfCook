@@ -17,15 +17,14 @@ public class Cookbook extends Validator {
     // *RECIPE ADD AND REMOVE METHODS
     // adds recipe to cookbook
     public void addRecipe(Recipe recipe) {
-        duplicateRecipeCheck(recipe);             //! necessay ? checks if recipe already exists
-        duplicateRecipeNameCheck(recipe);                                               // checks for recipes with duplicate names
+        duplicateRecipeName(recipes, recipe);                                               // checks for recipes with duplicate names
         recipes.add(recipe);                                                            // adds recipe to cookbook
         recipeAmount++;                                                                 // updates amount of recipes in cookbook
     }
 
     // removes recipe from cookbook and updates recipe amount
     public void removeRecipe(Recipe recipe) {
-        checkIfRecipeExists(recipe);                        // checks if recipe exists
+        recipeExists(recipes, recipe);                       //? er denne nødvendig med tanke på hvoradn grensesnittet er satt opp?  if recipe exists
         recipes.remove(recipe);                             // removes recipe from cookbook
         recipeAmount--;                                     // updates amount of recipes in cookbook
     }
@@ -53,29 +52,6 @@ public class Cookbook extends Validator {
             }
         }
         return false;
-    }
-
-    // *VALIDATION METHODS
-    // checks if cookbook contains recipe
-    private void duplicateRecipeCheck(Recipe recipe) {
-        if (recipes.contains(recipe)) {                                                             // checks if recipe already exists in cookbook
-            throw new IllegalArgumentException("Recipe already exists in cookbook");                // describes problem in console and throws ERROR
-        }
-    }
-
-    // checks if recipe name already exists in cookbook
-    private void duplicateRecipeNameCheck(Recipe recipe){
-        for (Recipe r : recipes) {                                                                      // loops through recipes in cookbook
-            if (r.getName().equals(recipe.getName())) {                                                 // checks there is another recipe with identical name in// cookbook
-                throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
-            }
-        }
-    }
-
-    private void checkIfRecipeExists(Recipe recipe) {
-        if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
-            throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
-        }
     }
 
     // metode som returnerer alle recipes som inneholder alle kategoriene
@@ -125,7 +101,7 @@ public class Cookbook extends Validator {
     //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
-        return "Cookbook [categories=" + categories + ", name=" + name + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
+        return "Cookbook [categories=" + categories + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
     }
 
     public void load(File file) {
