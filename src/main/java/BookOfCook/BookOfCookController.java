@@ -52,6 +52,8 @@ public class BookOfCookController {
     private TextArea descriptionArea, stepsArea;
     @FXML
     private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
+    @FXML
+    private CheckBox fridgeCheckbox;
 
     //-------------------------------------
     //*INITIALIZATION
@@ -68,7 +70,9 @@ public class BookOfCookController {
 
     //inititializes the recipe components in the GUI, from the cookbook
     private void initRecipeComponents() {
-        initRecipes();
+        //initializes the recipe ArrayList
+        recipes = new ArrayList<Recipe>();
+        recipes.addAll(book.getRecipes());
         for (Recipe recipe : recipes) {
             Recipe r = recipe; //copy recipe
             recipeList.getItems().add(recipeComponent(r));
@@ -106,45 +110,13 @@ public class BookOfCookController {
         book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
         book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
         
-
-        // book.addRecipe(new Recipe("Pizza", 2));
-        // book.addRecipe(new Recipe("Hamburger", 1));
-        // book.addRecipe(new Recipe("Spaghetti", 2));
-        // book.addRecipe(new Recipe("Enchiladas", 1));
-
-        // book.getRecipes().get(0).addIngredient("tomat", 1, "stk");
-        // book.getRecipes().get(0).addIngredient("ost", 1, "stk");
-        // book.getRecipes().get(0).addIngredient("salt", 1, "stk");
-        // book.getRecipes().get(0).setCalories(2002);
-        // book.getRecipes().get(0).setDescription("En fantastisk pizza");
-        // book.getRecipes().get(0).addStep("Frem i en skål");
-        // book.getRecipes().get(0).addStep("Frem i en skål");
-        // book.getRecipes().get(0).addStep("Frem i en skål");
-        // book.getRecipes().get(0).setPrepTime("10 minutter");
-    }
-
-    //initializes the recipe ArrayList
-    private void initRecipes(){
-        recipes = new ArrayList<Recipe>();
-        recipes.addAll(book.getRecipes());
     }
     
     //initializes the category components in the GUI
     private void initCateg(){
         categories = new ArrayList<Category>();
-        
-        // Category italiensk = new Category("italiensk");
-        // Category burger = new Category("burger");
-        // Category kjøtt = new Category("kjøtt");
-
-        // recipes.get(0).addCategory(italiensk);
-        // recipes.get(1).addCategory(burger);
-        // recipes.get(2).addCategory(burger);
-        // recipes.get(2).addCategory(italiensk);
-        // recipes.get(3).addCategory(kjøtt);
 
         book.collectCategories();
-
         categories.addAll(book.getCategories());
 
         //System.out.println(book.getCategories());
@@ -223,8 +195,6 @@ public class BookOfCookController {
         }
 
         System.out.println(book.getCategories());
-
-        //initCateg();
     }
 
     public void updatefridge(){
@@ -302,7 +272,6 @@ public class BookOfCookController {
                 categoryCreator.remove(target);
                 updateCategCreatorList();
             });
-    
             return btn;
     }
 
@@ -319,7 +288,6 @@ public class BookOfCookController {
                 stepsCreator.remove(target);
                 updateStepCreatorList();
             });
-    
             return btn;
     }
 
@@ -335,8 +303,7 @@ public class BookOfCookController {
                 System.out.println("Deleted " + target + " ingredient from recipe creation");
                 IngredCreator.remove(target);
                 updateIngredCreatorList();
-            });
-    
+            });   
             return btn;
     }
 

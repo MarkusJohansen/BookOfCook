@@ -119,6 +119,23 @@ public class Cookbook {
         return searchResults;
     }
 
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes){
+
+        if(true){ // SØKE
+
+        }
+
+        if(true){ // KATEGORIER
+
+        }
+
+        if(true){ // KJØLESKAP
+        
+        }
+
+        return recipes;
+    }
+
     //! TOSTRING METHOD brukes denne
     @Override
     public String toString() {
