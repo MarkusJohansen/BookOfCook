@@ -25,7 +25,6 @@ public class BookOfCookController {
     private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
-    private ArrayList<Category> categories;
     private Fridge fridge;
     private int numbersOfRecipesShown;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
@@ -34,10 +33,9 @@ public class BookOfCookController {
     private ArrayList<String> stepsCreator = new ArrayList<String>();  
     private ArrayList<String> categoryCreator = new ArrayList<String>();
     private ArrayList<HashMap<String, Object>> IngredCreator = new ArrayList<HashMap<String, Object>>();
-    
-    //-------------------------------------
+
     //*FXML-noder
-    //-------------------------------------
+
     @FXML
     private Label number, label, recipeAmount;  
     @FXML
@@ -73,9 +71,8 @@ public class BookOfCookController {
         //initializes the recipe ArrayList
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
-        for (Recipe recipe : recipes) {
-            Recipe r = recipe; //copy recipe
-            recipeList.getItems().add(recipeComponent(r));
+        for (Recipe recipe : book.filter(book.getRecipes())) {
+            recipeList.getItems().add(recipeComponent(recipe));
         }
         updateAmount();
     }
@@ -106,16 +103,14 @@ public class BookOfCookController {
         Category kjøtt = new Category("kjøtt");
 
         // DUMMYOPPSKRIFTER
-        
         book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
         book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
-        
     }
     
     //initializes the category components in the GUI
     private void initCateg(){
         book.collectCategories();
-        
+
         for(Category category : book.getCategories()){
             categList.getItems().add(categComponent(category));
         }
