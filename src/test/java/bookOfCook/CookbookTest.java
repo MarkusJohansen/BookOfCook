@@ -65,7 +65,7 @@ public class CookbookTest {
     @Test
     @DisplayName("Test Constructor")
     public void testConstructor() {
-        Cookbook cookbook = new Cookbook("cookbook");
+        Cookbook cookbook = new Cookbook();
         assertTrue(cookbook.getRecipes().isEmpty());
     }
 
