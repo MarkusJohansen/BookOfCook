@@ -27,7 +27,7 @@ public class CookbookTest {
 
     @BeforeEach
     public void setup() {
-        cookbook = new Cookbook("Book");
+        cookbook = new Cookbook();
         recipe1 = new Recipe("Milkshake", 3);
         recipe2 = new Recipe("Pizza", 2);
     }
@@ -78,15 +78,6 @@ public class CookbookTest {
         assertTrue(cookbook.searchRecipes("Pizza").contains(recipe2));
     }
     //!__________________________________________________________________
-
-    //! trenger vi setname funksjonen?
-    //! synes ikke det, vi bruker den vel ikke heller
-    @Test
-    @DisplayName("Test set name og get name")
-    public void testSetName() {
-        cookbook.setName("cookbook");
-        assertTrue(cookbook.getName().equals("cookbook"));
-    }
 
     //! skjønner ikke hva denne funksjonen gjør, kan du forklare? evt endre navn
     //! funksjonen filtrerer ut recipene etter gitte kategorier
