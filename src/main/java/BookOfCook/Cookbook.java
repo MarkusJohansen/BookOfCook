@@ -5,14 +5,12 @@ import java.util.*;
 import java.io.*;
 
 public class Cookbook implements recipeContainer {
-    private String name;
     private int recipeAmount;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private ArrayList<Category> categories = new ArrayList<Category>();
 
     // *CONSTRUCTOR
-    public Cookbook(String name) {
-        setName(name);
+    public Cookbook() {
         this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
     }
 
@@ -32,19 +30,8 @@ public class Cookbook implements recipeContainer {
         recipeAmount--;                                     // updates amount of recipes in cookbook
     }
 
-    //*SETTERS
-    // sets name of cookbook
-    public void setName(String name) {
-        nameIsValid(name);                                  // checks if name is valid
-        this.name = name;                                   // sets name of cookbook                   
-    }
-
     // *GETTERS
     // ? er disse nødvendige
-    // returns cookbook name
-    public String getName() {
-        return name; // returns cookbook name
-    }
 
     // returns amount of recipes in cookbook
     public int getAmount() {

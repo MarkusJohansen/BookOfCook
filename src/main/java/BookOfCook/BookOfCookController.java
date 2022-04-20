@@ -77,7 +77,7 @@ public class BookOfCookController {
 
     //initializes the cookbook, and adds dummy recipes
     private void initbook(){
-        book = new Cookbook("foo");
+        book = new Cookbook();
         book.addRecipe(new Recipe("Pizza", 2));
         book.addRecipe(new Recipe("Hamburger", 1));
         book.addRecipe(new Recipe("Spaghetti", 2));

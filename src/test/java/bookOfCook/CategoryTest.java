@@ -22,8 +22,8 @@ public class CategoryTest {
     }
  
     @Test
-    @DisplayName("Test add recipe and recipeAmount")
-    public void testAddRecipe() {
+    @DisplayName("Test add and remove recipe from category")
+    public void testAddRemoveRecipe() {
         category1.addRecipe(recipe1);
         assertTrue(category1.getRecipes().contains(recipe1));
         category1.removeRecipe(recipe1);
