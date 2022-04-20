@@ -96,22 +96,25 @@ public class Cookbook extends Validator {
         return searchResults;
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes/*, String searchText, ArrayList<Category> categories, Fridge fridge*/){
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes/*, String searchText, ArrayList<Category> categories*/, Fridge fridge){
+
+        ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+
+        if(true){ // KJØLESKAP
+            filteredRecipes = fridge.filter(recipes);
+        }
 
         if(true){ // SØKE
-
+            //første blokk så tar du inn filteredrecipes
+            //resultatet blir en enda mindre filteredRecipes
         }
 
         if(true){ // KATEGORIER
-            ArrayList<Recipe> temporary = new ArrayList<Recipe>();
-            
+            // tar inn den enda mindre filteredrecipes
+            //resultatet blir en enda enda mindre filteredRecipes
         }
 
-        if(true){ // KJØLESKAP
-        
-        }
-
-        return recipes;
+        return filteredRecipes;
     }
 
     //! TOSTRING METHOD brukes denne
