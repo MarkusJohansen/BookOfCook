@@ -190,7 +190,7 @@ public class BookOfCookController {
         categories.addAll(book.getCategories());
 
         //System.out.println(book.getCategories());
-        for(Category category : categories){
+        for(Category category : categories){                                //!init lager, updater skal gjøre klar for ny init ved endring
             categList.getItems().add(categComponent(category));
         }
 

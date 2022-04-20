@@ -17,9 +17,7 @@ public class Fridge extends Validator{
 
     //*ADDING AND REMOVING FOOD 
     public void addFood(String name, double amount, String unit) {
-        if(isFoodInFridge(name)){
-            throw new IllegalStateException("Food " + name + " is already in fridge.");
-        }
+        ingredientExists(foodInFridge, name);
 
         System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
         
@@ -37,49 +35,15 @@ public class Fridge extends Validator{
                 System.out.println("Removing " + foodInFridge.get(i));          
                 foodInFridge.remove(i);                                         // removes i food
                 removedFood = true;
-             }
+            }
         }
         if (!removedFood) {                                                     // checks if any food removed at all
             System.out.println("No food matching input '" + name + "' in fridge");
         }
     }
-    
-    // *VALIDATION
-    public boolean isFoodInFridge(String food){
-        for (int i = 0; i < foodInFridge.size(); i++) {                         // iterates through foodInFridge
-            if (foodInFridge.get(i).get("name").equals(food.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public String toString() {
         return "Fridge [foodInFridge=" + foodInFridge + "]";
-    }
-
-    public static void main(String[] args) {
-        Fridge fridge = new Fridge();
-        
-        fridge.addFood("milk", 1.0, "L");
-        fridge.addFood("pasta", 0.5, "Kg");
-
-        HashMap<String, Object> milk = new HashMap<String, Object>();
-        milk.put("name", "milk");
-        milk.put("amount", 1);
-        milk.put("unit", "L");
-
-        HashMap<String, Object> pasta = new HashMap<String, Object>();
-        milk.put("name", "pasta");
-        milk.put("amount", 0.5);
-        milk.put("unit", "kg");
-
-        System.out.println(fridge.getFood());
-        System.out.println(fridge.getFood().contains(milk));
-
-        fridge.removeFood(milk.get("name").toString());
-
-        System.out.println(fridge.getFood());
     }
 }

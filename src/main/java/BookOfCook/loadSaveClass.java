@@ -41,7 +41,7 @@ public class LoadSaveClass implements LoadSave {
     public Cookbook load(File file) {
         System.out.println("Loading...");
 
-        Cookbook foo = new Cookbook(null);
+        Cookbook foo = new Cookbook();
 
         //read csv file using filereader and buffered reader objects
         try {
@@ -51,7 +51,11 @@ public class LoadSaveClass implements LoadSave {
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
 
-                String[] data = line.split(",");
+                String[] data1 = line.split(",");
+                String[] data2 = bufferedReader.readLine().split(",");
+                String[] data3 = bufferedReader.readLine().split(",");
+                String[] data4 = bufferedReader.readLine().split(",");
+                
                 System.out.println(data.toString());
                 Recipe r = new Recipe(data[0], Integer.parseInt(data[1]), data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
                 // r.setCategories(data[5]);
