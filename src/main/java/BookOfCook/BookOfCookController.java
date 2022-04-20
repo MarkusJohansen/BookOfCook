@@ -296,6 +296,7 @@ public class BookOfCookController {
     }
 
 
+    //-------------------------------------
     //*BUTTONS
     //-------------------------------------
     //creates a close Btn for closing recipe view
@@ -345,10 +346,9 @@ public class BookOfCookController {
     public void addRecipe() {
         System.out.println("Add button was clicked");
 
-        //create new recipe object 
+        //create new recipe object
         //Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
-        //
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
@@ -423,6 +423,7 @@ public class BookOfCookController {
     }
 
     //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
+    //! DETTE ER DET DU SOM HAR GJORT DARRKUS. ITILLEGG TIL MUNKEN
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
         //book.categCollect();
@@ -671,23 +672,6 @@ public class BookOfCookController {
         }
         updateAmountLabel(sortedRecipes);
     }
-
-    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
-
-    /*public ArrayList<Recipe> filter(ArrayList<Recipe> recipes){
-
-        if(){ // SØKE
-
-        }
-
-        if(){ // KATEGORIER
-
-        }
-
-        if(){ // KJØLESKAP
-        }
-
-    }*/
 
     public void fridgeAddFood() {
         System.out.println("add food button");
