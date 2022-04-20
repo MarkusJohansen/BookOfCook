@@ -61,6 +61,7 @@ public class Cookbook extends Validator {
                     containsAllCategories = false;                                // if: set false
                 }
             }
+            
             if(containsAllCategories){
                 sortedRecipes.add(recipe);                                     // if still true, add recipe to output array
             }
@@ -95,7 +96,7 @@ public class Cookbook extends Validator {
         return searchResults;
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, ArrayList<Category> categories, Fridge fridge){
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes/*, ArrayList<Category> categories, Fridge fridge*/){
 
         if(true){ // SØKE
 
