@@ -42,6 +42,11 @@ public class Fridge extends Validator{
         }
     }
 
+    //fridge filter
+    public ArrayList<Recipe> fridgeFilter(ArrayList<Recipe> recipesToFilter) {
+        //use streams or comparator to put recipes in recipesToFilter in arrayList result, to 
+    }
+
     @Override
     public String toString() {
         return "Fridge [foodInFridge=" + foodInFridge + "]";

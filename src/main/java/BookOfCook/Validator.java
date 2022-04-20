@@ -3,6 +3,8 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.print.PrintColor;
+
 abstract class Validator {
 
     //*GENERAL METHODS
@@ -83,8 +85,8 @@ abstract class Validator {
 
     // checks if recipe name already exists in cookbook
     protected void duplicateRecipeName(ArrayList<Recipe> recipes, Recipe recipe){
-        for (Recipe r : recipes) {                                                                      // loops through recipes in cookbook
-            if (r.getName().equals(recipe.getName())) {                                                 // checks there is another recipe with identical name in// cookbook
+        for (Recipe r : recipes) {    
+            if (r.getName().equals(recipe.getName())) {     
                 throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
             }
         }
