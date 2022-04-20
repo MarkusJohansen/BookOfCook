@@ -90,19 +90,20 @@ public class Cookbook extends Validator {
         for (Recipe recipe : recipes) {
             if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {
                 searchResults.add(recipe);
-            } 
+            }
         }
         return searchResults;
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes){
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, ArrayList<Category> categories, Fridge fridge){
 
         if(true){ // SØKE
 
         }
 
         if(true){ // KATEGORIER
-
+            ArrayList<Recipe> temporary = new ArrayList<Recipe>();
+            
         }
 
         if(true){ // KJØLESKAP
