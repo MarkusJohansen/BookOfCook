@@ -296,7 +296,6 @@ public class BookOfCookController {
     }
 
 
-    //-------------------------------------
     //*BUTTONS
     //-------------------------------------
     //creates a close Btn for closing recipe view
