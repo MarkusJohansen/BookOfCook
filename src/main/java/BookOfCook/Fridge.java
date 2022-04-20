@@ -2,6 +2,9 @@ package BookOfCook;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Fridge extends Validator{
     // *FIELDS
@@ -44,8 +47,25 @@ public class Fridge extends Validator{
 
     //fridge filter
     public ArrayList<Recipe> fridgeFilter(ArrayList<Recipe> recipesToFilter) {
-        //use streams or comparator to put recipes in recipesToFilter in arrayList result, to 
-    }
+        //for recipe in recipesToFilter, check if all ingredients in recipe is in fridge return true, else return false
+        Predicate<Recipe> criteria = (Recipe recipe) -> {
+            for (HashMap<String, Object> ingredient : recipe.getIngredients()) {
+                boolean ingredientInFridge = false;
+                for (HashMap<String, Object> food : foodInFridge) {
+                    if (ingredient.get("name").equals(food.get("name"))) {
+                        ingredientInFridge = true;
+                    }
+                }
+                if (!ingredientInFridge) {
+                    return false;
+                }
+            }
+            return true;
+        }; 
+
+        //add recipes that matches criteria to result with stream
+        return recipesToFilter.stream().filter(criteria).collect(Collectors.toCollection(ArrayList::new));
+    } 
 
     @Override
     public String toString() {
