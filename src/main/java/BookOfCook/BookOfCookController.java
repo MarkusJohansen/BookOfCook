@@ -212,7 +212,7 @@ public class BookOfCookController {
     private void updateCategList(){
         categList.getItems().clear();
 
-        book.categCollect();
+        book.collectCategories();
 
         categories.clear();
         categories.addAll(book.getCategories());
@@ -708,7 +708,7 @@ public class BookOfCookController {
             return;
         }
 
-        ArrayList<Recipe> sortedRecipes = book.getSortedRecipesAllCategories(categoriesClicked);
+        ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
         if(sortedRecipes.size() == 0){
         }
 
