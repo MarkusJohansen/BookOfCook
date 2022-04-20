@@ -59,11 +59,11 @@ public class BookOfCookController {
     //initializes the controller
     public void initialize(){
         initbook();
-        initDummy();
-        initRecipeComponents();
         initFridge();
-        initCateg();
+        initDummy();
         initFridgeFood();
+        initRecipeComponents();
+        initCategories();
         initUnitBoxes();
     }
 
@@ -84,7 +84,7 @@ public class BookOfCookController {
     }
     
     //initializes the category components in the GUI
-    private void initCateg(){
+    private void initCategories(){
         book.collectCategories();
 
         for(Category category : book.getCategories()){
@@ -95,13 +95,6 @@ public class BookOfCookController {
     //initializes the frige object and the fridge food components in the GUI
     private void initFridge(){
         fridge = new Fridge();
-        fridge.addFood("tomater", 4, "stk");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("ost", 400, "g");
-        fridge.addFood("egg", 8, "stk");
-        fridge.addFood("rømme", 3, "dL");
-        fridge.addFood("ketchup", 5, "dL");
-        fridge.addFood("pastaskruer", 1, "kg");
     }
     
     //initializes the food in fridge
@@ -162,9 +155,17 @@ public class BookOfCookController {
         Category kjøtt = new Category("kjøtt");
 
         // DUMMYOPPSKRIFTER
-
         book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
         book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        
+        // DUMMYFRIDGE
+        fridge.addFood("tomater", 4, "stk");
+        fridge.addFood("melk", 2, "L");
+        fridge.addFood("ost", 400, "g");
+        fridge.addFood("egg", 8, "stk");
+        fridge.addFood("rømme", 3, "dL");
+        fridge.addFood("ketchup", 5, "dL");
+        fridge.addFood("pastaskruer", 1, "kg");
     }
 
     //-------------------------------------
@@ -300,6 +301,7 @@ public class BookOfCookController {
     }
 
 
+    //-------------------------------------
     //*BUTTONS
     //-------------------------------------
     //creates a close Btn for closing recipe view
@@ -349,10 +351,9 @@ public class BookOfCookController {
     public void addRecipe() {
         System.out.println("Add button was clicked");
 
-        //create new recipe object 
+        //create new recipe object
         //Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
-        //
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
@@ -427,6 +428,7 @@ public class BookOfCookController {
     }
 
     //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
+    //! DETTE ER DET DU SOM HAR GJORT DARRKUS. ITILLEGG TIL MUNKEN
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
         //book.categCollect();
@@ -675,25 +677,8 @@ public class BookOfCookController {
         updateAmountLabel(sortedRecipes);
     }
 
-    //! FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD FILTER METHOD 
-
-    /*public ArrayList<Recipe> filter(ArrayList<Recipe> recipes){
-
-        if(){ // SØKE
-
-        }
-
-        if(){ // KATEGORIER
-
-        }
-
-        if(){ // KJØLESKAP
-
-        }
-    }*/
-
     public void fridgeAddFood() {
-        System.out.println("add food button");
+        System.out.println("add food btton");
 
         if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0){
 
