@@ -25,9 +25,9 @@ public class BookOfCookController {
     private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
-    private ArrayList<Category> categories;
+    private ArrayList<Category> categories;                     // for          //! hva skjer her
     private Fridge fridge;
-    private int numbersOfRecipesShown;
+    private int numbersOfRecipesShown;                                          //! hva skjer her       
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
 
     //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
@@ -66,6 +66,7 @@ public class BookOfCookController {
         initCateg();
         initFridgeFood();
         initUnitBoxes();
+        initDummy();
     }
 
     //inititializes the recipe components in the GUI, from the cookbook
@@ -83,33 +84,6 @@ public class BookOfCookController {
     //initializes the cookbook, and adds dummy recipes
     private void initbook(){
         book = new Cookbook();
-
-        HashMap<String, Object> ost = new HashMap<String, Object>() {{
-            put("name", "ost");
-            put("amount", 1.0);
-            put("unit", "kg");
-        }};
-        HashMap<String, Object> melk = new HashMap<String, Object>() {{
-            put("name", "melk");
-            put("amount", 2.0);
-            put("unit", "L");
-        }};
-
-        HashMap<String, Object> tomat = new HashMap<String, Object>() {{
-            put("name", "tomat");
-            put("amount", 5.0);
-            put("unit", "stk");
-        }};
-
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category kjøtt = new Category("kjøtt");
-
-        // DUMMYOPPSKRIFTER
-        
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
-        
     }
     
     //initializes the category components in the GUI
@@ -166,6 +140,34 @@ public class BookOfCookController {
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
+    }
+
+    public void initDummy(){
+        HashMap<String, Object> ost = new HashMap<String, Object>() {{
+            put("name", "ost");
+            put("amount", 1.0);
+            put("unit", "kg");
+        }};
+        HashMap<String, Object> melk = new HashMap<String, Object>() {{
+            put("name", "melk");
+            put("amount", 2.0);
+            put("unit", "L");
+        }};
+
+        HashMap<String, Object> tomat = new HashMap<String, Object>() {{
+            put("name", "tomat");
+            put("amount", 5.0);
+            put("unit", "stk");
+        }};
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        // DUMMYOPPSKRIFTER
+        
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
     }
 
     //-------------------------------------
@@ -646,7 +648,6 @@ public class BookOfCookController {
     }
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
-
     //search for food
     public void searchFood() {
         System.out.println("Search food bar was used was clicked");
@@ -691,8 +692,8 @@ public class BookOfCookController {
         }
 
         if(){ // KJØLESKAP
-        }
 
+        }
     }*/
 
     public void fridgeAddFood() {
