@@ -114,13 +114,9 @@ public class BookOfCookController {
     
     //initializes the category components in the GUI
     private void initCateg(){
-        categories = new ArrayList<Category>();
-
         book.collectCategories();
-        categories.addAll(book.getCategories());
-
-        //System.out.println(book.getCategories());
-        for(Category category : categories){
+        
+        for(Category category : book.getCategories()){
             categList.getItems().add(categComponent(category));
         }
     }
@@ -186,11 +182,8 @@ public class BookOfCookController {
 
         book.collectCategories();
 
-        categories.clear();
-        categories.addAll(book.getCategories());
-
         //System.out.println(book.getCategories());
-        for(Category category : categories){                                //!init lager, updater skal gjøre klar for ny init ved endring
+        for(Category category : book.getCategories()){                                //!init lager, updater skal gjøre klar for ny init ved endring
             categList.getItems().add(categComponent(category));
         }
 
