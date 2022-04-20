@@ -11,7 +11,7 @@ public class Recipe extends Validator{
     private ArrayList<String> steps;                        // stores the steps of how to make the recipe
 
     // *CONSTRUCTOR                                                                                          
-    public Recipe(String name, int numberOfServings, String description ,String prepTime, ArrayList<HashMap<String,Object>> ingredients, ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
+    public Recipe(String name, int numberOfServings, String description , String prepTime, ArrayList<HashMap<String,Object>> ingredients, ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
         setName(name);
         setServings(numberOfServings);
         setDescription(description);
@@ -19,7 +19,7 @@ public class Recipe extends Validator{
 
         this.ingredients = new ArrayList<HashMap<String,Object>>();
         for (HashMap<String,Object> ingredient : ingredients) {
-            addIngredient((String) ingredient.get("name"), (Double) ingredient.get("amount"), (String) ingredient.get("unit")); //*Fikk med casting her
+            addIngredient((String)ingredient.get("name"), (double) ingredient.get("amount"), (String)ingredient.get("unit")); //*Fikk med casting her
         } 
 
         this.categories = new ArrayList<Category>();

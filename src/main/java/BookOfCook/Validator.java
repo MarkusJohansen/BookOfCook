@@ -51,16 +51,16 @@ abstract class Validator {
         }
         try {
             numbersOrSpecials((String) Ingredient.get("name"));
-            numbersOrSpecials((String) Ingredient.get("Unit"));
+            numbersOrSpecials((String) Ingredient.get("unit"));
         } catch (Exception e) {
             throw new IllegalArgumentException("name or unit contains invalid characters");
         }
     }
 
     // validates recipe name
-    protected void numbersOrSpecials(String s) {
-        nullOrEmpty(s);                                                                                                                          // checks if s is null or empty                                                                                            
-        if (!(s.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
+    public void numbersOrSpecials(String string) {
+        nullOrEmpty(string);                                                                                                                          // checks if s is null or empty
+        if (!(string.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
             throw new IllegalArgumentException("String cannot contain numbers or special characters");    // throw error
         }
     }

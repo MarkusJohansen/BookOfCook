@@ -4,18 +4,17 @@ package BookOfCook;
 import java.util.*;
 import java.io.*;
 
-public class Cookbook extends Validator {
+public class Cookbook {
     private int recipeAmount;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private ArrayList<Category> categories = new ArrayList<Category>();
 
-    // *CONSTRUCTOR
     public Cookbook() {
         this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
     }
 
-    // *RECIPE ADD AND REMOVE METHODS
-    // adds recipe to cookbook
+    // *ADD AND REMOVE METHODS
+    
     public void addRecipe(Recipe recipe) {
         duplicateRecipeName(recipes, recipe);                                               // checks for recipes with duplicate names
         recipes.add(recipe);                                                            // adds recipe to cookbook
@@ -30,9 +29,7 @@ public class Cookbook extends Validator {
     }
 
     // *GETTERS
-    // ? er disse nødvendige
 
-    // returns amount of recipes in cookbook
     public int getAmount() {
         return recipeAmount;                                // returns amount of recipes in cookbook
     }
@@ -115,7 +112,7 @@ public class Cookbook extends Validator {
                     String[] parts = line.split(",");
                     String name = parts[0];
                     int servings = Integer.parseInt(parts[1]);
-                    Recipe recipe = new Recipe(name, servings);
+                    Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
                     recipe.setDescription(parts[2]);
                     recipe.setCalories(Double.parseDouble(parts[3]));
                     recipe.setPrepTime(parts[4]);
