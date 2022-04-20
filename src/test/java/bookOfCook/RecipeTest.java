@@ -19,7 +19,7 @@ public class RecipeTest {
     @BeforeEach 
     public void setup() {
         //set up before each test
-        recipe = new Recipe("Milkshake", 3);
+        recipe = new Recipe("Milkshake", 3); //! FIKS OPP I DETTE DARRKUS, ny konstruktør
         recipe2 = new Recipe("Pizza", 2);
         Recipe recipe3 = new Recipe("Burger", 2);
     }
