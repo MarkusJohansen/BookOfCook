@@ -54,18 +54,13 @@ public class BookOfCookController {
         initBookFridgeDummys();
         initFridgeFood();
         initRecipeComponents();
-        initRecipeAmount();
-        initCategories();
-        initUnitBoxes();
-        initTempArrays();
-        initFileHandler();
     }
 
     private void initBookFridgeDummys(){ //!muligens legge i egen fil
         book = new Cookbook();
         fridge = new Fridge();
 
-        HashMap<String, String> ost = new HashMap<String, String>() {{//! IKKE EN DEL AV SLUTTPRODUKTET
+        HashMap<String, String> ost = new HashMap<String, String>() {{//! IKKE EN DEL AV SLUTTPRODUKTET START START START START START 
             put("name", "ost");
             put("amount", "1.0");
             put("unit", "kg");9
@@ -97,6 +92,25 @@ public class BookOfCookController {
         fridge.addFood("rømme", "3", "dL");
         fridge.addFood("ketchup", "5", "dL");
         fridge.addFood("pastaskruer", "1", "kg");
+
+        book.collectCategories();
+
+        // fyller inn kategorilista
+        for(Category category : book.getCategories()){
+            categList.getItems().add(categComponent(category));
+        }//! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
+
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
+
+        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
+
+        stepsCreator = new ArrayList<String>();// create creator arrays
+        categoryCreator = new ArrayList<String>();
+        IngredCreator = new ArrayList<HashMap<String, String>>();
+
+        fileHandler = new FileHandler(); // initialize filehandler
     }
 
     private void initRecipeComponents() {//inititializes the recipe components in the GUI, from the cookbook
@@ -105,31 +119,6 @@ public class BookOfCookController {
         }
     }
 
-    private void initFileHandler() {
-        fileHandler = new FileHandler();
-    }
-
-    public void initTempArrays() {
-        //initializes the temporary arrays
-        stepsCreator = new ArrayList<String>();
-        categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, String>>();
-    }
-
-    private void initRecipeAmount() {
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
-    }
-
-    
-    
-    //initializes the category components in the GUI
-    private void initCategories(){
-        book.collectCategories();
-
-        for(Category category : book.getCategories()){
-            categList.getItems().add(categComponent(category));
-        }
-    }
     
     //initializes the food in fridge
     private void initFridgeFood(){
@@ -155,12 +144,6 @@ public class BookOfCookController {
         closeBtn(recipe);
         removeBtn(recipe);
         //fikse steps, ingred og steps inn i list views fordi de er arrays
-    }
-
-    public void initUnitBoxes(){
-        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
     //*UPDATERS
