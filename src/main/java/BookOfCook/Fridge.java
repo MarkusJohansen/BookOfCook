@@ -19,10 +19,7 @@ public class Fridge extends Validator{
 
     //*ADDING AND REMOVING FOOD 
     public void addFood(String name, String amount, String unit) {
-        ingredientExists(foodInFridge, name);
-
-        System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
-        
+        ingredientExists(foodInFridge, name);        
         HashMap<String, String> ingredient = new HashMap<String, String>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
         ingredient.put("amount", amount);               //! unødvendig? adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
