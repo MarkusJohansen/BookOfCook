@@ -195,13 +195,21 @@ public class BookOfCookController {
     }
 
     //-------------------------------------
-    //!STYLING kan dette gjøres om til generell styling funksjon? evt sende inn en node som parameter? lage to forskjellige funksjoner?
+    //*STYLING
     //-------------------------------------
-    public void styleLabel(Label label, String styleClass, Double x, Double y){
-        label.getStyleClass().clear();
-        label.getStyleClass().add(styleClass);
-        label.setLayoutX(x);
-        label.setLayoutY(y);
+    public void styleNode(Node node, String styleClass, Double x, Double y){
+        node.getStyleClass().clear();
+        node.getStyleClass().add(styleClass);
+        node.setLayoutX(x);
+        node.setLayoutY(y);
+    }
+
+    //!fungerer ikke
+    public void styleNodeSize(Node node, String styleClass, Double width, Double height){
+        node.getStyleClass().clear();
+        node.getStyleClass().add(styleClass);
+        node.maxWidth(width);
+        node.maxHeight(height);
     }
     
     //-------------------------------------
@@ -214,13 +222,8 @@ public class BookOfCookController {
     }
 
     public Button removeCategoryList(String target){
-        Button btn = new Button("X");
-    
-        btn.getStyleClass().clear();
-        btn.getStyleClass().add("standard-button");
-        btn.setLayoutX(10);
-        btn.setLayoutY(0);
-
+        Button btn = new Button("-");
+        styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             categoryCreator.remove(target);
             updateCategCreatorList();
@@ -229,13 +232,8 @@ public class BookOfCookController {
     }
 
     public Button removeIngredientList(HashMap<String, String> target){
-            Button btn = new Button("X");
-    
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
+            Button btn = new Button("-");
+            styleNode(btn, "standard-button", 10.0, 0.0);
             btn.setOnAction(e -> {
                 IngredCreator.remove(target);
                 updateIngredCreatorList();
@@ -250,14 +248,7 @@ public class BookOfCookController {
     private void closeBtn(Recipe recipe){
         //creates button object
         Button btn = new Button("Close");
-
-        //sets style
-        btn.getStyleClass().clear();
-        btn.getStyleClass().add("standard-button");
-        btn.setLayoutX(80);
-        btn.setLayoutY(170);
-
-        //sets action
+        styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             closeRecipeView();
         });
@@ -268,22 +259,12 @@ public class BookOfCookController {
 
     //creates a remove Btn in recipe view, for removing the recipe from the cookbook
     private void removeBtn(Recipe recipe){
-        //creates button object
-        Button removeButton = new Button("Remove");
-
-        //sets style
-        removeButton.getStyleClass().clear();
-        removeButton.getStyleClass().add("standard-button");
-        removeButton.setLayoutX(80);
-        removeButton.setLayoutY(170);
-
-        //sets action
-        removeButton.setOnAction(e -> {
+        Button btn = new Button("Remove");
+        styleNode(btn, "standard-button", 80.0, 170.0);
+        btn.setOnAction(e -> {
             removeRecipe(recipe);
         });
-
-        //adds to grid
-        recipeViewContent.add(removeButton, 1, 4);
+        recipeViewContent.add(btn, 1, 4);
     }
 
     //*ADD METHODS
@@ -413,7 +394,7 @@ public class BookOfCookController {
     
     private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
-        styleLabel(label, "recipe-view-text", 80.0, 10.0);
+        styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
 
@@ -472,31 +453,26 @@ public class BookOfCookController {
         Pane pane = new Pane();
         Label label = new Label(content);
 
-        styleLabel(label, "list-label", 80.0, 10.0); 
+        styleNode(label, "list-label", 80.0, 10.0); 
         pane.getChildren().add(label);
         pane.getChildren().add(btn);
         return pane;
     }
 
     private Button createDeleteX(String string){
-        Button removeFoodBtn = new Button("X");
-
-        removeFoodBtn.getStyleClass().clear();
-        removeFoodBtn.getStyleClass().add("standard-button");
-        removeFoodBtn.setLayoutX(10);
-        removeFoodBtn.setLayoutY(0);
-
-        removeFoodBtn.setOnAction(e -> {
+        Button btn = new Button("X");
+        styleNode(btn, "standard-button", 10.0, 0.0);
+        btn.setOnAction(e -> {
             fridge.removeFood(string);
             updatefridge();
         });
-        return removeFoodBtn;
+        return btn;
     }
 
     private Label createFoodLabel(String foodname, String foodamount, String foodunit){
         Label label = new Label();
         label.setText(foodname + ": " + foodamount + " " + foodunit);
-        styleLabel(label, "list-label", 80.0, 10.0);
+        styleNode(label, "list-label", 80.0, 10.0);
         return label;
     }
 
@@ -568,18 +544,17 @@ public class BookOfCookController {
     }
 
     public Button removeList(String target, ArrayList<String> listView){
-        Button removeBtn = new Button("X");
-        removeBtn.getStyleClass().clear();
-        removeBtn.getStyleClass().add("standard-button");
-        removeBtn.setLayoutX(10);
-        removeBtn.setLayoutY(0);
+        Button btn = new Button("X");
+        btn.getStyleClass().clear();
+        styleNode(btn, "standard-button", 10.0, 0.0);
 
-        removeBtn.setOnAction(e -> {
+
+        btn.setOnAction(e -> {
             listView.remove(target);
             updateCategCreatorList();
             updateStepCreatorList();
         });
-        return removeBtn;
+        return btn;
     }
 
     public void update(ListView list, ArrayList<String> array, ListView undergruppe){
@@ -589,18 +564,4 @@ public class BookOfCookController {
             list.getItems().add(s);
         }
     };
-
-    /*
-    TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
-    ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
-    ! legge til ny oppskrift sørger for duplikate categories
-    ! fix load book
-    * fix save book
-    ! skalering av oppskrifts, funksjon
-    ! fridge filter av og på funksjon (i det hele tatt funksjon)
-
-    !edit recipe funksjon (kan vurdere)
-
-    !refreshPane i 
-    */
-} 
+}
