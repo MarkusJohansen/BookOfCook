@@ -118,7 +118,7 @@ public class Recipe extends Validator{
     public void addIngredient(String name, String amount, String unit) {    
         HashMap<String, String> ingredient = new HashMap<String, String>();   // Creates a hashmap called ingredient that stores different properties of the ingredient
         
-        ingredient.put("name", name.toUpperCase());                         // adds the name of the ingredient to the ingredient hashmap
+        ingredient.put("name", capitalize(name));                         // adds the name of the ingredient to the ingredient hashmap
         ingredient.put("amount", amount);                                   // adds the amount key, value pair to the ingrdient hashmap . describes the amount of the ingredient
         ingredient.put("unit", unit.toLowerCase());                         // adds the "unit" key, value pair to the ingredient hashmap. describes the unit of the ingredient
         
