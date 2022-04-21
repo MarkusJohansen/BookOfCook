@@ -57,47 +57,15 @@ public class BookOfCookController {
         initRecipeComponents();
     }
 
-    //! kan flyttes over til backend i cookbook
-    private void initBookFridgeDummys(){//!muligens legge i egen fil
+    private void initBookFridgeDummys(){//!wtf, LITT MYE FORSKJELLKIGE
         book = new Cookbook();
         fridge = new Fridge();
 
-        HashMap<String, String> ost = new HashMap<String, String>() {{//! IKKE EN DEL AV SLUTTPRODUKTET START START START START START 
-            put("name", "ost");
-            put("amount", "1.0");
-            put("unit", "kg");
-        }};
-        HashMap<String, String> melk = new HashMap<String, String>() {{
-            put("name", "melk");
-            put("amount", "2.0");
-            put("unit", "L");
-        }};
-
-        HashMap<String, String> tomat = new HashMap<String, String>() {{
-            put("name", "tomat");
-            put("amount", "5.0");
-            put("unit", "stk");
-        }};
-
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category kjøtt = new Category("kjøtt");
-
-        // DUMMYOPPSKRIFTER
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
-
-        fridge.addFood("tomater", "4", "stk");
-        fridge.addFood("melk", "2", "L");
-        fridge.addFood("ost", "400", "g");
-        fridge.addFood("egg", "8", "stk");
-
-        book.collectCategories();
+        book.addDummy();
 
         for(Category category : book.getCategories()){          // fyller inn kategorilista
             categList.getItems().add(categComponent(category));
         }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
-
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
@@ -111,15 +79,13 @@ public class BookOfCookController {
         fileHandler = new FileHandler(); // initialize filehandler
     }
 
-    private void initRecipeComponents() {//inititializes the recipe components in the GUI, from the cookbook
+    private void initRecipeComponents() {                                                   //inititializes the recipe components in the GUI, from the cookbook
         for (Recipe recipe : book.getRecipes()/*book.filter(book.getRecipes(), fridge)*/) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
-
     
-    //initializes the food in fridge
-    private void initFridgeFood(){
+    private void initFridgeFood(){                              //initializes the food in fridge
         fridgeFood = new ArrayList<HashMap<String, String>>();
         fridgeFood.addAll(fridge.getFood());
         for(HashMap<String, String> food : fridgeFood){

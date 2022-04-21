@@ -9,7 +9,36 @@ public class Cookbook extends Validator {
     private ArrayList<Category> categories = new ArrayList<Category>();
 
     public Cookbook() {
-        this.recipeAmount = 0;  // amount of recipes in cookbook is always 0 at start
+        this.recipeAmount = 0;  // amount of recipes in cookbook is always 0 at star
+    }
+
+    public void addDummy(){
+        //* dummy recipes
+        HashMap<String, String> ost = new HashMap<String, String>() {{
+            put("name", "ost");
+            put("amount", "1.0");
+            put("unit", "kg");
+        }};
+        HashMap<String, String> melk = new HashMap<String, String>() {{
+            put("name", "melk");
+            put("amount", "2.0");
+            put("unit", "L");
+        }};
+
+        HashMap<String, String> tomat = new HashMap<String, String>() {{
+            put("name", "tomat");
+            put("amount", "5.0");
+            put("unit", "stk");
+        }};
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+
+        collectCategories();
     }
 
     //*add and remove recipes to/from cookbook

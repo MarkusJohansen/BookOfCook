@@ -10,7 +10,13 @@ public class Fridge extends Validator{
     private ArrayList<HashMap<String, String>> foodInFridge = new ArrayList<HashMap<String, String>>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
 
     // *CONSTRUCTOR
-    public Fridge() {}
+    public Fridge() {
+        //*dummy food
+        addFood("tomater", "4", "stk");
+        addFood("melk", "2", "L");
+        addFood("ost", "400", "g");
+        addFood("egg", "8", "stk");
+    }
 
     // *GETTERS
     public ArrayList<HashMap<String, String>> getFood() {
