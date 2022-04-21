@@ -2,9 +2,7 @@ package BookOfCook;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -233,7 +231,7 @@ public class BookOfCookController {
 
     //*ADD METHODS
     public void addRecipe() {
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), getIngredientsFromCreator(), getGategoriesFromCreator(), getStepsFromCreator());
+        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
         book.addRecipe(recipe);
         updateRecipeList();
         updateCategList();
@@ -246,32 +244,13 @@ public class BookOfCookController {
         updateStepCreatorList();                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
-    //! MYE LOGIKK, FLYTTE TIL BACKEND
-    public ArrayList<String> getStepsFromCreator(){
-        ArrayList<String> outputArray = new ArrayList<String>(stepsCreator);
-        stepsCreator.clear();                                               //clear the list for next use
-        stepCreatorList.getItems().clear();                                 //clear the list for next use
-        return outputArray;
-    }
-
     public void addIngredientCreator(){
-        HashMap<String, String> ingredient = new HashMap<String,d String>();
+        HashMap<String, String> ingredient = new HashMap<String,String>();
         ingredient.put("name", ingredNameBar.getText());
         ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
         IngredCreator.add(ingredient);
         updateIngredCreatorList();
-    }
-
-    //! MYE LOGIKK, FLYTTE TIL BACKEND
-    public ArrayList<HashMap<String, String>> getIngredientsFromCreator(){
-        ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>(); //!refresh
-        for(HashMap<String, String> ingredient : IngredCreator){
-            outputArray.add(ingredient);
-        }
-        IngredCreator.clear(); //clear the list for next use
-        ingredCreatorList.getItems().clear(); //clear the list for next use
-        return outputArray;
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
@@ -506,11 +485,11 @@ public class BookOfCookController {
         return btn;
     }
 
-    public void update(ListView list, ArrayList<String> array, ListView undergruppe){
-        list.clear();
-        undergruppe.clear();
-        for(String s : array){
-            list.getItems().add(s);
-        }
-    };
+    // public void update(ListView list, ArrayList<String> array, ListView undergruppe){
+    //     list.clear();
+    //     undergruppe.clear();
+    //     for(String s : array){
+    //         list.getItems().add(s);
+    //     }
+    // };
 }
