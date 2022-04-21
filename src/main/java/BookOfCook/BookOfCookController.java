@@ -63,7 +63,7 @@ public class BookOfCookController {
         HashMap<String, String> ost = new HashMap<String, String>() {{//! IKKE EN DEL AV SLUTTPRODUKTET START START START START START 
             put("name", "ost");
             put("amount", "1.0");
-            put("unit", "kg");9
+            put("unit", "kg");
         }};
         HashMap<String, String> melk = new HashMap<String, String>() {{
             put("name", "melk");
@@ -172,7 +172,7 @@ public class BookOfCookController {
         stepsArea.clear();
         stepCreatorList.getItems().clear();
         for(String step : stepsCreator){  
-            stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
+            stepCreatorList.getItems().add(createRemovable(step, removeList(step, stepsCreator)));
         }
     }
 
@@ -189,7 +189,7 @@ public class BookOfCookController {
         categoryBar.clear();
         categCreatorList.getItems().clear();
         for(String category : categoryCreator){
-            categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
+            categCreatorList.getItems().add(createRemovable(category, removeList(category, categoryCreator)));
         }
     }
 
@@ -225,21 +225,6 @@ public class BookOfCookController {
             updateCategCreatorList();
         });
         return btn;
-    }
-
-    public Button removeStepList(String target){
-            Button btn = new Button("X");
-    
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
-            btn.setOnAction(e -> {
-                stepsCreator.remove(target);
-                updateStepCreatorList();
-            });
-            return btn;
     }
 
     public Button removeIngredientList(HashMap<String, String> target){
@@ -579,12 +564,24 @@ public class BookOfCookController {
         fileHandler.save(file, book);
     }
 
-    public void refreshPane(Pane pane, List list){
-        pane.getChildren().clear();
-        for(Object o : list.getItems()){
-            pane.getChildren().add(o);
-        }
+    public Button removeList(String target, ArrayList<String> listView){
+        Button removeBtn = new Button("X");
+        removeBtn.getStyleClass().clear();
+        removeBtn.getStyleClass().add("standard-button");
+        removeBtn.setLayoutX(10);
+        removeBtn.setLayoutY(0);
+
+        removeBtn.setOnAction(e -> {
+            listView.remove(target);
+            updateCategCreatorList();
+            updateStepCreatorList();
+        });
+        return removeBtn;
     }
+
+    public void update(){
+        
+    };
 
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
