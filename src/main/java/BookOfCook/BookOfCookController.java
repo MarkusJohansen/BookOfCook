@@ -167,8 +167,8 @@ public class BookOfCookController {
         Category kjøtt = new Category("kjøtt");
 
         // DUMMYOPPSKRIFTER
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", /*new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), */new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", /*new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), */new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
         
         // DUMMYFRIDGE
         fridge.addFood("tomater", "4", "stk");
@@ -360,14 +360,14 @@ public class BookOfCookController {
         int servings = Integer.parseInt(servesPeopleBar.getText());
         String description = descriptionArea.getText();
         String prepTime = prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue();
-        //ArrayList<HashMap<String, Object>> ingredients = getIngredientsFromCreator();
+        ArrayList<HashMap<String, String>> ingredients = getIngredientsFromCreator();
         ArrayList<Category> categories = getGategoriesFromCreator();
         ArrayList<String> steps = getStepsFromCreator();
 
         System.out.println("Recipe name: " + name + " Recipe description: " + description + " Recipe prepTime: " + prepTime + " Recipe servings: " + servings);
         //System.out.println("ingredents:" + ingredients + " categories: " + categories + " steps: " + steps);
 
-        Recipe recipe = new Recipe(name, servings, description, prepTime, /*ingredients, */categories, steps);
+        Recipe recipe = new Recipe(name, servings, description, prepTime, ingredients, categories, steps);
 
 
         // //optional info
@@ -440,16 +440,16 @@ public class BookOfCookController {
         //loop through items in list
         for(HashMap<String, String> ingredient : IngredCreator){
             //if the step is already in the list, do not add it again
-            recipe.addIngredient((String) ingredient.get("name"), (int) ingredient.get("amount"), (String) ingredient.get("unit")); //add ingredient to recipe
+            recipe.addIngredient(ingredient.get("name"), ingredient.get("amount"), ingredient.get("unit")); //add ingredient to recipe
         }
         IngredCreator.clear(); //clear the list for next use
         ingredCreatorList.getItems().clear(); //clear the list for next use
     }
 
-    public ArrayList<HashMap<String, Object>> getIngredientsFromCreator(){
-        ArrayList<HashMap<String, Object>> outputArray = new ArrayList<HashMap<String, Object>>();
+    public ArrayList<HashMap<String, String>> getIngredientsFromCreator(){
+        ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>();
 
-        for(HashMap<String, Object> ingredient : IngredCreator){
+        for(HashMap<String, String> ingredient : IngredCreator){
             outputArray.add(ingredient);
         }
         IngredCreator.clear(); //clear the list for next use
@@ -750,7 +750,7 @@ public class BookOfCookController {
         //     System.out.println("That type of food is already in your fridge");
         //     return;
         // }
-        fridge.addFood(fridgeNameInput.getText(), Double.parseDouble(fridgeAmountInput.getText()), unitComboBoxFridge.getValue());
+        fridge.addFood(fridgeNameInput.getText(), fridgeAmountInput.getText(), unitComboBoxFridge.getValue());
         updatefridge();
     }
 
