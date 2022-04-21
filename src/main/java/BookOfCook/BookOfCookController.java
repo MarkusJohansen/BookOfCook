@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -54,7 +57,7 @@ public class BookOfCookController {
     }
 
     //! kan flyttes over til backend i cookbook
-    private void initBookFridgeDummys(){
+    private void initBookFridgeDummys(){//!muligens legge i egen fil
         book = new Cookbook();
         fridge = new Fridge();
 
@@ -300,14 +303,7 @@ public class BookOfCookController {
 
     //*ADD METHODS
     public void addRecipe() {
-        String name = recipeNameBar.getText();
-        int servings = Integer.parseInt(servesPeopleBar.getText());
-        String description = descriptionArea.getText();
-        String prepTime = prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue();
-        ArrayList<HashMap<String, String>> ingredients = getIngredientsFromCreator();
-        ArrayList<Category> categories = getGategoriesFromCreator();
-        ArrayList<String> steps = getStepsFromCreator();
-        Recipe recipe = new Recipe(name, servings, description, prepTime, ingredients, categories, steps);
+        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), getIngredientsFromCreator(), getGategoriesFromCreator(), getStepsFromCreator());
         book.addRecipe(recipe);
         updateRecipeList();
         updateCategList();
@@ -339,7 +335,7 @@ public class BookOfCookController {
 
     //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<HashMap<String, String>> getIngredientsFromCreator(){
-        ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>(); //!refresh
         for(HashMap<String, String> ingredient : IngredCreator){
             outputArray.add(ingredient);
         }
@@ -357,7 +353,7 @@ public class BookOfCookController {
     //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<Category> getGategoriesFromCreator(){
         book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
-        ArrayList<Category> outputArray = new ArrayList<Category>();
+        ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
         for(String category : categoryCreator){
             if(book.checkIfCategoryExist(category, book)){
                 for(Category c : book.getCategories()){
@@ -524,7 +520,7 @@ public class BookOfCookController {
     public void searchFood() {
         searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
         if(searchedRecipes.size() > 0){
-            recipeList.getItems().clear();
+            recipeList.getItems().clear();      //!refresh funksjon
             for(Recipe r : searchedRecipes){
                 recipeList.getItems().add(recipeComponent(r));
             }
@@ -586,6 +582,13 @@ public class BookOfCookController {
         fileHandler.save(file, book);
     }
 
+    public void refreshPane(Pane pane, List list){
+        pane.getChildren().clear();
+        for(Object o : list.getItems()){
+            pane.getChildren().add(o);
+        }
+    }
+
     /*
     TODO: RØDT ER BUGS ELLER TING Å GJØRE, BLÅTT ER SPØRSMÅL, GRØNNT ER TING VI HAR GJORT ELLER GJØR
     ! om det er egg i kjøleskapet, hvorfor kan man ikke legge til flere egg med samme enhet?
@@ -596,5 +599,7 @@ public class BookOfCookController {
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
 
     !edit recipe funksjon (kan vurdere)
+
+    !refreshPane i 
     */
 } 
