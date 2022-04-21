@@ -3,8 +3,6 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javafx.print.PrintColor;
-
 abstract class Validator {
 
     //*GENERAL METHODS

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Fridge extends Validator{
     // *FIELDS
@@ -19,15 +18,15 @@ public class Fridge extends Validator{
     }
 
     //*ADDING AND REMOVING FOOD 
-    public void addFood(String name, double amount, String unit) {
+    public void addFood(String name, String amount, String unit) {
         ingredientExists(foodInFridge, name);
 
         System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
         
         HashMap<String, String> ingredient = new HashMap<String, String>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
-        ingredient.put("amount", amount);               // adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
-        ingredient.put("unit", unit);                   // adds the "unit" key, value pair to this ingredient hashmap, describes the unit of the ingredient
+        ingredient.put("amount", amount);               //! unødvendig? adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
+        ingredient.put("unit", unit);                   //! unødvendig? adds the unit key, value pair to this"unit" key, value pair to this ingredient hashmap, describes the unit of the ingredient
         foodInFridge.add(ingredient);                   // adds the ingredient to the list of ingredients
     }   
 
