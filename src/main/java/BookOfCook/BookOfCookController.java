@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class BookOfCookController {
     //-------------------
@@ -24,7 +23,7 @@ public class BookOfCookController {
     //-------------------
     private Cookbook book;
     private ArrayList<Recipe> recipes, searchedRecipes;
-    private ArrayList<HashMap<String, Object>> fridgeFood;
+    private ArrayList<HashMap<String, String>> fridgeFood;
     private Fridge fridge;
     private int recipesShown;                                          //! hva skjer her       
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
@@ -33,7 +32,7 @@ public class BookOfCookController {
     //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
     private ArrayList<String> stepsCreator;  
     private ArrayList<String> categoryCreator;
-    private ArrayList<HashMap<String, Object>> IngredCreator;
+    private ArrayList<HashMap<String, String>> IngredCreator;
 
     //*FXML-noder
     @FXML
@@ -88,7 +87,7 @@ public class BookOfCookController {
         //initializes the temporary arrays
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, Object>>();
+        IngredCreator = new ArrayList<HashMap<String, String>>();
     }
 
     private void initRecipeAmount() {
@@ -115,9 +114,9 @@ public class BookOfCookController {
     
     //initializes the food in fridge
     private void initFridgeFood(){
-        fridgeFood = new ArrayList<HashMap<String, Object>>();
+        fridgeFood = new ArrayList<HashMap<String, String>>();
         fridgeFood.addAll(fridge.getFood());
-        for(HashMap<String, Object> food : fridgeFood){
+        for(HashMap<String, String> food : fridgeFood){
             fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
     }
@@ -146,18 +145,18 @@ public class BookOfCookController {
     }
 
     public void initDummy(){    //!Ikke en del av sluttproduktet
-        HashMap<String, Object> ost = new HashMap<String, Object>() {{
+        HashMap<String, String> ost = new HashMap<String, String>() {{
             put("name", "ost");
             put("amount", 1.0);
             put("unit", "kg");
         }};
-        HashMap<String, Object> melk = new HashMap<String, Object>() {{
+        HashMap<String, String> melk = new HashMap<String, String>() {{
             put("name", "melk");
             put("amount", 2.0);
             put("unit", "L");
         }};
 
-        HashMap<String, Object> tomat = new HashMap<String, Object>() {{
+        HashMap<String, String> tomat = new HashMap<String, String>() {{
             put("name", "tomat");
             put("amount", 5.0);
             put("unit", "stk");
@@ -168,8 +167,8 @@ public class BookOfCookController {
         Category kjøtt = new Category("kjøtt");
 
         // DUMMYOPPSKRIFTER
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, Object>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
         
         // DUMMYFRIDGE
         fridge.addFood("tomater", 4, "stk");
@@ -220,7 +219,7 @@ public class BookOfCookController {
         ingredNameBar.clear();
         ingredAmountBar.clear();
         ingredCreatorList.getItems().clear();
-        for(HashMap<String, Object> ingredient : IngredCreator){ 
+        for(HashMap<String, String> ingredient : IngredCreator){ 
             ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
         }
     }
@@ -286,7 +285,7 @@ public class BookOfCookController {
             return btn;
     }
 
-    public Button removeIngredientList(HashMap<String, Object> target){
+    public Button removeIngredientList(HashMap<String, String> target){
             Button btn = new Button("X");
     
             btn.getStyleClass().clear();
@@ -425,7 +424,7 @@ public class BookOfCookController {
     }
 
     public void addIngredientCreator(){
-        HashMap<String, Object> ingredient = new HashMap<String, Object>();
+        HashMap<String, String> ingredient = new HashMap<String, String>();
 
         ingredient.put("name", ingredNameBar.getText());
         ingredient.put("amount", Integer.parseInt(ingredAmountBar.getText()));
@@ -439,7 +438,7 @@ public class BookOfCookController {
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addIngredientsToRecipe(Recipe recipe){
         //loop through items in list
-        for(HashMap<String, Object> ingredient : IngredCreator){
+        for(HashMap<String, String> ingredient : IngredCreator){
             //if the step is already in the list, do not add it again
             recipe.addIngredient((String) ingredient.get("name"), (int) ingredient.get("amount"), (String) ingredient.get("unit")); //add ingredient to recipe
         }
@@ -629,7 +628,7 @@ public class BookOfCookController {
         viewLabel("Ingredients", recipeViewBox2, 2, 0);
 
         //add ingredients to listview
-        for(HashMap<String, Object> ingredient : recipe.getIngredients()){
+        for(HashMap<String, String> ingredient : recipe.getIngredients()){
             listView.getItems().add(ingredient.get("name").toString() + " " + ingredient.get("amount").toString() + " " + ingredient.get("unit").toString());
         }
 
@@ -765,12 +764,8 @@ public class BookOfCookController {
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
 
-        fileHandler.load(file);          //if the user chooses a file, initialize the cookbook
-
-
-        //update the scene for the new cookbook
-        updateRecipeList();
-        updateCategList();
+        book = fileHandler.load(file);          //if the user chooses a file, initialize the cookbook
+        initialize();
     }
 
     public void save() {

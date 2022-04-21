@@ -36,7 +36,7 @@ abstract class Validator {
     }
 
     // validates Ingredient
-    protected void validateIngredient(HashMap<String,Object> Ingredient) {
+    protected void validateIngredient(HashMap<String, String> Ingredient) {
         //loop through Ingredient keys and validate
         for (String key : Ingredient.keySet()) {
             nullOrEmpty(Ingredient.get(key));
@@ -45,7 +45,7 @@ abstract class Validator {
     }
 
     // checks if values in ingredient are valid according to regex patterns
-    protected void ingredRegex(HashMap<String,Object> Ingredient) {
+    protected void ingredRegex(HashMap<String, String> Ingredient) {
         if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {      // if ingredient amount is not a number
             throw new IllegalArgumentException("amount is not a Double or integer");                                                            // throw error
         }
@@ -72,7 +72,7 @@ abstract class Validator {
         }
     }
 
-    protected void ingredientExists(ArrayList<HashMap<String,Object>> foodContainer, String foodName){
+    protected void ingredientExists(ArrayList<HashMap<String, String>> foodContainer, String foodName){
         for (int i = 0; i < foodContainer.size(); i++) {                         // iterates through foodInFridge
             String checkName = (String) foodContainer.get(i).get("name");
             if (checkName.equals(foodName.toLowerCase())) {

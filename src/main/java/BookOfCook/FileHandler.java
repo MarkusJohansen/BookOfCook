@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileHandler implements LoadSave {
 
@@ -26,8 +27,6 @@ public class FileHandler implements LoadSave {
                 bufferedWriter.newLine();
                 bufferedWriter.write(r.getSteps() + "");
                 bufferedWriter.newLine();
-                bufferedWriter.write("-------------------------------");
-                bufferedWriter.newLine();
             }
 
             bufferedWriter.close();
@@ -40,89 +39,51 @@ public class FileHandler implements LoadSave {
     //Coookbook load() konstruerer et cookbook objekt fra Dataen i filen, og returnerer denne cookbooken.
     //dette cookbook objektet skal erstatte den eksisterende cookbooken som leses i grensesnittet.
     public Cookbook load(File file) {
-        System.out.println("Loading...");
+        System.out.println("\nLoading...\n");
         Cookbook foo = new Cookbook();
-        try {                                                                //read csv file using filereader and buffered reader objects
+        try {                                                                //read csv file using filereader and buffered reader Strings
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader); 
 
             //read 5 lines at a time
-            String line = bufferedReader.readLine();
+            String line = "";
             while (line != null) {
-                String[] data = line.split(",");
-                Recipe recipe = new Recipe(data[0], Integer.parseInt(data[1]), data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
-                foo.addRecipe(recipe);
-                line = bufferedReader.readLine();
-                System.out.println(line);
-            }
+                String[] simpleData = bufferedReader.readLine().split(",");
+                String[] categoriesData = bufferedReader.readLine().replace("[", "").replace("]", "").split(",");
+                String[] ingredientData = bufferedReader.readLine().replace("[", "").replace("]", "").replace("{", "").replace("}", ";").split(";"); // name=blabla, unit=blabla, amount=blabla; name=blabla, unit=blabla, amount=blabla;
+                String[] stepsData = bufferedReader.readLine().replace("[", "").replace("]", "").split(",");
 
+                //construct hashmap for ingredients
+                ArrayList<HashMap<String, String>> ingredients = new ArrayList<HashMap<String, String>>();
+                for (String s : ingredientData) {  
+                    HashMap<String, String> ingredient = new HashMap<String, String>();
+                    String[] ingredientParts = s.split(",");
+
+                    for (int i = 0; i < ingredientParts.length; i++) {
+                        String[] keyValue = ingredientParts[i].split("=");
+                        ingredient.put(keyValue[0], keyValue[1]);
+                    }
+                    ingredients.add(ingredient);
+                }
+
+                //!construct categories for recipe (lager nye kategorier)
+                ArrayList<Category> categories = new ArrayList<Category>();
+                for(String s : categoriesData) {
+                    categories.add(new Category(s));
+                }
+
+                //converting String[] to ArrayList<String> for steps
+                ArrayList<String> steps = new ArrayList<String>();
+                for(String step : stepsData) {
+                    steps.add(step);
+                }
+                Recipe r = new Recipe(simpleData[0], Integer.parseInt(simpleData[1]), simpleData[2], simpleData[4], ingredients, categories, steps);
+                foo.addRecipe(r);
+            }
             bufferedReader.close();
         } catch (IOException e) {
             System.out.println("Error reading file");
         }
-        
         return foo;
     }
 }
-
-    // public void load(File file) {
-    //     if (file.exists()) {
-    //         try {
-    //             Scanner scanner = new Scanner(file);
-    //             while (scanner.hasNextLine()) {
-    //                 String line = scanner.nextLine();
-
-    //                 //line 1
-    //                 String[] parts = line.split(",");
-    //                 String name = parts[0];
-    //                 int servings = Integer.parseInt(parts[1]);
-    //                 Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
-    //                 recipe.setDescription(parts[2]);
-    //                 recipe.setCalories(Double.parseDouble(parts[3]));
-    //                 recipe.setPrepTime(parts[4]);
-
-    //                 //line 2 categories
-    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-    //                 parts = line.split(",");
-    //                 for (String part : parts) {
-    //                     recipe.addCategory(new Category(part)); //!lager nye categorier
-    //                 }
-    //                 //line 3 ingredients
-    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-    //                 String[] ingredients = line.split("}"); //splits the ingredients into an array  
-    //                 for (String ingredient : ingredients) {
-    //                     ingredient = ingredient.replace("{", "");  //removes curly brackets
-
-    //                     //if the ingredientstring starts with comma, then start from the second character in string
-    //                     if(ingredient.startsWith(",")){
-    //                         ingredient = ingredient.substring(0);
-    //                     }
-
-    //                     String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
-                        
-    //                     //slice ingredName from '=' to the end
-    //                     Double amount = Double.parseDouble(ingredientParts[0].substring(ingredientParts[0].indexOf("=")+1));
-    //                     String unit = ingredientParts[1].substring(ingredientParts[0].indexOf("="));
-    //                     String ingredName = ingredientParts[3].substring(ingredientParts[0].indexOf("="));
-
-    //                     //add ingredient to recipe
-    //                     recipe.addIngredient(ingredName, amount, unit);
-    //                     System.out.println("succesfully added ingredient: " + ingredName + ' ' + amount + ' ' + unit);
-    //                 }
-    //                 //line 4 instructions
-    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-    //                 String[] instructions = line.split("}"); //splits the instructions into an array
-    //                 for(String step : instructions){
-    //                     recipe.addStep(step);
-    //                 }
-    //                 //add recipe to cookbook
-    //                 recipes.add(recipe);
-    //             }
-
-    //         scanner.close();
-
-    //         } catch (FileNotFoundException e) {
-    //             e.printStackTrace();
-    //         }
-    //     }
-    // }

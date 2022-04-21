@@ -6,20 +6,20 @@ public class Recipe extends Validator{
     private String name, description, prepTime;             // name of recipe that will be dealt with back end, as well as name displayed to user    
     private int numberOfServings;                           // number persons this recipe serves        
     private double calories, CalPerServing;                 // optional for user.
-    private ArrayList<HashMap<String,Object>> ingredients;  // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
+    private ArrayList<HashMap<String, String>> ingredients;  // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories;                 // stores the categories of the recipe                                    
     private ArrayList<String> steps;                        // stores the steps of how to make the recipe
 
     // *CONSTRUCTOR                                                                                          
-    public Recipe(String name, int numberOfServings, String description , String prepTime, ArrayList<HashMap<String,Object>> ingredients, ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
+    public Recipe(String name, int numberOfServings, String description , String prepTime, ArrayList<HashMap<String, String>> ingredients, ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
         setName(name);
         setServings(numberOfServings);
         setDescription(description);
         setPrepTime(prepTime);
 
-        this.ingredients = new ArrayList<HashMap<String,Object>>();
-        for (HashMap<String,Object> ingredient : ingredients) {
-            addIngredient((String)ingredient.get("name"), (double)(ingredient.get("amount"), (String)ingredient.get("unit")); //*Fikk med casting her
+        this.ingredients = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> ingredient : ingredients) {
+            addIngredient(ingredient.get("name"), ingredient.get("amount"), ingredient.get("unit")); //*Fikk med casting her
         } 
 
         this.categories = new ArrayList<Category>();
@@ -66,8 +66,8 @@ public class Recipe extends Validator{
     }
 
     // get ingredients
-    public ArrayList<HashMap<String,Object>> getIngredients() {
-        return new ArrayList<HashMap<String,Object>>(ingredients);  // returns ingredients
+    public ArrayList<HashMap<String, String>> getIngredients() {
+        return new ArrayList<HashMap<String, String>>(ingredients);  // returns ingredients
     }
 
     // get categories
@@ -115,8 +115,8 @@ public class Recipe extends Validator{
 
 
     // *Add and remvoe ingredients
-    public void addIngredient(String name, double amount, String unit) {    
-        HashMap<String,Object> ingredient = new HashMap<String,Object>();   // Creates a hashmap called ingredient that stores different properties of the ingredient
+    public void addIngredient(String name, String amount, String unit) {    
+        HashMap<String, String> ingredient = new HashMap<String, String>();   // Creates a hashmap called ingredient that stores different properties of the ingredient
         
         ingredient.put("name", name.toUpperCase());                         // adds the name of the ingredient to the ingredient hashmap
         ingredient.put("amount", amount);                                   // adds the amount key, value pair to the ingrdient hashmap . describes the amount of the ingredient
@@ -127,7 +127,7 @@ public class Recipe extends Validator{
     }
 
     public void removeIngredient(String name) {                 
-        for (HashMap<String, Object> Ingredient : ingredients) {            // loops through all ingredients
+        for (HashMap<String, String> Ingredient : ingredients) {            // loops through all ingredients
             if (Ingredient.get("name").equals(name.toUpperCase())) {        // looks for a ingredient that mathces the name of the element to be removed
                 ingredients.remove(Ingredient);                             // removes the ingredient if it matches
                 return;                                                     // return if match found so it doesn't look for more matches. saves prossessing power

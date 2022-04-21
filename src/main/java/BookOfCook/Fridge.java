@@ -8,14 +8,14 @@ import java.util.stream.Stream;
 
 public class Fridge extends Validator{
     // *FIELDS
-    private ArrayList<HashMap<String, Object>> foodInFridge = new ArrayList<HashMap<String, Object>>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
+    private ArrayList<HashMap<String, String>> foodInFridge = new ArrayList<HashMap<String, String>>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
 
     // *CONSTRUCTOR
     public Fridge() {}
 
     // *GETTERS
-    public ArrayList<HashMap<String, Object>> getFood() {
-        return new ArrayList<HashMap<String, Object>>(foodInFridge);
+    public ArrayList<HashMap<String, String>> getFood() {
+        return new ArrayList<HashMap<String, String>>(foodInFridge);
     }
 
     //*ADDING AND REMOVING FOOD 
@@ -24,7 +24,7 @@ public class Fridge extends Validator{
 
         System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
         
-        HashMap<String, Object> ingredient = new HashMap<String, Object>();
+        HashMap<String, String> ingredient = new HashMap<String, String>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
         ingredient.put("amount", amount);               // adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
         ingredient.put("unit", unit);                   // adds the "unit" key, value pair to this ingredient hashmap, describes the unit of the ingredient
@@ -49,9 +49,9 @@ public class Fridge extends Validator{
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipesToFilter) {
         //for recipe in recipesToFilter, check if all ingredients in recipe is in fridge return true, else return false
         Predicate<Recipe> criteria = (Recipe recipe) -> {
-            for (HashMap<String, Object> ingredient : recipe.getIngredients()) {
+            for (HashMap<String, String> ingredient : recipe.getIngredients()) {
                 boolean ingredientInFridge = false;
-                for (HashMap<String, Object> food : foodInFridge) {
+                for (HashMap<String, String> food : foodInFridge) {
                     if (ingredient.get("name").equals(food.get("name"))) {
                         ingredientInFridge = true;
                     }
