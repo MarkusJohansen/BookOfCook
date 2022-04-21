@@ -19,7 +19,7 @@ public class Recipe extends Validator{
 
         this.ingredients = new ArrayList<HashMap<String, String>>();
         for (HashMap<String, String> ingredient : ingredients) {
-            addIngredient((String)ingredient.get("name"), (double) ingredient.get("amount"), (String)ingredient.get("unit")); //*Fikk med casting her
+            addIngredient(ingredient.get("name"), ingredient.get("amount"), ingredient.get("unit")); //*Fikk med casting her
         } 
 
         this.categories = new ArrayList<Category>();
@@ -115,7 +115,7 @@ public class Recipe extends Validator{
 
 
     // *Add and remvoe ingredients
-    public void addIngredient(String name, double amount, String unit) {    
+    public void addIngredient(String name, String amount, String unit) {    
         HashMap<String, String> ingredient = new HashMap<String, String>();   // Creates a hashmap called ingredient that stores different properties of the ingredient
         
         ingredient.put("name", name.toUpperCase());                         // adds the name of the ingredient to the ingredient hashmap

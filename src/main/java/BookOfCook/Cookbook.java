@@ -38,16 +38,6 @@ public class Cookbook extends Validator {
         return new ArrayList<Category>(categories); // returns categories in cookbook
     }
 
-    //*category methods
-    public boolean checkIfCategoryExist(String c){      //!er dette en valideringsmetode? brukes den? det er isåffal ikke i denne klassen
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).getName().equals(c)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public ArrayList<Recipe> filterByCategories(ArrayList<Category> categories){    // metode som returnerer alle recipes som inneholder alle kategoriene
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                        // create an output arraylist
         for (Recipe recipe : recipes) {                                             // loops through all recipes in cookbook

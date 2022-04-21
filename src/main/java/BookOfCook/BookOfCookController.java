@@ -354,13 +354,21 @@ public class BookOfCookController {
     public void addRecipe() {
         // System.out.println("Add button was clicked");
 
-        // //!create new recipe object
-        // //!Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        
 
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), );
+        String name = recipeNameBar.getText();
+        int servings = Integer.parseInt(servesPeopleBar.getText());
+        String description = descriptionArea.getText();
+        String prepTime = prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue();
+        //ArrayList<HashMap<String, Object>> ingredients = getIngredientsFromCreator();
+        ArrayList<Category> categories = getGategoriesFromCreator();
+        ArrayList<String> steps = getStepsFromCreator();
 
-        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
-        recipe.setDescription(descriptionArea.getText());
+        System.out.println("Recipe name: " + name + " Recipe description: " + description + " Recipe prepTime: " + prepTime + " Recipe servings: " + servings);
+        //System.out.println("ingredents:" + ingredients + " categories: " + categories + " steps: " + steps);
+
+        Recipe recipe = new Recipe(name, servings, description, prepTime, /*ingredients, */categories, steps);
+
 
         // //optional info
         // if(!caloriesBar.getText().equals("")){
@@ -373,14 +381,14 @@ public class BookOfCookController {
         // addCategoriesToRecipe(recipe);
 
         // //add to the cookbook
-        // book.addRecipe(recipe);
+        book.addRecipe(recipe);
 
         // //update the recipe list by adding new component
-        // updateRecipeList();
-        // updateCategList();
-        // book.categCollect();       
+        updateRecipeList();
+        updateCategList();
+        book.collectCategories();       
 
-        // System.out.println(book.getCategories());
+        System.out.println(book.getCategories());
     }
 
     public void addStepCreator(){
@@ -402,6 +410,19 @@ public class BookOfCookController {
         stepCreatorList.getItems().clear(); //clear the list for next use
     }
 
+    public ArrayList<String> getStepsFromCreator(){
+        ArrayList<String> outputArray = new ArrayList<String>();
+
+        for(String s : stepsCreator){
+            //if the step is already in the list, do not add it again
+            outputArray.add(s);
+        }
+        stepsCreator.clear(); //clear the list for next use
+        stepCreatorList.getItems().clear(); //clear the list for next use
+
+        return outputArray;
+    }
+
     public void addIngredientCreator(){
         HashMap<String, String> ingredient = new HashMap<String, String>();
 
@@ -413,6 +434,7 @@ public class BookOfCookController {
         updateIngredCreatorList();
     }
 
+    //! BRUKER IKKE METODE UNDER
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addIngredientsToRecipe(Recipe recipe){
         //loop through items in list
@@ -424,6 +446,18 @@ public class BookOfCookController {
         ingredCreatorList.getItems().clear(); //clear the list for next use
     }
 
+    public ArrayList<HashMap<String, Object>> getIngredientsFromCreator(){
+        ArrayList<HashMap<String, Object>> outputArray = new ArrayList<HashMap<String, Object>>();
+
+        for(HashMap<String, Object> ingredient : IngredCreator){
+            outputArray.add(ingredient);
+        }
+        IngredCreator.clear(); //clear the list for next use
+        ingredCreatorList.getItems().clear(); //clear the list for next use
+
+        return outputArray;
+    }
+
     public void addCategoryCreator(){
         //create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
@@ -433,6 +467,7 @@ public class BookOfCookController {
     }
 
     //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
+    //! BRUKER IKKE METODEN UNDER
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
         //book.categCollect();
@@ -440,7 +475,7 @@ public class BookOfCookController {
 
         for(String category : categoryCreator){
 
-            if(book.checkIfCategoryExist(category)){
+            if(book.checkIfCategoryExist(category, book)){
                 for(Category c : book.getCategories()){
                     if(category.equals(c.getName())){
                         recipe.addCategory(c);
@@ -457,6 +492,30 @@ public class BookOfCookController {
         categCreatorList.getItems().clear(); //clear the list for next use
 
         System.out.println("inneholder " + recipe.getCategories());
+    }
+
+    public ArrayList<Category> getGategoriesFromCreator(){
+        book.collectCategories();
+        // ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
+        ArrayList<Category> outputArray = new ArrayList<Category>();
+
+        for(String category : categoryCreator){
+            if(book.checkIfCategoryExist(category, book)){
+                for(Category c : book.getCategories()){
+                    if(category.equals(c.getName())){
+                        outputArray.add(c);
+                        System.out.println("adding category that alerady exists: " + c);
+                    }
+                }
+            }else{
+                outputArray.add(new Category(category));
+                System.out.println("adding new category: " + category);
+            }
+        }
+        categoryCreator.clear(); //clear the list for next use
+        categCreatorList.getItems().clear(); //clear the list for next use
+
+        return outputArray;
     }
 
     //-------------------------------------
