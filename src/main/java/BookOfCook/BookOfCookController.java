@@ -356,6 +356,8 @@ public class BookOfCookController {
         //!create new recipe object
         //!Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
+        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), );
+
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
 
@@ -436,7 +438,6 @@ public class BookOfCookController {
         //loop through items in list
 
         for(String category : categoryCreator){
-            boolean categoryExists = false;                                     //!
 
             if(book.checkIfCategoryExist(category)){
                 for(Category c : book.getCategories()){
