@@ -52,32 +52,43 @@ public class BookOfCookController {
 
     //*INITIALIZATION
     public void initialize(){//initializes the controller
-        initBookFridgeDummys();
+        initObjects();
+        initCombo();
+        initCategories();
+        initCreatorArrays();
         initFridgeFood();
         initRecipeComponents();
+        initRecipeAmount();
     }
 
-    private void initBookFridgeDummys(){//!wtf, LITT MYE FORSKJELLKIGE
-        book = new Cookbook();
-        fridge = new Fridge();
-
-        book.addDummy();
-
+    private void initCategories(){
         for(Category category : book.getCategories()){          // fyller inn kategorilista
             categList.getItems().add(categComponent(category));
         }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
+    }
 
+    private void initCreatorArrays(){
+        stepsCreator = new ArrayList<String>();
+        categoryCreator = new ArrayList<String>();
+        IngredCreator = new ArrayList<HashMap<String, String>>();
+    }
+
+    private void initCombo(){
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
-
-        stepsCreator = new ArrayList<String>();// create creator arrays
-        categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, String>>();
-
-        fileHandler = new FileHandler(); // initialize filehandler
     }
+
+    private void initRecipeAmount(){
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
+    }
+
+    private void initObjects(){//!wtf, LITT MYE FORSKJELLKIGE
+        book = new Cookbook();
+        fridge = new Fridge();        
+        fileHandler = new FileHandler(); // initialize filehandler
+        book.addDummy();
+    }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET
 
     private void initRecipeComponents() {                                                   //inititializes the recipe components in the GUI, from the cookbook
         for (Recipe recipe : book.getRecipes()/*book.filter(book.getRecipes(), fridge)*/) {
@@ -244,7 +255,7 @@ public class BookOfCookController {
     }
 
     public void addIngredientCreator(){
-        HashMap<String, String> ingredient = new HashMap<String, String>();
+        HashMap<String, String> ingredient = new HashMap<String,d String>();
         ingredient.put("name", ingredNameBar.getText());
         ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
