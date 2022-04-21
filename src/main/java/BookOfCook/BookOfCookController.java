@@ -18,25 +18,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class BookOfCookController {
-    //-------------------
-    //*FIELDS
-    //-------------------
     private Cookbook book;
-    private ArrayList<Recipe> recipes, searchedRecipes;
+    private ArrayList<Recipe> searchedRecipes;
     private ArrayList<HashMap<String, String>> fridgeFood;
     private Fridge fridge;
-    private int recipesShown;                                          //! hva skjer her       
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
-
     //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
     private ArrayList<String> stepsCreator;  
     private ArrayList<String> categoryCreator;
     private ArrayList<HashMap<String, String>> IngredCreator;
 
-    //*FXML-noder
     @FXML
-    private Label number, label, recipeAmount;  
+    private Label number, label, recipeAmount;
     @FXML
     private GridPane recipeViewContent, recipeViewBox1, recipeViewBox2;
     @FXML
@@ -52,14 +46,9 @@ public class BookOfCookController {
     @FXML
     private CheckBox fridgeCheckbox;
 
-    //-------------------------------------
     //*INITIALIZATION
-    //-------------------------------------
-    //initializes the controller
-    public void initialize(){
-        initbook();
-        initFridge();
-        initDummy();
+    public void initialize(){//initializes the controller
+        initBookFridgeDummys();
         initFridgeFood();
         initRecipeComponents();
         initRecipeAmount();
@@ -69,12 +58,46 @@ public class BookOfCookController {
         initFileHandler();
     }
 
-    //inititializes the recipe components in the GUI, from the cookbook
-    private void initRecipeComponents() {
-        //initializes the recipe ArrayList
-        recipes = new ArrayList<Recipe>();
-        recipes.addAll(book.getRecipes());
-        for (Recipe recipe : recipes/*book.filter(book.getRecipes(), fridge)*/) {
+    private void initBookFridgeDummys(){
+        book = new Cookbook();
+        fridge = new Fridge();
+
+        HashMap<String, String> ost = new HashMap<String, String>() {{//! IKKE EN DEL AV SLUTTPRODUKTET
+            put("name", "ost");
+            put("amount", "1.0");
+            put("unit", "kg");
+        }};
+        HashMap<String, String> melk = new HashMap<String, String>() {{
+            put("name", "melk");
+            put("amount", "2.0");
+            put("unit", "L");
+        }};
+
+        HashMap<String, String> tomat = new HashMap<String, String>() {{
+            put("name", "tomat");
+            put("amount", "5.0");
+            put("unit", "stk");
+        }};
+
+        Category italiensk = new Category("italiensk");
+        Category burger = new Category("burger");
+        Category kjøtt = new Category("kjøtt");
+
+        // DUMMYOPPSKRIFTER
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+
+        fridge.addFood("tomater", "4", "stk");
+        fridge.addFood("melk", "2", "L");
+        fridge.addFood("ost", "400", "g");
+        fridge.addFood("egg", "8", "stk");
+        fridge.addFood("rømme", "3", "dL");
+        fridge.addFood("ketchup", "5", "dL");
+        fridge.addFood("pastaskruer", "1", "kg");
+    }
+
+    private void initRecipeComponents() {//inititializes the recipe components in the GUI, from the cookbook
+        for (Recipe recipe : book.getRecipes()/*book.filter(book.getRecipes(), fridge)*/) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
@@ -91,17 +114,10 @@ public class BookOfCookController {
     }
 
     private void initRecipeAmount() {
-        recipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes.")); 
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
-    private void initbook(){
-        book = new Cookbook();
-    }
-
-    private void initFridge(){
-        fridge = new Fridge();
-    }
+    
     
     //initializes the category components in the GUI
     private void initCategories(){
@@ -144,45 +160,7 @@ public class BookOfCookController {
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
-    public void initDummy(){    //!Ikke en del av sluttproduktet
-        HashMap<String, String> ost = new HashMap<String, String>() {{
-            put("name", "ost");
-            put("amount", "1.0");
-            put("unit", "kg");
-        }};
-        HashMap<String, String> melk = new HashMap<String, String>() {{
-            put("name", "melk");
-            put("amount", "2.0");
-            put("unit", "L");
-        }};
-
-        HashMap<String, String> tomat = new HashMap<String, String>() {{
-            put("name", "tomat");
-            put("amount", "5.0");
-            put("unit", "stk");
-        }};
-
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
-        Category kjøtt = new Category("kjøtt");
-
-        // DUMMYOPPSKRIFTER
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
-        
-        // DUMMYFRIDGE
-        fridge.addFood("tomater", "4", "stk");
-        fridge.addFood("melk", "2", "L");
-        fridge.addFood("ost", "400", "g");
-        fridge.addFood("egg", "8", "stk");
-        fridge.addFood("rømme", "3", "dL");
-        fridge.addFood("ketchup", "5", "dL");
-        fridge.addFood("pastaskruer", "1", "kg");
-    }
-
-    //-------------------------------------
     //*UPDATERS
-    //-------------------------------------
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
@@ -194,12 +172,9 @@ public class BookOfCookController {
 
         book.collectCategories();
 
-        //System.out.println(book.getCategories());
         for(Category category : book.getCategories()){                                //!init lager, updater skal gjøre klar for ny init ved endring
             categList.getItems().add(categComponent(category));
         }
-
-        System.out.println(book.getCategories());
     }
 
     public void updatefridge(){
@@ -241,32 +216,29 @@ public class BookOfCookController {
         label.setLayoutX(x);
         label.setLayoutY(y);
     }
-
     
     //-------------------------------------
     //*REMOVE METHODS
     //-------------------------------------
     public void removeRecipe(Recipe recipe){
-        System.out.println("Remove recipe button was clicked");
         book.removeRecipe(recipe);
         updateRecipeList();
         closeRecipeView();
     }
 
     public Button removeCategoryList(String target){
-            Button btn = new Button("X");
+        Button btn = new Button("X");
     
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("standard-button");
-            btn.setLayoutX(10);
-            btn.setLayoutY(0);
-    
-            btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " category from recipe creation");
-                categoryCreator.remove(target);
-                updateCategCreatorList();
-            });
-            return btn;
+        btn.getStyleClass().clear();
+        btn.getStyleClass().add("standard-button");
+        btn.setLayoutX(10);
+        btn.setLayoutY(0);
+
+        btn.setOnAction(e -> {
+            categoryCreator.remove(target);
+            updateCategCreatorList();
+        });
+        return btn;
     }
 
     public Button removeStepList(String target){
@@ -278,7 +250,6 @@ public class BookOfCookController {
             btn.setLayoutY(0);
     
             btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " step from recipe creation");
                 stepsCreator.remove(target);
                 updateStepCreatorList();
             });
@@ -294,13 +265,11 @@ public class BookOfCookController {
             btn.setLayoutY(0);
     
             btn.setOnAction(e -> {
-                System.out.println("Deleted " + target + " ingredient from recipe creation");
                 IngredCreator.remove(target);
                 updateIngredCreatorList();
             });   
             return btn;
     }
-
 
     //-------------------------------------
     //*BUTTONS
@@ -318,7 +287,6 @@ public class BookOfCookController {
 
         //sets action
         btn.setOnAction(e -> {
-            System.out.println("Close recipe view for: " + recipe.getName());
             closeRecipeView();
         });
 
@@ -346,16 +314,8 @@ public class BookOfCookController {
         recipeViewContent.add(removeButton, 1, 4);
     }
 
-    //-------------------------------------
     //*ADD METHODS
-    //-------------------------------------
-
-    //!Funksjonen trenger total overhaling nå som vi har ny konstruktør for recipe objekter
     public void addRecipe() {
-        // System.out.println("Add button was clicked");
-
-        
-
         String name = recipeNameBar.getText();
         int servings = Integer.parseInt(servesPeopleBar.getText());
         String description = descriptionArea.getText();
@@ -363,153 +323,63 @@ public class BookOfCookController {
         ArrayList<HashMap<String, String>> ingredients = getIngredientsFromCreator();
         ArrayList<Category> categories = getGategoriesFromCreator();
         ArrayList<String> steps = getStepsFromCreator();
-
-        System.out.println("Recipe name: " + name + " Recipe description: " + description + " Recipe prepTime: " + prepTime + " Recipe servings: " + servings);
-        //System.out.println("ingredents:" + ingredients + " categories: " + categories + " steps: " + steps);
-
         Recipe recipe = new Recipe(name, servings, description, prepTime, ingredients, categories, steps);
-
-
-        // //optional info
-        // if(!caloriesBar.getText().equals("")){
-        //     recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
-        // }
-
-        // //add to the arrays using the buttons. and adding them to list
-        // addStepsToRecipe(recipe);
-        // addIngredientsToRecipe(recipe);
-        // addCategoriesToRecipe(recipe);
-
-        // //add to the cookbook
         book.addRecipe(recipe);
-
-        // //update the recipe list by adding new component
         updateRecipeList();
         updateCategList();
-        book.collectCategories();       
-
-        System.out.println(book.getCategories());
+        book.collectCategories();
     }
 
-    public void addStepCreator(){
-        //create step object with name from textfield, then add step to list in creator
+    public void addStepCreator(){//create step object with name from textfield, then add step to list in creator
         String stepContent = stepsArea.getText();
         stepsCreator.add(stepContent);
-        updateStepCreatorList();
-        //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
-    }
-
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe() 
-    public void addStepsToRecipe(Recipe recipe){
-        //loop through items in list
-        for(String s : stepsCreator){
-            //if the step is already in the list, do not add it again
-            recipe.addStep(s);
-        }
-        stepsCreator.clear(); //clear the list for next use
-        stepCreatorList.getItems().clear(); //clear the list for next use
+        updateStepCreatorList();//adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
     public ArrayList<String> getStepsFromCreator(){
-        ArrayList<String> outputArray = new ArrayList<String>();
-
-        for(String s : stepsCreator){
-            //if the step is already in the list, do not add it again
-            outputArray.add(s);
-        }
+        ArrayList<String> outputArray = new ArrayList<String>(stepsCreator);
         stepsCreator.clear(); //clear the list for next use
         stepCreatorList.getItems().clear(); //clear the list for next use
-
         return outputArray;
     }
 
     public void addIngredientCreator(){
         HashMap<String, String> ingredient = new HashMap<String, String>();
-
         ingredient.put("name", ingredNameBar.getText());
         ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
-
         IngredCreator.add(ingredient);
         updateIngredCreatorList();
     }
 
-    //! BRUKER IKKE METODE UNDER
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
-    public void addIngredientsToRecipe(Recipe recipe){
-        //loop through items in list
-        for(HashMap<String, String> ingredient : IngredCreator){
-            //if the step is already in the list, do not add it again
-            recipe.addIngredient(ingredient.get("name"), ingredient.get("amount"), ingredient.get("unit")); //add ingredient to recipe
-        }
-        IngredCreator.clear(); //clear the list for next use
-        ingredCreatorList.getItems().clear(); //clear the list for next use
-    }
-
     public ArrayList<HashMap<String, String>> getIngredientsFromCreator(){
         ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>();
-
         for(HashMap<String, String> ingredient : IngredCreator){
             outputArray.add(ingredient);
         }
         IngredCreator.clear(); //clear the list for next use
         ingredCreatorList.getItems().clear(); //clear the list for next use
-
         return outputArray;
     }
 
-    public void addCategoryCreator(){
-        //create category object with name from textfield, then add category to list in creator
+    public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
-        updateCategCreatorList();
-        //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-    }
-
-    //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
-    //! BRUKER IKKE METODEN UNDER
-    //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
-    public void addCategoriesToRecipe(Recipe recipe){
-        //book.categCollect();
-        //loop through items in list
-
-        for(String category : categoryCreator){
-
-            if(book.checkIfCategoryExist(category, book)){
-                for(Category c : book.getCategories()){
-                    if(category.equals(c.getName())){
-                        recipe.addCategory(c);
-                        System.out.println("adding category that alerady exists: " + c);
-                    }
-                }
-            }else{
-                recipe.addCategory(new Category(category));
-                System.out.println("adding new category: " + category);
-            }
-            //if the step is already in the list, do not add it again
-        }
-        categoryCreator.clear(); //clear the list for next use
-        categCreatorList.getItems().clear(); //clear the list for next use
-
-        System.out.println("inneholder " + recipe.getCategories());
+        updateCategCreatorList();//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     public ArrayList<Category> getGategoriesFromCreator(){
-        book.collectCategories();
-        // ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
+        book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();
-
         for(String category : categoryCreator){
             if(book.checkIfCategoryExist(category, book)){
                 for(Category c : book.getCategories()){
                     if(category.equals(c.getName())){
                         outputArray.add(c);
-                        System.out.println("adding category that alerady exists: " + c);
                     }
                 }
             }else{
                 outputArray.add(new Category(category));
-                System.out.println("adding new category: " + category);
             }
         }
         categoryCreator.clear(); //clear the list for next use
@@ -518,78 +388,53 @@ public class BookOfCookController {
         return outputArray;
     }
 
-    //-------------------------------------
     //*COMPONENTS
-    //-------------------------------------
     private Pane categComponent(Category category){
-        //creates pane for each category
-        Pane body = new Pane(); 
+        Pane body = new Pane(); //creates pane for each category
+        body.getChildren().add(categCheckBox(category));//adds children
 
-        //adds children
-        body.getChildren().add(categCheckBox(category));
-
-        //styling
-        body.getStyleClass().clear();
+        body.getStyleClass().clear();//styling
         body.getStyleClass().add("category-body");
         body.setMaxWidth(Double.MAX_VALUE);
         body.setMaxHeight(Double.MAX_VALUE);
-
         return body;
     }
 
     private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
-
-        //adds children
-        foodBody.getChildren().add(createFoodLabel(food, amount, unit));
+        foodBody.getChildren().add(createFoodLabel(food, amount, unit));//adds children
         foodBody.getChildren().add(createDeleteX(food));
-
         return foodBody;
     }
 
     private Button recipeComponent(Recipe recipe){
-        //create button object
-        Button recipeBtn = new Button(recipe.getName());
+        Button recipeBtn = new Button(recipe.getName());//create button object
 
-        //style
-        recipeBtn.getStyleClass().clear();
+        recipeBtn.getStyleClass().clear();//styling
         recipeBtn.getStyleClass().add("recipeBtn");
         recipeBtn.setMaxWidth(Double.MAX_VALUE);
         recipeBtn.setMaxHeight(Double.MAX_VALUE);
-
-        //event
-        recipeBtn.setOnAction(e -> {
-            System.out.println("View " + recipe.getName() + " recipe");
+        recipeBtn.setOnAction(e -> {//event
             viewRecipe(recipe);
         });
-
-        //return
         return recipeBtn;
     }
 
-
-    //-----------------------------------------------------------
     //*RECIPE VIEW
-    //-----------------------------------------------------------
-    //opens recipe view and builds the content
-    public void viewRecipe(Recipe recipe){
-        //hide grid and show recipeview
-        recipeList.setVisible(false);
+    public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
+        recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
         
-        //set recipe style
-        recipeView.getStyleClass().clear();
+        recipeView.getStyleClass().clear();//set recipe style
         recipeView.getStyleClass().add("recipe-view");
         recipeView.setMaxWidth(Double.MAX_VALUE);
         recipeView.setMaxHeight(Double.MAX_VALUE);
 
-        //add children
-        initViewContent(recipe);
+        initViewContent(recipe);//add children
     }
 
-    //close recipeView
-    public void closeRecipeView() {
+    public void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
         recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
@@ -597,38 +442,31 @@ public class BookOfCookController {
         recipeAmount.setVisible(true);
     }
     
-    //shorthand method for creating labels in recipe viewmode
-    private void viewLabel(String content, Object parent, int row, int column){
+    private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleLabel(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
 
-    //shorthand method for creating list and fill them with categories in recipe viewmode
-    private void viewCateg(Recipe recipe){
+    private void viewCateg(Recipe recipe){//shorthand method for creating list and fill them with categories in recipe viewmode
         ListView<String> listView = new ListView<String>();
 
-        //add category label to grid
-        viewLabel("Categories", recipeViewBox2, 0, 0);
-
-        //add categories to listview
-        for(Category category : recipe.getCategories()){
+        viewLabel("Categories", recipeViewBox2, 0, 0);//add category label to grid
+        
+        for(Category category : recipe.getCategories()){//add categories to listview
             listView.getItems().add(category.getName());
         }
         listView.getStyleClass().add("recipe-view-list");
 
-        (recipeViewBox2).add(listView, 0, 1);
+        recipeViewBox2.add(listView, 0, 1);
     }
 
-    //shorthand method for creating list and fill them with ingredients in recipe viewmode
-    private void viewIngred(Recipe recipe){
+    private void viewIngred(Recipe recipe){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
 
-        //add ingredients label to grid
-        viewLabel("Ingredients", recipeViewBox2, 2, 0);
+        viewLabel("Ingredients", recipeViewBox2, 2, 0);//add ingredients label to grid
 
-        //add ingredients to listview
-        for(HashMap<String, String> ingredient : recipe.getIngredients()){
+        for(HashMap<String, String> ingredient : recipe.getIngredients()){//add ingredients to listview
             listView.getItems().add(ingredient.get("name").toString() + " " + ingredient.get("amount").toString() + " " + ingredient.get("unit").toString());
         }
 
@@ -636,15 +474,12 @@ public class BookOfCookController {
         (recipeViewBox2).add(listView, 0, 3);
     }
 
-    //shorthand method for creating list and fill them with steps in recipe viewmode
-    private void viewSteps(Recipe recipe){
+    private void viewSteps(Recipe recipe){//shorthand method for creating list and fill them with steps in recipe viewmode
         ListView<String> listView = new ListView<String>();
 
-        //add steps label to grid
-        viewLabel("Steps", recipeViewBox2, 4, 0);
+        viewLabel("Steps", recipeViewBox2, 4, 0);//add steps label to grid
 
-        //add steps to listview
-        for(String step : recipe.getSteps()){
+        for(String step : recipe.getSteps()){//add steps to listview
             listView.getItems().add(step);
         }
 
@@ -653,27 +488,21 @@ public class BookOfCookController {
     }
 
     private CheckBox categCheckBox(Category category){
-        //creates a checkbox with category name
-        CheckBox checkbox = new CheckBox(category.getName());        
+        CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
 
-        //on checkbox click
-        checkbox.setOnAction(e -> {
-            System.out.println("Checkbox clicked");
+        checkbox.setOnAction(e -> {//on checkbox click
             if(checkbox.isSelected()){
                 categoriesClicked.add(category);
             }else{
                 categoriesClicked.remove(category);
             }
-            System.out.println("CategoriesClicked: " + categoriesClicked);
 
             filterRecipes(categoriesClicked);
         });
         return checkbox;
     }
 
-    //---------------------------------------------------
     //*OTHER METHODS
-    //---------------------------------------------------
     public Pane createRemovable(String content, Button btn){
         Pane pane = new Pane();
         Label label = new Label(content);
@@ -693,7 +522,6 @@ public class BookOfCookController {
         removeFoodBtn.setLayoutY(0);
 
         removeFoodBtn.setOnAction(e -> {
-            System.out.println("Delete food " + string);
             fridge.removeFood(string);
             updatefridge();
         });
@@ -708,9 +536,7 @@ public class BookOfCookController {
     }
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
-    //search for food
     public void searchFood() {
-        System.out.println("Search food bar was used was clicked");
         searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
         if(searchedRecipes.size() > 0){
             recipeList.getItems().clear();
@@ -741,15 +567,10 @@ public class BookOfCookController {
 
     //!MYE LOGIKK, bURDE GÅ I BACKEND
     public void fridgeAddFood() {
-        System.out.println("add food btton");
         if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0){
             System.out.println("Not all textfields filled in");
             return;
         }
-        // if(fridge.isFoodInFridge(fridgeNameInput.getText())){
-        //     System.out.println("That type of food is already in your fridge");
-        //     return;
-        // }
         fridge.addFood(fridgeNameInput.getText(), fridgeAmountInput.getText(), unitComboBoxFridge.getValue());
         updatefridge();
     }
@@ -789,9 +610,5 @@ public class BookOfCookController {
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
 
     !edit recipe funksjon (kan vurdere)
-
-    ? hvordan skiller vi kategorier
-    ? legge edit og lage recipe tool i et popupvindu?
-    ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
     */
 } 
