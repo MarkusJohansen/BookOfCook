@@ -31,7 +31,7 @@ public class Cookbook extends Validator {
     }
 
     public ArrayList<Recipe> getRecipes() {
-    return new ArrayList<Recipe>(recipes);  // returns all recipes in cookbook     
+        return new ArrayList<Recipe>(recipes);  // returns all recipes in cookbook     
     }
 
     public ArrayList<Category> getCategories() {
