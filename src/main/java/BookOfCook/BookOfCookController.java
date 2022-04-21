@@ -56,7 +56,8 @@ public class BookOfCookController {
         initRecipeComponents();
     }
 
-    private void initBookFridgeDummys(){ //!muligens legge i egen fil
+    //! kan flyttes over til backend i cookbook
+    private void initBookFridgeDummys(){//!muligens legge i egen fil
         book = new Cookbook();
         fridge = new Fridge();
 
@@ -194,7 +195,7 @@ public class BookOfCookController {
     }
 
     //-------------------------------------
-    //*STYLING
+    //!STYLING kan dette gjøres om til generell styling funksjon? evt sende inn en node som parameter? lage to forskjellige funksjoner?
     //-------------------------------------
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
@@ -211,7 +212,7 @@ public class BookOfCookController {
     }
     
     //-------------------------------------
-    //*REMOVE METHODS
+    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
     //-------------------------------------
     public void removeRecipe(Recipe recipe){
         book.removeRecipe(recipe);
@@ -252,7 +253,7 @@ public class BookOfCookController {
     }
 
     //-------------------------------------
-    //*BUTTONS
+    //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
     //-------------------------------------
     //creates a close Btn for closing recipe view
     private void closeBtn(Recipe recipe){
@@ -309,6 +310,7 @@ public class BookOfCookController {
         updateStepCreatorList();//adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
+    //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<String> getStepsFromCreator(){
         ArrayList<String> outputArray = new ArrayList<String>(stepsCreator);
         stepsCreator.clear(); //clear the list for next use
@@ -325,6 +327,7 @@ public class BookOfCookController {
         updateIngredCreatorList();
     }
 
+    //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<HashMap<String, String>> getIngredientsFromCreator(){
         ArrayList<HashMap<String, String>> outputArray = new ArrayList<HashMap<String, String>>(); //!refresh
         for(HashMap<String, String> ingredient : IngredCreator){
@@ -341,6 +344,7 @@ public class BookOfCookController {
         updateCategCreatorList();//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
+    //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<Category> getGategoriesFromCreator(){
         book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
@@ -362,6 +366,7 @@ public class BookOfCookController {
     }
 
     //*COMPONENTS
+    //! DE TRE METODENE UNDER ER GANSKE LIKE
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
         body.getChildren().add(categCheckBox(category));//adds children
@@ -421,22 +426,20 @@ public class BookOfCookController {
         ((GridPane)parent).add(label, column, row);
     }
 
+    //! DISSE TRE METODENE UNDER ER GANSKE LIKE
     private void viewCateg(Recipe recipe){//shorthand method for creating list and fill them with categories in recipe viewmode
         ListView<String> listView = new ListView<String>();
-
         viewLabel("Categories", recipeViewBox2, 0, 0);//add category label to grid
         
         for(Category category : recipe.getCategories()){//add categories to listview
             listView.getItems().add(category.getName());
         }
         listView.getStyleClass().add("recipe-view-list");
-
         recipeViewBox2.add(listView, 0, 1);
     }
 
     private void viewIngred(Recipe recipe){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
-
         viewLabel("Ingredients", recipeViewBox2, 2, 0);//add ingredients label to grid
 
         for(HashMap<String, String> ingredient : recipe.getIngredients()){//add ingredients to listview
@@ -444,12 +447,11 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        (recipeViewBox2).add(listView, 0, 3);
+        recipeViewBox2.add(listView, 0, 3);
     }
 
     private void viewSteps(Recipe recipe){//shorthand method for creating list and fill them with steps in recipe viewmode
         ListView<String> listView = new ListView<String>();
-
         viewLabel("Steps", recipeViewBox2, 4, 0);//add steps label to grid
 
         for(String step : recipe.getSteps()){//add steps to listview
@@ -457,7 +459,7 @@ public class BookOfCookController {
         }
 
         listView.getStyleClass().add("recipe-view-list");
-        (recipeViewBox2).add(listView, 0, 5);
+        recipeViewBox2.add(listView, 0, 5);
     }
 
     private CheckBox categCheckBox(Category category){
@@ -469,7 +471,6 @@ public class BookOfCookController {
             }else{
                 categoriesClicked.remove(category);
             }
-
             filterRecipes(categoriesClicked);
         });
         return checkbox;
@@ -509,6 +510,7 @@ public class BookOfCookController {
     }
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
+    //! SAKL VEKK
     public void searchFood() {
         searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
         if(searchedRecipes.size() > 0){
@@ -557,9 +559,10 @@ public class BookOfCookController {
         );
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
-
         book = fileHandler.load(file);          //if the user chooses a file, initialize the cookbook
-        initialize();
+        
+        updateRecipeList();
+        updateCategList();
     }
 
     public void save() {
