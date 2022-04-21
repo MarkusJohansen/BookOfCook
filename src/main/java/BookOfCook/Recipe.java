@@ -11,7 +11,7 @@ public class Recipe extends Validator{
     private ArrayList<String> steps;                        // stores the steps of how to make the recipe
 
     // *CONSTRUCTOR                                                                                          
-    public Recipe(String name, int numberOfServings, String description , String prepTime, ArrayList<HashMap<String, String>> ingredients, ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
+    public Recipe(String name, int numberOfServings, String description , String prepTime, /*ArrayList<HashMap<String, String>> ingredients,*/ ArrayList<Category> categories, ArrayList<String> steps) {              // constructor for recipe demands that recipe has a defined name and number of servings
         setName(name);
         setServings(numberOfServings);
         setDescription(description);

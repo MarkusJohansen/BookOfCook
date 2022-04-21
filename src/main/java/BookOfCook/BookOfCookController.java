@@ -147,18 +147,18 @@ public class BookOfCookController {
     public void initDummy(){    //!Ikke en del av sluttproduktet
         HashMap<String, String> ost = new HashMap<String, String>() {{
             put("name", "ost");
-            put("amount", 1.0);
+            put("amount", "1.0");
             put("unit", "kg");
         }};
         HashMap<String, String> melk = new HashMap<String, String>() {{
             put("name", "melk");
-            put("amount", 2.0);
+            put("amount", "2.0");
             put("unit", "L");
         }};
 
         HashMap<String, String> tomat = new HashMap<String, String>() {{
             put("name", "tomat");
-            put("amount", 5.0);
+            put("amount", "5.0");
             put("unit", "stk");
         }};
 
@@ -167,17 +167,17 @@ public class BookOfCookController {
         Category kjøtt = new Category("kjøtt");
 
         // DUMMYOPPSKRIFTER
-        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
-        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        book.addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", /*new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), */new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        book.addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", /*new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), */new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
         
         // DUMMYFRIDGE
-        fridge.addFood("tomater", 4, "stk");
-        fridge.addFood("melk", 2, "L");
-        fridge.addFood("ost", 400, "g");
-        fridge.addFood("egg", 8, "stk");
-        fridge.addFood("rømme", 3, "dL");
-        fridge.addFood("ketchup", 5, "dL");
-        fridge.addFood("pastaskruer", 1, "kg");
+        fridge.addFood("tomater", "4", "stk");
+        fridge.addFood("melk", "2", "L");
+        fridge.addFood("ost", "400", "g");
+        fridge.addFood("egg", "8", "stk");
+        fridge.addFood("rømme", "3", "dL");
+        fridge.addFood("ketchup", "5", "dL");
+        fridge.addFood("pastaskruer", "1", "kg");
     }
 
     //-------------------------------------
@@ -427,7 +427,7 @@ public class BookOfCookController {
         HashMap<String, String> ingredient = new HashMap<String, String>();
 
         ingredient.put("name", ingredNameBar.getText());
-        ingredient.put("amount", Integer.parseInt(ingredAmountBar.getText()));
+        ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
 
         IngredCreator.add(ingredient);

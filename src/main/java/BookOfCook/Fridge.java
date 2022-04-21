@@ -19,7 +19,7 @@ public class Fridge extends Validator{
     }
 
     //*ADDING AND REMOVING FOOD 
-    public void addFood(String name, double amount, String unit) {
+    public void addFood(String name, String amount, String unit) {
         ingredientExists(foodInFridge, name);
 
         System.out.println("Adding " + amount + " " + unit + " of " + name + " to fridge.");
