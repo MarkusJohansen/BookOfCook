@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class FileHandler implements LoadSave {
@@ -43,30 +44,34 @@ public class FileHandler implements LoadSave {
         Cookbook foo = new Cookbook();
         try {                                                                //read csv file using filereader and buffered reader Strings
             FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader); 
+            BufferedReader br = new BufferedReader(fileReader); 
 
             //read 5 lines at a time
-            String line = "";
+            String line = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");;       //muligens gjøre denne til readline
+            
             while (line != null) {
-                String[] simpleData = bufferedReader.readLine().split(",");
-                String[] categoriesData = bufferedReader.readLine().replace("[", "").replace("]", "").split(",");
-                String[] ingredientData = bufferedReader.readLine().replace("[", "").replace("]", "").replace("{", "").replace("}", ";").split(";"); // name=blabla, unit=blabla, amount=blabla; name=blabla, unit=blabla, amount=blabla;
-                String[] stepsData = bufferedReader.readLine().replace("[", "").replace("]", "").split(",");
+                String line2 = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");
+                String line3 = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");
+                String line4 = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");
 
+                String[] simpleData = line.split(",");
+                String[] categoriesData = line2.split(","); 
+                String[] ingredientData = line3.split(";");
+                String[] stepsData = line4.split(",");                                      
+            
                 //construct hashmap for ingredients
                 ArrayList<HashMap<String, String>> ingredients = new ArrayList<HashMap<String, String>>();
                 for (String s : ingredientData) {  
                     HashMap<String, String> ingredient = new HashMap<String, String>();
-                    String[] ingredientParts = s.split(",");
-
+                    String[] ingredientParts = s.split(",");                            //fungerer
                     for (int i = 0; i < ingredientParts.length; i++) {
-                        String[] keyValue = ingredientParts[i].split("=");
+                        String[] keyValue = ingredientParts[i].trim().split("=");
                         ingredient.put(keyValue[0], keyValue[1]);
                     }
                     ingredients.add(ingredient);
                 }
 
-                //!construct categories for recipe (lager nye kategorier)
+                //construct categories for recipe (lager nye kategorier)
                 ArrayList<Category> categories = new ArrayList<Category>();
                 for(String s : categoriesData) {
                     categories.add(new Category(s));
@@ -75,12 +80,13 @@ public class FileHandler implements LoadSave {
                 //converting String[] to ArrayList<String> for steps
                 ArrayList<String> steps = new ArrayList<String>();
                 for(String step : stepsData) {
-                    steps.add(step);
+                    steps.add(step.trim());
                 }
                 Recipe r = new Recipe(simpleData[0], Integer.parseInt(simpleData[1]), simpleData[2], simpleData[4], ingredients, categories, steps);
                 foo.addRecipe(r);
+                line = br.readLine();   //moves on to next recipe
             }
-            bufferedReader.close();
+            br.close();
         } catch (IOException e) {
             System.out.println("Error reading file");
         }
