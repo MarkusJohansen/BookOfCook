@@ -41,13 +41,10 @@ public class FileHandler implements LoadSave {
     //dette cookbook objektet skal erstatte den eksisterende cookbooken som leses i grensesnittet.
     public Cookbook load(File file) {
         System.out.println("Loading...");
-
         Cookbook foo = new Cookbook();
-
-        //read csv file using filereader and buffered reader objects
-        try {
+        try {                                                                //read csv file using filereader and buffered reader objects
             FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(fileReader); 
 
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
@@ -66,4 +63,64 @@ public class FileHandler implements LoadSave {
     }
 }
 
-//!fjerne navn i cookbook konstruktør?
+    // public void load(File file) {
+    //     if (file.exists()) {
+    //         try {
+    //             Scanner scanner = new Scanner(file);
+    //             while (scanner.hasNextLine()) {
+    //                 String line = scanner.nextLine();
+
+    //                 //line 1
+    //                 String[] parts = line.split(",");
+    //                 String name = parts[0];
+    //                 int servings = Integer.parseInt(parts[1]);
+    //                 Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
+    //                 recipe.setDescription(parts[2]);
+    //                 recipe.setCalories(Double.parseDouble(parts[3]));
+    //                 recipe.setPrepTime(parts[4]);
+
+    //                 //line 2 categories
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 parts = line.split(",");
+    //                 for (String part : parts) {
+    //                     recipe.addCategory(new Category(part)); //!lager nye categorier
+    //                 }
+    //                 //line 3 ingredients
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 String[] ingredients = line.split("}"); //splits the ingredients into an array  
+    //                 for (String ingredient : ingredients) {
+    //                     ingredient = ingredient.replace("{", "");  //removes curly brackets
+
+    //                     //if the ingredientstring starts with comma, then start from the second character in string
+    //                     if(ingredient.startsWith(",")){
+    //                         ingredient = ingredient.substring(0);
+    //                     }
+
+    //                     String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
+                        
+    //                     //slice ingredName from '=' to the end
+    //                     Double amount = Double.parseDouble(ingredientParts[0].substring(ingredientParts[0].indexOf("=")+1));
+    //                     String unit = ingredientParts[1].substring(ingredientParts[0].indexOf("="));
+    //                     String ingredName = ingredientParts[3].substring(ingredientParts[0].indexOf("="));
+
+    //                     //add ingredient to recipe
+    //                     recipe.addIngredient(ingredName, amount, unit);
+    //                     System.out.println("succesfully added ingredient: " + ingredName + ' ' + amount + ' ' + unit);
+    //                 }
+    //                 //line 4 instructions
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 String[] instructions = line.split("}"); //splits the instructions into an array
+    //                 for(String step : instructions){
+    //                     recipe.addStep(step);
+    //                 }
+    //                 //add recipe to cookbook
+    //                 recipes.add(recipe);
+    //             }
+
+    //         scanner.close();
+
+    //         } catch (FileNotFoundException e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }

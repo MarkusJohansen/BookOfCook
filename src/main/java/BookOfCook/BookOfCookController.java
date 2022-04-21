@@ -28,6 +28,7 @@ public class BookOfCookController {
     private Fridge fridge;
     private int recipesShown;                                          //! hva skjer her       
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
+    private FileHandler fileHandler;
 
     //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
     private ArrayList<String> stepsCreator;  
@@ -35,7 +36,6 @@ public class BookOfCookController {
     private ArrayList<HashMap<String, Object>> IngredCreator;
 
     //*FXML-noder
-
     @FXML
     private Label number, label, recipeAmount;  
     @FXML
@@ -67,6 +67,7 @@ public class BookOfCookController {
         initCategories();
         initUnitBoxes();
         initTempArrays();
+        initFileHandler();
     }
 
     //inititializes the recipe components in the GUI, from the cookbook
@@ -77,6 +78,10 @@ public class BookOfCookController {
         for (Recipe recipe : book.filter(book.getRecipes(), fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
+    }
+
+    private void initFileHandler() {
+        fileHandler = new FileHandler();
     }
 
     public void initTempArrays() {
@@ -643,17 +648,17 @@ public class BookOfCookController {
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
     //search for food
-    public void searchFood() {
-        System.out.println("Search food bar was used was clicked");
-        searchedRecipes = book.searchRecipes(searchBar.getText());
-        if(searchedRecipes.size() > 0){
-            recipeList.getItems().clear();
-            for(Recipe r : searchedRecipes){
-                recipeList.getItems().add(recipeComponent(r));
-            }
-        }
-        updateAmountLabel(searchedRecipes);
-    }
+    // public void searchFood() {
+    //     System.out.println("Search food bar was used was clicked");
+    //     searchedRecipes = book.searchRecipes(searchBar.getText());
+    //     if(searchedRecipes.size() > 0){
+    //         recipeList.getItems().clear();
+    //         for(Recipe r : searchedRecipes){
+    //             recipeList.getItems().add(recipeComponent(r));
+    //         }
+    //     }
+    //     updateAmountLabel(searchedRecipes);
+    // }
 
     //filter recipes with categories
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
@@ -727,8 +732,7 @@ public class BookOfCookController {
         );
         Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
-
-        book.save(file);
+        fileHandler.save(file, book);
         System.out.println("Cookbook saved successfully");
     }
 
@@ -741,16 +745,10 @@ public class BookOfCookController {
     ! skalering av oppskrifts, funksjon
     ! fridge filter av og på funksjon (i det hele tatt funksjon)
 
-    !fil skriving og lesing
-    !få fridge fungere
     !edit recipe funksjon (kan vurdere)
 
-    ? bruke predicates for å filtrere etter ingredienser i fridge tool. feks et predicate som sier at oppskriften kan lages av maten i fridge
     ? hvordan skiller vi kategorier
-    ? bruke predicates for å filtrere etter kategorier
     ? legge edit og lage recipe tool i et popupvindu?
-    ? picture support
-    ? hvem skriver dokumentasjonen
     ? vise til studass en stund før fristen for å finne ut av potensielle endringer litt tidlig.
     */
 } 
