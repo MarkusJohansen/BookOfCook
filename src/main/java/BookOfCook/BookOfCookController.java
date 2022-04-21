@@ -3,6 +3,8 @@ package BookOfCook;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle.Control;
+import java.util.function.Function;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -26,7 +29,6 @@ public class BookOfCookController {
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
-    //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
     private ArrayList<String> stepsCreator;  
     private ArrayList<String> categoryCreator;
     private ArrayList<HashMap<String, String>> IngredCreator;
@@ -48,52 +50,38 @@ public class BookOfCookController {
     @FXML
     private CheckBox fridgeCheckbox;
 
-    //*INITIALIZATION
     public void initialize(){//initializes the controller
-        initObjects();
-        initCombo();
-        initCategories();
-        initCreatorArrays();
-        initFridgeFood();
-        initRecipeComponents();
-        initRecipeAmount();
-    }
-
-    private void initCategories(){
-        for(Category category : book.getCategories()){          // fyller inn kategorilista
-            categList.getItems().add(categComponent(category));
-        }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
-    }
-
-    private void initCreatorArrays(){
-        stepsCreator = new ArrayList<String>();
-        categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, String>>();
-    }
-
-    private void initCombo(){
-        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
-    }
-
-    private void initRecipeAmount(){
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
-    }
-
-    private void initObjects(){//!wtf, LITT MYE FORSKJELLKIGE
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
         book.addDummy();
-    }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET
 
+        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
+        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
+        
+        for(Category category : book.getCategories()){          // fyller inn kategorilista
+            categList.getItems().add(categComponent(category));
+        }  
+
+        stepsCreator = new ArrayList<String>();
+        categoryCreator = new ArrayList<String>();
+        IngredCreator = new ArrayList<HashMap<String, String>>();
+
+        initFridgeFood();
+        initRecipeComponents();
+
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
+    }
+
+    //?usikker
     private void initRecipeComponents() {                                                   //inititializes the recipe components in the GUI, from the cookbook
         for (Recipe recipe : book.getRecipes()/*book.filter(book.getRecipes(), fridge)*/) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
     
+    //?usikker
     private void initFridgeFood(){                              //initializes the food in fridge
         fridgeFood = new ArrayList<HashMap<String, String>>();
         fridgeFood.addAll(fridge.getFood());
@@ -102,6 +90,7 @@ public class BookOfCookController {
         }
     }
     
+    //?usikker
     public void initViewContent(Recipe recipe){
         //column 1
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
@@ -126,21 +115,22 @@ public class BookOfCookController {
         initRecipeComponents();
     }
 
+    //!nesten helt lik updateCategCreatorList
     private void updateCategList(){
         categList.getItems().clear();
-
         book.collectCategories();
-
         for(Category category : book.getCategories()){                                //!init lager, updater skal gjøre klar for ny init ved endring
             categList.getItems().add(categComponent(category));
         }
     }
 
+    //?usikker
     public void updatefridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
     }
 
+    //!updater ligner hverandre med små forskjeller
     private void updateStepCreatorList() {
         stepsArea.clear();
         stepCreatorList.getItems().clear();
@@ -149,6 +139,7 @@ public class BookOfCookController {
         }
     }
 
+    //!updater ligner hverandre med små forskjeller
     private void updateIngredCreatorList() {
         ingredNameBar.clear();
         ingredAmountBar.clear();
@@ -158,16 +149,30 @@ public class BookOfCookController {
         }
     }
 
+    //!updater ligner hverandre med små forskjeller
     private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
         for(String category : categoryCreator){
             categCreatorList.getItems().add(createRemovable(category, removeList(category, categoryCreator)));
         }
+        // listUpdater(categoryCreator, categCreatorList, categoryBar);
     }
 
+    // private void listUpdater(ArrayList<Object> array, ListView list, TextInputControl...t){            //bruker varargs for å kunne ta inn flere textfields
+    //     for(TextInputControl text : t){
+    //         text.clear();
+    //     }
+    //     list.getItems().clear();
+    //     for(Object element : array){
+    //         list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));
+    //     }
+    // }
+    //?prøver å få til å ta inn ulike subklasser av en parent class som et parameter. kan korte ned updaters for creator lists mye
+    //?https://stackoverflow.com/questions/13056350/passing-in-a-sub-class-to-a-method-but-having-the-super-class-as-the-parameter
 
-    //*STYLING
+
+    //*godkjent
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -175,6 +180,7 @@ public class BookOfCookController {
         node.setLayoutY(y);
     }
 
+    //*godkjent
     public void styleRegion(Region region, String styleClass, Double width, Double height){
         region.getStyleClass().clear();
         region.getStyleClass().add(styleClass);
@@ -189,6 +195,7 @@ public class BookOfCookController {
         closeRecipeView();
     }
 
+    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
     public Button removeCategoryList(String target){
         Button btn = new Button("-");
         styleNode(btn, "standard-button", 10.0, 0.0);
@@ -199,6 +206,7 @@ public class BookOfCookController {
         return btn;
     }
 
+    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
     public Button removeIngredientList(HashMap<String, String> target){
             Button btn = new Button("-");
             styleNode(btn, "standard-button", 10.0, 0.0);
@@ -220,6 +228,7 @@ public class BookOfCookController {
 
     }
 
+    //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
     private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
         styleNode(btn, "standard-button", 80.0, 170.0);
@@ -229,7 +238,7 @@ public class BookOfCookController {
         recipeViewContent.add(btn, 1, 4);
     }
 
-    //*ADD METHODS
+    //?usikker
     public void addRecipe() {
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
         book.addRecipe(recipe);
@@ -238,12 +247,14 @@ public class BookOfCookController {
         book.collectCategories();
     }
 
+    //?usikker
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         String stepContent = stepsArea.getText();
         stepsCreator.add(stepContent);
         updateStepCreatorList();                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
+    //?usikker
     public void addIngredientCreator(){
         HashMap<String, String> ingredient = new HashMap<String,String>();
         ingredient.put("name", ingredNameBar.getText());
@@ -253,6 +264,7 @@ public class BookOfCookController {
         updateIngredCreatorList();
     }
 
+    //?usikker
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
@@ -280,8 +292,7 @@ public class BookOfCookController {
         return outputArray;
     }
 
-    //*COMPONENTS
-    //! DE TRE METODENE UNDER ER GANSKE LIKE
+    //! components er ganske like
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
         body.getChildren().add(categCheckBox(category));//adds children
@@ -289,6 +300,7 @@ public class BookOfCookController {
         return body;
     }
 
+    //! components er ganske like
     private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
         foodBody.getChildren().add(createFoodLabel(food, amount, unit));//adds children
@@ -296,6 +308,7 @@ public class BookOfCookController {
         return foodBody;
     }
 
+    //! components er ganske like
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
         styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
@@ -305,7 +318,7 @@ public class BookOfCookController {
         return recipeBtn;
     }
 
-    //*RECIPE VIEW
+    //?kan denne forenkles?
     public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
@@ -314,6 +327,7 @@ public class BookOfCookController {
         initViewContent(recipe);//add children
     }
 
+    //?kan denne forenkles?
     public void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
@@ -322,13 +336,14 @@ public class BookOfCookController {
         recipeAmount.setVisible(true);
     }
     
+    //*godkjent. brukes 9 ganger så korter ned ca 24 linjer
     private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
 
-    //! DISSE TRE METODENE UNDER ER GANSKE LIKE
+    //!veldig lik de andre view metodene
     private void viewCateg(Recipe recipe){//shorthand method for creating list and fill them with categories in recipe viewmode
         ListView<String> listView = new ListView<String>();
         viewLabel("Categories", recipeViewBox2, 0, 0);//add category label to grid
@@ -340,6 +355,7 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, 0, 1);
     }
 
+    //!veldig lik de andre view metodene
     private void viewIngred(Recipe recipe){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
         viewLabel("Ingredients", recipeViewBox2, 2, 0);//add ingredients label to grid
@@ -352,6 +368,7 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, 0, 3);
     }
 
+    //!veldig lik de andre view metodene,
     private void viewSteps(Recipe recipe){//shorthand method for creating list and fill them with steps in recipe viewmode
         ListView<String> listView = new ListView<String>();
         viewLabel("Steps", recipeViewBox2, 4, 0);//add steps label to grid
@@ -364,6 +381,7 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, 0, 5);
     }
 
+    //!kan legges i categ component
     private CheckBox categCheckBox(Category category){
         CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
 
@@ -389,6 +407,7 @@ public class BookOfCookController {
         return pane;
     }
 
+    //!kan legges i food component metoden
     private Button createDeleteX(String string){
         Button btn = new Button("X");
         styleNode(btn, "standard-button", 10.0, 0.0);
@@ -399,15 +418,14 @@ public class BookOfCookController {
         return btn;
     }
 
+    //!Kan legges i food component metoden
     private Label createFoodLabel(String foodname, String foodamount, String foodunit){
-        Label label = new Label();
-        label.setText(foodname + ": " + foodamount + " " + foodunit);
+        Label label = new Label(foodname + ": " + foodamount + " " + foodunit);
         styleNode(label, "list-label", 80.0, 10.0);
         return label;
     }
 
-    //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
-    //! SKALL VEKK, FLYTTE INN I COOKBOOK.JAVA
+    //! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
     public void searchFood() {
         searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
         if(searchedRecipes.size() > 0){
@@ -420,7 +438,7 @@ public class BookOfCookController {
     }
 
     //!MYE LOGIKK, filter recipes with categories
-    //! FLYTTE INN I COOKBOOK.JAVA
+    //! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
@@ -438,14 +456,13 @@ public class BookOfCookController {
         //updateAmountLabel(sortedRecipes);
     }
 
-    //*MYE LOGIKK, BURDE GÅ I BACKEND
-    //* FIKSA :)
+    //*godkjent
     public void fridgeAddFood() {
         fridge.addFood(fridgeNameInput.getText(), fridgeAmountInput.getText(), unitComboBoxFridge.getValue());
         updatefridge();
     }
 
-    //*FILE WRITING
+    //*Godkjent
     public void load() {        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Cookbook");
@@ -454,23 +471,25 @@ public class BookOfCookController {
         );
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
-        book = fileHandler.load(file);          //if the user chooses a file, initialize the cookbook
+        book = fileHandler.load(file);                              //if the user chooses a file, initialize the cookbook
         
         updateRecipeList();
         updateCategList();
     }
 
-    public void save() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Cookbook");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        Stage stage = new Stage();
-        File file = fileChooser.showSaveDialog(stage);
-        fileHandler.save(file, book);
+    //*Godkjent
+    public void save() {                                            //saves the cookbook as a csv file
+        FileChooser fileChooser = new FileChooser();                //creates a filechooser
+        fileChooser.setTitle("Save Cookbook");                      //sets the title of the filechooser window
+        fileChooser.getExtensionFilters().addAll(                   //adds the extension filter for csv files to the filechooser, such that the user can only save the cookbook as a csv file
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv")   //the extension filter is set to csv files
+        );                                  
+        Stage stage = new Stage();                                  //creates a new stage 
+        File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
+        fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
+    //?
     public Button removeList(String target, ArrayList<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
@@ -493,3 +512,14 @@ public class BookOfCookController {
     //     }
     // };
 }
+
+/*
+*GOLFING
+*searchbar og category filter erstattes av filter (ca.40 linjer)
+*totalt
+
+!KJENTE BUGS
+!amount label er ikke oppdatert
+!man kan legge inn verdier null i creator lister
+!du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit?
+*/
