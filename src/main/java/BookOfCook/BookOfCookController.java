@@ -582,8 +582,12 @@ public class BookOfCookController {
         return removeBtn;
     }
 
-    public void update(){
-        
+    public void update(ListView list, ArrayList<String> array, ListView undergruppe){
+        list.clear();
+        undergruppe.clear();
+        for(String s : array){
+            list.getItems().add(s);
+        }
     };
 
     /*
