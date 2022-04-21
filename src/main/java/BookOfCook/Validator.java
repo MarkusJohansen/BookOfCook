@@ -3,8 +3,6 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javafx.print.PrintColor;
-
 abstract class Validator {
 
     //*GENERAL METHODS
@@ -60,7 +58,7 @@ abstract class Validator {
     }
 
     // validates recipe name
-    public void numbersOrSpecials(String string) {
+    protected void numbersOrSpecials(String string) {
         nullOrEmpty(string);                                                                                                                          // checks if s is null or empty
         if (!(string.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
             throw new IllegalArgumentException("String cannot contain numbers or special characters");    // throw error
@@ -96,6 +94,15 @@ abstract class Validator {
         if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
             throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
         }
+    }
+
+    protected boolean checkIfCategoryExist(String categoryName, Cookbook book){
+        for(int i = 0; i < book.getCategories().size(); i++){
+            if( book.getCategories().get(i).getName().equals(categoryName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // *GENERAL TOOLBOX METHODS
