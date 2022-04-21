@@ -196,11 +196,18 @@ public class BookOfCookController {
     //-------------------------------------
     //*STYLING
     //-------------------------------------
-    public void styleLabel(Label label, String styleClass, Double x, Double y){
-        label.getStyleClass().clear();
-        label.getStyleClass().add(styleClass);
-        label.setLayoutX(x);
-        label.setLayoutY(y);
+    public void styleNode(Node node, String styleClass, Double x, Double y){
+        node.getStyleClass().clear();
+        node.getStyleClass().add(styleClass);
+        node.setLayoutX(x);
+        node.setLayoutY(y);
+    }
+
+    public void styleNodeSize(Node node, String styleClass, Double width, Double height){
+        node.getStyleClass().clear();
+        node.getStyleClass().add(styleClass);
+        node.maxWidth(width);
+        node.maxHeight(height);
     }
     
     //-------------------------------------
@@ -215,10 +222,12 @@ public class BookOfCookController {
     public Button removeCategoryList(String target){
         Button btn = new Button("X");
     
-        btn.getStyleClass().clear();
-        btn.getStyleClass().add("standard-button");
-        btn.setLayoutX(10);
-        btn.setLayoutY(0);
+        // btn.getStyleClass().clear();
+        // btn.getStyleClass().add("standard-button");
+        // btn.setLayoutX(10);
+        // btn.setLayoutY(0);
+
+        styleNode(btn, "standard-button", 10.0, 0.0);
 
         btn.setOnAction(e -> {
             categoryCreator.remove(target);
