@@ -2,7 +2,6 @@
 package BookOfCook;
 
 import java.util.*;
-import java.io.*;
 
 public class Cookbook extends Validator {
     private int recipeAmount;
@@ -10,39 +9,37 @@ public class Cookbook extends Validator {
     private ArrayList<Category> categories = new ArrayList<Category>();
 
     public Cookbook() {
-        this.recipeAmount = 0;                                                          // amount of recipes in cookbook is always 0 at start
+        this.recipeAmount = 0;  // amount of recipes in cookbook is always 0 at start
     }
 
-    // *ADD AND REMOVE METHODS
-    
+    //*add and remove recipes to/from cookbook
     public void addRecipe(Recipe recipe) {
-        duplicateRecipeName(recipes, recipe);                                               // checks for recipes with duplicate names
-        recipes.add(recipe);                                                            // adds recipe to cookbook
-        recipeAmount++;                                                                 // updates amount of recipes in cookbook
+        duplicateRecipeName(recipes, recipe);   // checks for recipes with duplicate names
+        recipes.add(recipe);                    // adds recipe to cookbook
+        recipeAmount++;                         // updates amount of recipes in cookbook
     }
 
-    // removes recipe from cookbook and updates recipe amount
-    public void removeRecipe(Recipe recipe) {
-        recipeExists(recipes, recipe);                       //? er denne nødvendig med tanke på hvoradn grensesnittet er satt opp?  if recipe exists
-        recipes.remove(recipe);                             // removes recipe from cookbook
-        recipeAmount--;                                     // updates amount of recipes in cookbook
+    public void removeRecipe(Recipe recipe) {   // removes recipe from cookbook and updates recipe amount
+        recipeExists(recipes, recipe);          //? er denne nødvendig med tanke på hvoradn grensesnittet er satt opp?  if recipe exists
+        recipes.remove(recipe);                 // removes recipe from cookbook
+        recipeAmount--;                         // updates amount of recipes in cookbook
     }
 
-    // *GETTERS
-
+    //*getter methods
     public int getAmount() {
-        return recipeAmount;                                // returns amount of recipes in cookbook
+        return recipeAmount;    // returns amount of recipes in cookbook
     }
 
     public ArrayList<Recipe> getRecipes() {
-        return new ArrayList<Recipe>(recipes);            // returns all recipes in cookbook     
+    return new ArrayList<Recipe>(recipes);  // returns all recipes in cookbook     
     }
 
     public ArrayList<Category> getCategories() {
-        return new ArrayList<Category>(categories);                                  // returns categories in cookbook
+        return new ArrayList<Category>(categories); // returns categories in cookbook
     }
 
-    public boolean checkIfCategoryExist(String c){
+    //*category methods
+    public boolean checkIfCategoryExist(String c){      //!er dette en valideringsmetode? brukes den? det er isåffal ikke i denne klassen
         for(int i = 0; i < categories.size(); i++){
             if(categories.get(i).getName().equals(c)){
                 return true;
@@ -51,19 +48,18 @@ public class Cookbook extends Validator {
         return false;
     }
 
-    // metode som returnerer alle recipes som inneholder alle kategoriene
-    public ArrayList<Recipe> filterByCategories(ArrayList<Category> categories){  // categories as parameter
-        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                    // create an output arraylist
-        for (Recipe recipe : recipes) {                                         // loops through all recipes in cookbook
-            boolean containsAllCategories = true;                              // sets temporary variable to true
-            for (Category category : categories) {                              // loops through all categories
-                if(!recipe.getCategories().contains(category)){                  // checks if recipe does not contain this category
-                    containsAllCategories = false;                                // if: set false
+
+    public ArrayList<Recipe> filterByCategories(ArrayList<Category> categories){    // metode som returnerer alle recipes som inneholder alle kategoriene
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                        // create an output arraylist
+        for (Recipe recipe : recipes) {                                             // loops through all recipes in cookbook
+            boolean containsAllCategories = true;                                   // sets temporary variable to true
+            for (Category category : categories) {                                  // loops through all categories
+                if(!recipe.getCategories().contains(category)){                     // checks if recipe does not contain this category
+                    containsAllCategories = false;                                  // if: set false
                 }
             }
-
             if(containsAllCategories){
-                sortedRecipes.add(recipe);                                     // if still true, add recipe to output array
+                sortedRecipes.add(recipe);                                          // if still true, add recipe to output array
             }
         }
         System.out.println(sortedRecipes);
@@ -72,7 +68,6 @@ public class Cookbook extends Validator {
 
     public void collectCategories(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
-
         for (Recipe recipe : recipes) {                                 // lopps through all recipes
             for (Category category : recipe.getCategories()) {          // loops through all categories in recipe
                 if(!collectedCategories.contains(category)){            // if not category already collected
@@ -84,29 +79,23 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
-    //*RECIPE SEARCH METHODS
-    // searches for recipes in cookbook with name containing searchString:
-    public ArrayList<Recipe> searchRecipes(String searchString) {
-        ArrayList<Recipe> searchResults = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {
-                searchResults.add(recipe);
+    //*Searchbar
+    public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {   // searches for recipes in cookbook with name containing searchString:
+        ArrayList<Recipe> searchResults = new ArrayList<>();                                        // initializes an output arraylist
+        for (Recipe recipe : filterTarget) {                                                        // loops through all recipes
+            if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {              // if recipe name contains searchString
+                searchResults.add(recipe);                                                          // add recipe to output arraylist
             }
         }
-        return searchResults;
+        return searchResults;                                                                       // return output arraylist
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes/*, String searchText, ArrayList<Category> categories*/, Fridge fridge){
-
+    //*Cookbook filtration
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText/*, ArrayList<Category> categories*/, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
 
         if(true){ // KJØLESKAP
             filteredRecipes = fridge.filter(recipes);
-        }
-
-        if(true){ // SØKE
-            //første blokk så tar du inn filteredrecipes
-            //resultatet blir en enda mindre filteredRecipes
         }
 
         if(true){ // KATEGORIER
@@ -114,7 +103,13 @@ public class Cookbook extends Validator {
             //resultatet blir en enda enda mindre filteredRecipes
         }
 
-        return filteredRecipes;
+        if(true){ // SØKE
+            //tar inn den enda mindre filteredrecipes
+            //resultatet blir en enda enda mindre filteredRecipes
+            filteredRecipes = searchRecipes(searchText, filteredRecipes);
+        }
+
+        return filteredRecipes;                         //returnerer filtrasjonsproduktet
     }
 
     //! TOSTRING METHOD brukes denne
@@ -123,65 +118,65 @@ public class Cookbook extends Validator {
         return "Cookbook [categories=" + categories + ", recipeAmount=" + recipeAmount + ", recipes=" + recipes + "]";
     }
 
-    public void load(File file) {
-        if (file.exists()) {
-            try {
-                Scanner scanner = new Scanner(file);
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
+    // public void load(File file) {
+    //     if (file.exists()) {
+    //         try {
+    //             Scanner scanner = new Scanner(file);
+    //             while (scanner.hasNextLine()) {
+    //                 String line = scanner.nextLine();
 
-                    //line 1
-                    String[] parts = line.split(",");
-                    String name = parts[0];
-                    int servings = Integer.parseInt(parts[1]);
-                    Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
-                    recipe.setDescription(parts[2]);
-                    recipe.setCalories(Double.parseDouble(parts[3]));
-                    recipe.setPrepTime(parts[4]);
+    //                 //line 1
+    //                 String[] parts = line.split(",");
+    //                 String name = parts[0];
+    //                 int servings = Integer.parseInt(parts[1]);
+    //                 Recipe recipe = new Recipe(name, servings); //! NY KONSTRUKTØR
+    //                 recipe.setDescription(parts[2]);
+    //                 recipe.setCalories(Double.parseDouble(parts[3]));
+    //                 recipe.setPrepTime(parts[4]);
 
-                    //line 2 categories
-                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-                    parts = line.split(",");
-                    for (String part : parts) {
-                        recipe.addCategory(new Category(part)); //!lager nye categorier
-                    }
-                    //line 3 ingredients
-                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-                    String[] ingredients = line.split("}"); //splits the ingredients into an array  
-                    for (String ingredient : ingredients) {
-                        ingredient = ingredient.replace("{", "");  //removes curly brackets
+    //                 //line 2 categories
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 parts = line.split(",");
+    //                 for (String part : parts) {
+    //                     recipe.addCategory(new Category(part)); //!lager nye categorier
+    //                 }
+    //                 //line 3 ingredients
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 String[] ingredients = line.split("}"); //splits the ingredients into an array  
+    //                 for (String ingredient : ingredients) {
+    //                     ingredient = ingredient.replace("{", "");  //removes curly brackets
 
-                        //if the ingredientstring starts with comma, then start from the second character in string
-                        if(ingredient.startsWith(",")){
-                            ingredient = ingredient.substring(0);
-                        }
+    //                     //if the ingredientstring starts with comma, then start from the second character in string
+    //                     if(ingredient.startsWith(",")){
+    //                         ingredient = ingredient.substring(0);
+    //                     }
 
-                        String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
+    //                     String[] ingredientParts = ingredient.split(",");   //splits the ingredient into an array of ingredient componetns
                         
-                        //slice ingredName from '=' to the end
-                        Double amount = Double.parseDouble(ingredientParts[0].substring(ingredientParts[0].indexOf("=")+1));
-                        String unit = ingredientParts[1].substring(ingredientParts[0].indexOf("="));
-                        String ingredName = ingredientParts[3].substring(ingredientParts[0].indexOf("="));
+    //                     //slice ingredName from '=' to the end
+    //                     Double amount = Double.parseDouble(ingredientParts[0].substring(ingredientParts[0].indexOf("=")+1));
+    //                     String unit = ingredientParts[1].substring(ingredientParts[0].indexOf("="));
+    //                     String ingredName = ingredientParts[3].substring(ingredientParts[0].indexOf("="));
 
-                        //add ingredient to recipe
-                        recipe.addIngredient(ingredName, amount, unit);
-                        System.out.println("succesfully added ingredient: " + ingredName + ' ' + amount + ' ' + unit);
-                    }
-                    //line 4 instructions
-                    line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
-                    String[] instructions = line.split("}"); //splits the instructions into an array
-                    for(String step : instructions){
-                        recipe.addStep(step);
-                    }
-                    //add recipe to cookbook
-                    recipes.add(recipe);
-                }
+    //                     //add ingredient to recipe
+    //                     recipe.addIngredient(ingredName, amount, unit);
+    //                     System.out.println("succesfully added ingredient: " + ingredName + ' ' + amount + ' ' + unit);
+    //                 }
+    //                 //line 4 instructions
+    //                 line = scanner.nextLine().replace("[", "").replace("]", ""); //removes the array brackets
+    //                 String[] instructions = line.split("}"); //splits the instructions into an array
+    //                 for(String step : instructions){
+    //                     recipe.addStep(step);
+    //                 }
+    //                 //add recipe to cookbook
+    //                 recipes.add(recipe);
+    //             }
 
-            scanner.close();
+    //         scanner.close();
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    //         } catch (FileNotFoundException e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }
 }

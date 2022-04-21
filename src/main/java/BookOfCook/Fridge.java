@@ -29,7 +29,7 @@ public class Fridge extends Validator{
         ingredient.put("amount", amount);               // adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
         ingredient.put("unit", unit);                   // adds the "unit" key, value pair to this ingredient hashmap, describes the unit of the ingredient
         foodInFridge.add(ingredient);                   // adds the ingredient to the list of ingredients
-        }
+    }   
 
     public void removeFood(String name) {
         boolean removedFood = false;

@@ -26,13 +26,13 @@ public class BookOfCookController {
     private ArrayList<Recipe> recipes, searchedRecipes;
     private ArrayList<HashMap<String, Object>> fridgeFood;
     private Fridge fridge;
-    private int numbersOfRecipesShown;                                          //! hva skjer her       
+    private int recipesShown;                                          //! hva skjer her       
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
 
     //*FIELDS FOR RECIPE CREATOR (TEMPORARY ARRAYS)
-    private ArrayList<String> stepsCreator = new ArrayList<String>();  
-    private ArrayList<String> categoryCreator = new ArrayList<String>();
-    private ArrayList<HashMap<String, Object>> IngredCreator = new ArrayList<HashMap<String, Object>>();
+    private ArrayList<String> stepsCreator;  
+    private ArrayList<String> categoryCreator;
+    private ArrayList<HashMap<String, Object>> IngredCreator;
 
     //*FXML-noder
 
@@ -63,8 +63,10 @@ public class BookOfCookController {
         initDummy();
         initFridgeFood();
         initRecipeComponents();
+        initRecipeAmount();
         initCategories();
         initUnitBoxes();
+        initTempArrays();
     }
 
     //inititializes the recipe components in the GUI, from the cookbook
@@ -72,10 +74,21 @@ public class BookOfCookController {
         //initializes the recipe ArrayList
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
-        for (Recipe recipe : book.filter(book.getRecipes())) {
+        for (Recipe recipe : book.filter(book.getRecipes(), fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
-        updateAmount();
+    }
+
+    public void initTempArrays() {
+        //initializes the temporary arrays
+        stepsCreator = new ArrayList<String>();
+        categoryCreator = new ArrayList<String>();
+        IngredCreator = new ArrayList<HashMap<String, Object>>();
+    }
+
+    private void initRecipeAmount() {
+        recipesShown = recipes.size();
+        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes.")); 
     }
 
     private void initbook(){
@@ -127,7 +140,7 @@ public class BookOfCookController {
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
     }
 
-    public void initDummy(){
+    public void initDummy(){    //!Ikke en del av sluttproduktet
         HashMap<String, Object> ost = new HashMap<String, Object>() {{
             put("name", "ost");
             put("amount", 1.0);
@@ -190,21 +203,10 @@ public class BookOfCookController {
         initFridgeFood();
     }
 
-    //! maybe only one of these,
-    public void updateAmount(){
-        numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipes.size() + "/" + book.getAmount() + " recipes.")); //!
-    }
-
-    public void updateAmountLabel(ArrayList<Recipe> recipeArray){
-        numbersOfRecipesShown = recipes.size();
-        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes.")); //!
-    }
-
     private void updateStepCreatorList() {
         stepsArea.clear();
         stepCreatorList.getItems().clear();
-        for(String step : stepsCreator){    //!dette skal være init
+        for(String step : stepsCreator){  
             stepCreatorList.getItems().add(createRemovable(step, removeStepList(step)));
         }
     }
@@ -213,7 +215,7 @@ public class BookOfCookController {
         ingredNameBar.clear();
         ingredAmountBar.clear();
         ingredCreatorList.getItems().clear();
-        for(HashMap<String, Object> ingredient : IngredCreator){ //! dette skal være init
+        for(HashMap<String, Object> ingredient : IngredCreator){ 
             ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
         }
     }
@@ -221,7 +223,7 @@ public class BookOfCookController {
     private void updateCategCreatorList() {
         categoryBar.clear();
         categCreatorList.getItems().clear();
-        for(String category : categoryCreator){ //!dette skal være init
+        for(String category : categoryCreator){
             categCreatorList.getItems().add(createRemovable(category, removeCategoryList(category)));
         }
     }
@@ -346,8 +348,8 @@ public class BookOfCookController {
     public void addRecipe() {
         System.out.println("Add button was clicked");
 
-        //create new recipe object
-        //Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        //!create new recipe object
+        //!Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
         recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
         recipe.setDescription(descriptionArea.getText());
@@ -423,14 +425,13 @@ public class BookOfCookController {
     }
 
     //!HER KJØRER DU MYE BACKEND I CONTROLLEREN SOM ER FRONTEND
-    //! DETTE ER DET DU SOM HAR GJORT DARRKUS. ITILLEGG TIL MUNKEN
     //partial functions for adding steps, ingredients and categories to recipe. shall be run in addRecipe()
     public void addCategoriesToRecipe(Recipe recipe){
         //book.categCollect();
         //loop through items in list
 
         for(String category : categoryCreator){
-            boolean categoryExists = false;
+            boolean categoryExists = false;                                     //!
 
             if(book.checkIfCategoryExist(category)){
                 for(Category c : book.getCategories()){

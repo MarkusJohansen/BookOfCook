@@ -6,8 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class LoadSaveClass implements LoadSave {
+public class FileHandler implements LoadSave {
 
     public void save(File file, Cookbook book) {
         System.out.println("Saving...");
@@ -50,19 +51,10 @@ public class LoadSaveClass implements LoadSave {
 
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
-
-                String[] data1 = line.split(",");
-                String[] data2 = bufferedReader.readLine().split(",");
-                String[] data3 = bufferedReader.readLine().split(",");
-                String[] data4 = bufferedReader.readLine().split(",");
+                String[] data = line.split(",");
+                continue;       
+                //read next line in document
                 
-                System.out.println(data.toString());
-                Recipe r = new Recipe(data[0], Integer.parseInt(data[1]), data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
-                // r.setCategories(data[5]);
-                // r.setIngredients(data[6]);
-                // r.setSteps(data[7]);
-                // foo.addRecipe(r);
-
             }
 
             bufferedReader.close();
