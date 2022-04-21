@@ -17,6 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -90,16 +91,12 @@ public class BookOfCookController {
         fridge.addFood("melk", "2", "L");
         fridge.addFood("ost", "400", "g");
         fridge.addFood("egg", "8", "stk");
-        fridge.addFood("rømme", "3", "dL");
-        fridge.addFood("ketchup", "5", "dL");
-        fridge.addFood("pastaskruer", "1", "kg");
 
         book.collectCategories();
 
-        // fyller inn kategorilista
-        for(Category category : book.getCategories()){
+        for(Category category : book.getCategories()){          // fyller inn kategorilista
             categList.getItems().add(categComponent(category));
-        }//! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
+        }                                                       //! IKKE EN DEL AV SLUTTPRODUKTET SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT SLUTT 
 
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
 
@@ -194,9 +191,8 @@ public class BookOfCookController {
         }
     }
 
-    //-------------------------------------
+
     //*STYLING
-    //-------------------------------------
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -204,17 +200,14 @@ public class BookOfCookController {
         node.setLayoutY(y);
     }
 
-    //!fungerer ikke
-    public void styleNodeSize(Node node, String styleClass, Double width, Double height){
-        node.getStyleClass().clear();
-        node.getStyleClass().add(styleClass);
-        node.maxWidth(width);
-        node.maxHeight(height);
+    public void styleRegion(Region region, String styleClass, Double width, Double height){
+        region.getStyleClass().clear();
+        region.getStyleClass().add(styleClass);
+        region.setMaxWidth(width);
+        region.setMaxWidth(height);
     }
     
-    //-------------------------------------
     //!REMOVE METHODS trenger generell metode, for å  kutte linjer
-    //-------------------------------------
     public void removeRecipe(Recipe recipe){
         book.removeRecipe(recipe);
         updateRecipeList();
@@ -241,24 +234,18 @@ public class BookOfCookController {
             return btn;
     }
 
-    //-------------------------------------
     //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
-    //-------------------------------------
-    //creates a close Btn for closing recipe view
-    private void closeBtn(Recipe recipe){
-        //creates button object
-        Button btn = new Button("Close");
+    private void closeBtn(Recipe recipe){    //creates a close Btn for closing recipe view
+        Button btn = new Button("Close");           //creates button object
         styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             closeRecipeView();
         });
+        recipeViewContent.add(btn, 0, 4);        //adds to grid
 
-        //adds to grid
-        recipeViewContent.add(btn, 0, 4);
     }
 
-    //creates a remove Btn in recipe view, for removing the recipe from the cookbook
-    private void removeBtn(Recipe recipe){
+    private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
         styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
@@ -276,17 +263,17 @@ public class BookOfCookController {
         book.collectCategories();
     }
 
-    public void addStepCreator(){//create step object with name from textfield, then add step to list in creator
+    public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         String stepContent = stepsArea.getText();
         stepsCreator.add(stepContent);
-        updateStepCreatorList();//adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+        updateStepCreatorList();                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
     //! MYE LOGIKK, FLYTTE TIL BACKEND
     public ArrayList<String> getStepsFromCreator(){
         ArrayList<String> outputArray = new ArrayList<String>(stepsCreator);
-        stepsCreator.clear(); //clear the list for next use
-        stepCreatorList.getItems().clear(); //clear the list for next use
+        stepsCreator.clear();                                               //clear the list for next use
+        stepCreatorList.getItems().clear();                                 //clear the list for next use
         return outputArray;
     }
 
@@ -342,11 +329,7 @@ public class BookOfCookController {
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
         body.getChildren().add(categCheckBox(category));//adds children
-
-        body.getStyleClass().clear();//styling
-        body.getStyleClass().add("category-body");
-        body.setMaxWidth(Double.MAX_VALUE);
-        body.setMaxHeight(Double.MAX_VALUE);
+        styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
     }
 
@@ -359,11 +342,7 @@ public class BookOfCookController {
 
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
-
-        recipeBtn.getStyleClass().clear();//styling
-        recipeBtn.getStyleClass().add("recipeBtn");
-        recipeBtn.setMaxWidth(Double.MAX_VALUE);
-        recipeBtn.setMaxHeight(Double.MAX_VALUE);
+        styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
         recipeBtn.setOnAction(e -> {//event
             viewRecipe(recipe);
         });
@@ -375,12 +354,7 @@ public class BookOfCookController {
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
-        
-        recipeView.getStyleClass().clear();//set recipe style
-        recipeView.getStyleClass().add("recipe-view");
-        recipeView.setMaxWidth(Double.MAX_VALUE);
-        recipeView.setMaxHeight(Double.MAX_VALUE);
-
+        styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         initViewContent(recipe);//add children
     }
 
