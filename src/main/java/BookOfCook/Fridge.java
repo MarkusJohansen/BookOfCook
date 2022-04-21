@@ -19,6 +19,8 @@ public class Fridge extends Validator{
 
     //*ADDING AND REMOVING FOOD 
     public void addFood(String name, String amount, String unit) {
+        nullOrEmpty(name);
+        nullOrEmpty(amount);
         ingredientExists(foodInFridge, name);        
         HashMap<String, String> ingredient = new HashMap<String, String>();
         ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
@@ -28,6 +30,7 @@ public class Fridge extends Validator{
     }   
 
     public void removeFood(String name) {
+        
         boolean removedFood = false;
         for (int i = 0; i < foodInFridge.size(); i++){                          // iterates through foodInFridge
             if(foodInFridge.get(i).get("name") == name){                        // checks if food is equal to name

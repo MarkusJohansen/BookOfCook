@@ -477,7 +477,7 @@ public class BookOfCookController {
     }
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
-    //! SAKL VEKK
+    //! SKALL VEKK, FLYTTE INN I COOKBOOK.JAVA
     public void searchFood() {
         searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
         if(searchedRecipes.size() > 0){
@@ -490,6 +490,7 @@ public class BookOfCookController {
     }
 
     //!MYE LOGIKK, filter recipes with categories
+    //! FLYTTE INN I COOKBOOK.JAVA
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
@@ -504,15 +505,12 @@ public class BookOfCookController {
         for(Recipe r : sortedRecipes){
             recipeList.getItems().add(recipeComponent(r));
         }
-        // updateAmountLabel(sortedRecipes);
+        //updateAmountLabel(sortedRecipes);
     }
 
-    //!MYE LOGIKK, bURDE GÅ I BACKEND
+    //*MYE LOGIKK, BURDE GÅ I BACKEND
+    //* FIKSA :)
     public void fridgeAddFood() {
-        if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0){
-            System.out.println("Not all textfields filled in");
-            return;
-        }
         fridge.addFood(fridgeNameInput.getText(), fridgeAmountInput.getText(), unitComboBoxFridge.getValue());
         updatefridge();
     }
