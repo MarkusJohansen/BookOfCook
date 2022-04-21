@@ -46,12 +46,14 @@ public class FileHandler implements LoadSave {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader); 
 
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
+            //read 5 lines at a time
+            String line = bufferedReader.readLine();
+            while (line != null) {
                 String[] data = line.split(",");
-                continue;       
-                //read next line in document
-                
+                Recipe recipe = new Recipe(data[0], Integer.parseInt(data[1]), data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+                foo.addRecipe(recipe);
+                line = bufferedReader.readLine();
+                System.out.println(line);
             }
 
             bufferedReader.close();

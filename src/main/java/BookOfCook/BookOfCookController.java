@@ -75,7 +75,7 @@ public class BookOfCookController {
         //initializes the recipe ArrayList
         recipes = new ArrayList<Recipe>();
         recipes.addAll(book.getRecipes());
-        for (Recipe recipe : book.filter(book.getRecipes(), fridge)) {
+        for (Recipe recipe : recipes/*book.filter(book.getRecipes(), fridge)*/) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
@@ -350,34 +350,36 @@ public class BookOfCookController {
     //-------------------------------------
     //*ADD METHODS
     //-------------------------------------
+
+    //!Funksjonen trenger total overhaling nå som vi har ny konstruktør for recipe objekter
     public void addRecipe() {
-        System.out.println("Add button was clicked");
+        // System.out.println("Add button was clicked");
 
-        //!create new recipe object
-        //!Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
+        // //!create new recipe object
+        // //!Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()));
 
-        recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
-        recipe.setDescription(descriptionArea.getText());
+        // recipe.setPrepTime(prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue());
+        // recipe.setDescription(descriptionArea.getText());
 
-        //optional info
-        if(!caloriesBar.getText().equals("")){
-            recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
-        }
+        // //optional info
+        // if(!caloriesBar.getText().equals("")){
+        //     recipe.setCalories(Integer.parseInt(caloriesBar.getText()));
+        // }
 
-        //add to the arrays using the buttons. and adding them to list
-        addStepsToRecipe(recipe);
-        addIngredientsToRecipe(recipe);
-        addCategoriesToRecipe(recipe);
+        // //add to the arrays using the buttons. and adding them to list
+        // addStepsToRecipe(recipe);
+        // addIngredientsToRecipe(recipe);
+        // addCategoriesToRecipe(recipe);
 
-        //add to the cookbook
-        book.addRecipe(recipe);
+        // //add to the cookbook
+        // book.addRecipe(recipe);
 
-        //update the recipe list by adding new component
-        updateRecipeList();
-        updateCategList();
-        book.categCollect();       
+        // //update the recipe list by adding new component
+        // updateRecipeList();
+        // updateCategList();
+        // book.categCollect();       
 
-        System.out.println(book.getCategories());
+        // System.out.println(book.getCategories());
     }
 
     public void addStepCreator(){
@@ -648,19 +650,19 @@ public class BookOfCookController {
 
     //! SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH  SEARCH 
     //search for food
-    // public void searchFood() {
-    //     System.out.println("Search food bar was used was clicked");
-    //     searchedRecipes = book.searchRecipes(searchBar.getText());
-    //     if(searchedRecipes.size() > 0){
-    //         recipeList.getItems().clear();
-    //         for(Recipe r : searchedRecipes){
-    //             recipeList.getItems().add(recipeComponent(r));
-    //         }
-    //     }
-    //     updateAmountLabel(searchedRecipes);
-    // }
+    public void searchFood() {
+        System.out.println("Search food bar was used was clicked");
+        searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
+        if(searchedRecipes.size() > 0){
+            recipeList.getItems().clear();
+            for(Recipe r : searchedRecipes){
+                recipeList.getItems().add(recipeComponent(r));
+            }
+        }
+        // updateAmountLabel(searchedRecipes);
+    }
 
-    //filter recipes with categories
+    //!MYE LOGIKK, filter recipes with categories
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
@@ -675,33 +677,26 @@ public class BookOfCookController {
         for(Recipe r : sortedRecipes){
             recipeList.getItems().add(recipeComponent(r));
         }
-        updateAmountLabel(sortedRecipes);
+        // updateAmountLabel(sortedRecipes);
     }
 
+    //!MYE LOGIKK, bURDE GÅ I BACKEND
     public void fridgeAddFood() {
         System.out.println("add food btton");
-
         if(fridgeNameInput.getText().length() == 0 || fridgeAmountInput.getText().length() == 0){
-
             System.out.println("Not all textfields filled in");
             return;
         }
-
-        if(fridge.isFoodInFridge(fridgeNameInput.getText())){
-            System.out.println("That type of food is already in your fridge");
-            return;
-        }
-
+        // if(fridge.isFoodInFridge(fridgeNameInput.getText())){
+        //     System.out.println("That type of food is already in your fridge");
+        //     return;
+        // }
         fridge.addFood(fridgeNameInput.getText(), Double.parseDouble(fridgeAmountInput.getText()), unitComboBoxFridge.getValue());
-        
         updatefridge();
     }
 
     //*FILE WRITING
-    public void load() {
-        System.out.println("Load button was clicked");
-        //open csv file and read it, then renitialize the cookbook
-        //let the user choose the file
+    public void load() {        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Cookbook");
         fileChooser.getExtensionFilters().addAll(
@@ -710,21 +705,15 @@ public class BookOfCookController {
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
 
+        fileHandler.load(file);          //if the user chooses a file, initialize the cookbook
 
-        //if the user chooses a file, initialize the cookbook
-        if(file != null){
-            book.load(file);
-            updateAmount();
-            updateRecipeList();
-            updateCategList();
-            System.out.println("Cookbook loaded successfully");
-        }
+
+        //update the scene for the new cookbook
+        updateRecipeList();
+        updateCategList();
     }
 
-    //can save to file
     public void save() {
-        System.out.println("Save button was clicked");
-        //create filechooser and save the cookbook at prefered location in new stage
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Cookbook");
         fileChooser.getExtensionFilters().addAll(
@@ -733,7 +722,6 @@ public class BookOfCookController {
         Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
         fileHandler.save(file, book);
-        System.out.println("Cookbook saved successfully");
     }
 
     /*
