@@ -32,7 +32,7 @@ public class BookOfCookController {
     private ArrayList<String> stepsCreator;  
     private ArrayList<String> categoryCreator;
     private ArrayList<HashMap<String, String>> IngredCreator;
-
+//penis
     @FXML
     private Label number, label, recipeAmount;
     @FXML
@@ -88,7 +88,7 @@ public class BookOfCookController {
         fridgeFood = new ArrayList<HashMap<String, String>>();
         fridgeFood.addAll(fridge.getFood());
         for(HashMap<String, String> food : fridgeFood){
-            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
+            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString())); //penis
         }
     }
 
@@ -107,7 +107,7 @@ public class BookOfCookController {
             categList.getItems().add(categComponent(category));
         }
     }
-
+//penis
     //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
     public void updatefridge(){
         fridgeList.getItems().clear();
@@ -181,7 +181,7 @@ public class BookOfCookController {
             });   
             return btn;
     }
-
+//penis
     //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
     private void closeBtn(){    //creates a close Btn for closing recipe view
         Button btn = new Button("Close");           //creates button object
@@ -266,7 +266,7 @@ public class BookOfCookController {
         categCreatorList.getItems().clear(); //clear the list for next use
         return outputArray;
     }
-
+//penis
     //?usikker
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
@@ -293,7 +293,7 @@ public class BookOfCookController {
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             fridge.removeFood(food);
-            updatefridge();
+            updatefridge(); //penis
         });
 
         Label label = new Label(food + ": " + amount + " " + unit);
@@ -326,7 +326,7 @@ public class BookOfCookController {
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
-
+//penis
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
@@ -358,7 +358,7 @@ public class BookOfCookController {
     //*godkjent https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
     public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
-        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid
+        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid //penis
         for(String o : array){//shorthand method for)
             listView.getItems().add(o.toString());
         }
@@ -439,7 +439,7 @@ public class BookOfCookController {
             listView.remove(target);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
-        });
+        }); //penis
         return btn;
     }
 }
