@@ -1,16 +1,11 @@
 package BookOfCook;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle.Control;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -45,7 +40,9 @@ public class BookOfCookController {
     @FXML
     private Pane recipeView, recipeStepView;
     @FXML
-    private ListView fridgeList, categList, recipeList, categCreatorList, ingredCreatorList, stepCreatorList;
+    private ListView<Pane> fridgeList, categList, categCreatorList, ingredCreatorList, stepCreatorList;
+    @FXML
+    private ListView<Button> recipeList;
     @FXML
     private TextField recipeNameBar, stepsField, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredNameBar, ingredAmountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
     @FXML
@@ -94,26 +91,6 @@ public class BookOfCookController {
             fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString()));
         }
     }
-    
-    //*godkjent
-    public void initViewContent(Recipe recipe){
-        viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
-        viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
-        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
-        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
-
-        List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
-        List<String> steps = recipe.getSteps();
-        List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
-        viewList(0, 0, 1, 0, "Categories", categories);
-        viewList(4, 0, 5, 0, "steps", steps);
-        viewList(2, 0, 3, 0, "Ingredients", Ingredients);
-
-        //btns
-        closeBtn();
-        removeBtn(recipe);
-    }
 
     //*godkjent
     public void updateRecipeList(){
@@ -131,7 +108,7 @@ public class BookOfCookController {
         }
     }
 
-    //?usikker kan listupdater kjøres her
+    //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
     public void updatefridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
@@ -144,7 +121,7 @@ public class BookOfCookController {
     }
 
     //*godkjent
-    private void listUpdater(List<String> array, ListView list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
+    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //clear the textcontrol
         }
@@ -153,7 +130,6 @@ public class BookOfCookController {
             list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));     //add element to listview
         }
     }
-
 
     //*godkjent
     public void styleNode(Node node, String styleClass, Double x, Double y){
@@ -178,7 +154,7 @@ public class BookOfCookController {
         closeRecipeView();
     }
 
-    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
+    //!REMOVE METHODS trenger generell metode, for å  kutte linjer, kan man bruke remove list?
     public Button removeCategoryList(String target){
         Button btn = new Button("-");
         styleNode(btn, "standard-button", 10.0, 0.0);
@@ -189,7 +165,7 @@ public class BookOfCookController {
         return btn;
     }
 
-    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
+    //!REMOVE METHODS trenger generell metode, for å  kutte linjer, kan man bruke remove list?
     public Button removeIngredientList(HashMap<String, String> target){
             Button btn = new Button("-");
             styleNode(btn, "standard-button", 10.0, 0.0);
@@ -282,11 +258,10 @@ public class BookOfCookController {
         }
         categoryCreator.clear(); //clear the list for next use
         categCreatorList.getItems().clear(); //clear the list for next use
-
         return outputArray;
     }
 
-    //?usiker
+    //?usikker
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
         CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
@@ -339,7 +314,23 @@ public class BookOfCookController {
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
         styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
-        initViewContent(recipe);//add children
+        
+        viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
+        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
+        viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
+        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
+        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
+
+        List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        List<String> steps = recipe.getSteps();
+        List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        viewList(0, 0, 1, 0, "Categories", categories);
+        viewList(4, 0, 5, 0, "steps", steps);
+        viewList(2, 0, 3, 0, "Ingredients", Ingredients);
+
+        //btns
+        closeBtn();
+        removeBtn(recipe);
     }
 
     //?kan denne forenkles?
@@ -471,5 +462,4 @@ public class BookOfCookController {
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 !lage penere tostring for ingredients
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
-!
 */
