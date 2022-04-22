@@ -131,7 +131,7 @@ public class BookOfCookController {
         }
     }
 
-    //?usikker
+    //?usikker kan listupdater kjøres her
     public void updatefridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
@@ -245,7 +245,7 @@ public class BookOfCookController {
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         String stepContent = stepsField.getText();
         stepsCreator.add(stepContent);
-        listUpdater(stepsCreator, stepCreatorList, stepsField));                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+        listUpdater(stepsCreator, stepCreatorList, stepsField);                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
     //!må ha validering her for at disse skal erstatte get
