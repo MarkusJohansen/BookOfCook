@@ -10,6 +10,7 @@ import java.util.ResourceBundle.Control;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -94,7 +95,7 @@ public class BookOfCookController {
         }
     }
     
-    //?usikker
+    //*godkjent
     public void initViewContent(Recipe recipe){
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
         viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
@@ -110,11 +111,11 @@ public class BookOfCookController {
         viewList(2, 0, 3, 0, "Ingredients", Ingredients);
 
         //btns
-        closeBtn(recipe);
+        closeBtn();
         removeBtn(recipe);
     }
 
-    //*UPDATERS
+    //*godkjent
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
@@ -136,28 +137,14 @@ public class BookOfCookController {
         initFridgeFood();
     }
 
-    //*Godkjent
-    private void updateStepCreatorList() {
-        listUpdater(stepsCreator, stepCreatorList, stepsField);
-    }
-
-    //!updater ligner hverandre med små forskjeller
+    //*godkjent
     private void updateIngredCreatorList() {
-        ingredNameBar.clear();
-        ingredAmountBar.clear();
-        ingredCreatorList.getItems().clear();
-        for(HashMap<String, String> ingredient : IngredCreator){ 
-            ingredCreatorList.getItems().add(createRemovable(ingredient.get("name") + " " + ingredient.get("amount") + " " + ingredient.get("unit"), removeIngredientList(ingredient)));
-        }
+        List<String> ingredients = IngredCreator.stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);
     }
 
-    //*Godkjent
-    private void updateCategCreatorList() {
-        listUpdater(categoryCreator, categCreatorList, categoryBar);
-    }
-
-    //?Godkjent, men kan prøve å inkludere ingredCreatorList
-    private void listUpdater(ArrayList<String> array, ListView list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
+    //*godkjent
+    private void listUpdater(List<String> array, ListView list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //clear the textcontrol
         }
@@ -166,8 +153,6 @@ public class BookOfCookController {
             list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));     //add element to listview
         }
     }
-    //?prøver å få til å ta inn ulike subklasser av en parent class som et parameter. kan korte ned updaters for creator lists mye
-    //?https://stackoverflow.com/questions/13056350/passing-in-a-sub-class-to-a-method-but-having-the-super-class-as-the-parameter
 
 
     //*godkjent
@@ -186,7 +171,7 @@ public class BookOfCookController {
         region.setMaxWidth(height);
     }
     
-    //!REMOVE METHODS trenger generell metode, for å  kutte linjer
+    //*godkjent
     public void removeRecipe(Recipe recipe){
         book.removeRecipe(recipe);
         updateRecipeList();
@@ -199,7 +184,7 @@ public class BookOfCookController {
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             categoryCreator.remove(target);
-            updateCategCreatorList();
+            listUpdater(categoryCreator, categCreatorList, categoryBar);;
         });
         return btn;
     }
@@ -216,7 +201,7 @@ public class BookOfCookController {
     }
 
     //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
-    private void closeBtn(Recipe recipe){    //creates a close Btn for closing recipe view
+    private void closeBtn(){    //creates a close Btn for closing recipe view
         Button btn = new Button("Close");           //creates button object
         styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
@@ -224,6 +209,7 @@ public class BookOfCookController {
         });
         recipeViewContent.add(btn, 0, 4);        //adds to grid
 
+        // viewBtn("Close", () -> closeRecipeView(), 0, 4);
     }
 
     //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
@@ -234,6 +220,16 @@ public class BookOfCookController {
             removeRecipe(recipe);
         });
         recipeViewContent.add(btn, 1, 4);
+    }
+
+    //?prøver å lage shorthands for buttons, men sliter med å passe void arguments som funksjoner
+    private void viewBtn(String btnLabel, Runnable function, int btnX, int btnY){ 
+        Button btn = new Button(btnLabel);
+        styleNode(btn, "standard-button", 80.0, 170.0);
+        btn.setOnAction(e -> {
+            function.run();
+        });
+        recipeViewContent.add(btn, btnX, btnY);
     }
 
     //?usikke, må ha mer updaters?
@@ -249,7 +245,7 @@ public class BookOfCookController {
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         String stepContent = stepsField.getText();
         stepsCreator.add(stepContent);
-        updateStepCreatorList();                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+        listUpdater(stepsCreator, stepCreatorList, stepsField));                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
     //!må ha validering her for at disse skal erstatte get
@@ -266,7 +262,7 @@ public class BookOfCookController {
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
-        updateCategCreatorList();//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+        listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     //! MYE LOGIKK, FLYTTE TIL BACKEND
@@ -290,12 +286,10 @@ public class BookOfCookController {
         return outputArray;
     }
 
-    //! components er ganske like
+    //?usiker
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
-
         CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
-
         checkbox.setOnAction(e -> {//on checkbox click
             if(checkbox.isSelected()){
                 categoriesClicked.add(category);
@@ -310,7 +304,7 @@ public class BookOfCookController {
         return body;
     }
 
-    //! components er ganske like, kalles kun en gang
+    //?usikker
     private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
         Button btn = new Button("X");
@@ -329,7 +323,7 @@ public class BookOfCookController {
         return foodBody;
     }
 
-    //! components er ganske like
+    //?usikker
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
         styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
@@ -357,15 +351,14 @@ public class BookOfCookController {
         recipeAmount.setVisible(true);
     }
     
-    //*godkjent. brukes 9 ganger så korter ned ca 24 linjer
+    //*godkjent
     private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
 
-    //?https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
-    //?prøve å få den til å dekke de ulike typene arrays
+    //*godkjent https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
     public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
         viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid
@@ -399,7 +392,6 @@ public class BookOfCookController {
         // updateAmountLabel(searchedRecipes);
     }
 
-    //!MYE LOGIKK, filter recipes with categories
     //! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
     public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
@@ -452,15 +444,15 @@ public class BookOfCookController {
     }
 
     //?usikker, denne kan kanskje forbedres med enda mer generelle klasser
-    public Button removeList(String target, ArrayList<String> listView){
+    public Button removeList(String target, List<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
         styleNode(btn, "standard-button", 10.0, 0.0);
 
         btn.setOnAction(e -> {
             listView.remove(target);
-            updateCategCreatorList();
-            updateStepCreatorList();
+            listUpdater(categoryCreator, categCreatorList, categoryBar);;
+            listUpdater(stepsCreator, stepCreatorList, stepsField);
         });
         return btn;
     }
@@ -477,5 +469,7 @@ public class BookOfCookController {
 !amount label er ikke oppdatert
 !man kan legge inn verdier null i creator lister
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
-!lage penere components
+!lage penere tostring for ingredients
+!Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
+!
 */
