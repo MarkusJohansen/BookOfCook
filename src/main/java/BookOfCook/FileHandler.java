@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FileHandler implements LoadSave {
+public class FileHandler extends Validator implements LoadSave{
 
     public void save(File file, Cookbook book) {
         System.out.println("Saving...");
@@ -36,17 +36,17 @@ public class FileHandler implements LoadSave {
         }
     }
 
-    //Coookbook load() konstruerer et cookbook objekt fra Dataen i filen, og returnerer denne cookbooken.
-    //dette cookbook objektet skal erstatte den eksisterende cookbooken som leses i grensesnittet.
     public Cookbook load(File file) {
+        nullOrEmpty(file);
+
         System.out.println("\nLoading...\n");
         Cookbook foo = new Cookbook();
         try {                                                                //read csv file using filereader and buffered reader Strings
             FileReader fileReader = new FileReader(file);
             BufferedReader br = new BufferedReader(fileReader); 
 
-            //read 5 lines at a time
-            String line = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");;       //muligens gjøre denne til readline
+            //!trenger ikke alle replacene på hver linje
+            String line = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");      //muligens gjøre denne til readline
             
             while (line != null) {
                 String line2 = br.readLine().replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");
@@ -58,7 +58,6 @@ public class FileHandler implements LoadSave {
                 String[] ingredientData = line3.split(";");
                 String[] stepsData = line4.split(",");                                      
             
-                //construct hashmap for ingredients
                 ArrayList<HashMap<String, String>> ingredients = new ArrayList<HashMap<String, String>>();
                 for (String s : ingredientData) {  
                     HashMap<String, String> ingredient = new HashMap<String, String>();
@@ -70,13 +69,11 @@ public class FileHandler implements LoadSave {
                     ingredients.add(ingredient);
                 }
 
-                //construct categories for recipe (lager nye kategorier)
                 ArrayList<Category> categories = new ArrayList<Category>();
                 for(String s : categoriesData) {
                     categories.add(new Category(s));
                 }
 
-                //converting String[] to ArrayList<String> for steps
                 ArrayList<String> steps = new ArrayList<String>();
                 for(String step : stepsData) {
                     steps.add(step.trim());

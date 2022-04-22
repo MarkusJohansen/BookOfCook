@@ -112,8 +112,8 @@
             <Button layoutX="353.0" layoutY="700.0" mnemonicParsing="false" onAction="#addStepCreator" prefHeight="25.0" prefWidth="86.0" styleClass="standard-button" text="Add" />
             <ListView fx:id="categCreatorList" layoutX="32.0" layoutY="143.0" prefHeight="95.0" prefWidth="407.0" styleClass="recipe-creator-list" />
             <Button layoutX="306.0" layoutY="251.0" mnemonicParsing="false" onAction="#addCategoryCreator" prefHeight="25.0" prefWidth="135.0" styleClass="standard-button" text="Add" />
-            <TextArea fx:id="stepsArea" layoutX="34.0" layoutY="681.0" prefHeight="63.0" prefWidth="310.0" promptText="Step" />
             <ComboBox fx:id="timeUnitComboBoxRecipe" layoutX="304.0" layoutY="558.0" prefHeight="25.0" prefWidth="135.0" promptText="Hours/ Minutes" />
+            <TextField fx:id="stepsField" layoutX="33.0" layoutY="681.0" prefHeight="63.0" prefWidth="300.0" promptText="Step" />
          </children>
       </Pane>
       <Pane layoutX="1.0" layoutY="-1.0" prefHeight="63.0" prefWidth="1485.0" styleClass="level-1-panes">

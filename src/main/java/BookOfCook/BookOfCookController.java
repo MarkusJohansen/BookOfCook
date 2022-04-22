@@ -1,10 +1,14 @@
 package BookOfCook;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle.Control;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -42,9 +46,9 @@ public class BookOfCookController {
     @FXML
     private ListView fridgeList, categList, recipeList, categCreatorList, ingredCreatorList, stepCreatorList;
     @FXML
-    private TextField recipeNameBar, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredNameBar, ingredAmountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
+    private TextField recipeNameBar, stepsField, servesPeopleBar, prepTimeBar, categoryBar, caloriesBar, ingredNameBar, ingredAmountBar, searchBar, fridgeNameInput, fridgeAmountInput, fridgeUnitInput;
     @FXML
-    private TextArea descriptionArea, stepsArea;
+    private TextArea descriptionArea;
     @FXML
     private ComboBox<String> unitComboBoxRecipe, unitComboBoxFridge, timeUnitComboBoxRecipe;
     @FXML
@@ -98,9 +102,14 @@ public class BookOfCookController {
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
+
         //column 2
-        viewCateg(recipe);
-        viewSteps(recipe);
+        List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        List<String> steps = recipe.getSteps();
+        List<String> Ingredients = recipe.getSteps().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        viewList(0, 0, 1, 0, "Categories", categories);
+        viewList(4, 0, 5, 0, "steps", steps);
+
         viewIngred(recipe);
         //btns
         closeBtn(recipe);
@@ -130,13 +139,9 @@ public class BookOfCookController {
         initFridgeFood();
     }
 
-    //!updater ligner hverandre med små forskjeller
+    //*Godkjent
     private void updateStepCreatorList() {
-        stepsArea.clear();
-        stepCreatorList.getItems().clear();
-        for(String step : stepsCreator){  
-            stepCreatorList.getItems().add(createRemovable(step, removeList(step, stepsCreator)));
-        }
+        listUpdater(stepsCreator, stepCreatorList, stepsField);
     }
 
     //!updater ligner hverandre med små forskjeller
@@ -149,25 +154,21 @@ public class BookOfCookController {
         }
     }
 
-    //!updater ligner hverandre med små forskjeller
+    //*Godkjent
     private void updateCategCreatorList() {
-        categoryBar.clear();
-        categCreatorList.getItems().clear();
-        for(String category : categoryCreator){
-            categCreatorList.getItems().add(createRemovable(category, removeList(category, categoryCreator)));
-        }
-        // listUpdater(categoryCreator, categCreatorList, categoryBar);
+        listUpdater(categoryCreator, categCreatorList, categoryBar);
     }
 
-    // private void listUpdater(ArrayList<Object> array, ListView list, TextInputControl...t){            //bruker varargs for å kunne ta inn flere textfields
-    //     for(TextInputControl text : t){
-    //         text.clear();
-    //     }
-    //     list.getItems().clear();
-    //     for(Object element : array){
-    //         list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));
-    //     }
-    // }
+    //?Godkjent, men kan prøve å inkludere ingredCreatorList
+    private void listUpdater(ArrayList<String> array, ListView list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
+        for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
+            ((TextInputControl) text).clear();                                                                   //clear the textcontrol
+        }
+        list.getItems().clear();                                                                                 //clear listview
+        for(Object element : array){                                                                             //for every element in array                                   
+            list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));     //add element to listview
+        }
+    }
     //?prøver å få til å ta inn ulike subklasser av en parent class som et parameter. kan korte ned updaters for creator lists mye
     //?https://stackoverflow.com/questions/13056350/passing-in-a-sub-class-to-a-method-but-having-the-super-class-as-the-parameter
 
@@ -238,7 +239,7 @@ public class BookOfCookController {
         recipeViewContent.add(btn, 1, 4);
     }
 
-    //?usikker
+    //?usikke, må ha mer updaters?
     public void addRecipe() {
         Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
         book.addRecipe(recipe);
@@ -247,14 +248,14 @@ public class BookOfCookController {
         book.collectCategories();
     }
 
-    //?usikker
+    //!må ha validering her for at disse skal erstatte get
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        String stepContent = stepsArea.getText();
+        String stepContent = stepsField.getText();
         stepsCreator.add(stepContent);
         updateStepCreatorList();                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
     }
 
-    //?usikker
+    //!må ha validering her for at disse skal erstatte get
     public void addIngredientCreator(){
         HashMap<String, String> ingredient = new HashMap<String,String>();
         ingredient.put("name", ingredNameBar.getText());
@@ -264,7 +265,7 @@ public class BookOfCookController {
         updateIngredCreatorList();
     }
 
-    //?usikker
+    //!må ha validering her for at disse skal erstatte get
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         categoryCreator.add(categoryName);
@@ -295,16 +296,39 @@ public class BookOfCookController {
     //! components er ganske like
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
-        body.getChildren().add(categCheckBox(category));//adds children
+
+        CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
+
+        checkbox.setOnAction(e -> {//on checkbox click
+            if(checkbox.isSelected()){
+                categoriesClicked.add(category);
+            }else{
+                categoriesClicked.remove(category);
+            }
+            filterRecipes(categoriesClicked);
+        });
+
+        body.getChildren().add(checkbox);//adds children
         styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
     }
 
-    //! components er ganske like
+    //! components er ganske like, kalles kun en gang
     private Pane foodComponent(String food, String amount, String unit){
         Pane foodBody = new Pane();
-        foodBody.getChildren().add(createFoodLabel(food, amount, unit));//adds children
-        foodBody.getChildren().add(createDeleteX(food));
+        Button btn = new Button("X");
+
+        styleNode(btn, "standard-button", 10.0, 0.0);
+        btn.setOnAction(e -> {
+            fridge.removeFood(food);
+            updatefridge();
+        });
+
+        Label label = new Label(food + ": " + amount + " " + unit);
+        styleNode(label, "list-label", 80.0, 10.0);
+
+        foodBody.getChildren().add(label);
+        foodBody.getChildren().add(btn);
         return foodBody;
     }
 
@@ -343,17 +367,6 @@ public class BookOfCookController {
         ((GridPane)parent).add(label, column, row);
     }
 
-    //!veldig lik de andre view metodene
-    private void viewCateg(Recipe recipe){//shorthand method for creating list and fill them with categories in recipe viewmode
-        ListView<String> listView = new ListView<String>();
-        viewLabel("Categories", recipeViewBox2, 0, 0);//add category label to grid
-        
-        for(Category category : recipe.getCategories()){//add categories to listview
-            listView.getItems().add(category.getName());
-        }
-        listView.getStyleClass().add("recipe-view-list");
-        recipeViewBox2.add(listView, 0, 1);
-    }
 
     //!veldig lik de andre view metodene
     private void viewIngred(Recipe recipe){//shorthand method for creating list and fill them with ingredients in recipe viewmode
@@ -368,35 +381,19 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, 0, 3);
     }
 
-    //!veldig lik de andre view metodene,
-    private void viewSteps(Recipe recipe){//shorthand method for creating list and fill them with steps in recipe viewmode
+    //?https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
+    //?prøve å få den til å dekke de ulike typene arrays
+    public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
-        viewLabel("Steps", recipeViewBox2, 4, 0);//add steps label to grid
-
-        for(String step : recipe.getSteps()){//add steps to listview
-            listView.getItems().add(step);
+        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid
+        for(String o : array){//shorthand method for)
+            listView.getItems().add(o.toString());
         }
-
         listView.getStyleClass().add("recipe-view-list");
-        recipeViewBox2.add(listView, 0, 5);
+        recipeViewBox2.add(listView, listY, listX);
     }
 
-    //!kan legges i categ component
-    private CheckBox categCheckBox(Category category){
-        CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
-
-        checkbox.setOnAction(e -> {//on checkbox click
-            if(checkbox.isSelected()){
-                categoriesClicked.add(category);
-            }else{
-                categoriesClicked.remove(category);
-            }
-            filterRecipes(categoriesClicked);
-        });
-        return checkbox;
-    }
-
-    //*OTHER METHODS
+    //?Usikker, dersom vi får inkludert ingredients i listUpdater, vil denne funksjonen kun kalles en gang
     public Pane createRemovable(String content, Button btn){
         Pane pane = new Pane();
         Label label = new Label(content);
@@ -405,24 +402,6 @@ public class BookOfCookController {
         pane.getChildren().add(label);
         pane.getChildren().add(btn);
         return pane;
-    }
-
-    //!kan legges i food component metoden
-    private Button createDeleteX(String string){
-        Button btn = new Button("X");
-        styleNode(btn, "standard-button", 10.0, 0.0);
-        btn.setOnAction(e -> {
-            fridge.removeFood(string);
-            updatefridge();
-        });
-        return btn;
-    }
-
-    //!Kan legges i food component metoden
-    private Label createFoodLabel(String foodname, String foodamount, String foodunit){
-        Label label = new Label(foodname + ": " + foodamount + " " + foodunit);
-        styleNode(label, "list-label", 80.0, 10.0);
-        return label;
     }
 
     //! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
@@ -489,12 +468,11 @@ public class BookOfCookController {
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    //?
+    //?usikker, denne kan kanskje forbedres med enda mer generelle klasser
     public Button removeList(String target, ArrayList<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
         styleNode(btn, "standard-button", 10.0, 0.0);
-
 
         btn.setOnAction(e -> {
             listView.remove(target);
@@ -503,23 +481,17 @@ public class BookOfCookController {
         });
         return btn;
     }
-
-    // public void update(ListView list, ArrayList<String> array, ListView undergruppe){
-    //     list.clear();
-    //     undergruppe.clear();
-    //     for(String s : array){
-    //         list.getItems().add(s);
-    //     }
-    // };
 }
 
 /*
 *GOLFING
 *searchbar og category filter erstattes av filter (ca.40 linjer)
+*generalisering av components
+*generalisering av creator updaters
 *totalt
 
 !KJENTE BUGS
 !amount label er ikke oppdatert
 !man kan legge inn verdier null i creator lister
-!du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit?
+!du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 */
