@@ -127,7 +127,13 @@ public class BookOfCookController {
         }
         list.getItems().clear();                                                                                 //clear listview
         for(Object element : array){                                                                             //for every element in array                                   
-            list.getItems().add(createRemovable(element.toString(), removeList(element.toString(), array)));     //add element to listview
+            Pane pane = new Pane();
+            Label label = new Label(element.toString());
+    
+            styleNode(label, "list-label", 80.0, 10.0); 
+            pane.getChildren().add(label);
+            pane.getChildren().add(removeList(element.toString(), array));
+            list.getItems().add(pane);
         }
     }
 
@@ -245,6 +251,8 @@ public class BookOfCookController {
     public ArrayList<Category> getGategoriesFromCreator(){
         book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
+
+
         for(String category : categoryCreator){
             if(book.checkIfCategoryExist(category, book)){
                 for(Category c : book.getCategories()){
@@ -360,46 +368,35 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, listY, listX);
     }
 
-    //?Usikker, dersom vi får inkludert ingredients i listUpdater, vil denne funksjonen kun kalles en gang
-    public Pane createRemovable(String content, Button btn){
-        Pane pane = new Pane();
-        Label label = new Label(content);
-
-        styleNode(label, "list-label", 80.0, 10.0); 
-        pane.getChildren().add(label);
-        pane.getChildren().add(btn);
-        return pane;
-    }
-
     //! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
-    public void searchFood() {
-        searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
-        if(searchedRecipes.size() > 0){
-            recipeList.getItems().clear();      //!refresh funksjon
-            for(Recipe r : searchedRecipes){
-                recipeList.getItems().add(recipeComponent(r));
-            }
-        }
-        // updateAmountLabel(searchedRecipes);
-    }
+    // public void searchFood() {
+    //     searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
+    //     if(searchedRecipes.size() > 0){
+    //         recipeList.getItems().clear();      //!refresh funksjon
+    //         for(Recipe r : searchedRecipes){
+    //             recipeList.getItems().add(recipeComponent(r));
+    //         }
+    //     }
+    //     // updateAmountLabel(searchedRecipes);
+    // }
 
     //! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
-    public void filterRecipes(ArrayList<Category> categoriesClicked) {
-        recipeList.getItems().clear();
-        if(categoriesClicked.size() == 0){
-            initRecipeComponents();
-            return;
-        }
+    // public void filterRecipes(ArrayList<Category> categoriesClicked) {
+    //     recipeList.getItems().clear();
+    //     if(categoriesClicked.size() == 0){
+    //         initRecipeComponents();
+    //         return;
+    //     }
 
-        ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
-        if(sortedRecipes.size() == 0){
-        }
+    //     ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
+    //     if(sortedRecipes.size() == 0){
+    //     }
 
-        for(Recipe r : sortedRecipes){
-            recipeList.getItems().add(recipeComponent(r));
-        }
-        //updateAmountLabel(sortedRecipes);
-    }
+    //     for(Recipe r : sortedRecipes){
+    //         recipeList.getItems().add(recipeComponent(r));
+    //     }
+    //     //updateAmountLabel(sortedRecipes);
+    // }
 
     //*godkjent
     public void fridgeAddFood() {
@@ -434,7 +431,7 @@ public class BookOfCookController {
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    //?usikker, denne kan kanskje forbedres med enda mer generelle klasser
+    //*Godkjent, men kan denne brukes flere steder
     public Button removeList(String target, List<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
@@ -451,10 +448,9 @@ public class BookOfCookController {
 
 /*
 *GOLFING
-*searchbar og category filter erstattes av filter (ca.40 linjer)
-*generalisering av components
-*generalisering av creator updaters
-*totalt
+*searchbar og category filter erstattes av filter (ca.30 linjer)
+*getCategories, ca (20.linjer)
+*totalt ca (50.linjer) = 400 linjer
 
 !KJENTE BUGS
 !amount label er ikke oppdatert
