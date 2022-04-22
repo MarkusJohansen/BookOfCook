@@ -96,25 +96,22 @@ public class BookOfCookController {
     
     //?usikker
     public void initViewContent(Recipe recipe){
-        //column 1
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
         viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
 
-        //column 2
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
-        List<String> Ingredients = recipe.getSteps().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         viewList(0, 0, 1, 0, "Categories", categories);
         viewList(4, 0, 5, 0, "steps", steps);
+        viewList(2, 0, 3, 0, "Ingredients", Ingredients);
 
-        viewIngred(recipe);
         //btns
         closeBtn(recipe);
         removeBtn(recipe);
-        //fikse steps, ingred og steps inn i list views fordi de er arrays
     }
 
     //*UPDATERS
@@ -367,20 +364,6 @@ public class BookOfCookController {
         ((GridPane)parent).add(label, column, row);
     }
 
-
-    //!veldig lik de andre view metodene
-    private void viewIngred(Recipe recipe){//shorthand method for creating list and fill them with ingredients in recipe viewmode
-        ListView<String> listView = new ListView<String>();
-        viewLabel("Ingredients", recipeViewBox2, 2, 0);//add ingredients label to grid
-
-        for(HashMap<String, String> ingredient : recipe.getIngredients()){//add ingredients to listview
-            listView.getItems().add(ingredient.get("name").toString() + " " + ingredient.get("amount").toString() + " " + ingredient.get("unit").toString());
-        }
-
-        listView.getStyleClass().add("recipe-view-list");
-        recipeViewBox2.add(listView, 0, 3);
-    }
-
     //?https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
     //?prøve å få den til å dekke de ulike typene arrays
     public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
@@ -494,4 +477,5 @@ public class BookOfCookController {
 !amount label er ikke oppdatert
 !man kan legge inn verdier null i creator lister
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
+!lage penere components
 */
