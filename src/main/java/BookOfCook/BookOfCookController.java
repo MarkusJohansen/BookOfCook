@@ -99,7 +99,7 @@ public class BookOfCookController {
         initRecipeComponents();
     }
 
-    //!nesten helt lik updateCategCreatorList
+    //!passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
         book.collectCategories();
@@ -251,9 +251,7 @@ public class BookOfCookController {
     public ArrayList<Category> getGategoriesFromCreator(){
         book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
-
-
-        for(String category : categoryCreator){
+        for(String category : categoryCreator){             
             if(book.checkIfCategoryExist(category, book)){
                 for(Category c : book.getCategories()){
                     if(category.equals(c.getName())){
@@ -368,35 +366,35 @@ public class BookOfCookController {
         recipeViewBox2.add(listView, listY, listX);
     }
 
-    //! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
-    // public void searchFood() {
-    //     searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
-    //     if(searchedRecipes.size() > 0){
-    //         recipeList.getItems().clear();      //!refresh funksjon
-    //         for(Recipe r : searchedRecipes){
-    //             recipeList.getItems().add(recipeComponent(r));
-    //         }
-    //     }
-    //     // updateAmountLabel(searchedRecipes);
-    // }
+    // ! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
+    public void searchFood() {
+        searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
+        if(searchedRecipes.size() > 0){
+            recipeList.getItems().clear();      //!refresh funksjon
+            for(Recipe r : searchedRecipes){
+                recipeList.getItems().add(recipeComponent(r));
+            }
+        }
+        // updateAmountLabel(searchedRecipes);
+    }
 
-    //! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
-    // public void filterRecipes(ArrayList<Category> categoriesClicked) {
-    //     recipeList.getItems().clear();
-    //     if(categoriesClicked.size() == 0){
-    //         initRecipeComponents();
-    //         return;
-    //     }
+    // ! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
+    public void filterRecipes(ArrayList<Category> categoriesClicked) {
+        recipeList.getItems().clear();
+        if(categoriesClicked.size() == 0){
+            initRecipeComponents();
+            return;
+        }
 
-    //     ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
-    //     if(sortedRecipes.size() == 0){
-    //     }
+        ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
+        if(sortedRecipes.size() == 0){
+        }
 
-    //     for(Recipe r : sortedRecipes){
-    //         recipeList.getItems().add(recipeComponent(r));
-    //     }
-    //     //updateAmountLabel(sortedRecipes);
-    // }
+        for(Recipe r : sortedRecipes){
+            recipeList.getItems().add(recipeComponent(r));
+        }
+        //updateAmountLabel(sortedRecipes);
+    }
 
     //*godkjent
     public void fridgeAddFood() {
@@ -450,7 +448,8 @@ public class BookOfCookController {
 *GOLFING
 *searchbar og category filter erstattes av filter (ca.30 linjer)
 *getCategories, ca (20.linjer)
-*totalt ca (50.linjer) = 400 linjer
+*Shorthand for buttons ca (40.linjer)
+*totalt ca (90.linjer) = 350 linjer igjen
 
 !KJENTE BUGS
 !amount label er ikke oppdatert

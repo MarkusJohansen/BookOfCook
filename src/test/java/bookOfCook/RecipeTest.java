@@ -4,152 +4,180 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import BookOfCook.Category;
+import BookOfCook.Cookbook;
 import BookOfCook.Recipe;
 
 public class RecipeTest {
-    private Recipe recipe;
-    private Recipe recipe2;
-    private Recipe recipe3;
+    private Recipe pizza;
+    private Recipe hamburger;
+    private Category kjøtt;
+    private Category burger;
+    private Category italiensk;
+    private Cookbook cookbook;
 
-    @BeforeEach 
+    @BeforeEach
     public void setup() {
-        //set up before each test
-        recipe = new Recipe("Milkshake", 3); //! FIKS OPP I DETTE DARRKUS, ny konstruktør
-        recipe2 = new Recipe("Pizza", 2);
-        Recipe recipe3 = new Recipe("Burger", 2);
+        cookbook = new Cookbook();
+        HashMap<String, String> ost = new HashMap<String, String>() {{
+            put("name", "ost");
+            put("amount", "1.0");
+            put("unit", "kg");
+        }};
+        HashMap<String, String> melk = new HashMap<String, String>() {{
+            put("name", "melk");
+            put("amount", "2.0");
+            put("unit", "L");
+        }};
+
+        HashMap<String, String> tomat = new HashMap<String, String>() {{
+            put("name", "tomat");
+            put("amount", "5.0");
+            put("unit", "stk");
+        }};
+
+        italiensk = new Category("italiensk");
+        burger = new Category("burger");
+        kjøtt = new Category("kjøtt");
+
+        pizza = new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving")));
+        hamburger = new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla")));
     }
 
     @Test
-    @DisplayName("Test recipe name")
-    public void checkRecipeName() {
-        recipe.setName("Fransk løk suppe");
-        assertTrue(recipe.getName().equals("Fransk løk suppe".toUpperCase()));
+    @DisplayName("Test pizza name")
+    public void checkpizzaName() {
+        pizza.setName("Fransk løk suppe");
+        assertTrue(pizza.getName().equals("Fransk løk suppe".toUpperCase()));
 
-        //test if invalid recipename throws exception
-        assertThrows(IllegalArgumentException.class, () -> recipe.setName("Fransk123"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.setName("Fransk "));
-        assertThrows(IllegalArgumentException.class, () -> recipe.setName(" Fransk"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.setName("Fransk#@%&!"));
+        //test if invalid pizzaname throws exception
+        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk123"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk "));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setName(" Fransk"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk#@%&!"));
 
-        assertFalse(recipe.getName().equals("Fransk #@%&!".toUpperCase()));
+        assertFalse(pizza.getName().equals("Fransk #@%&!".toUpperCase()));
     }
 
     @Test
-    @DisplayName("Test recipe servings")
-    public void checkRecipeServings() {
-        assertTrue(recipe.getServings() == 3);
-        recipe.setServings(2);
-        assertTrue(recipe.getServings() == 2);
+    @DisplayName("Test pizza servings")
+    public void checkpizzaServings() {
+        assertTrue(pizza.getServings() == 3);
+        pizza.setServings(2);
+        assertTrue(pizza.getServings() == 2);
 
         //test if invalid servings throws exception
-        assertThrows(IllegalArgumentException.class, () -> recipe.setServings(0));
-        assertThrows(IllegalArgumentException.class, () -> recipe.setServings(-1));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setServings(0));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setServings(-1));
     }
 
     @Test
-    @DisplayName("Test recipe description")
-    public void checkRecipeDescription() {
-        assertTrue(recipe.getDescription() == null);
-        recipe.setDescription("Milkshake is a drink made from milk and sugar.");
-        assertTrue(recipe.getDescription() == "Milkshake is a drink made from milk and sugar.");
+    @DisplayName("Test pizza description")
+    public void checkpizzaDescription() {
+        assertTrue(pizza.getDescription() == null);
+        pizza.setDescription("Milkshake is a drink made from milk and sugar.");
+        assertTrue(pizza.getDescription() == "Milkshake is a drink made from milk and sugar.");
     }
 
     //! hvorfor funker ikke denne? feil i koden i funksjonen?
     @Test
     @DisplayName("Test Calorie methods")
     public void checkCalorieMethods() {
-        assertTrue(recipe.getCalories() == 0);
-        recipe.setCalories(100);
-        assertTrue(recipe.getCalories() == 100);
-        recipe.setServings(2);
-        assertTrue(recipe.getCalPerServing() == 50);
-        assertThrows(IllegalArgumentException.class, () -> recipe.setCalories(-1));
-        assertThrows(IllegalArgumentException.class, () -> recipe.setCalories(0));
+        assertTrue(pizza.getCalories() == 0);
+        pizza.setCalories(100);
+        assertTrue(pizza.getCalories() == 100);
+        pizza.setServings(2);
+        assertTrue(pizza.getCalPerServing() == 50);
+        assertThrows(IllegalArgumentException.class, () -> pizza.setCalories(-1));
+        assertThrows(IllegalArgumentException.class, () -> pizza.setCalories(0));
     }
 
     @Test
-    @DisplayName("Test scaling of recipe")
+    @DisplayName("Test scaling of pizza")
     public void checkScaling() {
-        recipe.setServings(2);
-        recipe.setCalories(100);
-        recipe.addIngredient("Milk", 2, "l");
-        assertTrue(recipe.getCalories() == 100);
-        assertTrue(recipe.getServings() == 2);
-        assertTrue(recipe.getIngredientAmount("Milk") == 2);
+        pizza.setServings(2);
+        pizza.setCalories(100);
+        pizza.addIngredient("Milk", "2", "l");
+        assertTrue(pizza.getCalories() == 100);
+        assertTrue(pizza.getServings() == 2);
+        // assertTrue(pizza.getIngredientAmount("Milk") == 2);
 
-        recipe.scale(4);
-        assertTrue(recipe.getServings() == 4);
-        assertTrue(recipe.getCalories() == 200);
-        assertTrue(recipe.getCalPerServing() == 100);
-        assertTrue(recipe.getIngredientAmount("Milk") == 4);
+        pizza.scale(4);
+        assertTrue(pizza.getServings() == 4);
+        assertTrue(pizza.getCalories() == 200);
+        assertTrue(pizza.getCalPerServing() == 100);
+        // assertTrue(pizza.getIngredientAmount("Milk") == 4);
 
         //check illegal new servings
-        assertThrows(IllegalArgumentException.class, () -> recipe.scale(0));
-        assertThrows(IllegalArgumentException.class, () -> recipe.scale(-1));
-        assertThrows(IllegalArgumentException.class, () -> recipe.scale(1));
+        assertThrows(IllegalArgumentException.class, () -> pizza.scale(0));
+        assertThrows(IllegalArgumentException.class, () -> pizza.scale(-1));
+        assertThrows(IllegalArgumentException.class, () -> pizza.scale(1));
     }
 
     @Test
-    @DisplayName("Test recipe ingredients")
-    public void checkRecipeIngredients() {
-        recipe.addIngredient("Milk", 2, "l");
-        assertTrue(recipe.getIngredients().size() == 1);
-        recipe.addIngredient("Sugar", 1, "tsk");
-        assertTrue(recipe.getIngredients().size() == 2);
+    @DisplayName("Test pizza ingredients")
+    public void checkpizzaIngredients() {
+        pizza.addIngredient("Milk", "2", "l");
+        assertTrue(pizza.getIngredients().size() == 1);
+        pizza.addIngredient("Sugar", "1", "tsk");
+        assertTrue(pizza.getIngredients().size() == 2);
 
-        assertTrue(recipe.getIngredients().get(0).getName().equals("Milk"));
-        assertTrue(recipe.getIngredients().get(0).getAmount() == 2);
-        assertTrue(recipe.getIngredients().get(0).getUnit().equals("l"));
+        // assertTrue(pizza.getIngredients().get(0).getName().equals("Milk"));
+        // assertTrue(pizza.getIngredients().get(0).getAmount() == 2);
+        // assertTrue(pizza.getIngredients().get(0).getUnit().equals("l"));
 
         //test if invalid ingredient throws exception
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk", -1, "l"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk", 0, "l"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk", 2, ""));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk123", 2, "l"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk", 2, "l123"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk!#¤%", 2, "l"));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addIngredient("Milk", 2, "l#¤%&"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk", "-1", "l"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk", "0", "l"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk", "2", ""));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk123", "2", "l"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk", "2", "l123"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk!#¤%", "2", "l"));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addIngredient("Milk", "2", "l#¤%&"));
 
-        recipe.removeIngredient("Milk");
-        assertTrue(recipe.getIngredients().size() == 1);
-        assertTrue(recipe.getIngredients().get(0).getName().equals("Sugar"));
+        pizza.removeIngredient("Milk");
+        assertTrue(pizza.getIngredients().size() == 1);
+        // assertTrue(pizza.getIngredients().get(0).getName().equals("Sugar"));
     }
     
     @Test
-    @DisplayName("Test Category methods for recipe")
+    @DisplayName("Test Category methods for pizza")
     public void checkCategoryMethods() {
         Category category = new Category("italiensk");
-        recipe.addCategory(category);
-        assertTrue(category.getRecipes().contains(recipe));
-        assertTrue(recipe.getCategories().contains(category));
-        recipe.removeCategory(category);
-        assertFalse(category.getRecipes().contains(recipe));
-        assertFalse(recipe.getCategories().contains(category));
-       //?vi har dobbelt opp med metoder her. ser at vi har add/remove category metoder i recipe og vice versa i category
+        pizza.addCategory(category);
+        assertTrue(category.getRecipes().contains(pizza));
+        assertTrue(pizza.getCategories().contains(category));
+        pizza.removeCategory(category);
+        assertFalse(category.getRecipes().contains(pizza));
+        assertFalse(pizza.getCategories().contains(category));
+       //?vi har dobbelt opp med metoder her. ser at vi har add/remove category metoder i pizza og vice versa i category
     }
 
 
     @Test
-    @DisplayName("Test recipe instructions")
-    public void checkRecipeInstructions() {
-        assertTrue(recipe.getSteps() == null);
-        assertFalse(recipe.getSteps().contains("Mix"));
-        recipe.addStep("Mix");
-        assertTrue(recipe.getSteps().contains("Mix"));
-        recipe.addStep("Bake");
-        assertTrue(recipe.getSteps().contains("Bake"));
-        recipe.removeStep(0);
-        assertFalse(recipe.getSteps().contains("Mix"));
-        assertTrue(recipe.getSteps().contains("Bake"));
+    @DisplayName("Test pizza instructions")
+    public void checkpizzaInstructions() {
+        assertTrue(pizza.getSteps() == null);
+        assertFalse(pizza.getSteps().contains("Mix"));
+        pizza.addStep("Mix");
+        assertTrue(pizza.getSteps().contains("Mix"));
+        pizza.addStep("Bake");
+        assertTrue(pizza.getSteps().contains("Bake"));
+        pizza.removeStep(0);
+        assertFalse(pizza.getSteps().contains("Mix"));
+        assertTrue(pizza.getSteps().contains("Bake"));
 
         //test if invalid step throws exception
-        assertThrows(IllegalArgumentException.class, () -> recipe.addStep(""));
-        assertThrows(IllegalArgumentException.class, () -> recipe.addStep(null));
-        assertThrows(IllegalArgumentException.class, () -> recipe.removeStep(-1));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addStep(""));
+        assertThrows(IllegalArgumentException.class, () -> pizza.addStep(null));
+        assertThrows(IllegalArgumentException.class, () -> pizza.removeStep(-1));
     }
 }

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,47 +20,68 @@ import BookOfCook.Recipe;
 
 public class CookbookTest {
     //JUnit tests for Cookbook class
+    private Recipe pizza;
+    private Recipe hamburger;
+    private Category kjøtt;
+    private Category burger;
+    private Category italiensk;
     private Cookbook cookbook;
-    private Recipe recipe1;
-    private Recipe recipe2;
-    private Category category1 = new Category("Category1");
-    Category category2 = new Category("Category2");
 
     @BeforeEach
     public void setup() {
         cookbook = new Cookbook();
-        recipe1 = new Recipe("Milkshake", 3);
-        recipe2 = new Recipe("Pizza", 2);
+        HashMap<String, String> ost = new HashMap<String, String>() {{
+            put("name", "ost");
+            put("amount", "1.0");
+            put("unit", "kg");
+        }};
+        HashMap<String, String> melk = new HashMap<String, String>() {{
+            put("name", "melk");
+            put("amount", "2.0");
+            put("unit", "L");
+        }};
+
+        HashMap<String, String> tomat = new HashMap<String, String>() {{
+            put("name", "tomat");
+            put("amount", "5.0");
+            put("unit", "stk");
+        }};
+
+        italiensk = new Category("italiensk");
+        burger = new Category("burger");
+        kjøtt = new Category("kjøtt");
+
+        pizza = new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving")));
+        hamburger = new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla")));
     }
 
     @Test
     @DisplayName("Test add recipe and recipeAmount")
     public void RecipeContainment() {
-        cookbook.addRecipe(recipe1);
-        assertTrue(cookbook.getRecipes().contains(recipe1));
-        assertFalse(cookbook.getRecipes().contains(recipe2));
-        cookbook.addRecipe(recipe2);
+        cookbook.addRecipe(pizza);
+        assertTrue(cookbook.getRecipes().contains(pizza));
+        assertFalse(cookbook.getRecipes().contains(hamburger));
+        cookbook.addRecipe(hamburger);
         assertTrue(cookbook.getAmount() == 2);
         assertTrue(cookbook.getRecipes().size() == 2);
 
         //throw exceptions if recipe is duplicate
-        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(recipe1));
+        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(pizza));
         assertThrows(NullPointerException.class, () -> cookbook.addRecipe(null));
-        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(new Recipe("Milkshake", 2))); 
     }
 
     @Test
     @DisplayName("Test remove recipe")
     public void recipeRemoval() {
-        cookbook.addRecipe(recipe1);
-        cookbook.addRecipe(recipe2);
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
 
         //check if throw exception if recipe not in cookbook
-        cookbook.removeRecipe(recipe2);
-        assertThrows(IllegalArgumentException.class, () -> cookbook.removeRecipe(recipe2));
+        cookbook.removeRecipe(hamburger);
+        assertThrows(IllegalArgumentException.class, () -> cookbook.removeRecipe(hamburger));
 
-        assertFalse(cookbook.getRecipes().contains(recipe2));
-        assertTrue(cookbook.getRecipes().contains(recipe1));
+        assertFalse(cookbook.getRecipes().contains(hamburger));
+        assertTrue(cookbook.getRecipes().contains(pizza));
     }
 
     @Test
@@ -72,39 +94,39 @@ public class CookbookTest {
     @Test
     @DisplayName("Test searchRecipes")
     public void testSearchRecipe() {
-        cookbook.addRecipe(recipe1);
-        cookbook.addRecipe(recipe2);
-        assertFalse(cookbook.searchRecipes("Pizza").contains(recipe1));
-        assertTrue(cookbook.searchRecipes("Pizza").contains(recipe2));
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
+        assertFalse(cookbook.searchRecipes("Pizza").contains(pizza));
+        assertTrue(cookbook.searchRecipes("Pizza").contains(hamburger));
     }
 
     @Test
     @DisplayName("Test getSortedRecipesAllCategories")
     public void testfilterByCategories() {
-        recipe1.addCategory(category1);
-        recipe1.addCategory(category2);
-        recipe2.addCategory(category1);
-        cookbook.addRecipe(recipe1);
-        cookbook.addRecipe(recipe2);
-        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(category1))), new ArrayList<>(Arrays.asList(recipe1, recipe2)));
-        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(category1, category2))), new ArrayList<>(Arrays.asList(recipe1)));
+        pizza.addCategory(italiensk);
+        pizza.addCategory(burger);
+        hamburger.addCategory(italiensk);
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
+        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(italiensk))), new ArrayList<>(Arrays.asList(pizza, hamburger)));
+        assertEquals(cookbook.filterByCategories(new ArrayList<>(Arrays.asList(italiensk, burger))), new ArrayList<>(Arrays.asList(pizza)));
     }
 
     @Test
     @DisplayName("Test collectCategories")
     public void testcollectCategories() {
-        cookbook.addRecipe(recipe1);
-        recipe1.addCategory(category1);
+        cookbook.addRecipe(pizza);
+        pizza.addCategory(italiensk);
         cookbook.collectCategories();
-        assertEquals(cookbook.getCategories(), new ArrayList<>(Arrays.asList(category1)));
+        assertEquals(cookbook.getCategories(), new ArrayList<>(Arrays.asList(italiensk)));
     }
 
     //?ikke satt opp properly
     @Test
     @DisplayName("Test Save")
     public void testSave() {
-        cookbook.addRecipe(recipe1);
-        cookbook.addRecipe(recipe2);
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
 
         File file = new File("cookbook.csv");
         cookbook.save(file);
@@ -118,18 +140,18 @@ public class CookbookTest {
 
         //!Hvordan fikse dette: open file and check if it contains the recipe
         //assertTrue(file.contains(recipe));
-        //assertTrue(file.contains(recipe2));
+        //assertTrue(file.contains(hamburger));
     }
 
     //?hvordan teste?
     @Test
     @DisplayName("Test Load")
     public void testLoad() {
-        cookbook.addRecipe(recipe1);
-        cookbook.addRecipe(recipe2);
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
         cookbook.save();
         cookbook.load();
-        assertTrue(cookbook.getRecipes().contains(recipe1));
-        assertTrue(cookbook.getRecipes().contains(recipe2));
+        assertTrue(cookbook.getRecipes().contains(pizza));
+        assertTrue(cookbook.getRecipes().contains(hamburger));
     }
 }
