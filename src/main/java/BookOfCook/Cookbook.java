@@ -64,10 +64,11 @@ public class Cookbook extends Validator {
     }
 
     public ArrayList<Category> getCategories() {
+        collectCategories();
         return new ArrayList<Category>(categories); // returns categories in cookbook
     }
 
-    public ArrayList<Recipe> filterByCategories(ArrayList<Category> categories){    // metode som returnerer alle recipes som inneholder alle kategoriene
+    public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){    // metode som returnerer alle recipes som inneholder alle kategoriene
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                        // create an output arraylist
         for (Recipe recipe : recipes) {                                             // loops through all recipes in cookbook
             boolean containsAllCategories = true;                                   // sets temporary variable to true
@@ -84,7 +85,7 @@ public class Cookbook extends Validator {
         return sortedRecipes;
     }
 
-    public void collectCategories(){
+    private void collectCategories(){
         ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
         for (Recipe recipe : recipes) {                                 // lopps through all recipes
             for (Category category : recipe.getCategories()) {          // loops through all categories in recipe
@@ -109,24 +110,36 @@ public class Cookbook extends Validator {
     }
 
     //*Cookbook filtration
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText/*, ArrayList<Category> categories*/, Fridge fridge){
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+        for (Recipe recipe : recipes) {
+            filteredRecipes.add(recipe);
+        }
 
-        if(true){ // KJØLESKAP
+        if(false){ // KJØLESKAP
             filteredRecipes = fridge.filter(recipes);
         }
 
         if(true){ // KATEGORIER
             // tar inn den enda mindre filteredrecipes
+            filteredRecipes = filterByCategories(filteredRecipes, categories);
             //resultatet blir en enda enda mindre filteredRecipes
         }
 
         if(true){ // SØKE
+            if(searchText != ""){
+                filteredRecipes = searchRecipes(searchText, filteredRecipes);
+            }
             //tar inn den enda mindre filteredrecipes
             //resultatet blir en enda enda mindre filteredRecipes
-            filteredRecipes = searchRecipes(searchText, filteredRecipes);
         }
 
         return filteredRecipes;                         //returnerer filtrasjonsproduktet
+    }
+
+    public static void main(String[] args) {
+        Cookbook cookbook = new Cookbook();
+        cookbook.addDummy();
+        System.out.println(cookbook.filter(cookbook.getRecipes(), "pizza", new ArrayList<Category>(Arrays.asList(new Category("burger"))), new Fridge()));
     }
 }

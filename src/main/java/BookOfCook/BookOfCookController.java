@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 
 public class BookOfCookController extends Validator{
     private Cookbook book;
+    private String searchText;
     private ArrayList<Recipe> searchedRecipes;
     private ArrayList<HashMap<String, String>> fridgeFood;
     private Fridge fridge;
@@ -79,7 +80,7 @@ public class BookOfCookController extends Validator{
 
     //?usikker
     private void initRecipeComponents() {                                                   //inititializes the recipe components in the GUI, from the cookbook
-        for (Recipe recipe : book.getRecipes()/*book.filter(book.getRecipes(), fridge)*/) {
+        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
@@ -103,7 +104,6 @@ public class BookOfCookController extends Validator{
     //!passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
-        book.collectCategories();
         for(Category category : book.getCategories()){                                //!init lager, updater skal gjøre klar for ny init ved endring
             categList.getItems().add(categComponent(category));
         }
@@ -221,7 +221,6 @@ public class BookOfCookController extends Validator{
         book.addRecipe(recipe);
         updateRecipeList();
         updateCategList();
-        book.collectCategories();
     }
 
     //!må ha validering her for at disse skal erstatte get
@@ -251,8 +250,7 @@ public class BookOfCookController extends Validator{
     }
 
     //! MYE LOGIKK, FLYTTE TIL BACKEND
-    public ArrayList<Category> getGategoriesFromCreator(){
-        book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
+    public ArrayList<Category> getGategoriesFromCreator(){ // ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
         for(String category : categoryCreator){             
             if(checkIfCategoryExist(category, book.getCategories())){
@@ -280,7 +278,9 @@ public class BookOfCookController extends Validator{
             }else{
                 categoriesClicked.remove(category);
             }
-            filterRecipes(categoriesClicked);
+            recipeList.getItems().clear();
+            initRecipeComponents();
+            //filterRecipes(categoriesClicked);
         });
 
         body.getChildren().add(checkbox);//adds children
@@ -371,18 +371,20 @@ public class BookOfCookController extends Validator{
 
     // ! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
     public void searchFood() {
-        searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
+        /*searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
+        
         if(searchedRecipes.size() > 0){
             recipeList.getItems().clear();      //!refresh funksjon
             for(Recipe r : searchedRecipes){
                 recipeList.getItems().add(recipeComponent(r));
             }
-        }
+        }*/
         // updateAmountLabel(searchedRecipes);
     }
 
+    
     // ! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
-    public void filterRecipes(ArrayList<Category> categoriesClicked) {
+    /*public void filterRecipes(ArrayList<Category> categoriesClicked) {
         recipeList.getItems().clear();
         if(categoriesClicked.size() == 0){
             initRecipeComponents();
@@ -397,7 +399,7 @@ public class BookOfCookController extends Validator{
             recipeList.getItems().add(recipeComponent(r));
         }
         //updateAmountLabel(sortedRecipes);
-    }
+    }*/
 
     //*godkjent
     public void fridgeAddFood() {

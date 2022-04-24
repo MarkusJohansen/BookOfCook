@@ -27,7 +27,6 @@ public class Category extends Validator {
         if (recipes.contains(recipe)) {     // checks if recipes already contains recipes
             return;
         }
-
         recipes.add(recipe);
         recipe.addCategory(this);
     }
