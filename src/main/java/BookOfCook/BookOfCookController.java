@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -76,6 +79,12 @@ public class BookOfCookController extends Validator{
         initRecipeComponents();
 
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
+    }
+
+    public void checkbox(){
+        if(fridgeCheckbox.isSelected()){
+            System.out.println("test");
+        }
     }
 
     //?usikker

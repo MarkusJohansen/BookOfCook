@@ -35,7 +35,17 @@ public class Cookbook extends Validator {
         Category burger = new Category("burger");
         Category kjøtt = new Category("kjøtt");
 
-        addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving"))));
+        addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), 
+        new ArrayList<String>(Arrays.asList(
+            "Lag pizzadeig først. Rør gjær ut i lunkent vann, og tilsett olje, mel og salt. Elt deigen godt sammen, og la den heve til dobbel størrelse.", 
+            "Lag pizzasaus med å frese løk og hvitløk i olivenolje. Tilsett tomatpurè og la det frese i et par minutter.",
+            "Ha i grovhakket tomat, timian, oregano, salt og pepper. Dette skal nå koke inn til en tykk og god saus. Avkjøl og kjør gjerne til en jevn saus med stavmikser.",
+            "Ha deigen på en lett melet benkeplate og del den i fire like emner. Trill hvert emne til runde boller. Strø over litt mel og legg over et klede. Emnene skal nå hvile i 20 minutter.", 
+            "Trykk eller kjevle ut emnene til runde, tallerkenstore pizzabunner.", 
+            "Fordel tomatsaus på bunnene før du legger på spekeskinke, oliven og revet parmesan.", 
+            "Stek pizzaen på 250 °C i 8-10 minutter, eller til pizzaen har en gyllen farge og sprø bunn.", 
+            "Dryss over rucculasalat før servering."
+            ))));
         addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
 
         collectCategories();
@@ -122,7 +132,9 @@ public class Cookbook extends Validator {
 
         if(true){ // KATEGORIER
             // tar inn den enda mindre filteredrecipes
+            System.out.println(filteredRecipes);
             filteredRecipes = filterByCategories(filteredRecipes, categories);
+            System.out.println(filteredRecipes);
             //resultatet blir en enda enda mindre filteredRecipes
         }
 
