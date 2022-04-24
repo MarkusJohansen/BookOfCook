@@ -75,7 +75,7 @@ abstract class Validator {
     protected void ingredientExists(ArrayList<HashMap<String, String>> foodContainer, String foodName){
         for (int i = 0; i < foodContainer.size(); i++) {                         // iterates through foodInFridge
             String checkName = (String) foodContainer.get(i).get("name");
-            if (checkName.equals(foodName.toLowerCase())) {
+            if (checkName.toUpperCase().equals(foodName.toUpperCase())) {
                 throw new IllegalArgumentException(checkName + " already exists within food container");
             }
         }
@@ -84,7 +84,7 @@ abstract class Validator {
     // checks if recipe name already exists in cookbook
     protected void duplicateRecipeName(ArrayList<Recipe> recipes, Recipe recipe){
         for (Recipe r : recipes) {    
-            if (r.getName().equals(recipe.getName())) {     
+            if (r.getName().toUpperCase().equals(recipe.getName().toUpperCase())) {     
                 throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
             }
         }
@@ -96,9 +96,18 @@ abstract class Validator {
         }
     }
 
-    protected boolean checkIfCategoryExist(String categoryName, Cookbook book){
-        for(int i = 0; i < book.getCategories().size(); i++){
-            if( book.getCategories().get(i).getName().equals(categoryName)){
+    protected boolean checkIfCategoryExist(String categoryName, ArrayList<Category> categories){
+        for(int i = 0; i < categories.size(); i++){
+            if( categories.get(i).getName().toUpperCase().equals(categoryName.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean stringExistsArray(String string, ArrayList<String> arraylist){
+        for (String i : arraylist) {
+            if(i.toUpperCase().equals(string.toUpperCase())){
                 return true;
             }
         }

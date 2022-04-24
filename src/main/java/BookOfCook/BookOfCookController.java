@@ -22,7 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class BookOfCookController {
+public class BookOfCookController extends Validator{
     private Cookbook book;
     private ArrayList<Recipe> searchedRecipes;
     private ArrayList<HashMap<String, String>> fridgeFood;
@@ -32,7 +32,7 @@ public class BookOfCookController {
     private ArrayList<String> stepsCreator;  
     private ArrayList<String> categoryCreator;
     private ArrayList<HashMap<String, String>> IngredCreator;
-//penis
+
     @FXML
     private Label number, label, recipeAmount;
     @FXML
@@ -53,6 +53,7 @@ public class BookOfCookController {
     private CheckBox fridgeCheckbox;
 
     public void initialize(){//initializes the controller
+        System.out.println("ehe");
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
@@ -88,7 +89,7 @@ public class BookOfCookController {
         fridgeFood = new ArrayList<HashMap<String, String>>();
         fridgeFood.addAll(fridge.getFood());
         for(HashMap<String, String> food : fridgeFood){
-            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString())); //penis
+            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString())); 
         }
     }
 
@@ -107,7 +108,7 @@ public class BookOfCookController {
             categList.getItems().add(categComponent(category));
         }
     }
-//penis
+
     //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
     public void updatefridge(){
         fridgeList.getItems().clear();
@@ -181,7 +182,7 @@ public class BookOfCookController {
             });   
             return btn;
     }
-//penis
+
     //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
     private void closeBtn(){    //creates a close Btn for closing recipe view
         Button btn = new Button("Close");           //creates button object
@@ -216,7 +217,7 @@ public class BookOfCookController {
 
     //?usikke, må ha mer updaters?
     public void addRecipe() {
-        Recipe recipe = new Recipe(recipeNameBar.getText(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
+        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
         book.addRecipe(recipe);
         updateRecipeList();
         updateCategList();
@@ -243,7 +244,9 @@ public class BookOfCookController {
     //!må ha validering her for at disse skal erstatte get
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
-        categoryCreator.add(categoryName);
+        if(!stringExistsArray(categoryName, categoryCreator)){
+            categoryCreator.add(categoryName);
+        }
         listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
@@ -252,9 +255,9 @@ public class BookOfCookController {
         book.collectCategories();// ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
         for(String category : categoryCreator){             
-            if(book.checkIfCategoryExist(category, book)){
+            if(checkIfCategoryExist(category, book.getCategories())){
                 for(Category c : book.getCategories()){
-                    if(category.equals(c.getName())){
+                    if(category.toUpperCase().equals(c.getName().toUpperCase())){
                         outputArray.add(c);
                     }
                 }
@@ -266,7 +269,7 @@ public class BookOfCookController {
         categCreatorList.getItems().clear(); //clear the list for next use
         return outputArray;
     }
-//penis
+
     //?usikker
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
@@ -293,7 +296,7 @@ public class BookOfCookController {
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             fridge.removeFood(food);
-            updatefridge(); //penis
+            updatefridge(); 
         });
 
         Label label = new Label(food + ": " + amount + " " + unit);
@@ -326,7 +329,7 @@ public class BookOfCookController {
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
-//penis
+
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
@@ -358,7 +361,7 @@ public class BookOfCookController {
     //*godkjent https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
     public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
         ListView<String> listView = new ListView<String>();
-        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid //penis
+        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)
             listView.getItems().add(o.toString());
         }
@@ -439,7 +442,7 @@ public class BookOfCookController {
             listView.remove(target);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
-        }); //penis
+        }); 
         return btn;
     }
 }
