@@ -29,12 +29,10 @@ public class BookOfCookController extends Validator{
     private Cookbook book;
     private String searchText;
     private ArrayList<Recipe> searchedRecipes;
-    private ArrayList<HashMap<String, String>> fridgeFood;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
-    private ArrayList<String> stepsCreator;  
-    private ArrayList<String> categoryCreator;
+    private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> IngredCreator;
 
     @FXML
@@ -64,7 +62,6 @@ public class BookOfCookController extends Validator{
         book.addDummy();
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        unitComboBoxFridge.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
         
         for(Category category : book.getCategories()){          // fyller inn kategorilista
@@ -95,11 +92,12 @@ public class BookOfCookController extends Validator{
     
     //?usikker
     private void initFridgeFood(){                              //initializes the food in fridge
-        fridgeFood = new ArrayList<HashMap<String, String>>();
+        fridgeFood = new ArrayList<String>();
         fridgeFood.addAll(fridge.getFood());
-        for(HashMap<String, String> food : fridgeFood){
-            fridgeList.getItems().add(foodComponent(food.get("name").toString(), food.get("amount").toString(), food.get("unit").toString())); 
+        for(String food : fridgeFood){
+            fridgeList.getItems().add(foodComponent(food.toString())); 
         }
+        updateRecipeList();
     }
 
     //*godkjent
@@ -297,7 +295,7 @@ public class BookOfCookController extends Validator{
     }
 
     //?usikker
-    private Pane foodComponent(String food, String amount, String unit){
+    private Pane foodComponent(String food){
         Pane foodBody = new Pane();
         Button btn = new Button("X");
 
@@ -307,7 +305,7 @@ public class BookOfCookController extends Validator{
             updatefridge(); 
         });
 
-        Label label = new Label(food + ": " + amount + " " + unit);
+        Label label = new Label(food);
         styleNode(label, "list-label", 80.0, 10.0);
 
         foodBody.getChildren().add(label);
@@ -413,7 +411,7 @@ public class BookOfCookController extends Validator{
 
     //*godkjent
     public void fridgeAddFood() {
-        fridge.addFood(fridgeNameInput.getText(), fridgeAmountInput.getText(), unitComboBoxFridge.getValue());
+        fridge.addFood(fridgeNameInput.getText());
         updatefridge();
     }
 
