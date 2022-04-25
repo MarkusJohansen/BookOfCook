@@ -82,9 +82,8 @@ public class BookOfCookController extends Validator{
     }
 
     public void checkbox(){
-        if(fridgeCheckbox.isSelected()){
-            System.out.println("test");
-        }
+        book.setFridgeCheck(fridgeCheckbox.isSelected());
+        updateRecipeList();
     }
 
     //?usikker
@@ -342,6 +341,8 @@ public class BookOfCookController extends Validator{
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+
+        System.out.println(Ingredients);
         viewList(0, 0, 1, 0, "Categories", categories);
         viewList(4, 0, 5, 0, "steps", steps);
         viewList(2, 0, 3, 0, "Ingredients", Ingredients);

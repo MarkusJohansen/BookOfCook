@@ -36,7 +36,6 @@ public class Fridge extends Validator{
     }   
 
     public void removeFood(String name) {
-        
         boolean removedFood = false;
         for (int i = 0; i < foodInFridge.size(); i++){                          // iterates through foodInFridge
             if(foodInFridge.get(i).get("name") == name){                        // checks if food is equal to name
@@ -57,7 +56,7 @@ public class Fridge extends Validator{
             for (HashMap<String, String> ingredient : recipe.getIngredients()) {
                 boolean ingredientInFridge = false;
                 for (HashMap<String, String> food : foodInFridge) {
-                    if (ingredient.get("name").equals(food.get("name"))) {
+                    if (ingredient.get("name").toUpperCase().equals(food.get("name").toUpperCase())) {
                         ingredientInFridge = true;
                     }
                 }
@@ -75,5 +74,9 @@ public class Fridge extends Validator{
     @Override
     public String toString() {
         return "Fridge [foodInFridge=" + foodInFridge + "]";
+    }
+
+    public static void main(String[] args) {
+        
     }
 }

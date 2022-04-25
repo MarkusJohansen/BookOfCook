@@ -7,6 +7,7 @@ public class Cookbook extends Validator {
     private int recipeAmount;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private ArrayList<Category> categories = new ArrayList<Category>();
+    private boolean fridgeCheck;
 
     public Cookbook() {
         this.recipeAmount = 0;  // amount of recipes in cookbook is always 0 at star
@@ -119,6 +120,10 @@ public class Cookbook extends Validator {
         return searchResults;                                                                       // return output arraylist
     }
 
+    public void setFridgeCheck(boolean fridgeCheck) {
+        this.fridgeCheck = fridgeCheck;
+    }
+
     //*Cookbook filtration
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
@@ -126,8 +131,10 @@ public class Cookbook extends Validator {
             filteredRecipes.add(recipe);
         }
 
-        if(false){ // KJØLESKAP
+        if(fridgeCheck){ // KJØLESKAP
+            System.out.println(filteredRecipes);
             filteredRecipes = fridge.filter(recipes);
+            System.out.println(filteredRecipes);
         }
 
         if(true){ // KATEGORIER

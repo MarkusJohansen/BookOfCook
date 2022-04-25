@@ -67,6 +67,12 @@ public class Recipe extends Validator{
 
     // get ingredients
     public ArrayList<HashMap<String, String>> getIngredients() {
+        /*ArrayList<HashMap<String, String>> output = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> ingredient : ingredients) {
+            output.add(ingredient.get("name"));
+        }
+        return output;*/
+
         return new ArrayList<HashMap<String, String>>(ingredients);  // returns ingredients
     }
 
