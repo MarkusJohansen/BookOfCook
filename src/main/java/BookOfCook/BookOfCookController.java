@@ -51,7 +51,6 @@ public class BookOfCookController extends Validator{
     private CheckBox fridgeCheckbox;
 
     public void initialize(){//initializes the controller
-        System.out.println("ehe");
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
@@ -336,7 +335,6 @@ public class BookOfCookController extends Validator{
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
 
-        System.out.println(Ingredients);
         viewList(0, 0, 1, 0, "Categories", categories);
         viewList(4, 0, 5, 0, "steps", steps);
         viewList(2, 0, 3, 0, "Ingredients", Ingredients);

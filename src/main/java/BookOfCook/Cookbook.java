@@ -153,8 +153,6 @@ public class Cookbook extends Validator {
         }
 
         if(true){ // SØKE
-
-            System.out.println(searchText);
             if(searchText != ""){
                 filteredRecipes = searchRecipes(searchText, filteredRecipes);
             }
