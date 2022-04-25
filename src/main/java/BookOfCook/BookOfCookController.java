@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -73,9 +72,10 @@ public class BookOfCookController extends Validator{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
+    //! er dette kilden til checkbox bug?
     public void checkbox(){
-        book.setFridgeCheck(fridgeCheckbox.isSelected());
-        updateRecipeList();
+        // book.setFridgeCheck(fridgeCheckbox.isSelected());
+        // updateRecipeList();
     }
 
     //?usikker
@@ -118,7 +118,7 @@ public class BookOfCookController extends Validator{
 
     //*godkjent
     private void updateIngredCreatorList() {
-        List<String> ingredients = IngredCreator.stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);
     }
 
@@ -323,7 +323,7 @@ public class BookOfCookController extends Validator{
 
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
-        List<String> Ingredients = recipe.getIngredients().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
+        List<String> Ingredients = recipe.getIngredients().stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
 
         viewList(0, 0, 1, 0, "Categories", categories);
         viewList(4, 0, 5, 0, "steps", steps);
@@ -410,16 +410,9 @@ public class BookOfCookController extends Validator{
 }
 
 /*
-*GOLFING
-*searchbar og category filter erstattes av filter (ca.30 linjer)
-*getCategories, ca (20.linjer)
-*Shorthand for buttons ca (40.linjer)
-*totalt ca (90.linjer) = 350 linjer igjen
-
 !KJENTE BUGS
 !amount label er ikke oppdatert
 !man kan legge inn verdier null i creator lister
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
-!lage penere tostring for ingredients
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
 */

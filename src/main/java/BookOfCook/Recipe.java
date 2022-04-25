@@ -182,22 +182,22 @@ public class Recipe extends Validator{
     }
 
 
-    //! *SCALE RECIPE har ikke støtte men burde ha det, da dette er det mest mattematisk logiske vi dealer med
-    // when numbers of servings change, scale amounts
-    public void scale(int newNumberOfServings) { 
-        negativeOrZero((double) newNumberOfServings);                       // validates new number of servings¨
-        double ratio = newNumberOfServings / numberOfServings;              // the ratio describes how many times the recipe has been scaled
+    // //! *SCALE RECIPE har ikke støtte men burde ha det, da dette er det mest mattematisk logiske vi dealer med
+    // // when numbers of servings change, scale amounts
+    // public void scale(int newNumberOfServings) { 
+    //     negativeOrZero((double) newNumberOfServings);                       // validates new number of servings¨
+    //     double ratio = newNumberOfServings / numberOfServings;              // the ratio describes how many times the recipe has been scaled
 
-        for (int i = 0; i < ingredients.size(); i++) {                      // loops through all ingredients
-            double amount =  Double.parseDouble(ingredients.get(i).get("amount"));      // gets amount of every ingredient as a double 
-            amount = amount * ratio;                                        // scales amount of ingredient by multiplying itself with the ratio 
-            ingredients.get(i).put("amount", amount + "");                       // sets the new amount of ingredient i in the recipe
-        }
+    //     for (int i = 0; i < ingredients.size(); i++) {                      // loops through all ingredients
+    //         double amount =  Double.parseDouble(ingredients.get(i).get("amount"));      // gets amount of every ingredient as a double 
+    //         amount = amount * ratio;                                        // scales amount of ingredient by multiplying itself with the ratio 
+    //         ingredients.get(i).put("amount", amount + "");                       // sets the new amount of ingredient i in the recipe
+    //     }
 
-        setCalories(calories * ratio);                                      // scales calories by multiplying itself with the ratio
-        setServings(newNumberOfServings);                           // sets new number of servings
-        setCalPerServing();                                             // sets calories per person based on the new value of number of servings
-    }
+    //     setCalories(calories * ratio);                                      // scales calories by multiplying itself with the ratio
+    //     setServings(newNumberOfServings);                           // sets new number of servings
+    //     setCalPerServing();                                             // sets calories per person based on the new value of number of servings
+    // }
 
 
     //! *TOSTRING METHOD brukes ikke
