@@ -7,38 +7,33 @@ import java.util.stream.Collectors;
 
 public class Fridge extends Validator{
     // *FIELDS
-    private ArrayList<HashMap<String, String>> foodInFridge = new ArrayList<HashMap<String, String>>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
+    private ArrayList<String> foodInFridge = new ArrayList<String>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
 
     // *CONSTRUCTOR
     public Fridge() {
         //*dummy food
-        addFood("tomater", "4", "stk");
-        addFood("melk", "2", "L");
-        addFood("ost", "400", "g");
-        addFood("egg", "8", "stk");
+        addFood("tomater");
+        addFood("melk");
+        addFood("ost");
+        addFood("egg");
     }
 
     // *GETTERS
-    public ArrayList<HashMap<String, String>> getFood() {
-        return new ArrayList<HashMap<String, String>>(foodInFridge);
+    public ArrayList<String> getFood() {
+        return new ArrayList<String>(foodInFridge);
     }
 
     //*ADDING AND REMOVING FOOD 
-    public void addFood(String name, String amount, String unit) {
+    public void addFood(String name) {
         nullOrEmpty(name);
-        nullOrEmpty(amount);
         ingredientExists(foodInFridge, name);        
-        HashMap<String, String> ingredient = new HashMap<String, String>();
-        ingredient.put("name", name.toLowerCase());     // adds the name of the ingredient to this ingredient hashmap
-        ingredient.put("amount", amount);               //! unødvendig? adds the amount key, value pair to this ingrdient hashmap, describes the amount of the ingredient
-        ingredient.put("unit", unit);                   //! unødvendig? adds the unit key, value pair to this"unit" key, value pair to this ingredient hashmap, describes the unit of the ingredient
-        foodInFridge.add(ingredient);                   // adds the ingredient to the list of ingredients
+        foodInFridge.add(name.toLowerCase());                   // adds the ingredient to the list of ingredients
     }   
 
     public void removeFood(String name) {
         boolean removedFood = false;
         for (int i = 0; i < foodInFridge.size(); i++){                          // iterates through foodInFridge
-            if(foodInFridge.get(i).get("name") == name){                        // checks if food is equal to name
+            if(foodInFridge.get(i) == name){                        // checks if food is equal to name
                 System.out.println("Removing " + foodInFridge.get(i));          
                 foodInFridge.remove(i);                                         // removes i food
                 removedFood = true;
@@ -55,8 +50,8 @@ public class Fridge extends Validator{
         Predicate<Recipe> criteria = (Recipe recipe) -> {
             for (HashMap<String, String> ingredient : recipe.getIngredients()) {
                 boolean ingredientInFridge = false;
-                for (HashMap<String, String> food : foodInFridge) {
-                    if (ingredient.get("name").toUpperCase().equals(food.get("name").toUpperCase())) {
+                for (String food : foodInFridge) {
+                    if (ingredient.get("name").toUpperCase().equals(food.toUpperCase())) {
                         ingredientInFridge = true;
                     }
                 }

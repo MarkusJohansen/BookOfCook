@@ -19,12 +19,10 @@
    <children>
       <Pane layoutX="62.0" layoutY="85.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
          <children>
-            <Button fx:id="fridgeAddButton" layoutX="254.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add food" />
-            <TextField fx:id="fridgeNameInput" layoutX="14.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
-            <TextField fx:id="fridgeAmountInput" layoutX="88.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="amount" />
+            <Button fx:id="fridgeAddButton" layoutX="211.0" layoutY="775.0" mnemonicParsing="false" onAction="#fridgeAddFood" styleClass="standard-button" text="Add food" />
+            <TextField fx:id="fridgeNameInput" layoutX="117.0" layoutY="775.0" prefHeight="25.0" prefWidth="64.0" promptText="name" />
             <ListView fx:id="categList" layoutX="51.0" layoutY="70.0" prefHeight="302.0" prefWidth="281.0" styleClass="listViews" />
             <ListView fx:id="fridgeList" layoutX="51.0" layoutY="446.0" prefHeight="313.0" prefWidth="281.0" styleClass="listViews" />
-            <ComboBox fx:id="unitComboBoxFridge" layoutX="161.0" layoutY="775.0" prefHeight="25.0" prefWidth="75.0" promptText="unit" />
             <Label layoutX="124.0" layoutY="30.0" prefHeight="33.0" prefWidth="135.0" text="Categories" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial" size="27.0" />
@@ -35,7 +33,7 @@
                   <Font name="Arial" size="27.0" />
                </font>
             </Label>
-            <CheckBox fx:id="fridgeCheckbox" layoutX="108.0" layoutY="423.0" mnemonicParsing="false" text="Sort by ingredients in fridge" onAction="#checkbox"/>
+            <CheckBox fx:id="fridgeCheckbox" layoutX="108.0" layoutY="423.0" mnemonicParsing="false" onAction="#checkbox" text="Sort by ingredients in fridge" />
          </children>
       </Pane>
       <Pane layoutX="459.0" layoutY="98.0" prefHeight="817.0" prefWidth="634.0" styleClass="level-1-panes">

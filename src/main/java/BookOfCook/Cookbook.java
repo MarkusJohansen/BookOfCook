@@ -132,25 +132,17 @@ public class Cookbook extends Validator {
         }
 
         if(fridgeCheck){ // KJØLESKAP
-            System.out.println(filteredRecipes);
-            filteredRecipes = fridge.filter(recipes);
-            System.out.println(filteredRecipes);
+            filteredRecipes = fridge.filter(recipes)
         }
 
         if(true){ // KATEGORIER
-            // tar inn den enda mindre filteredrecipes
-            System.out.println(filteredRecipes);
             filteredRecipes = filterByCategories(filteredRecipes, categories);
-            System.out.println(filteredRecipes);
-            //resultatet blir en enda enda mindre filteredRecipes
         }
 
         if(true){ // SØKE
             if(searchText != ""){
                 filteredRecipes = searchRecipes(searchText, filteredRecipes);
             }
-            //tar inn den enda mindre filteredrecipes
-            //resultatet blir en enda enda mindre filteredRecipes
         }
 
         return filteredRecipes;                         //returnerer filtrasjonsproduktet

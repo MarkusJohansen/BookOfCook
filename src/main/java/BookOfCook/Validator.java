@@ -72,9 +72,9 @@ abstract class Validator {
         }
     }
 
-    protected void ingredientExists(ArrayList<HashMap<String, String>> foodContainer, String foodName){
+    protected void ingredientExists(ArrayList<String> foodContainer, String foodName){
         for (int i = 0; i < foodContainer.size(); i++) {                         // iterates through foodInFridge
-            String checkName = (String) foodContainer.get(i).get("name");
+            String checkName = (String) foodContainer.get(i);
             if (checkName.toUpperCase().equals(foodName.toUpperCase())) {
                 throw new IllegalArgumentException(checkName + " already exists within food container");
             }
