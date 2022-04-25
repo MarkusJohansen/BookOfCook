@@ -104,7 +104,7 @@ public class BookOfCookController extends Validator{
     //!passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
-        for(Category category : book.getCategories()){                                //!init lager, updater skal gjøre klar for ny init ved endring
+        for(Category category : book.getCategories()){                             
             categList.getItems().add(categComponent(category));
         }
     }
@@ -162,7 +162,7 @@ public class BookOfCookController extends Validator{
         closeRecipeView();
     }
 
-    //!REMOVE METHODS trenger generell metode, for å  kutte linjer, kan man bruke remove list?
+    //?
     public Button removeCategoryList(String target){
         Button btn = new Button("-");
         styleNode(btn, "standard-button", 10.0, 0.0);
@@ -173,7 +173,7 @@ public class BookOfCookController extends Validator{
         return btn;
     }
 
-    //!REMOVE METHODS trenger generell metode, for å  kutte linjer, kan man bruke remove list?
+    //?
     public Button removeIngredientList(HashMap<String, String> target){
             Button btn = new Button("-");
             styleNode(btn, "standard-button", 10.0, 0.0);
@@ -184,7 +184,7 @@ public class BookOfCookController extends Validator{
             return btn;
     }
 
-    //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
+    //?
     private void closeBtn(){    //creates a close Btn for closing recipe view
         Button btn = new Button("Close");           //creates button object
         styleNode(btn, "standard-button", 80.0, 170.0);
@@ -204,16 +204,6 @@ public class BookOfCookController extends Validator{
             removeRecipe(recipe);
         });
         recipeViewContent.add(btn, 1, 4);
-    }
-
-    //?prøver å lage shorthands for buttons, men sliter med å passe void arguments som funksjoner
-    private void viewBtn(String btnLabel, Runnable function, int btnX, int btnY){ 
-        Button btn = new Button(btnLabel);
-        styleNode(btn, "standard-button", 80.0, 170.0);
-        btn.setOnAction(e -> {
-            function.run();
-        });
-        recipeViewContent.add(btn, btnX, btnY);
     }
 
     //?usikke, må ha mer updaters?
@@ -369,11 +359,6 @@ public class BookOfCookController extends Validator{
         }
         listView.getStyleClass().add("recipe-view-list");
         recipeViewBox2.add(listView, listY, listX);
-    }
-
-    // ! heller sette onAction til søkebaren til updateRecipeList()?
-    public void searchFood() {
-        updateRecipeList();
     }
 
     //*godkjent
