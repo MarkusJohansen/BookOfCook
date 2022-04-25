@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -27,8 +25,6 @@ import javafx.stage.Stage;
 
 public class BookOfCookController extends Validator{
     private Cookbook book;
-    private String searchText;
-    private ArrayList<Recipe> searchedRecipes;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
@@ -377,37 +373,10 @@ public class BookOfCookController extends Validator{
         recipeViewBox2.add(listView, listY, listX);
     }
 
-    // ! SKALL VEKK fordi den erstattes av filter, FLYTTE INN I COOKBOOK.JAVA
+    // ! heller sette onAction til søkebaren til updateRecipeList()?
     public void searchFood() {
-        /*searchedRecipes = book.searchRecipes(searchBar.getText(), book.getRecipes());
-        
-        if(searchedRecipes.size() > 0){
-            recipeList.getItems().clear();      //!refresh funksjon
-            for(Recipe r : searchedRecipes){
-                recipeList.getItems().add(recipeComponent(r));
-            }
-        }*/
-        // updateAmountLabel(searchedRecipes);
+        updateRecipeList();
     }
-
-    
-    // ! Skal vekk fordi den erstattes av filter FLYTTE INN I COOKBOOK.JAVA
-    /*public void filterRecipes(ArrayList<Category> categoriesClicked) {
-        recipeList.getItems().clear();
-        if(categoriesClicked.size() == 0){
-            initRecipeComponents();
-            return;
-        }
-
-        ArrayList<Recipe> sortedRecipes = book.filterByCategories(categoriesClicked);
-        if(sortedRecipes.size() == 0){
-        }
-
-        for(Recipe r : sortedRecipes){
-            recipeList.getItems().add(recipeComponent(r));
-        }
-        //updateAmountLabel(sortedRecipes);
-    }*/
 
     //*godkjent
     public void fridgeAddFood() {

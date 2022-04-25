@@ -148,11 +148,13 @@ public class Cookbook extends Validator {
             filteredRecipes = fridge.filter(recipes);
         }
 
-        if(true){ // KATEGORIER
+        if(categories.size() > 0){ // KATEGORIER
             filteredRecipes = filterByCategories(filteredRecipes, categories);
         }
 
         if(true){ // SØKE
+
+            System.out.println(searchText);
             if(searchText != ""){
                 filteredRecipes = searchRecipes(searchText, filteredRecipes);
             }

@@ -36,7 +36,7 @@
             <CheckBox fx:id="fridgeCheckbox" layoutX="108.0" layoutY="423.0" mnemonicParsing="false" onAction="#checkbox" text="Sort by ingredients in fridge" />
          </children>
       </Pane>
-      <Pane layoutX="459.0" layoutY="98.0" prefHeight="817.0" prefWidth="634.0" styleClass="level-1-panes">
+      <Pane layoutX="460.0" layoutY="83.0" prefHeight="824.0" prefWidth="633.0" styleClass="level-1-panes">
          <children>
             <ListView fx:id="recipeList" layoutX="35.0" layoutY="41.0" prefHeight="703.0" prefWidth="564.0" styleClass="listViews" />
             <Pane fx:id="recipeView" layoutX="2.0" layoutY="-7.0" prefHeight="824.0" prefWidth="599.0" styleClass="level-1-panes" visible="false">
