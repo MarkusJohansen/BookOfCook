@@ -132,7 +132,7 @@ public class Cookbook extends Validator {
         }
 
         if(fridgeCheck){ // KJØLESKAP
-            filteredRecipes = fridge.filter(recipes)
+            filteredRecipes = fridge.filter(recipes);
         }
 
         if(true){ // KATEGORIER
