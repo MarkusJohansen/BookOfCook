@@ -11,11 +11,14 @@ public class Fridge extends Validator{
 
     // *CONSTRUCTOR
     public Fridge() {
-        //*dummy food
-        addFood("tomater");
+        addFood("tomat");//dummy food
         addFood("melk");
         addFood("ost");
         addFood("egg");
+        addFood("kjøttdeig");
+        addFood("hamburgerbrød");
+        addFood("rødløk");
+        addFood("sylteagurk");
     }
 
     // *GETTERS

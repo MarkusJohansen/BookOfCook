@@ -73,7 +73,7 @@ public class BookOfCookController extends Validator{
         IngredCreator = new ArrayList<HashMap<String, String>>();
 
         initFridgeFood();
-        initRecipeComponents();
+        updateRecipeList();
 
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
@@ -97,7 +97,6 @@ public class BookOfCookController extends Validator{
         for(String food : fridgeFood){
             fridgeList.getItems().add(foodComponent(food.toString())); 
         }
-        updateRecipeList();
     }
 
     //*godkjent
@@ -119,6 +118,7 @@ public class BookOfCookController extends Validator{
     public void updatefridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
+        updateRecipeList();
     }
 
     //*godkjent

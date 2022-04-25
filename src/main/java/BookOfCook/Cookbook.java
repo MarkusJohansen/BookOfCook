@@ -32,6 +32,12 @@ public class Cookbook extends Validator {
             put("unit", "stk");
         }};
 
+        HashMap<String, String> hamburgerbrød = new HashMap<String, String>() {{
+            put("name", "hamburgerbrød");
+            put("amount", "2.0");
+            put("unit", "stk");
+        }};
+
         Category italiensk = new Category("italiensk");
         Category burger = new Category("burger");
         Category kjøtt = new Category("kjøtt");
@@ -47,7 +53,14 @@ public class Cookbook extends Validator {
             "Stek pizzaen på 250 °C i 8-10 minutter, eller til pizzaen har en gyllen farge og sprø bunn.", 
             "Dryss over rucculasalat før servering."
             ))));
-        addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving", "blabla"))));
+        addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, hamburgerbrød, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList(
+            "Ha kjøttdeig, salt, pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge, deigen skal ikke bli seig.", 
+            "Ha litt vann på en fjøl og form deigen til runde kaker som klemmes ut til store flate burgere.", 
+            "Stek burgere i en stekepanne med margarin eller olje. Bruk sterk varme og stek på den ene siden til det pipler ut kjøttsaft. Snu burgerne og stek videre på den andre siden til det igjen pipler ut kjøttsaft. Da er burgerne medium stekt.",
+            "Gjør klar tilbehøret. Varm hamburgerbrød som anvist på pakken. Vask salat. Kutt tomat, rødløk og syltet agurk i skiver.",
+            "Fyll brødene med salatblad, burgere, tomat, rødløk og syltet agurk. Ha gjerne på en dressing du liker godt, eller en hjemmelaget ketchup. Server gjerne med potetchips",
+            "Vil du ha et godt tips til burgertilbehør? Syltet rødløk er superdigg på burgeren!"
+            ))));
 
         collectCategories();
     }
