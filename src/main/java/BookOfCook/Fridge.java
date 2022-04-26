@@ -34,7 +34,6 @@ public class Fridge extends Validator{
         boolean removedFood = false;                                    // boolean to check if food was removed
         for (int i = 0; i < foodInFridge.size(); i++){                  // iterates through foodInFridge
             if(foodInFridge.get(i) == name){                            // checks if food is equal to name
-                System.out.println("Removing " + foodInFridge.get(i));  //! prints out what is being removed  husk å fjerne
                 foodInFridge.remove(i);                                 // removes i food
                 removedFood = true;
             }

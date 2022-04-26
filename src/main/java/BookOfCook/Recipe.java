@@ -83,17 +83,11 @@ public class Recipe extends Validator{
     public void setServings(int numberOfServings) {
         negativeOrZero((double) numberOfServings);                              // checks if number of servings is valid
         this.numberOfServings = numberOfServings;                               // sets number of servings
-        setCalPerServing();                                                     //? sets calories per person. er dette undøvendig?
     }
 
     public void setCalories(double calories) {   
         negative(calories);                                                     // checks if calories are valid
         this.calories = calories;                                               // sets the total calories of the recipe
-        setCalPerServing();                                                     // sets calories per person based on the new value of calories and number of servings
-    }
-
-    private void setCalPerServing() {                                           //? sets calories per serving er dette undøvendig?
-        this.CalPerServing = calories / numberOfServings;                       // sets calories per person based on the new value of calories and number of servings
     }
 
     public void setDescription(String description) {                            // sets description of recipe
@@ -126,5 +120,10 @@ public class Recipe extends Validator{
     public void addStep(String step) {
         nullOrEmpty(step);                                                      // checks if step is valid
         steps.add(capitalize(step));                                            // adds step to list of steps in recipe
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe [categories=" + categories + ", name=" + name + "]";
     }
 }

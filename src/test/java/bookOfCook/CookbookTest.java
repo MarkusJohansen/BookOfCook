@@ -118,9 +118,11 @@ public class CookbookTest {
         hamburger.addCategory(italiensk);
         cookbook.addRecipe(pizza);
         cookbook.addRecipe(hamburger);
-        assertTrue(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
-        tCategories.remove(italiensk);
+        System.out.println(pizza);
+        System.out.println(cookbook.filterByCategories(cookbook.getRecipes(), tCategories));
         assertFalse(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
+        tCategories.remove(kjøtt);
+        assertTrue(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
     }
 
     @Test
