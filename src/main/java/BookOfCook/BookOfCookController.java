@@ -410,5 +410,5 @@ public class BookOfCookController extends Validator{
 ?hva med å prøve å konstruere en oppskrift
 ?brukeren skal kunne gi 
 ?få til møte med studass på hvordan flytte mer frontend til backend. 
-?kan man lage backend som tar seg av mye av javaFX dynamikken?'
+?kan man lage backend som tar seg av mye av javaFX dynamikken?
 */
