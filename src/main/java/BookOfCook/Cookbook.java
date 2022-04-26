@@ -76,6 +76,7 @@ public class Cookbook extends Validator {
     }
 
     public void removeRecipe(Recipe recipe) {                               // removes recipe from cookbook and updates recipe amount
+        recipeExists(recipes, recipe);                                      // checks if recipe exists
         recipes.remove(recipe);                                             // removes recipe from cookbook
         recipeAmount--;                                                     // updates amount of recipes in cookbook
     }
@@ -106,7 +107,6 @@ public class Cookbook extends Validator {
                 sortedRecipes.add(recipe);                                                                      // add recipe to output array
             }
         }
-        System.out.println(sortedRecipes);
         return sortedRecipes;
     }
 

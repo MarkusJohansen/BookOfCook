@@ -121,4 +121,9 @@ public class Recipe extends Validator{
         nullOrEmpty(step);                                                      // checks if step is valid
         steps.add(capitalize(step));                                            // adds step to list of steps in recipe
     }
+
+    @Override
+    public String toString() {
+        return "Recipe [categories=" + categories + ", name=" + name + "]";
+    }
 }
