@@ -212,7 +212,8 @@ public class BookOfCookController extends Validator{
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        if(!(stringExistsArray(stepsField.getText(), stepsCreator) || stepsField.getText().equals(""))){ //! feil validering
+        if(!(stringExistsArray(stepsField.getText(), stepsCreator))){
+            nullOrEmpty(stepsField);
             stepsCreator.add(stepsField.getText());
             listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
@@ -220,20 +221,22 @@ public class BookOfCookController extends Validator{
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addIngredientCreator(){
-        if(!( ingredNameBar.getText().equals("") || ingredAmountBar.getText().equals("") || unitComboBoxRecipe.getValue().equals("") )){ //! feil validering
-            HashMap<String, String> ingredient = new HashMap<String,String>();
-            ingredient.put("name", ingredNameBar.getText());
-            ingredient.put("amount", ingredAmountBar.getText());
-            ingredient.put("unit", unitComboBoxRecipe.getValue());
-            IngredCreator.add(ingredient); 
-            updateIngredCreatorList();       
-        }
+        nullOrEmpty(ingredNameBar.getText());
+        nullOrEmpty(ingredAmountBar.getText());
+        nullOrEmpty(unitComboBoxRecipe.getValue());
+        HashMap<String, String> ingredient = new HashMap<String,String>();
+        ingredient.put("name", ingredNameBar.getText());
+        ingredient.put("amount", ingredAmountBar.getText());
+        ingredient.put("unit", unitComboBoxRecipe.getValue());
+        IngredCreator.add(ingredient); 
+        updateIngredCreatorList();
     }
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
-        if(!(stringExistsArray(categoryName, categoryCreator) || categoryName.equals(""))){ //! feil validering
+        if(!(stringExistsArray(categoryName, categoryCreator))){
+            nullOrEmpty(categoryName);
             categoryCreator.add(categoryName);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
