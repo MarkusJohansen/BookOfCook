@@ -117,7 +117,23 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
-    //
+    public ArrayList<Category> createNewCategoriesOnly(ArrayList<String> categNames){                           // creates new categories from a list of names
+        ArrayList<Category> outputArray = new ArrayList<Category>();                                            // create an output arraylist
+        for(String category : categNames){                                                                      // loops through all names in category names
+            if(checkIfCategoryExist(category, getCategories())){                                                // checks if category already exists in cookbook 
+                for(Category c : getCategories()){                                                              // loops through all categories in cookbook
+                    if(category.toUpperCase().equals(c.getName().toUpperCase())){                               // if category name is equal to category name in cookbook
+                        outputArray.add(c);                                                                     // add category to output array
+                    }
+                }
+            }else{
+                outputArray.add(new Category(category));                                                        // add new category to output array
+            }
+        }
+        return outputArray;                                                                                     // return output array
+    }
+
+
     public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                                    // loops through all recipes

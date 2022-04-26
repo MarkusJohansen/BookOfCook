@@ -5,7 +5,7 @@ import java.util.*;
 public class Recipe extends Validator{
     private String name, description, prepTime;                                 // name of recipe that will be dealt with back end, as well as name displayed to user    
     private int numberOfServings;                                               // number persons this recipe serves        
-    private double calories, CalPerServing;                                     // optional for user.
+    private double calories;                                     // optional for user.
     private ArrayList<HashMap<String, String>> ingredients;                     // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories;                                     // stores the categories of the recipe                                    
     private ArrayList<String> steps;                                            // stores the steps of how to make the recipe
@@ -55,10 +55,6 @@ public class Recipe extends Validator{
         return calories;                                                        // returns calories
     }
 
-    public double getCalPerServing() {
-        return CalPerServing;                                                   // returns calories per person
-    }
-
     public ArrayList<HashMap<String, String>> getIngredients() {
         return new ArrayList<HashMap<String, String>>(ingredients);             // returns ingredients
     }
@@ -87,17 +83,11 @@ public class Recipe extends Validator{
     public void setServings(int numberOfServings) {
         negativeOrZero((double) numberOfServings);                              // checks if number of servings is valid
         this.numberOfServings = numberOfServings;                               // sets number of servings
-        setCalPerServing();                                                     //? sets calories per person. er dette undøvendig?
     }
 
     public void setCalories(double calories) {   
         negative(calories);                                                     // checks if calories are valid
         this.calories = calories;                                               // sets the total calories of the recipe
-        setCalPerServing();                                                     // sets calories per person based on the new value of calories and number of servings
-    }
-
-    private void setCalPerServing() {                                           //? sets calories per serving er dette undøvendig?
-        this.CalPerServing = calories / numberOfServings;                       // sets calories per person based on the new value of calories and number of servings
     }
 
     public void setDescription(String description) {                            // sets description of recipe
