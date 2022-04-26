@@ -128,7 +128,6 @@ public class BookOfCookController extends Validator{
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             Label label = new Label(element.toString());
-    
             styleNode(label, "list-label", 80.0, 10.0); 
             pane.getChildren().add(label);
             pane.getChildren().add(removeList(element.toString(), array));
@@ -169,13 +168,13 @@ public class BookOfCookController extends Validator{
 
     //?
     public Button removeIngredientList(HashMap<String, String> target){
-            Button btn = new Button("-");
-            styleNode(btn, "standard-button", 10.0, 0.0);
-            btn.setOnAction(e -> {
-                IngredCreator.remove(target);
-                updateIngredCreatorList();
-            });   
-            return btn;
+        Button btn = new Button("-");
+        styleNode(btn, "standard-button", 10.0, 0.0);
+        btn.setOnAction(e -> {
+            IngredCreator.remove(target);
+            updateIngredCreatorList();
+        });   
+        return btn;
     }
 
     //?
