@@ -73,9 +73,9 @@ public class BookOfCookController extends Validator{
     }
 
     //! er dette kilden til checkbox bug? NEI TROR IKKE D, BUGEN ER DER FORTSATT
-    public void checkbox(){                             // check
-        // book.setFridgeCheck(fridgeCheckbox.isSelected());
-        // updateRecipeList();
+    public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList
+        book.setFridgeCheck(fridgeCheckbox.isSelected());
+        updateRecipeList();
     }
 
     //?usikker
