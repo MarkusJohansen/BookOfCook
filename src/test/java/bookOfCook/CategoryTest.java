@@ -1,5 +1,6 @@
 package bookOfCook;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +18,7 @@ import BookOfCook.Recipe;
 public class CategoryTest {
     //JUnit tests for Cookbook class
     private Recipe pizza;
-    private Category italiensk;
+    private Category italiensk, categoryT;
 
     @BeforeEach
     public void setup() {
@@ -35,6 +36,21 @@ public class CategoryTest {
         italiensk = new Category("italiensk");
         pizza = new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Tiss i en kopp", "Kok øving")));
     }
+
+    @Test
+    @DisplayName("Test for getName")
+    public void testGetName() {
+        assertEquals("italiensk", italiensk.getName());
+    }
+
+    @Test
+    @DisplayName("Test for constructor")
+    public void testConstructor() {
+        categoryT = new Category("test");
+        assertEquals("test", categoryT.getName());
+        assertTrue(categoryT.getRecipes().isEmpty());
+    }
+
 
     @Test
     @DisplayName("Test add and remove recipe from category")

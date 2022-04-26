@@ -58,6 +58,15 @@ public class CookbookTest {
         tCategories = new ArrayList<Category>(Arrays.asList(italiensk, burger, kjøtt));
     }
 
+    //*CONSTRUCTOR TEST
+    @Test
+    @DisplayName("Test Constructor")
+    public void testConstructor() {
+        Cookbook cookbook = new Cookbook();
+        assertTrue(cookbook.getRecipes().isEmpty());
+    }
+
+    //*RECIPES IN COOKBOOK TESTS
     @Test
     @DisplayName("Test add recipe and recipeAmount")
     public void RecipeContainment() {
@@ -67,8 +76,6 @@ public class CookbookTest {
         cookbook.addRecipe(hamburger);
         assertTrue(cookbook.getAmount() == 2);
         assertTrue(cookbook.getRecipes().size() == 2);
-
-        //throw exceptions if recipe is duplicate
         assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(pizza));
         assertThrows(NullPointerException.class, () -> cookbook.addRecipe(null));
     }
@@ -78,29 +85,29 @@ public class CookbookTest {
     public void recipeRemoval() {
         cookbook.addRecipe(pizza);
         cookbook.addRecipe(hamburger);
-
-        //check if throw exception if recipe not in cookbook
         cookbook.removeRecipe(hamburger);
         assertThrows(IllegalArgumentException.class, () -> cookbook.removeRecipe(hamburger));
-
         assertFalse(cookbook.getRecipes().contains(hamburger));
         assertTrue(cookbook.getRecipes().contains(pizza));
     }
 
+    //*CATEGORIES IN COOKBOOK TEST
     @Test
-    @DisplayName("Test Constructor")
-    public void testConstructor() {
-        Cookbook cookbook = new Cookbook();
-        assertTrue(cookbook.getRecipes().isEmpty());
+    @DisplayName("Test categories in cookbook")
+    public void categoriesInCookbook() {
+        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(hamburger);
+        assertTrue(cookbook.getCategories().containsAll(tCategories));
     }
 
+    //*FILTER TESTS
     @Test
     @DisplayName("Test searchRecipes")
     public void testSearchRecipe() {
         cookbook.addRecipe(pizza);
         cookbook.addRecipe(hamburger);
-        assertFalse(cookbook.searchRecipes("Pizza").contains(pizza));
-        assertTrue(cookbook.searchRecipes("Pizza").contains(hamburger));
+        assertTrue(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(pizza));
+        assertFalse(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(hamburger));
     }
 
     @Test
@@ -117,20 +124,11 @@ public class CookbookTest {
     }
 
     @Test
-    @DisplayName("Test collectCategories")
-    public void testcollectCategories() {
-        cookbook.addRecipe(pizza);
-        pizza.addCategory(italiensk);
-        cookbook.collectCategories();
-        assertEquals(cookbook.getCategories(), new ArrayList<>(Arrays.asList(italiensk)));
-    }
-
-    @Test
     @DisplayName("Test filter")
-    public void testcollectCategories() {
+    public void testFilter() {
         cookbook.addRecipe(pizza);
-        pizza.addCategory(italiensk);
-        cookbook.collectCategories();
-        assertEquals(cookbook.getCategories(), new ArrayList<>(Arrays.asList(italiensk)));
+        cookbook.addRecipe(hamburger);
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(pizza));
+        assertFalse(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(hamburger));
     }
 }

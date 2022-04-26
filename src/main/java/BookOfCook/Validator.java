@@ -13,7 +13,6 @@ abstract class Validator {
         }
     }
 
-    // checks if null, empty and if string, also trailing and leading whitespace
     protected void nullOrEmpty(Object object) {
         if (object == null) {                                      // if recipe string is null or empty
             throw new IllegalArgumentException("string cannot be null");     // throw error
@@ -130,7 +129,6 @@ abstract class Validator {
     }
 
     // *GENERAL TOOLBOX METHODS
-    // capitalizes first letter and makes rest of string lowercase. good for displayed names in app
     protected String capitalize(String s) {
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();             // capitalizes first letter of string s and returns it
     }

@@ -119,6 +119,7 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
+    //
     public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {   // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                        // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                        // loops through all recipes
@@ -129,10 +130,12 @@ public class Cookbook extends Validator {
         return searchResults;                                                                       // return output arraylist
     }
 
+    //?hva gjør denne
     public void setFridgeCheck(boolean fridgeCheck) {
         this.fridgeCheck = fridgeCheck;
     }
 
+    //! må den ta inn så mange forskjellige? kan den ikke bruke noen av feltene i cookbook?
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (Recipe recipe : recipes) {
