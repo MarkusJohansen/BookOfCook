@@ -70,21 +70,21 @@ public class CookbookTest {
     @Test
     @DisplayName("Test add recipe and recipeAmount")
     public void RecipeContainment() {
-        cookbook.addRecipe(pizza);
+        cookbook.addRecipe(pizza, "");
         assertTrue(cookbook.getRecipes().contains(pizza));
         assertFalse(cookbook.getRecipes().contains(hamburger));
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(hamburger, "");
         assertTrue(cookbook.getAmount() == 2);
         assertTrue(cookbook.getRecipes().size() == 2);
-        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(pizza));
-        assertThrows(NullPointerException.class, () -> cookbook.addRecipe(null));
+        assertThrows(IllegalArgumentException.class, () -> cookbook.addRecipe(pizza, ""));
+        assertThrows(NullPointerException.class, () -> cookbook.addRecipe(null, ""));
     }
 
     @Test
     @DisplayName("Test remove recipe")
     public void recipeRemoval() {
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, "");
+        cookbook.addRecipe(hamburger, "");
         cookbook.removeRecipe(hamburger);
         assertThrows(IllegalArgumentException.class, () -> cookbook.removeRecipe(hamburger));
         assertFalse(cookbook.getRecipes().contains(hamburger));
@@ -95,8 +95,8 @@ public class CookbookTest {
     @Test
     @DisplayName("Test categories in cookbook")
     public void categoriesInCookbook() {
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, "");
+        cookbook.addRecipe(hamburger, "");
         assertTrue(cookbook.getCategories().containsAll(tCategories));
     }
 
@@ -104,8 +104,8 @@ public class CookbookTest {
     @Test
     @DisplayName("Test searchRecipes")
     public void testSearchRecipe() {
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, "");
+        cookbook.addRecipe(hamburger, "");
         assertTrue(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(pizza));
         assertFalse(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(hamburger));
     }
@@ -116,8 +116,8 @@ public class CookbookTest {
         pizza.addCategory(italiensk);
         pizza.addCategory(burger);
         hamburger.addCategory(italiensk);
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, "");
+        cookbook.addRecipe(hamburger, "");
         assertTrue(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
         tCategories.remove(italiensk);
         assertFalse(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
@@ -126,8 +126,8 @@ public class CookbookTest {
     @Test
     @DisplayName("Test filter")
     public void testFilter() {
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, "");
+        cookbook.addRecipe(hamburger, "");
         assertTrue(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(pizza));
         assertFalse(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(hamburger));
     }

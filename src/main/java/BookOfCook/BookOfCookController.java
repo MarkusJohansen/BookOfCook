@@ -200,7 +200,7 @@ public class BookOfCookController extends Validator{
     //?usikke, må ha mer updaters?
     public void addRecipe() {
             Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
-            book.addRecipe(recipe);
+            book.addRecipe(recipe, caloriesBar.getText());
 
             categoryCreator.clear();                //clear the list for next use
             categCreatorList.getItems().clear();    //clear the list for next use

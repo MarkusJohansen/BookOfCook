@@ -51,7 +51,7 @@ public class Cookbook extends Validator {
             "Fordel tomatsaus på bunnene før du legger på spekeskinke, oliven og revet parmesan.", 
             "Stek pizzaen på 250 °C i 8-10 minutter, eller til pizzaen har en gyllen farge og sprø bunn.", 
             "Dryss over rucculasalat før servering."
-            ))));
+            ))), "");
         addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, hamburgerbrød, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList(
             "Ha kjøttdeig, salt, pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge, deigen skal ikke bli seig.", 
             "Ha litt vann på en fjøl og form deigen til runde kaker som klemmes ut til store flate burgere.", 
@@ -59,13 +59,18 @@ public class Cookbook extends Validator {
             "Gjør klar tilbehøret. Varm hamburgerbrød som anvist på pakken. Vask salat. Kutt tomat, rødløk og syltet agurk i skiver.",
             "Fyll brødene med salatblad, burgere, tomat, rødløk og syltet agurk. Ha gjerne på en dressing du liker godt, eller en hjemmelaget ketchup. Server gjerne med potetchips",
             "Vil du ha et godt tips til burgertilbehør? Syltet rødløk er superdigg på burgeren!"
-            ))));
+            ))), "");
 
         collectCategories();                                                    
     }
 
-    public void addRecipe(Recipe recipe) {                                  // add recipe to cookbook
+    public void addRecipe(Recipe recipe, String calories) {                 // add recipe to cookbook
         duplicateRecipeName(recipes, recipe);                               // checks for recipes with duplicate names
+        if (calories == null || calories.equals("")) {                       // checks if calories is empty
+            recipe.setCalories(0);                                           // sets calories to 0
+        } else {                                                             // if calories is not empty
+            recipe.setCalories(Double.parseDouble(calories));                // sets calories to double value of calories
+        }
         recipes.add(recipe);                                                // adds recipe to cookbook
         recipeAmount++;                                                     // updates amount of recipes in cookbook
     }
