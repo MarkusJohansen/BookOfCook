@@ -4,41 +4,41 @@ package BookOfCook;
 import java.util.*;
 
 public class Cookbook extends Validator {
-    private int recipeAmount;
-    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-    private ArrayList<Category> categories = new ArrayList<Category>();
-    private boolean fridgeCheck;
+    private int recipeAmount;                                               // amount of recipes in cookbook
+    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();            // recipes in cookbook
+    private ArrayList<Category> categories = new ArrayList<Category>();     // categories in cookbook
+    private boolean fridgeCheck;                                            //? fridge check
 
-    public Cookbook() {
-        this.recipeAmount = 0;  // amount of recipes in cookbook is always 0 at star
+    public Cookbook() {                                                     // constructor
+        this.recipeAmount = 0;                                              // amount of recipes in cookbook is always 0 at start
     }
 
-    public void addDummy(){
-        HashMap<String, String> ost = new HashMap<String, String>() {{
+    public void addDummy(){                                                 // add dummy recipes to cookbook
+        HashMap<String, String> ost = new HashMap<String, String>() {{              // hashmap for ost
             put("name", "ost");
             put("amount", "1.0");
             put("unit", "kg");
         }};
-        HashMap<String, String> melk = new HashMap<String, String>() {{
+        HashMap<String, String> melk = new HashMap<String, String>() {{             // hashmap for melk
             put("name", "melk");
             put("amount", "2.0");
             put("unit", "L");
         }};
 
-        HashMap<String, String> tomat = new HashMap<String, String>() {{
+        HashMap<String, String> tomat = new HashMap<String, String>() {{            // hashmap for tomat
             put("name", "tomat");
             put("amount", "5.0");
             put("unit", "stk");
         }};
 
-        HashMap<String, String> hamburgerbrød = new HashMap<String, String>() {{
+        HashMap<String, String> hamburgerbrød = new HashMap<String, String>() {{   // hashmap for hamburgerbrød
             put("name", "hamburgerbrød");
             put("amount", "2.0");
             put("unit", "stk");
         }};
 
-        Category italiensk = new Category("italiensk");
-        Category burger = new Category("burger");
+        Category italiensk = new Category("italiensk");                             // category for italiensk
+        Category burger = new Category("burger");                                   // category for burger
         Category kjøtt = new Category("kjøtt");
 
         addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), 
@@ -61,58 +61,56 @@ public class Cookbook extends Validator {
             "Vil du ha et godt tips til burgertilbehør? Syltet rødløk er superdigg på burgeren!"
             ))));
 
-        collectCategories();
+        collectCategories();                                                    
     }
 
-    public void addRecipe(Recipe recipe) {
-        duplicateRecipeName(recipes, recipe);   // checks for recipes with duplicate names
-        recipes.add(recipe);                    // adds recipe to cookbook
-        recipeAmount++;                         // updates amount of recipes in cookbook
+    public void addRecipe(Recipe recipe) {                                  // add recipe to cookbook
+        duplicateRecipeName(recipes, recipe);                               // checks for recipes with duplicate names
+        recipes.add(recipe);                                                // adds recipe to cookbook
+        recipeAmount++;                                                     // updates amount of recipes in cookbook
     }
 
-    public void removeRecipe(Recipe recipe) {   // removes recipe from cookbook and updates recipe amount
-        recipeExists(recipes, recipe);          //? er denne nødvendig med tanke på hvoradn grensesnittet er satt opp?  if recipe exists
-        recipes.remove(recipe);                 // removes recipe from cookbook
-        recipeAmount--;                         // updates amount of recipes in cookbook
+    public void removeRecipe(Recipe recipe) {                               // removes recipe from cookbook and updates recipe amount
+        recipes.remove(recipe);                                             // removes recipe from cookbook
+        recipeAmount--;                                                     // updates amount of recipes in cookbook
     }
 
-    public int getAmount() {
-        return recipeAmount;    // returns amount of recipes in cookbook
+    public int getAmount() {                                                // returns amount of recipes in cookbook
+        return recipeAmount;                    
     }
 
-    public ArrayList<Recipe> getRecipes() {
-        return new ArrayList<Recipe>(recipes);  // returns all recipes in cookbook     
+    public ArrayList<Recipe> getRecipes() {                                 // returns recipes in cookbook
+        return new ArrayList<Recipe>(recipes);                              //? hvorfor returnere en kopi     
     }
 
     public ArrayList<Category> getCategories() {
-        collectCategories();
-        return new ArrayList<Category>(categories); // returns categories in cookbook
+        collectCategories();                                                //? hvorfor collect categories her?
+        return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
     }
 
-    public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){    // metode som returnerer alle recipes som inneholder alle kategoriene
-        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                        // create an output arraylist
-        for (Recipe recipe : recipes) {                                             // loops through all recipes in cookbook
-            boolean containsAllCategories = true;                                   // sets temporary variable to true
-            for (Category category : categories) {                                  // loops through all categories
-                if(!recipe.getCategories().contains(category)){                     // checks if recipe does not contain this category
-                    containsAllCategories = false;                                  // if: set false
+    public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();                                                    // create an output arraylist
+        for (Recipe recipe : recipes) {                                                                         // loops through all recipes in cookbook
+            boolean containsAllCategories = true;                                                               // sets temporary variable to true
+            for (Category category : categories) {                                                              // loops through all categories
+                if(!recipe.getCategories().contains(category)){                                                 // checks if recipe does not contain this category
+                    containsAllCategories = false;                                                              // if: set false
                 }
             }
-            if(containsAllCategories){
-                sortedRecipes.add(recipe);                                          // if still true, add recipe to output array
+            if(containsAllCategories){                                                                          // recipe contains all categories
+                sortedRecipes.add(recipe);                                                                      // add recipe to output array
             }
         }
         System.out.println(sortedRecipes);
         return sortedRecipes;
     }
 
-    private void collectCategories(){
-        ArrayList<Category> collectedCategories = new ArrayList<>();    // create an output arraylist
-        for (Recipe recipe : recipes) {                                 // lopps through all recipes
-            for (Category category : recipe.getCategories()) {          // loops through all categories in recipe
-                if(!collectedCategories.contains(category)){            // if not category already collected
-                    collectedCategories.add(category);                  // collect category
-                    //System.out.println("collected " + category);
+    private void collectCategories(){                                                                           //? er det ikke enklere å bare tømme hele listen og fylle den opp på nytt?
+        ArrayList<Category> collectedCategories = new ArrayList<>();                                            // create an output arraylist
+        for (Recipe recipe : recipes) {                                                                         // loops through all recipes
+            for (Category category : recipe.getCategories()) {                                                  // loops through all categories in recipe
+                if(!collectedCategories.contains(category)){                                                    // if not category already collected
+                    collectedCategories.add(category);                                                          // collect category
                 }
             }
         }
@@ -120,41 +118,34 @@ public class Cookbook extends Validator {
     }
 
     //
-    public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {   // searches for recipes in cookbook with name containing searchString:
-        ArrayList<Recipe> searchResults = new ArrayList<>();                                        // initializes an output arraylist
-        for (Recipe recipe : filterTarget) {                                                        // loops through all recipes
-            if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {              // if recipe name contains searchString
-                searchResults.add(recipe);                                                          // add recipe to output arraylist
+    public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
+        ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
+        for (Recipe recipe : filterTarget) {                                                                    // loops through all recipes
+            if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {                          // if recipe name contains searchString
+                searchResults.add(recipe);                                                                      // add recipe to output arraylist
             }
         }
-        return searchResults;                                                                       // return output arraylist
+        return searchResults;                                                                                   // return output arraylist
     }
 
-    //?hva gjør denne
-    public void setFridgeCheck(boolean fridgeCheck) {
+    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne
         this.fridgeCheck = fridgeCheck;
     }
 
-    //! må den ta inn så mange forskjellige? kan den ikke bruke noen av feltene i cookbook?
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){
+    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){   //! kan den ikke ta inn recipes feltet i cookbook isteden for array??
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            filteredRecipes.add(recipe);
+        for (Recipe recipe : recipes) {                                                                                             //? er det ikke bare å sette filteredrecipes til recipes i cookbook? 
+            filteredRecipes.add(recipe);                        
         }
-
-        if(fridgeCheck){ // KJØLESKAP
-            filteredRecipes = fridge.filter(recipes);
+        if(fridgeCheck){                                                                                                            //? hva er dette?
+            filteredRecipes = fridge.filter(recipes);                           
         }
-
-        if(categories.size() > 0){ // KATEGORIER
-            filteredRecipes = filterByCategories(filteredRecipes, categories);
+        if(categories.size() > 0){ // KATEGORIER                                                                                    // dersom noen kategorier sendes inn i funksjonen, skal den filtrere på disse
+            filteredRecipes = filterByCategories(filteredRecipes, categories);                                                      // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher categories
         }
-
-        if(true){ // SØKE
-            if(searchText != ""){
-                filteredRecipes = searchRecipes(searchText, filteredRecipes);
-            }
+        if(searchText != ""){                                                                                                       //dersom søkestrengen ikke er tom, skal den filtrere på søkestrengen
+            filteredRecipes = searchRecipes(searchText, filteredRecipes);                                                           // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher søkestrengen
         }
-        return filteredRecipes;                         //returnerer filtrasjonsproduktet
+        return filteredRecipes;                                                                                                     //returnerer filtrasjonsprodukte, etter tre runder med filtrering
     }
 }
