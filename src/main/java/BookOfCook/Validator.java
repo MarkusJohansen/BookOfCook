@@ -15,7 +15,7 @@ abstract class Validator {
 
     protected void nullOrEmpty(Object object) {
         if (object == null) {                                      
-            throw new IllegalArgumentException("string cannot be null");     
+            throw new NullPointerException("string cannot be null");     
         }
         if (object instanceof String) {                                                             
             if (((String) object).trim().equals("")) {                                             

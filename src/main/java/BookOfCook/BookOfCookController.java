@@ -94,7 +94,6 @@ public class BookOfCookController extends Validator{
         }
     }
 
-    //*godkjent
     public void updateRecipeList(){
         recipeList.getItems().clear();
         updateCategList();
@@ -116,13 +115,11 @@ public class BookOfCookController extends Validator{
         updateRecipeList();
     }
 
-    //*godkjent
     private void updateIngredCreatorList() {
         List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);
     }
 
-    //*godkjent
     private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //clear the textcontrol
@@ -139,7 +136,6 @@ public class BookOfCookController extends Validator{
         }
     }
 
-    //*godkjent
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -147,7 +143,6 @@ public class BookOfCookController extends Validator{
         node.setLayoutY(y);
     }
 
-    //*godkjent
     public void styleRegion(Region region, String styleClass, Double width, Double height){
         region.getStyleClass().clear();
         region.getStyleClass().add(styleClass);
@@ -155,7 +150,6 @@ public class BookOfCookController extends Validator{
         region.setMaxWidth(height);
     }
     
-    //*godkjent
     public void removeRecipe(Recipe recipe){
         book.removeRecipe(recipe);
         updateRecipeList();
@@ -279,7 +273,6 @@ public class BookOfCookController extends Validator{
             initRecipeComponents();
             //filterRecipes(categoriesClicked);
         });
-
         body.getChildren().add(checkbox);//adds children
         styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
@@ -314,7 +307,6 @@ public class BookOfCookController extends Validator{
         return recipeBtn;
     }
 
-    //*godkjent
     public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
@@ -348,15 +340,13 @@ public class BookOfCookController extends Validator{
         recipeAmount.setVisible(true);
     }
     
-    //*godkjent
     private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
 
-    //*godkjent https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
-    public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode
+    public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
         ListView<String> listView = new ListView<String>();
         viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)
@@ -366,13 +356,11 @@ public class BookOfCookController extends Validator{
         recipeViewBox2.add(listView, listY, listX);
     }
 
-    //*godkjent
     public void fridgeAddFood() {
         fridge.addFood(fridgeNameInput.getText());
         updatefridge();
     }
 
-    //*Godkjent
     public void load() {        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Cookbook");
@@ -387,7 +375,6 @@ public class BookOfCookController extends Validator{
         updateCategList();
     }
 
-    //*Godkjent
     public void save() {                                            //saves the cookbook as a csv file
         FileChooser fileChooser = new FileChooser();                //creates a filechooser
         fileChooser.setTitle("Save Cookbook");                      //sets the title of the filechooser window
@@ -399,7 +386,6 @@ public class BookOfCookController extends Validator{
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    //*Godkjent, men kan denne brukes flere steder
     public Button removeList(String target, List<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
@@ -413,7 +399,6 @@ public class BookOfCookController extends Validator{
         return btn;
     }
 }
-
 /*
 !KJENTE BUGS
 !amount label er ikke oppdatert
