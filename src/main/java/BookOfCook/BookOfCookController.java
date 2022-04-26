@@ -97,7 +97,14 @@ public class BookOfCookController extends Validator{
         recipeList.getItems().clear();
         updateCategList();
         initRecipeComponents();
+        updateAmountLabel(recipes); //!her er update amount label feilen
     }
+
+    //!skal fikse amount label(skal kjøre i filter metode, og legge til recipe metode) 
+    public void updateAmountLabel(ArrayList<Recipe> recipeArray){
+        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
+    }
+
 
     //?passer denne inn i noen shorthands
     private void updateCategList(){
@@ -171,7 +178,7 @@ public class BookOfCookController extends Validator{
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             IngredCreator.remove(target);
-            updateIngredCreatorList();
+            updateIngredCreatorList();     //! feil i sletting av remove ingredient list ligger her. gå tilbake å se på commit hvor det fungerte?
         });   
         return btn;
     }
@@ -211,6 +218,7 @@ public class BookOfCookController extends Validator{
 
             updateRecipeList();
             updateCategList();
+            updateAmountLabel();
     }
 
     //?er disse ferdig validerte og skal det gjøres her?
