@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import BookOfCook.Category;
 import BookOfCook.Recipe;
 
-//*alle funksjonalitetene i klassen er testet
 public class RecipeTest {
     private Recipe pizza;
     private Category italiensk;
@@ -64,17 +63,17 @@ public class RecipeTest {
     @Test
     @DisplayName("Test pizza description")
     public void checkpizzaDescription() {
-        assertTrue(pizza.getDescription() == "Pizza er godt");
+        assertTrue(pizza.getDesc() == "Pizza er godt");
         pizza.setDescription("Milkshake is a drink made from milk and sugar.");
-        assertTrue(pizza.getDescription() == "Milkshake is a drink made from milk and sugar.");
+        assertTrue(pizza.getDesc() == "Milkshake is a drink made from milk and sugar.");
     }
 
     @Test
     @DisplayName("Test Calorie methods")
     public void checkCalorieMethods() {
-        assertTrue(pizza.getCalories() == 0);
+        assertTrue(pizza.getCal() == 0);
         pizza.setCalories(100);
-        assertTrue(pizza.getCalories() == 100);
+        assertTrue(pizza.getCal() == 100);
         pizza.setServings(2);
         assertTrue(pizza.getCalPerServing() == 50);
         assertThrows(IllegalArgumentException.class, () -> pizza.setCalories(-1));
@@ -105,7 +104,6 @@ public class RecipeTest {
         pizza.addCategory(category);
         assertTrue(category.getRecipes().contains(pizza));
         assertTrue(pizza.getCategories().contains(category));
-       //?vi har dobbelt opp med metoder her. ser at vi har add/remove category metoder i pizza og vice versa i category
     }
 
 

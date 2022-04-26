@@ -322,10 +322,10 @@ public class BookOfCookController extends Validator{
         styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
+        viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
-        viewLabel("Calories: " + recipe.getCalories(), recipeViewBox1, 4, 0);
+        viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
 
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();

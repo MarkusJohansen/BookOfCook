@@ -14,34 +14,33 @@ abstract class Validator {
     }
 
     protected void nullOrEmpty(Object object) {
-        if (object == null) {                                      // if recipe string is null or empty
-            throw new IllegalArgumentException("string cannot be null");     // throw error
+        if (object == null) {                                      
+            throw new IllegalArgumentException("string cannot be null");     
         }
-        if (object instanceof String) {                                                             // if object is a string
-            if (((String) object).trim().equals("")) {                                              // if string is empty
-                throw new IllegalArgumentException("string cannot be empty or just whitespace");   // throw error
+        if (object instanceof String) {                                                             
+            if (((String) object).trim().equals("")) {                                             
+                throw new IllegalArgumentException("string cannot be empty or just whitespace");  
             }
-            if (((String) object).trim().length() != ((String) object).length()) {                  // if string                                 // if string is empty
-                throw new IllegalArgumentException("String: \"" + ((String) object) + "\"cannot have trailing or leading whitespace"); // throw error// throw error
+            if (((String) object).trim().length() != ((String) object).length()) {                                                  
+                throw new IllegalArgumentException("String: \"" + ((String) object) + "\"cannot have trailing or leading whitespace");
             }
         }
-        if (object instanceof ArrayList) {                                                           // if object is an arraylist
-            if (((ArrayList) object).isEmpty()) {                                                    // if arraylist is empty
-                throw new IllegalArgumentException("ArrayList cannot be empty");                      // throw error
+        if (object instanceof ArrayList) {                                                           
+            if (((ArrayList) object).isEmpty()) {                                                    
+                throw new IllegalArgumentException("ArrayList cannot be empty");                     
             }
         }
     }
 
     // validates number
     protected void negative(double calories) {                                
-        if (calories < 0) {                                                         // if calories is negative
-            throw new IllegalArgumentException("number cannot be negative");      // throw error
+        if (calories < 0) {                                                         
+            throw new IllegalArgumentException("number cannot be negative");     
         }
     }
 
     // validates Ingredient
     protected void validateIngredient(HashMap<String, String> ingredient, ArrayList<HashMap<String, String>> ingredients) {
-        //loop through Ingredient keys and validate
         for (String key : ingredient.keySet()) {
             nullOrEmpty(ingredient.get(key));
             if (key.equals("amount")) {
@@ -55,13 +54,13 @@ abstract class Validator {
                 }
             }
         }
-        ingredRegex(ingredient);                                                     // checks if ingredient has invalid characters                 // checks if ingredient unit has white spaces
+        ingredRegex(ingredient);                                                     
     }
 
     // checks if values in ingredient are valid according to regex patterns
     protected void ingredRegex(HashMap<String, String> Ingredient) {
-        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {      // if ingredient amount is not a number
-            throw new IllegalArgumentException("amount is not a Double or integer");                                                            // throw error
+        if (!(Ingredient.get("amount").toString().matches("[0-9]*\\.?[0-9]*") || Ingredient.get("amount").toString().matches("[0-9]*"))) {     
+            throw new IllegalArgumentException("amount is not a Double or integer");                                                           
         }
         try {
             numbersOrSpecials((String) Ingredient.get("name"));
@@ -73,21 +72,21 @@ abstract class Validator {
 
     // validates recipe name
     protected void numbersOrSpecials(String string) {
-        nullOrEmpty(string);                                                                                                                          // checks if s is null or empty
-        if (!(string.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                   // if name contains invalid characters
-            throw new IllegalArgumentException("String cannot contain numbers or special characters");    // throw error
+        nullOrEmpty(string);                                                                                                                         
+        if (!(string.matches("[a-zA-ZæøåÆØÅ\\- ]+"))) {                                                  
+            throw new IllegalArgumentException("String cannot contain numbers or special characters");   
         }
     }
 
     // validates number of servings
     protected void negativeOrZero(Double numberOfServings) {
-        if (numberOfServings <= 0) {                                                                    // if number of servings is less than or equal to 0
-            throw new IllegalArgumentException("number cant be negative or zero"); // throw error            // throw error
+        if (numberOfServings <= 0) {                                                                    
+            throw new IllegalArgumentException("number cant be negative or zero");           
         }
     }
 
     protected void ingredientExists(ArrayList<String> foodContainer, String foodName){
-        for (int i = 0; i < foodContainer.size(); i++) {                         // iterates through foodInFridge
+        for (int i = 0; i < foodContainer.size(); i++) {                         
             String checkName = (String) foodContainer.get(i);
             if (checkName.toUpperCase().equals(foodName.toUpperCase())) {
                 throw new IllegalArgumentException(checkName + " already exists within food container");
@@ -99,14 +98,14 @@ abstract class Validator {
     protected void duplicateRecipeName(ArrayList<Recipe> recipes, Recipe recipe){
         for (Recipe r : recipes) {    
             if (r.getName().toUpperCase().equals(recipe.getName().toUpperCase())) {     
-                throw new IllegalArgumentException("Recipe with same name already exists in cookbook"); // describes problem in console;                             
+                throw new IllegalArgumentException("Recipe with same name already exists in cookbook");                          
             }
         }
     }
 
     protected void recipeExists(ArrayList<Recipe> recipes, Recipe recipe) {
-        if (!recipes.contains(recipe)) {                                                                 // checks if recipe exists in cookbook
-            throw new IllegalArgumentException("Recipe does not exist in cookbook");                     // describes problem in console;
+        if (!recipes.contains(recipe)) {                                                                 
+            throw new IllegalArgumentException("Recipe does not exist in cookbook");                     
         }
     }
 
@@ -130,6 +129,10 @@ abstract class Validator {
 
     // *GENERAL TOOLBOX METHODS
     protected String capitalize(String s) {
-        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();             // capitalizes first letter of string s and returns it
+        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();            
+    }
+
+    protected String arrayStripper(String s) {
+        return s.replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");                                                   
     }
 }
