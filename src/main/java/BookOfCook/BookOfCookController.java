@@ -72,7 +72,6 @@ public class BookOfCookController extends Validator{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
-    //! er dette kilden til checkbox bug? NEI TROR IKKE D, BUGEN ER DER FORTSATT
     public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList
         book.setFridgeCheck(fridgeCheckbox.isSelected());
         updateRecipeList();
@@ -100,7 +99,7 @@ public class BookOfCookController extends Validator{
         initRecipeComponents();
     }
 
-    //!passer denne inn i noen shorthands
+    //?passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
         for(Category category : book.getCategories()){                             
@@ -168,7 +167,7 @@ public class BookOfCookController extends Validator{
 
     //?
     public Button removeIngredientList(HashMap<String, String> target){
-        Button btn = new Button("-");
+        Button btn = new Button("X");
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             IngredCreator.remove(target);
@@ -188,7 +187,7 @@ public class BookOfCookController extends Validator{
         // viewBtn("Close", () -> closeRecipeView(), 0, 4);
     }
 
-    //*!BUTTONS metodene ligner svært muye på hverandre. lage en generell funksjon?
+    //?
     private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
         styleNode(btn, "standard-button", 80.0, 170.0);
@@ -200,14 +199,14 @@ public class BookOfCookController extends Validator{
 
     //?usikke, må ha mer updaters?
     public void addRecipe() {
-        try{
-            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
-            book.addRecipe(recipe);
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+            book.addRecipe(recipe, caloriesBar.getText());
+
+            categoryCreator.clear();                //clear the list for next use
+            categCreatorList.getItems().clear();    //clear the list for next use
+
             updateRecipeList();
             updateCategList();
-        }catch(Exception e){
-            System.out.println("Error: under konstruksjon av ugyldig oppskrift");
-        }
     }
 
     //?er disse ferdig validerte og skal det gjøres her?
@@ -240,25 +239,6 @@ public class BookOfCookController extends Validator{
             categoryCreator.add(categoryName);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
-    }
-
-    //! MYE LOGIKK, FLYTTE TIL BACKEND kan fikses med fake recipe
-    public ArrayList<Category> getGategoriesFromCreator(){ // ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
-        ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
-        for(String category : categoryCreator){             
-            if(checkIfCategoryExist(category, book.getCategories())){
-                for(Category c : book.getCategories()){
-                    if(category.toUpperCase().equals(c.getName().toUpperCase())){
-                        outputArray.add(c);
-                    }
-                }
-            }else{
-                outputArray.add(new Category(category));
-            }
-        }
-        categoryCreator.clear(); //clear the list for next use
-        categCreatorList.getItems().clear(); //clear the list for next use
-        return outputArray;
     }
 
     //?usikker
@@ -408,6 +388,7 @@ public class BookOfCookController extends Validator{
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
 !fridge fungerer ikke helt
+
 ?FORSLAG: 
 ?hva med å prøve å konstruere en oppskrift
 ?brukeren skal kunne gi 

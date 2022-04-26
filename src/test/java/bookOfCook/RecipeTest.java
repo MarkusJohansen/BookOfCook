@@ -74,9 +74,6 @@ public class RecipeTest {
         assertTrue(pizza.getCal() == 0);
         pizza.setCalories(100);
         assertTrue(pizza.getCal() == 100);
-        pizza.setServings(2);
-        assertTrue(pizza.getCalPerServing() == 50);
-        assertThrows(IllegalArgumentException.class, () -> pizza.setCalories(-1));
     }
 
     @Test
@@ -117,6 +114,6 @@ public class RecipeTest {
         pizza.addStep("Bake");
         assertTrue(pizza.getSteps().contains("Bake"));
         assertThrows(IllegalArgumentException.class, () -> pizza.addStep(""));
-        assertThrows(IllegalArgumentException.class, () -> pizza.addStep(null));
+        assertThrows(NullPointerException.class, () -> pizza.addStep(null));
     }
 }

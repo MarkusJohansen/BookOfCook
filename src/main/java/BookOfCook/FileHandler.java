@@ -73,7 +73,7 @@ public class FileHandler extends Validator implements LoadSave{
                     steps.add(step.trim());                                                                                                 //legger steget i arraylisten   
                 }
                 Recipe r = new Recipe(sData[0], Integer.parseInt(sData[1]), sData[2], sData[4], ingredients, categories, steps);            //oppretter en ny recipe med data fra filen
-                foo.addRecipe(r);                                                                                                           //legger recipe i cookbooket
+                foo.addRecipe(r, sData[3]);                                                                                                 //legger recipe i cookbooket
                 line = br.readLine();                                                                                                       //moves on to next recipe
             }
             br.close();                                                                                                                     //lukker bufferedreader
