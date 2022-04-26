@@ -6,10 +6,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Fridge extends Validator{
-    // *FIELDS
     private ArrayList<String> foodInFridge = new ArrayList<String>(); // an arraylist of hasmaps containing name, amount and unit of measurement ex.: [{"name": "tomat","amount": "3","unit":stk},{...}]
 
-    // *CONSTRUCTOR
     public Fridge() {
         addFood("tomat");//dummy food
         addFood("melk");
@@ -21,12 +19,10 @@ public class Fridge extends Validator{
         addFood("sylteagurk");
     }
 
-    // *GETTERS
     public ArrayList<String> getFood() {
         return new ArrayList<String>(foodInFridge);
     }
 
-    //*ADDING AND REMOVING FOOD 
     public void addFood(String name) {
         nullOrEmpty(name);
         ingredientExists(foodInFridge, name);        
@@ -47,9 +43,7 @@ public class Fridge extends Validator{
         }
     }
 
-    //fridge filter
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipesToFilter) {
-        //for recipe in recipesToFilter, check if all ingredients in recipe is in fridge return true, else return false
         Predicate<Recipe> criteria = (Recipe recipe) -> {
             for (HashMap<String, String> ingredient : recipe.getIngredients()) {
                 boolean ingredientInFridge = false;
@@ -64,17 +58,6 @@ public class Fridge extends Validator{
             }
             return true;
         }; 
-
-        //add recipes that matches criteria to result with stream
         return recipesToFilter.stream().filter(criteria).collect(Collectors.toCollection(ArrayList::new));
     } 
-
-    @Override
-    public String toString() {
-        return "Fridge [foodInFridge=" + foodInFridge + "]";
-    }
-
-    public static void main(String[] args) {
-        
-    }
 }

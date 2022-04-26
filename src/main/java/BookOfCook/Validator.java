@@ -26,6 +26,11 @@ abstract class Validator {
                 throw new IllegalArgumentException("String: \"" + ((String) object) + "\"cannot have trailing or leading whitespace"); // throw error// throw error
             }
         }
+        if (object instanceof ArrayList) {                                                           // if object is an arraylist
+            if (((ArrayList) object).isEmpty()) {                                                    // if arraylist is empty
+                throw new IllegalArgumentException("ArrayList cannot be empty");                      // throw error
+            }
+        }
     }
 
     // validates number
@@ -36,12 +41,22 @@ abstract class Validator {
     }
 
     // validates Ingredient
-    protected void validateIngredient(HashMap<String, String> Ingredient) {
+    protected void validateIngredient(HashMap<String, String> ingredient, ArrayList<HashMap<String, String>> ingredients) {
         //loop through Ingredient keys and validate
-        for (String key : Ingredient.keySet()) {
-            nullOrEmpty(Ingredient.get(key));
+        for (String key : ingredient.keySet()) {
+            nullOrEmpty(ingredient.get(key));
+            if (key.equals("amount")) {
+                negativeOrZero(Double.parseDouble(ingredient.get(key)));
+            }
+            if (key.equals("name")) {
+                for(HashMap<String, String> i : ingredients) {
+                    if(ingredient.get(key).equals(i.get(key))) {
+                        throw new IllegalArgumentException("Ingredient already exists");
+                    }
+                }
+            }
         }
-        ingredRegex(Ingredient);                                                     // checks if ingredient has invalid characters                 // checks if ingredient unit has white spaces
+        ingredRegex(ingredient);                                                     // checks if ingredient has invalid characters                 // checks if ingredient unit has white spaces
     }
 
     // checks if values in ingredient are valid according to regex patterns

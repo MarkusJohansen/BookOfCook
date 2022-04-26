@@ -14,7 +14,6 @@ public class Cookbook extends Validator {
     }
 
     public void addDummy(){
-        //* dummy recipes
         HashMap<String, String> ost = new HashMap<String, String>() {{
             put("name", "ost");
             put("amount", "1.0");
@@ -65,7 +64,6 @@ public class Cookbook extends Validator {
         collectCategories();
     }
 
-    //*add and remove recipes to/from cookbook
     public void addRecipe(Recipe recipe) {
         duplicateRecipeName(recipes, recipe);   // checks for recipes with duplicate names
         recipes.add(recipe);                    // adds recipe to cookbook
@@ -78,7 +76,6 @@ public class Cookbook extends Validator {
         recipeAmount--;                         // updates amount of recipes in cookbook
     }
 
-    //*getter methods
     public int getAmount() {
         return recipeAmount;    // returns amount of recipes in cookbook
     }
@@ -122,7 +119,6 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
-    //*Searchbar
     public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {   // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                        // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                        // loops through all recipes
@@ -137,7 +133,6 @@ public class Cookbook extends Validator {
         this.fridgeCheck = fridgeCheck;
     }
 
-    //*Cookbook filtration
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -157,13 +152,6 @@ public class Cookbook extends Validator {
                 filteredRecipes = searchRecipes(searchText, filteredRecipes);
             }
         }
-
         return filteredRecipes;                         //returnerer filtrasjonsproduktet
-    }
-
-    public static void main(String[] args) {
-        Cookbook cookbook = new Cookbook();
-        cookbook.addDummy();
-        System.out.println(cookbook.filter(cookbook.getRecipes(), "pizza", new ArrayList<Category>(Arrays.asList(new Category("burger"))), new Fridge()));
     }
 }

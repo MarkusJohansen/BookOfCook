@@ -192,7 +192,6 @@ public class BookOfCookController extends Validator{
             closeRecipeView();
         });
         recipeViewContent.add(btn, 0, 4);        //adds to grid
-
         // viewBtn("Close", () -> closeRecipeView(), 0, 4);
     }
 
@@ -208,39 +207,46 @@ public class BookOfCookController extends Validator{
 
     //?usikke, må ha mer updaters?
     public void addRecipe() {
-        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
-        book.addRecipe(recipe);
-        updateRecipeList();
-        updateCategList();
+        try{
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, getGategoriesFromCreator(), stepsCreator);
+            book.addRecipe(recipe);
+            updateRecipeList();
+            updateCategList();
+        }catch(Exception e){
+            System.out.println("Error: under konstruksjon av ugyldig oppskrift");
+        }
     }
 
-    //!må ha validering her for at disse skal erstatte get
+    //?er disse ferdig validerte og skal det gjøres her?
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        String stepContent = stepsField.getText();
-        stepsCreator.add(stepContent);
-        listUpdater(stepsCreator, stepCreatorList, stepsField);                    //adding step to recipe, must happen through adding recipe function. cause that confirms that the steps in list is correct
+        if(!(stringExistsArray(stepsField.getText(), stepsCreator) || stepsField.getText().equals(""))){
+            stepsCreator.add(stepsField.getText());
+            listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+        }
     }
 
-    //!må ha validering her for at disse skal erstatte get
+    //?er disse ferdig validerte og skal det gjøres her?
     public void addIngredientCreator(){
-        HashMap<String, String> ingredient = new HashMap<String,String>();
-        ingredient.put("name", ingredNameBar.getText());
-        ingredient.put("amount", ingredAmountBar.getText());
-        ingredient.put("unit", unitComboBoxRecipe.getValue());
-        IngredCreator.add(ingredient);
-        updateIngredCreatorList();
+        if(!( ingredNameBar.getText().equals("") || ingredAmountBar.getText().equals("") || unitComboBoxRecipe.getValue().equals("") )){
+            HashMap<String, String> ingredient = new HashMap<String,String>();
+            ingredient.put("name", ingredNameBar.getText());
+            ingredient.put("amount", ingredAmountBar.getText());
+            ingredient.put("unit", unitComboBoxRecipe.getValue());
+            IngredCreator.add(ingredient); 
+            updateIngredCreatorList();       
+        }
     }
 
-    //!må ha validering her for at disse skal erstatte get
+    //?er disse ferdig validerte og skal det gjøres her?
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
-        if(!stringExistsArray(categoryName, categoryCreator)){
+        if(!(stringExistsArray(categoryName, categoryCreator) || categoryName.equals(""))){
             categoryCreator.add(categoryName);
+            listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
-        listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
-    //! MYE LOGIKK, FLYTTE TIL BACKEND
+    //! MYE LOGIKK, FLYTTE TIL BACKEND kan fikses med fake recipe
     public ArrayList<Category> getGategoriesFromCreator(){ // ta ut alle categories fra creator, sjekkehver enkelt om de finnes fra før av, hvis de finnes legg de til i output, hvis ikke lag en ny category og legg den til i output
         ArrayList<Category> outputArray = new ArrayList<Category>();//!refresh funksjon
         for(String category : categoryCreator){             
@@ -308,7 +314,7 @@ public class BookOfCookController extends Validator{
         return recipeBtn;
     }
 
-    //?kan denne forenkles?
+    //*godkjent
     public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
@@ -329,12 +335,11 @@ public class BookOfCookController extends Validator{
         viewList(4, 0, 5, 0, "steps", steps);
         viewList(2, 0, 3, 0, "Ingredients", Ingredients);
 
-        //btns
         closeBtn();
         removeBtn(recipe);
     }
 
-    //?kan denne forenkles?
+    //?usikker
     public void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
@@ -415,4 +420,10 @@ public class BookOfCookController extends Validator{
 !man kan legge inn verdier null i creator lister
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
+!fridge fungerer ikke helt
+?FORSLAG: 
+?hva med å prøve å konstruere en oppskrift
+?brukeren skal kunne gi 
+?få til møte med studass på hvordan flytte mer frontend til backend. 
+?kan man lage backend som tar seg av mye av javaFX dynamikken?'
 */
