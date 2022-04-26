@@ -1,13 +1,12 @@
 package BookOfCook;
 
 import java.io.File;
+import javafx.fxml.FXML;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -21,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 
 public class BookOfCookController extends Validator{
     private Cookbook book;
@@ -72,8 +72,7 @@ public class BookOfCookController extends Validator{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
-    //! er dette kilden til checkbox bug?
-    public void checkbox(){
+    public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList
         book.setFridgeCheck(fridgeCheckbox.isSelected());
         updateRecipeList();
     }
@@ -100,7 +99,7 @@ public class BookOfCookController extends Validator{
         initRecipeComponents();
     }
 
-    //!passer denne inn i noen shorthands
+    //?passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
         for(Category category : book.getCategories()){                             
@@ -128,7 +127,6 @@ public class BookOfCookController extends Validator{
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             Label label = new Label(element.toString());
-    
             styleNode(label, "list-label", 80.0, 10.0); 
             pane.getChildren().add(label);
             pane.getChildren().add(removeList(element.toString(), array));
@@ -169,13 +167,13 @@ public class BookOfCookController extends Validator{
 
     //?
     public Button removeIngredientList(HashMap<String, String> target){
-            Button btn = new Button("-");
-            styleNode(btn, "standard-button", 10.0, 0.0);
-            btn.setOnAction(e -> {
-                IngredCreator.remove(target);
-                updateIngredCreatorList();
-            });   
-            return btn;
+        Button btn = new Button("X");
+        styleNode(btn, "standard-button", 10.0, 0.0);
+        btn.setOnAction(e -> {
+            IngredCreator.remove(target);
+            updateIngredCreatorList();
+        });   
+        return btn;
     }
 
     //?
@@ -213,7 +211,8 @@ public class BookOfCookController extends Validator{
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        if(!(stringExistsArray(stepsField.getText(), stepsCreator) || stepsField.getText().equals(""))){
+        if(!(stringExistsArray(stepsField.getText(), stepsCreator))){
+            nullOrEmpty(stepsField);
             stepsCreator.add(stepsField.getText());
             listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
@@ -221,20 +220,22 @@ public class BookOfCookController extends Validator{
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addIngredientCreator(){
-        if(!( ingredNameBar.getText().equals("") || ingredAmountBar.getText().equals("") || unitComboBoxRecipe.getValue().equals("") )){
-            HashMap<String, String> ingredient = new HashMap<String,String>();
-            ingredient.put("name", ingredNameBar.getText());
-            ingredient.put("amount", ingredAmountBar.getText());
-            ingredient.put("unit", unitComboBoxRecipe.getValue());
-            IngredCreator.add(ingredient); 
-            updateIngredCreatorList();       
-        }
+        nullOrEmpty(ingredNameBar.getText());
+        nullOrEmpty(ingredAmountBar.getText());
+        nullOrEmpty(unitComboBoxRecipe.getValue());
+        HashMap<String, String> ingredient = new HashMap<String,String>();
+        ingredient.put("name", ingredNameBar.getText());
+        ingredient.put("amount", ingredAmountBar.getText());
+        ingredient.put("unit", unitComboBoxRecipe.getValue());
+        IngredCreator.add(ingredient); 
+        updateIngredCreatorList();
     }
 
     //?er disse ferdig validerte og skal det gjøres her?
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
-        if(!(stringExistsArray(categoryName, categoryCreator) || categoryName.equals(""))){
+        if(!(stringExistsArray(categoryName, categoryCreator))){
+            nullOrEmpty(categoryName);
             categoryCreator.add(categoryName);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
         }
