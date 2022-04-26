@@ -177,13 +177,13 @@ public class BookOfCookController extends Validator{
     }
 
     //?
-    private void closeBtn(){    //creates a close Btn for closing recipe view
-        Button btn = new Button("Close");           //creates button object
+    private void closeBtn(){                            //creates a close Btn for closing recipe view
+        Button btn = new Button("Close");               //creates button object
         styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             closeRecipeView();
         });
-        recipeViewContent.add(btn, 0, 4);        //adds to grid
+        recipeViewContent.add(btn, 0, 4);               //adds to grid
         // viewBtn("Close", () -> closeRecipeView(), 0, 4);
     }
 
@@ -204,6 +204,10 @@ public class BookOfCookController extends Validator{
 
             categoryCreator.clear();                //clear the list for next use
             categCreatorList.getItems().clear();    //clear the list for next use
+            IngredCreator.clear();                  //clear the list for next use
+            ingredCreatorList.getItems().clear();   //clear the list for next use
+            stepsCreator.clear();                   //clear the list for next use
+            stepCreatorList.getItems().clear();    //clear the list for next use
 
             updateRecipeList();
             updateCategList();
@@ -223,10 +227,12 @@ public class BookOfCookController extends Validator{
         nullOrEmpty(ingredNameBar.getText());
         nullOrEmpty(ingredAmountBar.getText());
         nullOrEmpty(unitComboBoxRecipe.getValue());
+
         HashMap<String, String> ingredient = new HashMap<String,String>();
         ingredient.put("name", ingredNameBar.getText());
         ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
+
         IngredCreator.add(ingredient); 
         updateIngredCreatorList();
     }
