@@ -117,7 +117,6 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
-    //
     public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                                    // loops through all recipes
@@ -137,8 +136,8 @@ public class Cookbook extends Validator {
         for (Recipe recipe : recipes) {                                                                                             //? er det ikke bare å sette filteredrecipes til recipes i cookbook? 
             filteredRecipes.add(recipe);                        
         }
-        if(fridgeCheck){                                                                                                            //? hva er dette?
-            filteredRecipes = fridge.filter(recipes);                           
+        if(fridgeCheck){                                                                                                            //? hva er dette? 
+            filteredRecipes = fridge.filter(recipes);                                                                               //! en boolean verdi som enten er true eller false etter om fridge checkboksen er checked
         }
         if(categories.size() > 0){ // KATEGORIER                                                                                    // dersom noen kategorier sendes inn i funksjonen, skal den filtrere på disse
             filteredRecipes = filterByCategories(filteredRecipes, categories);                                                      // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher categories
