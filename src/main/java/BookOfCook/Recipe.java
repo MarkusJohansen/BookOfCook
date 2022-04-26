@@ -5,7 +5,7 @@ import java.util.*;
 public class Recipe extends Validator{
     private String name, description, prepTime;                                 // name of recipe that will be dealt with back end, as well as name displayed to user    
     private int numberOfServings;                                               // number persons this recipe serves        
-    private double calories, CalPerServing;                                     // optional for user.
+    private double calories;                                     // optional for user.
     private ArrayList<HashMap<String, String>> ingredients;                     // uses <String, Object> to store the ingredient name-, amount- and unit-strings, but at the same time be able to set the key equal to differnt datatypes
     private ArrayList<Category> categories;                                     // stores the categories of the recipe                                    
     private ArrayList<String> steps;                                            // stores the steps of how to make the recipe
@@ -53,10 +53,6 @@ public class Recipe extends Validator{
 
     public double getCal() {
         return calories;                                                        // returns calories
-    }
-
-    public double getCalPerServing() {
-        return CalPerServing;                                                   // returns calories per person
     }
 
     public ArrayList<HashMap<String, String>> getIngredients() {
