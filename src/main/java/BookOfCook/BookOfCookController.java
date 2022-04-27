@@ -316,12 +316,3 @@ public class BookOfCookController{
         return btn;
     }
 }
-
-// public Button removeIngredientList(HashMap<String, String> target){
-//     Button btn = fxComponents.xButton();
-//     btn.setOnAction(e -> {
-//         IngredCreator.remove(target); 
-//         updateIngredCreatorList();    
-//     });   
-//     return btn;
-// }
