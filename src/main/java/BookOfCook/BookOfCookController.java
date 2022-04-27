@@ -67,20 +67,18 @@ public class BookOfCookController{
         updateRecipeList();
     }
 
-    public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList
+    public void checkbox(){                                                                                     // sjekker om checkbox er krysset av, og oppdaterer recipesList
         book.setFridgeCheck(fridgeCheckbox.isSelected());
         updateRecipeList();
     }
 
-    //?usikker
-    private void initRecipeComponents() {                                                   //inititializes the recipe components in the GUI, from the cookbook
+    private void initRecipeComponents() {                                                                       //inititializes the recipe components in the GUI, from the cookbook
         for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
     }
     
-    //?usikker
-    private void initFridgeFood(){                              //initializes the food in fridge
+    private void initFridgeFood(){                                                                              //initializes the food in fridge
         fridgeFood = new ArrayList<String>();
         fridgeFood.addAll(fridge.getFood());
         for(String food : fridgeFood){
@@ -94,15 +92,15 @@ public class BookOfCookController{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
     }
 
-    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //!bruker varargs for å kunne ta inn flere textfields. HVORFOR? BRUKER JO ALDRI METOEN MED MER ENN ETT TEXTFIELD
+    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){         
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
-            ((TextInputControl) text).clear();        //tømmer felter i recipefiels                                                           //clear the textcontrol
+            ((TextInputControl) text).clear();                                                                   //tømmer felter i recipefiels                                                           //clear the textcontrol
         }
         list.getItems().clear();                                                                                 //clear listview
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             pane.getChildren().add(fxComponents.listLabel(element.toString()));
-            pane.getChildren().add(removeList(element.toString(), array));
+            pane.getChildren().add(removeList(element.toString(), array));                                       //!bruker removeList for å få knappen til å fjerne elementet
             list.getItems().add(pane);
         }
 
@@ -121,7 +119,7 @@ public class BookOfCookController{
             ingredCreator.clear();                  //clear the list for next use
             ingredCreatorList.getItems().clear();   //clear the list for next use
             stepsCreator.clear();                   //clear the list for next use
-            stepCreatorList.getItems().clear();    //clear the list for next use
+            stepCreatorList.getItems().clear();     //clear the list for next use
 
             updateRecipeList();
             updateCategList();
@@ -129,7 +127,7 @@ public class BookOfCookController{
 
     private void updateIngredCreatorList() { //!her er bug
         List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
-        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
+        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar); //!her er bug                                                                                      
     }
 
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
@@ -285,17 +283,25 @@ public class BookOfCookController{
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    public Button removeList(String target, List<String> listView){
-        Button btn = fxComponents.xButton();
-
+    public Button removeList(String target, List<String> listView){ //!kilden til problemet er min teori.
+        Button btn = fxComponents.xButton();                        //!target blir ikke fra selve liste. det er ikke oppdaterings problem
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
             listView.remove(target);
             System.out.println(listView);
-            listUpdater(categoryCreator, categCreatorList, categoryBar);;
+            listUpdater(categoryCreator, categCreatorList, categoryBar);
             listUpdater(stepsCreator, stepCreatorList, stepsField);
-            updateIngredCreatorList();  //!fungerer ikke ordentlig
+            updateIngredCreatorList();                                  
         }); 
         return btn;
     }
 }
+
+// public Button removeIngredientList(HashMap<String, String> target){
+//     Button btn = fxComponents.xButton();
+//     btn.setOnAction(e -> {
+//         IngredCreator.remove(target); 
+//         updateIngredCreatorList();    
+//     });   
+//     return btn;
+// }
