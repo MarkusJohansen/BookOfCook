@@ -116,8 +116,8 @@ public class CookbookTest {
         pizza.addCategory(italiensk);
         pizza.addCategory(burger);
         hamburger.addCategory(italiensk);
-        cookbook.addRecipe(pizza);
-        cookbook.addRecipe(hamburger);
+        cookbook.addRecipe(pizza, null);
+        cookbook.addRecipe(hamburger, null);
         System.out.println(pizza);
         System.out.println(cookbook.filterByCategories(cookbook.getRecipes(), tCategories));
         assertFalse(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
