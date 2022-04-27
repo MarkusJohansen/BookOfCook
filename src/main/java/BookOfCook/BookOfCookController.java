@@ -103,7 +103,7 @@ public class BookOfCookController{
 
     private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
-            ((TextInputControl) text).clear();                                                                   //clear the textcontrol
+            ((TextInputControl) text).clear();        //tømmer felter i recipefiels                                                           //clear the textcontrol
         }
         list.getItems().clear();                                                                                 //clear listview
         for(Object element : array){                                                                             //for every element in array                                   
@@ -111,6 +111,10 @@ public class BookOfCookController{
             pane.getChildren().add(fxComponents.listLabel(element.toString()));
             pane.getChildren().add(removeList(element.toString(), array));
             list.getItems().add(pane);
+        }
+
+        if (list == ingredCreatorList){
+            
         }
     }
 
@@ -124,30 +128,24 @@ public class BookOfCookController{
             IngredCreator.clear();                  //clear the list for next use
             ingredCreatorList.getItems().clear();   //clear the list for next use
             stepsCreator.clear();                   //clear the list for next use
-            stepCreatorList.getItems().clear();    //clear the list for next use
-
+            stepCreatorList.getItems().clear();     //clear the list for next use
+            
             updateRecipeList();             
             updateCategList();
     }
 
-    //?
-    public Button removeCategoryList(String target){
-        Button btn = fxComponents.xButton();
-        btn.setOnAction(e -> {
-            categoryCreator.remove(target);
-            listUpdater(categoryCreator, categCreatorList, categoryBar);;
-        });
-        return btn;
-    }
 
-    public Button removeIngredientList(HashMap<String, String> target){
-        Button btn = fxComponents.xButton();
-        btn.setOnAction(e -> {
-            IngredCreator.remove(target); 
-            updateIngredCreatorList();    
-        });   
-        return btn;
-    }
+    //! brukes ikke
+    // public Button removeIngredientList(HashMap<String, String> target){
+    //     Button btn = fxComponents.xButton();
+    //     btn.setOnAction(e -> {
+    //         System.out.println(IngredCreator);
+    //         IngredCreator.remove(target);
+    //         System.out.println(IngredCreator);
+    //         updateIngredCreatorList();  
+    //     });   
+    //     return btn;
+    // }
 
     private void updateIngredCreatorList() { //!her er bug
         List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
@@ -323,17 +321,6 @@ public class BookOfCookController{
         }); 
         return btn;
     }
+
+    
 }
-
-/*
-!KJENTE BUGS
-!amount label er ikke oppdatert
-!man kan legge inn verdier null i creator lister
-!du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
-!Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
-!fridge fungerer ikke helt
-!categori filter
-
-?FORSLAG: 
-?få til møte med studass på hvordan flytte mer frontend til backend. 
-*/
