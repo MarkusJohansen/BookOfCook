@@ -14,7 +14,7 @@ public class Cookbook extends Validator {
         this.displayedAmount = 0;                                           // amount of recipes displayed in cookbook is always 0 at start
     }
 
-    public void addDummy(){                                                 // add dummy recipes to cookbook
+    public void addDummyRecipes(){                                                 // add dummy recipes to cookbook
         HashMap<String, String> ost = new HashMap<String, String>() {{              // hashmap for ost
             put("name", "ost");
             put("amount", "1.0");

@@ -52,7 +52,8 @@ public class BookOfCookController extends Validator{
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
-        book.addDummy();
+        book.addDummyRecipes();
+        fridge.addDummyFood();
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
