@@ -88,7 +88,7 @@ public class Cookbook extends Validator {
 
     public ArrayList<Recipe> getRecipes() {                                 // returns recipes in cookbook
         return new ArrayList<Recipe>(recipes);                              //? hvorfor returnere en kopi     
-    }
+    }                                                                       //! fordi man aldri burde returnere selve arrayListen, da kan man ender på den gjennom getteren
 
     public ArrayList<Category> getCategories() {
         collectCategories();                                                //? hvorfor collect categories her?

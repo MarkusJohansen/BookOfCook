@@ -26,7 +26,7 @@ public class BookOfCookController extends Validator{
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
-    private ArrayList<HashMap<String, String>> IngredCreator;
+    private ArrayList<HashMap<String, String>> ingredCreator;
     private FXcomponents fxComponents;
 
     @FXML
@@ -65,7 +65,7 @@ public class BookOfCookController extends Validator{
 
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, String>>();
+        ingredCreator = new ArrayList<HashMap<String, String>>();
 
         initFridgeFood();
         updateRecipeList();
@@ -101,7 +101,7 @@ public class BookOfCookController extends Validator{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
     }
 
-    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
+    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //!bruker varargs for å kunne ta inn flere textfields. HVORFOR? BRUKER JO ALDRI METOEN MED MER ENN ETT TEXTFIELD
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //clear the textcontrol
         }
@@ -116,12 +116,12 @@ public class BookOfCookController extends Validator{
 
     //*RECIPE CREATOR
     public void addRecipe() {
-            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
             book.addRecipe(recipe, caloriesBar.getText());
 
             categoryCreator.clear();                //clear the list for next use
             categCreatorList.getItems().clear();    //clear the list for next use
-            IngredCreator.clear();                  //clear the list for next use
+            ingredCreator.clear();                  //clear the list for next use
             ingredCreatorList.getItems().clear();   //clear the list for next use
             stepsCreator.clear();                   //clear the list for next use
             stepCreatorList.getItems().clear();    //clear the list for next use
@@ -143,14 +143,14 @@ public class BookOfCookController extends Validator{
     public Button removeIngredientList(HashMap<String, String> target){
         Button btn = fxComponents.xButton();
         btn.setOnAction(e -> {
-            IngredCreator.remove(target); 
-            updateIngredCreatorList();    
+            ingredCreator.remove(target); 
+            updateingredCreatorList();    
         });   
         return btn;
     }
 
-    private void updateIngredCreatorList() {
-        List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
+    private void updateingredCreatorList() {
+        List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
@@ -174,8 +174,8 @@ public class BookOfCookController extends Validator{
         ingredient.put("amount", ingredAmountBar.getText());
         ingredient.put("unit", unitComboBoxRecipe.getValue());
 
-        IngredCreator.add(ingredient); 
-        updateIngredCreatorList();
+        ingredCreator.add(ingredient); 
+        updateingredCreatorList();
     }
 
     //!nesten bare backend
@@ -332,9 +332,11 @@ public class BookOfCookController extends Validator{
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
             listView.remove(target);
+            System.out.println(listView);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
-            updateIngredCreatorList();  //!fungerer ikke ordentlig
+            listUpdater(ingredCreator, ingredCreatorList, stepsField);
+            updateingredCreatorList();  //!fungerer ikke ordentlig
         }); 
         return btn;
     }

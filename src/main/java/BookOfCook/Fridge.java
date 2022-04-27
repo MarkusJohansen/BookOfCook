@@ -43,7 +43,7 @@ public class Fridge extends Validator{
         }
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> target) {      
+    public ArrayList<Recipe> filter(ArrayList<Recipe> target) {      // returns all recipes that have the ingedients in the fridge
         Predicate<Recipe> criteria = (Recipe recipe) -> {                                           // predicate to check if all ingredients in recipe are in fridge
             for (HashMap<String, String> ingredient : recipe.getIngredients()) {                    // iterates through ingredients in recipe
                 boolean ingredientInFridge = false;                                                 // boolean to check if ingredient is in fridge
