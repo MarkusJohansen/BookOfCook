@@ -27,7 +27,7 @@ public class BookOfCookController extends Validator{
     private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> IngredCreator;
-    private FXcomponents fxComponents = new FXcomponents();
+    private FXcomponents fxComponents;
 
     @FXML
     private Label number, label, recipeAmount;
@@ -52,6 +52,7 @@ public class BookOfCookController extends Validator{
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
+        fxComponents = new FXcomponents();
         book.addDummy();
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
@@ -106,9 +107,7 @@ public class BookOfCookController extends Validator{
         list.getItems().clear();                                                                                 //clear listview
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
-            Label label = new Label(element.toString());
-            fxComponents.styleNode(label, "list-label", 80.0, 10.0); 
-            pane.getChildren().add(label);
+            pane.getChildren().add(fxComponents.listLabel(element.toString()));
             pane.getChildren().add(removeList(element.toString(), array));
             list.getItems().add(pane);
         }
@@ -132,8 +131,7 @@ public class BookOfCookController extends Validator{
 
     //?
     public Button removeCategoryList(String target){
-        Button btn = new Button("-");
-        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
+        Button btn = fxComponents.xButton();
         btn.setOnAction(e -> {
             categoryCreator.remove(target);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
@@ -142,8 +140,7 @@ public class BookOfCookController extends Validator{
     }
 
     public Button removeIngredientList(HashMap<String, String> target){
-        Button btn = new Button("X");
-        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
+        Button btn = fxComponents.xButton();
         btn.setOnAction(e -> {
             IngredCreator.remove(target); 
             updateIngredCreatorList();    
@@ -227,10 +224,7 @@ public class BookOfCookController extends Validator{
             updatefridge(); 
         });
 
-        Label label = new Label(food);
-        fxComponents.styleNode(label, "list-label", 80.0, 10.0);
-
-        foodBody.getChildren().add(label);
+        foodBody.getChildren().add(fxComponents.listLabel(food));
         foodBody.getChildren().add(btn);
         return foodBody;
     }
@@ -320,7 +314,6 @@ public class BookOfCookController extends Validator{
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
         book = fileHandler.load(file);                              //if the user chooses a file, initialize the cookbook
-        
         updateRecipeList();
         updateCategList();
     }

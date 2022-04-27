@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 
 public class FXcomponents {
     
-    //*STYLING
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -57,5 +56,11 @@ public class FXcomponents {
             new FileChooser.ExtensionFilter("CSV Files", "*.csv")   //the extension filter is set to csv files
         );  
         return fileChooser;     
+    }
+
+    public Label listLabel(String content){
+        Label label = new Label(content);
+        styleNode(label, "list-label", 80.0, 10.0); 
+        return label;
     }
 }
