@@ -59,18 +59,13 @@ public class BookOfCookController{
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
         
-        for(Category category : book.getCategories()){          // fyller inn kategorilista
-            categList.getItems().add(categComponent(category));
-        }  
-
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
         ingredCreator = new ArrayList<HashMap<String, String>>();
 
+        updateCategList(); // fyller inn kategorilista 
         initFridgeFood();
         updateRecipeList();
-
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
     public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList

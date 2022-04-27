@@ -116,7 +116,7 @@ public class Cookbook extends Validator {
     }
 
     private void collectCategories(){                                                                           //? er det ikke enklere å bare tømme hele listen og fylle den opp på nytt?
-        ArrayList<Category> collectedCategories = new ArrayList<>();                                            // create an output arraylist
+        ArrayList<Category> collectedCategories = new ArrayList<>();                                            //! ER JO AKKURAT DET SOM GJØRES HER. create an output arraylist
         for (Recipe recipe : recipes) {                                                                         // loops through all recipes
             for (Category category : recipe.getCategories()) {                                                  // loops through all categories in recipe
                 if(!collectedCategories.contains(category)){                                                    // if not category already collected
@@ -154,8 +154,8 @@ public class Cookbook extends Validator {
         return searchResults;                                                                                   // return output arraylist
     }
 
-    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne
-        this.fridgeCheck = fridgeCheck;
+    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne  
+        this.fridgeCheck = fridgeCheck;                                                                         //! boolean for å sjekke at friche checkbox er krysset av
     }
 
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){   //! kan den ikke ta inn recipes feltet i cookbook isteden for array??
