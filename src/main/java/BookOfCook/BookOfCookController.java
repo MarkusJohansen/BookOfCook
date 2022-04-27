@@ -172,7 +172,7 @@ public class BookOfCookController extends Validator{
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
-    //?er disse ferdig validerte og skal det gjøres her?
+    //!nesten bare backend
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         if(!(stringExistsArray(stepsField.getText(), stepsCreator))){
             nullOrEmpty(stepsField);
@@ -181,7 +181,7 @@ public class BookOfCookController extends Validator{
         }
     }
 
-    //?er disse ferdig validerte og skal det gjøres her?
+    //!nesten bare backend
     public void addIngredientCreator(){
         nullOrEmpty(ingredNameBar.getText());
         nullOrEmpty(ingredAmountBar.getText());
@@ -196,7 +196,7 @@ public class BookOfCookController extends Validator{
         updateIngredCreatorList();
     }
 
-    //?er disse ferdig validerte og skal det gjøres her?
+    //!nesten bare backend
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         String categoryName = categoryBar.getText();
         if(!(stringExistsArray(categoryName, categoryCreator))){
@@ -395,8 +395,6 @@ public class BookOfCookController extends Validator{
 !fridge fungerer ikke helt
 
 ?FORSLAG: 
-?hva med å prøve å konstruere en oppskrift
-?brukeren skal kunne gi 
 ?få til møte med studass på hvordan flytte mer frontend til backend. 
 ?kan man lage backend som tar seg av mye av javaFX dynamikken?
 */
