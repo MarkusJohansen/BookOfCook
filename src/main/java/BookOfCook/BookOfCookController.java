@@ -24,9 +24,9 @@ public class BookOfCookController{
     private Cookbook book;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
-    private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> ingredCreator;
+    private FileHandler fileHandler;
     private FXcomponents fxComponents;
 
     @FXML
@@ -89,7 +89,7 @@ public class BookOfCookController{
     public void updateRecipeList(){
         recipeList.getItems().clear();
         initRecipeComponents();
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
     private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){         
