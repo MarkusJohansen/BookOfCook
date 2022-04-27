@@ -6,11 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Fridge extends Validator{
-    public ArrayList<String> foodInFridge = new ArrayList<String>();   // an arraylist of strings representing ingredient names
-
-    public Fridge() {                                                   // constructor
-        
-    }
+    private ArrayList<String> foodInFridge = new ArrayList<String>();   // an arraylist of strings representing ingredient names
 
     public void addDummyFood(){
         addFood("tomat");                                               //dummy food
