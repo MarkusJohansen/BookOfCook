@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class BookOfCookController extends Validator{
+public class BookOfCookController{
     private Cookbook book;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
@@ -144,48 +144,32 @@ public class BookOfCookController extends Validator{
         Button btn = fxComponents.xButton();
         btn.setOnAction(e -> {
             ingredCreator.remove(target); 
-            updateingredCreatorList();    
+            updateIngredCreatorList();    
         });   
         return btn;
     }
 
-    private void updateingredCreatorList() {
+    private void updateIngredCreatorList() { //!her er bug
         List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
-    //!nesten bare backend
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        if(!(stringExistsArray(stepsField.getText(), stepsCreator))){
-            nullOrEmpty(stepsField);
-            stepsCreator.add(stepsField.getText());
-            listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-        }
+        fxComponents.validateTextField('a',stepsCreator, null, stepsField);
+        stepsCreator.add(stepsField.getText());
+        listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
-    //!nesten bare backend
     public void addIngredientCreator(){
-        nullOrEmpty(ingredNameBar.getText());
-        nullOrEmpty(ingredAmountBar.getText());
-        nullOrEmpty(unitComboBoxRecipe.getValue());
-
-        HashMap<String, String> ingredient = new HashMap<String,String>();
-        ingredient.put("name", ingredNameBar.getText());
-        ingredient.put("amount", ingredAmountBar.getText());
-        ingredient.put("unit", unitComboBoxRecipe.getValue());
-
-        ingredCreator.add(ingredient); 
-        updateingredCreatorList();
+        fxComponents.validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
+        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); 
+        updateIngredCreatorList();
     }
 
-    //!nesten bare backend
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
-        String categoryName = categoryBar.getText();
-        if(!(stringExistsArray(categoryName, categoryCreator))){
-            nullOrEmpty(categoryName);
-            categoryCreator.add(categoryName);
-            listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-        }
+        fxComponents.validateTextField('a', categoryCreator, null, categoryBar);
+        categoryCreator.add(categoryBar.getText());
+        listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     //*CATEGORIES
@@ -231,6 +215,7 @@ public class BookOfCookController extends Validator{
     }
 
     public void fridgeAddFood() {
+        fxComponents.validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
         updatefridge();
     }
@@ -335,12 +320,12 @@ public class BookOfCookController extends Validator{
             System.out.println(listView);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
-            listUpdater(ingredCreator, ingredCreatorList, stepsField);
-            updateingredCreatorList();  //!fungerer ikke ordentlig
+            updateIngredCreatorList();  //!fungerer ikke ordentlig
         }); 
         return btn;
     }
 }
+
 /*
 !KJENTE BUGS
 !amount label er ikke oppdatert
@@ -348,8 +333,8 @@ public class BookOfCookController extends Validator{
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
 !fridge fungerer ikke helt
+!categori filter
 
 ?FORSLAG: 
 ?få til møte med studass på hvordan flytte mer frontend til backend. 
-?kan man lage backend som tar seg av mye av javaFX dynamikken?
 */

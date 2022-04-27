@@ -13,6 +13,12 @@ abstract class Validator {
         }
     }
 
+    protected void isNull(Object o) {
+        if (o == null) {
+            throw new IllegalArgumentException("object is null");
+        }
+    }
+
     protected void nullOrEmpty(Object object) {
         if (object == null) {                                      
             throw new NullPointerException("string cannot be null");     
