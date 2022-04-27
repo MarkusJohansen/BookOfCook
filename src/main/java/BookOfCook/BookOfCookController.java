@@ -17,10 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 
 public class BookOfCookController extends Validator{
     private Cookbook book;
@@ -29,6 +27,7 @@ public class BookOfCookController extends Validator{
     private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> IngredCreator;
+    private FXcomponents fxComponents = new FXcomponents();
 
     @FXML
     private Label number, label, recipeAmount;
@@ -108,26 +107,11 @@ public class BookOfCookController extends Validator{
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             Label label = new Label(element.toString());
-            styleNode(label, "list-label", 80.0, 10.0); 
+            fxComponents.styleNode(label, "list-label", 80.0, 10.0); 
             pane.getChildren().add(label);
             pane.getChildren().add(removeList(element.toString(), array));
             list.getItems().add(pane);
         }
-    }
-
-    //*STYLING
-    public void styleNode(Node node, String styleClass, Double x, Double y){
-        node.getStyleClass().clear();
-        node.getStyleClass().add(styleClass);
-        node.setLayoutX(x);
-        node.setLayoutY(y);
-    }
-
-    public void styleRegion(Region region, String styleClass, Double width, Double height){
-        region.getStyleClass().clear();
-        region.getStyleClass().add(styleClass);
-        region.setMaxWidth(width);
-        region.setMaxWidth(height);
     }
 
     //*RECIPE CREATOR
@@ -149,7 +133,7 @@ public class BookOfCookController extends Validator{
     //?
     public Button removeCategoryList(String target){
         Button btn = new Button("-");
-        styleNode(btn, "standard-button", 10.0, 0.0);
+        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             categoryCreator.remove(target);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
@@ -159,7 +143,7 @@ public class BookOfCookController extends Validator{
 
     public Button removeIngredientList(HashMap<String, String> target){
         Button btn = new Button("X");
-        styleNode(btn, "standard-button", 10.0, 0.0);
+        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             IngredCreator.remove(target); 
             updateIngredCreatorList();    
@@ -221,7 +205,7 @@ public class BookOfCookController extends Validator{
             //filterRecipes(categoriesClicked);
         });
         body.getChildren().add(checkbox);//adds children
-        styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
+        fxComponents.styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
     }
     
@@ -238,14 +222,14 @@ public class BookOfCookController extends Validator{
         Pane foodBody = new Pane();
         Button btn = new Button("X");
 
-        styleNode(btn, "standard-button", 10.0, 0.0);
+        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             fridge.removeFood(food);
             updatefridge(); 
         });
 
         Label label = new Label(food);
-        styleNode(label, "list-label", 80.0, 10.0);
+        fxComponents.styleNode(label, "list-label", 80.0, 10.0);
 
         foodBody.getChildren().add(label);
         foodBody.getChildren().add(btn);
@@ -267,7 +251,7 @@ public class BookOfCookController extends Validator{
     //*RECIPE DISPLAY
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
-        styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
+        fxComponents.styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
         recipeBtn.setOnAction(e -> {//event
             viewRecipe(recipe);
         });
@@ -279,13 +263,13 @@ public class BookOfCookController extends Validator{
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
-        styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
+        fxComponents.styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         
-        viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
-        viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
-        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
-        viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
+        fxComponents.viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
+        fxComponents.viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
+        fxComponents.viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
+        fxComponents.viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
+        fxComponents.viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
 
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
@@ -311,7 +295,7 @@ public class BookOfCookController extends Validator{
         //?
     private void closeBtn(){                            //creates a close Btn for closing recipe view
         Button btn = new Button("Close");               //creates button object
-        styleNode(btn, "standard-button", 80.0, 170.0);
+        fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             closeRecipeView();
         });
@@ -322,7 +306,7 @@ public class BookOfCookController extends Validator{
     //?
     private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
-        styleNode(btn, "standard-button", 80.0, 170.0);
+        fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             book.removeRecipe(recipe);
             updateRecipeList();
@@ -330,16 +314,10 @@ public class BookOfCookController extends Validator{
         });
         recipeViewContent.add(btn, 1, 4);
     }
-    
-    private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
-        Label label = new Label(content);
-        styleNode(label, "recipe-view-text", 80.0, 10.0);
-        ((GridPane)parent).add(label, column, row);
-    }
 
     public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
         ListView<String> listView = new ListView<String>();
-        viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid 
+        fxComponents.viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)
             listView.getItems().add(o.toString());
         }
@@ -376,7 +354,7 @@ public class BookOfCookController extends Validator{
     public Button removeList(String target, List<String> listView){
         Button btn = new Button("X");
         btn.getStyleClass().clear();
-        styleNode(btn, "standard-button", 10.0, 0.0);
+        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
 
         btn.setOnAction(e -> {
             listView.remove(target);
