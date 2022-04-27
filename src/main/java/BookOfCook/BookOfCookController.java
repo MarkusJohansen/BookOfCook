@@ -26,7 +26,7 @@ public class BookOfCookController{
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
-    private ArrayList<HashMap<String, String>> IngredCreator;
+    private ArrayList<HashMap<String, String>> ingredCreator;
     private FXcomponents fxComponents;
 
     @FXML
@@ -58,19 +58,13 @@ public class BookOfCookController{
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
-        
-        for(Category category : book.getCategories()){          // fyller inn kategorilista
-            categList.getItems().add(categComponent(category));
-        }  
-
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
-        IngredCreator = new ArrayList<HashMap<String, String>>();
+        ingredCreator = new ArrayList<HashMap<String, String>>();
 
+        updateCategList(); // fyller inn kategorilista 
         initFridgeFood();
         updateRecipeList();
-
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getRecipes().size() + "/" + book.getAmount() + " recipes.")); 
     }
 
     public void checkbox(){                             // sjekker om checkbox er krysset av, og oppdaterer recipesList
@@ -96,12 +90,11 @@ public class BookOfCookController{
 
     public void updateRecipeList(){
         recipeList.getItems().clear();
-        updateCategList();
         initRecipeComponents();
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
     }
 
-    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
+    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //!bruker varargs for å kunne ta inn flere textfields. HVORFOR? BRUKER JO ALDRI METOEN MED MER ENN ETT TEXTFIELD
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();        //tømmer felter i recipefiels                                                           //clear the textcontrol
         }
@@ -120,17 +113,17 @@ public class BookOfCookController{
 
     //*RECIPE CREATOR
     public void addRecipe() {
-            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
             book.addRecipe(recipe, caloriesBar.getText());
 
             categoryCreator.clear();                //clear the list for next use
             categCreatorList.getItems().clear();    //clear the list for next use
-            IngredCreator.clear();                  //clear the list for next use
+            ingredCreator.clear();                  //clear the list for next use
             ingredCreatorList.getItems().clear();   //clear the list for next use
             stepsCreator.clear();                   //clear the list for next use
-            stepCreatorList.getItems().clear();     //clear the list for next use
-            
-            updateRecipeList();             
+            stepCreatorList.getItems().clear();    //clear the list for next use
+
+            updateRecipeList();
             updateCategList();
     }
 
@@ -148,7 +141,7 @@ public class BookOfCookController{
     // }
 
     private void updateIngredCreatorList() { //!her er bug
-        List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
+        List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
@@ -160,7 +153,7 @@ public class BookOfCookController{
 
     public void addIngredientCreator(){
         fxComponents.validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
-        IngredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); 
+        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); 
         updateIngredCreatorList();
     }
 
@@ -180,9 +173,7 @@ public class BookOfCookController{
             }else{
                 categoriesClicked.remove(category);
             }
-            recipeList.getItems().clear();
-            initRecipeComponents();
-            //filterRecipes(categoriesClicked);
+            updateRecipeList();
         });
         body.getChildren().add(checkbox);//adds children
         fxComponents.styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
@@ -287,6 +278,7 @@ public class BookOfCookController{
         btn.setOnAction(e -> {
             book.removeRecipe(recipe);
             updateRecipeList();
+            updateCategList();
             closeRecipeView();
         });
         recipeViewContent.add(btn, 1, 4);
@@ -315,6 +307,7 @@ public class BookOfCookController{
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
             listView.remove(target);
+            System.out.println(listView);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
             updateIngredCreatorList();  //!fungerer ikke ordentlig
@@ -322,5 +315,5 @@ public class BookOfCookController{
         return btn;
     }
 
-    
+
 }
