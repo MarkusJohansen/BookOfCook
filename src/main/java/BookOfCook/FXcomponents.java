@@ -1,17 +1,21 @@
 package BookOfCook;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.GridPane;
 
-public class FXcomponents {
-    
+public class FXcomponents extends Validator{
+    //*STYLING
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -25,7 +29,9 @@ public class FXcomponents {
         region.setMaxWidth(width);
         region.setMaxWidth(height);
     }
-    
+
+
+    //*JAVAFX COMPONENTS
     public void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
@@ -62,5 +68,42 @@ public class FXcomponents {
         Label label = new Label(content);
         styleNode(label, "list-label", 80.0, 10.0); 
         return label;
+    }
+
+    public HashMap<String,String> createIngredientFromTextFields(String name, String amount, String unit){
+        HashMap<String,String> ingredient = new HashMap<String,String>();
+        ingredient.put("name", name);
+        ingredient.put("amount", amount);
+        ingredient.put("unit", unit);
+        return ingredient;
+    } 
+
+    //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE
+    public void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
+        //mode = 's' for steps
+        //mode = 'i' for ingredients
+        //mode = 'c' for categories
+        //mode = 'f' for fridge name
+
+        switch (mode) {
+            case 'a':
+                isNull(array);
+                for(TextField t : textField){
+                    nullOrEmpty(t.getText());
+                    stringExistsArray(t.getText(), array);
+                }
+                break;
+
+            case 'b':
+                isNull(box);
+                nullOrEmpty(box.getValue());
+                for(TextField t : textField){
+                    nullOrEmpty(t.getText());
+                }
+                break;
+        
+            default:
+                System.out.println("Error in validateTextFieldInput");
+        }
     }
 }
