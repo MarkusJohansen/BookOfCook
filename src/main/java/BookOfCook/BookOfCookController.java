@@ -220,9 +220,8 @@ public class BookOfCookController extends Validator{
     //*FRIDGE
     private Pane foodComponent(String food){
         Pane foodBody = new Pane();
-        Button btn = new Button("X");
+        Button btn = fxComponents.xButton();
 
-        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
             fridge.removeFood(food);
             updatefridge(); 
@@ -275,9 +274,9 @@ public class BookOfCookController extends Validator{
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
 
-        viewList(0, 0, 1, 0, "Categories", categories);
-        viewList(4, 0, 5, 0, "steps", steps);
-        viewList(2, 0, 3, 0, "Ingredients", Ingredients);
+        fxComponents.viewList(0, 0, 1, 0, "Categories", categories, recipeViewBox2);
+        fxComponents.viewList(4, 0, 5, 0, "steps", steps, recipeViewBox2);
+        fxComponents.viewList(2, 0, 3, 0, "Ingredients", Ingredients, recipeViewBox2);
 
         closeBtn();
         removeBtn(recipe);
@@ -292,7 +291,7 @@ public class BookOfCookController extends Validator{
         recipeAmount.setVisible(true);
     }
 
-        //?
+    //?
     private void closeBtn(){                            //creates a close Btn for closing recipe view
         Button btn = new Button("Close");               //creates button object
         fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
@@ -315,23 +314,9 @@ public class BookOfCookController extends Validator{
         recipeViewContent.add(btn, 1, 4);
     }
 
-    public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
-        ListView<String> listView = new ListView<String>();
-        fxComponents.viewLabel(label, recipeViewBox2, labelX, labelY);//add steps label to grid 
-        for(String o : array){//shorthand method for)
-            listView.getItems().add(o.toString());
-        }
-        listView.getStyleClass().add("recipe-view-list");
-        recipeViewBox2.add(listView, listY, listX);
-    }
-
     //*FILBEHANDLING
     public void load() {        
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Cookbook");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
+        FileChooser fileChooser = fxComponents.csvFileChooser("Load cookbook");
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
         book = fileHandler.load(file);                              //if the user chooses a file, initialize the cookbook
@@ -341,25 +326,21 @@ public class BookOfCookController extends Validator{
     }
 
     public void save() {                                            //saves the cookbook as a csv file
-        FileChooser fileChooser = new FileChooser();                //creates a filechooser
-        fileChooser.setTitle("Save Cookbook");                      //sets the title of the filechooser window
-        fileChooser.getExtensionFilters().addAll(                   //adds the extension filter for csv files to the filechooser, such that the user can only save the cookbook as a csv file
-            new FileChooser.ExtensionFilter("CSV Files", "*.csv")   //the extension filter is set to csv files
-        );                                  
+        FileChooser fileChooser = fxComponents.csvFileChooser("Save cookbook");                 
         Stage stage = new Stage();                                  //creates a new stage 
         File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
     public Button removeList(String target, List<String> listView){
-        Button btn = new Button("X");
-        btn.getStyleClass().clear();
-        fxComponents.styleNode(btn, "standard-button", 10.0, 0.0);
+        Button btn = fxComponents.xButton();
 
         btn.setOnAction(e -> {
+            System.out.println("fjerner fra list rcreator");
             listView.remove(target);
             listUpdater(categoryCreator, categCreatorList, categoryBar);;
             listUpdater(stepsCreator, stepCreatorList, stepsField);
+            updateIngredCreatorList();  //!fungerer ikke ordentlig
         }); 
         return btn;
     }
