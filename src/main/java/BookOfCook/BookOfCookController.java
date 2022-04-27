@@ -127,19 +127,6 @@ public class BookOfCookController{
             updateCategList();
     }
 
-
-    //! brukes ikke
-    // public Button removeIngredientList(HashMap<String, String> target){
-    //     Button btn = fxComponents.xButton();
-    //     btn.setOnAction(e -> {
-    //         System.out.println(IngredCreator);
-    //         IngredCreator.remove(target);
-    //         System.out.println(IngredCreator);
-    //         updateIngredCreatorList();  
-    //     });   
-    //     return btn;
-    // }
-
     private void updateIngredCreatorList() { //!her er bug
         List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
@@ -180,7 +167,6 @@ public class BookOfCookController{
         return body;
     }
     
-    //?passer denne inn i noen shorthands
     private void updateCategList(){
         categList.getItems().clear();
         for(Category category : book.getCategories()){                             
@@ -209,7 +195,6 @@ public class BookOfCookController{
         updatefridge();
     }
 
-    //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
     public void updatefridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
@@ -268,7 +253,6 @@ public class BookOfCookController{
             closeRecipeView();
         });
         recipeViewContent.add(btn, 0, 4);               //adds to grid
-        // viewBtn("Close", () -> closeRecipeView(), 0, 4);
     }
 
     //?
@@ -314,6 +298,4 @@ public class BookOfCookController{
         }); 
         return btn;
     }
-
-
 }
