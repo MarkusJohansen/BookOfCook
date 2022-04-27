@@ -215,7 +215,7 @@ public class BookOfCookController{
     }
 
     public void fridgeAddFood() {
-        fxComponents.validateTextField('a',fridge.getFood() , null, fridgeNameInput);
+        fxComponents.validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
         updatefridge();
     }
