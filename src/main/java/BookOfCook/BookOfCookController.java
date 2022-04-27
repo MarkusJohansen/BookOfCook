@@ -284,12 +284,7 @@ public class BookOfCookController{
             System.out.println("fjerner fra list rcreator");
 
             if(ingredMode){
-                String[] targetParts = target.split(" ");
-                HashMap<String, String> ingred = new HashMap<>();
-                ingred.put("name", targetParts[0]);
-                ingred.put("amount", targetParts[1]);
-                ingred.put("unit", targetParts[2]);
-                ingredCreator.remove(ingred);
+                ingredCreator.remove(fxComponents.convertStringToHashMap(target));
             }else{
                 listView.remove(target);
             }

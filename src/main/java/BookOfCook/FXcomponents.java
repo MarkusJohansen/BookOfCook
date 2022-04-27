@@ -106,4 +106,13 @@ public class FXcomponents extends Validator{
                 System.out.println("Error in validateTextFieldInput");
         }
     }
+
+    public HashMap<String, String> convertStringToHashMap(String string){
+        String[] targetParts = string.split(" ");
+        HashMap<String, String> ingred = new HashMap<>();
+        ingred.put("name", targetParts[0]);
+        ingred.put("amount", targetParts[1]);
+        ingred.put("unit", targetParts[2]);
+        return ingred;
+    }
 }
