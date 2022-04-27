@@ -102,12 +102,8 @@ public class BookOfCookController{
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             pane.getChildren().add(fxComponents.listLabel(element.toString()));
-            pane.getChildren().add(removeList(element.toString(), array, ingredMode));                                       //!bruker removeList for å få knappen til å fjerne elementet
+            pane.getChildren().add(removeList(element.toString(), array, ingredMode));                                
             list.getItems().add(pane);
-        }
-
-        if (list == ingredCreatorList){
-            
         }
     }
 
@@ -127,17 +123,9 @@ public class BookOfCookController{
         updateCategList();
     }
 
-    private void updateIngredCreatorList() { //!her er bug
+    private void updateIngredCreatorList() {
         ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + " " + object.get("unit")).collect(Collectors.toList()); 
-        listUpdater(ingredients, ingredCreatorList, true, ingredNameBar, ingredAmountBar); //!her er bug     
-        //!det er ingredients som vises. og 
-        
-        //slette fra ingredCreator
-        //kjøre updateIngredCreatorList()
-        //lage en ny list<String> kopi av ingredCreator,
-        //fylle recipeCreatorIngredList med kopiene og oppdatere listen
-        //oversette den liste tilbake til hashmap, og bruke det som target for slette.
-        //vi kan bruke removeList, og sende inn ekstra variabel som en boolen som sier om det er en ingred eller ikke, og avgjør hvordam ting skal lages utifra dette.
+        listUpdater(ingredients, ingredCreatorList, true, ingredNameBar, ingredAmountBar);     
     }
 
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
@@ -148,7 +136,7 @@ public class BookOfCookController{
 
     public void addIngredientCreator(){
         fxComponents.validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
-        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); //!ingred creator er et hashmap
+        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue()));
         updateIngredCreatorList();
     }
 
@@ -244,7 +232,6 @@ public class BookOfCookController{
         removeBtn(recipe);
     }
 
-    //?usikker
     public void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
@@ -253,7 +240,6 @@ public class BookOfCookController{
         recipeAmount.setVisible(true);
     }
 
-    //?
     private void closeBtn(){                            //creates a close Btn for closing recipe view
         Button btn = new Button("Close");               //creates button object
         fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
@@ -263,7 +249,6 @@ public class BookOfCookController{
         recipeViewContent.add(btn, 0, 4);               //adds to grid
     }
 
-    //?
     private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
         fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
@@ -293,22 +278,22 @@ public class BookOfCookController{
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    public Button removeList(String target, List<String> listView, boolean ingredMode){ //!kilden til problemet er min teori.
-        Button btn = fxComponents.xButton();                        //!target blir ikke fra selve liste. det er ikke oppdaterings problem
+    public Button removeList(String target, List<String> listView, boolean ingredMode){
+        Button btn = fxComponents.xButton();                        
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
+
             if(ingredMode){
                 String[] targetParts = target.split(" ");
                 HashMap<String, String> ingred = new HashMap<>();
                 ingred.put("name", targetParts[0]);
                 ingred.put("amount", targetParts[1]);
                 ingred.put("unit", targetParts[2]);
-                System.out.println(ingredCreator.contains(ingred));
                 ingredCreator.remove(ingred);
-                System.out.println(ingredCreator.contains(ingred));                
             }else{
                 listView.remove(target);
             }
+
             listUpdater(categoryCreator, categCreatorList, false, categoryBar);
             listUpdater(stepsCreator, stepCreatorList, false, stepsField);
             updateIngredCreatorList();                                  
