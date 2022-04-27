@@ -234,6 +234,7 @@ public class BookOfCookController{
         removeBtn(recipe);
     }
 
+    //*BUTTONS
     //?usikker
     public void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
@@ -266,6 +267,28 @@ public class BookOfCookController{
         recipeViewContent.add(btn, 1, 4);
     }
 
+    public Button removeList(String target, List<String> listView){ //!kilden til problemet er min teori.
+        Button btn = fxComponents.xButton();                        //!target blir ikke fra selve liste. det er ikke oppdaterings problem
+        btn.setOnAction(e -> {
+            System.out.println("fjerner fra list rcreator");
+            listView.remove(target);
+            System.out.println(listView);
+            listUpdater(categoryCreator, categCreatorList, categoryBar);
+            listUpdater(stepsCreator, stepCreatorList, stepsField);
+            updateIngredCreatorList();                                  
+        }); 
+        return btn;
+    }
+
+    // public Button removeIngredientList(HashMap<String, String> target){
+    //     Button btn = fxComponents.xButton();
+    //     btn.setOnAction(e -> {
+    //         IngredCreator.remove(target); 
+    //         updateIngredCreatorList();    
+    //     });   
+    //     return btn;
+    // }
+
     //*FILBEHANDLING
     public void load() {        
         FileChooser fileChooser = fxComponents.csvFileChooser("Load cookbook");
@@ -282,26 +305,4 @@ public class BookOfCookController{
         File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
-
-    public Button removeList(String target, List<String> listView){ //!kilden til problemet er min teori.
-        Button btn = fxComponents.xButton();                        //!target blir ikke fra selve liste. det er ikke oppdaterings problem
-        btn.setOnAction(e -> {
-            System.out.println("fjerner fra list rcreator");
-            listView.remove(target);
-            System.out.println(listView);
-            listUpdater(categoryCreator, categCreatorList, categoryBar);
-            listUpdater(stepsCreator, stepCreatorList, stepsField);
-            updateIngredCreatorList();                                  
-        }); 
-        return btn;
-    }
 }
-
-// public Button removeIngredientList(HashMap<String, String> target){
-//     Button btn = fxComponents.xButton();
-//     btn.setOnAction(e -> {
-//         IngredCreator.remove(target); 
-//         updateIngredCreatorList();    
-//     });   
-//     return btn;
-// }
