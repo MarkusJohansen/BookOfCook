@@ -28,6 +28,7 @@ public class BookOfCookController{
     private ArrayList<HashMap<String, String>> ingredCreator;
     private FileHandler fileHandler;
     private FXcomponents fxComponents;
+    private List<String> ingredients;
 
     @FXML
     private Label number, label, recipeAmount;
@@ -53,6 +54,7 @@ public class BookOfCookController{
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
         fxComponents = new FXcomponents();
+        ingredients = new ArrayList<String>();
         book.addDummyRecipes();
         fridge.addDummyFood();
 
@@ -92,7 +94,7 @@ public class BookOfCookController{
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
-    private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){         
+    private void listUpdater(List<String> array ,ListView<Pane> list, boolean ingredMode, TextField...textControl){         
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //tømmer felter i recipefiels                                                           //clear the textcontrol
         }
@@ -100,7 +102,7 @@ public class BookOfCookController{
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
             pane.getChildren().add(fxComponents.listLabel(element.toString()));
-            pane.getChildren().add(removeList(element.toString(), array));                                       //!bruker removeList for å få knappen til å fjerne elementet
+            pane.getChildren().add(removeList(element.toString(), array, ingredMode));                                       //!bruker removeList for å få knappen til å fjerne elementet
             list.getItems().add(pane);
         }
 
@@ -126,26 +128,34 @@ public class BookOfCookController{
     }
 
     private void updateIngredCreatorList() { //!her er bug
-        List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
-        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar); //!her er bug                                                                                      
+        ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + " " + object.get("unit")).collect(Collectors.toList()); 
+        listUpdater(ingredients, ingredCreatorList, true, ingredNameBar, ingredAmountBar); //!her er bug     
+        //!det er ingredients som vises. og 
+        
+        //slette fra ingredCreator
+        //kjøre updateIngredCreatorList()
+        //lage en ny list<String> kopi av ingredCreator,
+        //fylle recipeCreatorIngredList med kopiene og oppdatere listen
+        //oversette den liste tilbake til hashmap, og bruke det som target for slette.
+        //vi kan bruke removeList, og sende inn ekstra variabel som en boolen som sier om det er en ingred eller ikke, og avgjør hvordam ting skal lages utifra dette.
     }
 
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
         fxComponents.validateTextField('a',stepsCreator, null, stepsField);
         stepsCreator.add(stepsField.getText());
-        listUpdater(stepsCreator, stepCreatorList, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+        listUpdater(stepsCreator, stepCreatorList, false, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     public void addIngredientCreator(){
         fxComponents.validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
-        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); 
+        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue())); //!ingred creator er et hashmap
         updateIngredCreatorList();
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         fxComponents.validateTextField('a', categoryCreator, null, categoryBar);
         categoryCreator.add(categoryBar.getText());
-        listUpdater(categoryCreator, categCreatorList, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+        listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     //*CATEGORIES
@@ -283,14 +293,24 @@ public class BookOfCookController{
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
-    public Button removeList(String target, List<String> listView){ //!kilden til problemet er min teori.
+    public Button removeList(String target, List<String> listView, boolean ingredMode){ //!kilden til problemet er min teori.
         Button btn = fxComponents.xButton();                        //!target blir ikke fra selve liste. det er ikke oppdaterings problem
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
-            listView.remove(target);
-            System.out.println(listView);
-            listUpdater(categoryCreator, categCreatorList, categoryBar);
-            listUpdater(stepsCreator, stepCreatorList, stepsField);
+            if(ingredMode){
+                String[] targetParts = target.split(" ");
+                HashMap<String, String> ingred = new HashMap<>();
+                ingred.put("name", targetParts[0]);
+                ingred.put("amount", targetParts[1]);
+                ingred.put("unit", targetParts[2]);
+                System.out.println(ingredCreator.contains(ingred));
+                ingredCreator.remove(ingred);
+                System.out.println(ingredCreator.contains(ingred));                
+            }else{
+                listView.remove(target);
+            }
+            listUpdater(categoryCreator, categCreatorList, false, categoryBar);
+            listUpdater(stepsCreator, stepCreatorList, false, stepsField);
             updateIngredCreatorList();                                  
         }); 
         return btn;
