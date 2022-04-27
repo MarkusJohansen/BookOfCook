@@ -53,7 +53,8 @@ public class BookOfCookController{
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
         fxComponents = new FXcomponents();
-        book.addDummy();
+        book.addDummyRecipes();
+        fridge.addDummyFood();
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");

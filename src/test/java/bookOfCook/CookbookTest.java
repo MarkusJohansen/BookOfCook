@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import BookOfCook.Category;
 import BookOfCook.Cookbook;
+import BookOfCook.Fridge;
 import BookOfCook.Recipe;
 
 public class CookbookTest {
@@ -126,9 +127,30 @@ public class CookbookTest {
     @Test
     @DisplayName("Test filter")
     public void testFilter() {
+        Fridge fridge = new Fridge();
+        fridge.addFood("ost");
+        fridge.addFood("melk");
+        fridge.addFood("tomat");
         cookbook.addRecipe(pizza, "");
         cookbook.addRecipe(hamburger, "");
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(pizza));
-        assertFalse(cookbook.filter(cookbook.getRecipes(), "Pizza").contains(hamburger));
+
+        cookbook.setFridgeCheck(true);
+
+        ArrayList<Category> italienskArray = new ArrayList<Category>(Arrays.asList(italiensk));
+        ArrayList<Category> hamburgerArray = new ArrayList<Category>(Arrays.asList(burger, kjøtt));
+        ArrayList<Category> emptyArray = new ArrayList<Category>(Arrays.asList());
+
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "Pizza", italienskArray, fridge).contains(pizza));
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "burg", hamburgerArray, fridge).contains(hamburger));
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, fridge).contains(hamburger));
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, fridge).contains(pizza));
+
+        Fridge tomFridge = new Fridge();
+        assertFalse(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, tomFridge).contains(hamburger));
+
+        cookbook.setFridgeCheck(false);
+        
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, tomFridge).contains(hamburger));
+        assertTrue(cookbook.filter(cookbook.getRecipes(), "", emptyArray, tomFridge).contains(pizza));
     }
 }

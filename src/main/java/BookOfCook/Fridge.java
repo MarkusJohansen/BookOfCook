@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Fridge extends Validator{
     private ArrayList<String> foodInFridge = new ArrayList<String>();   // an arraylist of strings representing ingredient names
 
-    public Fridge() {                                                   // constructor
+    public void addDummyFood(){
         addFood("tomat");                                               //dummy food
         addFood("melk");                                                //dummy food
         addFood("ost");                                                 //dummy food
