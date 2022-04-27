@@ -97,33 +97,7 @@ public class BookOfCookController extends Validator{
         recipeList.getItems().clear();
         updateCategList();
         initRecipeComponents();
-        updateAmountLabel(recipes); //!her er update amount label feilen
-    }
-
-    //!skal fikse amount label(skal kjøre i filter metode, og legge til recipe metode) 
-    public void updateAmountLabel(ArrayList<Recipe> recipeArray){
-        recipeAmount.setText(String.valueOf("Currently showing " + recipeArray.size() + "/" + book.getAmount() + " recipes."));
-    }
-
-
-    //?passer denne inn i noen shorthands
-    private void updateCategList(){
-        categList.getItems().clear();
-        for(Category category : book.getCategories()){                             
-            categList.getItems().add(categComponent(category));
-        }
-    }
-
-    //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
-    public void updatefridge(){
-        fridgeList.getItems().clear();
-        initFridgeFood();
-        updateRecipeList();
-    }
-
-    private void updateIngredCreatorList() {
-        List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
-        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
     }
 
     private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //bruker varargs for å kunne ta inn flere textfields
@@ -141,6 +115,7 @@ public class BookOfCookController extends Validator{
         }
     }
 
+    //*STYLING
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
@@ -154,11 +129,21 @@ public class BookOfCookController extends Validator{
         region.setMaxWidth(width);
         region.setMaxWidth(height);
     }
-    
-    public void removeRecipe(Recipe recipe){
-        book.removeRecipe(recipe);
-        updateRecipeList();
-        closeRecipeView();
+
+    //*RECIPE CREATOR
+    public void addRecipe() {
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+            book.addRecipe(recipe, caloriesBar.getText());
+
+            categoryCreator.clear();                //clear the list for next use
+            categCreatorList.getItems().clear();    //clear the list for next use
+            IngredCreator.clear();                  //clear the list for next use
+            ingredCreatorList.getItems().clear();   //clear the list for next use
+            stepsCreator.clear();                   //clear the list for next use
+            stepCreatorList.getItems().clear();    //clear the list for next use
+
+            updateRecipeList();             
+            updateCategList();
     }
 
     //?
@@ -172,53 +157,19 @@ public class BookOfCookController extends Validator{
         return btn;
     }
 
-    //?
     public Button removeIngredientList(HashMap<String, String> target){
         Button btn = new Button("X");
         styleNode(btn, "standard-button", 10.0, 0.0);
         btn.setOnAction(e -> {
-            IngredCreator.remove(target);
-            updateIngredCreatorList();     //! feil i sletting av remove ingredient list ligger her. gå tilbake å se på commit hvor det fungerte?
+            IngredCreator.remove(target); 
+            updateIngredCreatorList();    
         });   
         return btn;
     }
 
-    //?
-    private void closeBtn(){                            //creates a close Btn for closing recipe view
-        Button btn = new Button("Close");               //creates button object
-        styleNode(btn, "standard-button", 80.0, 170.0);
-        btn.setOnAction(e -> {
-            closeRecipeView();
-        });
-        recipeViewContent.add(btn, 0, 4);               //adds to grid
-        // viewBtn("Close", () -> closeRecipeView(), 0, 4);
-    }
-
-    //?
-    private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
-        Button btn = new Button("Remove");
-        styleNode(btn, "standard-button", 80.0, 170.0);
-        btn.setOnAction(e -> {
-            removeRecipe(recipe);
-        });
-        recipeViewContent.add(btn, 1, 4);
-    }
-
-    //?usikke, må ha mer updaters?
-    public void addRecipe() {
-            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), IngredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
-            book.addRecipe(recipe, caloriesBar.getText());
-
-            categoryCreator.clear();                //clear the list for next use
-            categCreatorList.getItems().clear();    //clear the list for next use
-            IngredCreator.clear();                  //clear the list for next use
-            ingredCreatorList.getItems().clear();   //clear the list for next use
-            stepsCreator.clear();                   //clear the list for next use
-            stepCreatorList.getItems().clear();    //clear the list for next use
-
-            updateRecipeList();
-            updateCategList();
-            updateAmountLabel();
+    private void updateIngredCreatorList() {
+        List<String> ingredients = IngredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
+        listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
     //?er disse ferdig validerte og skal det gjøres her?
@@ -255,7 +206,7 @@ public class BookOfCookController extends Validator{
         }
     }
 
-    //?usikker
+    //*CATEGORIES
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
         CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
@@ -273,8 +224,16 @@ public class BookOfCookController extends Validator{
         styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
     }
+    
+    //?passer denne inn i noen shorthands
+    private void updateCategList(){
+        categList.getItems().clear();
+        for(Category category : book.getCategories()){                             
+            categList.getItems().add(categComponent(category));
+        }
+    }
 
-    //?usikker
+    //*FRIDGE
     private Pane foodComponent(String food){
         Pane foodBody = new Pane();
         Button btn = new Button("X");
@@ -293,7 +252,19 @@ public class BookOfCookController extends Validator{
         return foodBody;
     }
 
-    //?usikker
+    public void fridgeAddFood() {
+        fridge.addFood(fridgeNameInput.getText());
+        updatefridge();
+    }
+
+    //?usikker kan listupdater kjøres her? den er ganske kort, så lav prioritering.
+    public void updatefridge(){
+        fridgeList.getItems().clear();
+        initFridgeFood();
+        updateRecipeList();
+    }
+
+    //*RECIPE DISPLAY
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
         styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
@@ -303,6 +274,7 @@ public class BookOfCookController extends Validator{
         return recipeBtn;
     }
 
+    //*RECIPE VIEW
     public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
@@ -335,6 +307,29 @@ public class BookOfCookController extends Validator{
         recipeList.setVisible(true);
         recipeAmount.setVisible(true);
     }
+
+        //?
+    private void closeBtn(){                            //creates a close Btn for closing recipe view
+        Button btn = new Button("Close");               //creates button object
+        styleNode(btn, "standard-button", 80.0, 170.0);
+        btn.setOnAction(e -> {
+            closeRecipeView();
+        });
+        recipeViewContent.add(btn, 0, 4);               //adds to grid
+        // viewBtn("Close", () -> closeRecipeView(), 0, 4);
+    }
+
+    //?
+    private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
+        Button btn = new Button("Remove");
+        styleNode(btn, "standard-button", 80.0, 170.0);
+        btn.setOnAction(e -> {
+            book.removeRecipe(recipe);
+            updateRecipeList();
+            closeRecipeView();
+        });
+        recipeViewContent.add(btn, 1, 4);
+    }
     
     private void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
@@ -352,11 +347,7 @@ public class BookOfCookController extends Validator{
         recipeViewBox2.add(listView, listY, listX);
     }
 
-    public void fridgeAddFood() {
-        fridge.addFood(fridgeNameInput.getText());
-        updatefridge();
-    }
-
+    //*FILBEHANDLING
     public void load() {        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Cookbook");

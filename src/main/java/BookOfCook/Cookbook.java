@@ -4,13 +4,14 @@ package BookOfCook;
 import java.util.*;
 
 public class Cookbook extends Validator {
-    private int recipeAmount;                                               // amount of recipes in cookbook
+    private int recipeAmount, displayedAmount;                                               // amount of recipes in cookbook
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();            // recipes in cookbook
     private ArrayList<Category> categories = new ArrayList<Category>();     // categories in cookbook
     private boolean fridgeCheck;                                            //? fridge check
 
     public Cookbook() {                                                     // constructor
         this.recipeAmount = 0;                                              // amount of recipes in cookbook is always 0 at start
+        this.displayedAmount = 0;                                           // amount of recipes displayed in cookbook is always 0 at start
     }
 
     public void addDummy(){                                                 // add dummy recipes to cookbook
@@ -94,6 +95,10 @@ public class Cookbook extends Validator {
         return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
     }
 
+    public int getDisplayedAmount() {                                       // returns amount of recipes displayed in cookbook
+        return displayedAmount;
+    }
+
     public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                                                    // create an output arraylist
         for (Recipe recipe : recipes) {                                                                         // loops through all recipes in cookbook
@@ -167,6 +172,7 @@ public class Cookbook extends Validator {
         if(searchText != ""){                                                                                                       //dersom søkestrengen ikke er tom, skal den filtrere på søkestrengen
             filteredRecipes = searchRecipes(searchText, filteredRecipes);                                                           // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher søkestrengen
         }
+        displayedAmount = filteredRecipes.size();                                                                                     // recipeAmount settes til antall recipes i filteredRecipes
         return filteredRecipes;                                                                                                     //returnerer filtrasjonsprodukte, etter tre runder med filtrering
     }
 }
