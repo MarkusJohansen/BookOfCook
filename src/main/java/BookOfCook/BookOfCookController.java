@@ -24,9 +24,9 @@ public class BookOfCookController{
     private Cookbook book;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
-    private FileHandler fileHandler;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> ingredCreator;
+    private FileHandler fileHandler;
     private FXcomponents fxComponents;
 
     @FXML
@@ -91,7 +91,7 @@ public class BookOfCookController{
     public void updateRecipeList(){
         recipeList.getItems().clear();
         initRecipeComponents();
-        recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
+        recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
     private void listUpdater(List<String> array, ListView<Pane> list, TextField...textControl){                   //!bruker varargs for å kunne ta inn flere textfields. HVORFOR? BRUKER JO ALDRI METOEN MED MER ENN ETT TEXTFIELD
@@ -325,7 +325,6 @@ public class BookOfCookController{
 !du kan skrive inn bokstaver i amount i fridge, men vi skal vel muligens fjerne amount og unit, da fridge går utifra navn?
 !Type safety, sjekk om listviews tar inn panes eller Strings, og parametiser
 !fridge fungerer ikke helt
-!categori filter
 
 ?FORSLAG: 
 ?få til møte med studass på hvordan flytte mer frontend til backend. 
