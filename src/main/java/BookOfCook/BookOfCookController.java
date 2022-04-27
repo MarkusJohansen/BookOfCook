@@ -58,7 +58,6 @@ public class BookOfCookController{
 
         unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
         timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
-        
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
         ingredCreator = new ArrayList<HashMap<String, String>>();
@@ -91,7 +90,6 @@ public class BookOfCookController{
 
     public void updateRecipeList(){
         recipeList.getItems().clear();
-        updateCategList();
         initRecipeComponents();
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes."));
     }
@@ -121,7 +119,7 @@ public class BookOfCookController{
             stepsCreator.clear();                   //clear the list for next use
             stepCreatorList.getItems().clear();    //clear the list for next use
 
-            updateRecipeList();             
+            updateRecipeList();
             updateCategList();
     }
 
@@ -177,9 +175,7 @@ public class BookOfCookController{
             }else{
                 categoriesClicked.remove(category);
             }
-            recipeList.getItems().clear();
-            initRecipeComponents();
-            //filterRecipes(categoriesClicked);
+            updateRecipeList();
         });
         body.getChildren().add(checkbox);//adds children
         fxComponents.styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
@@ -284,6 +280,7 @@ public class BookOfCookController{
         btn.setOnAction(e -> {
             book.removeRecipe(recipe);
             updateRecipeList();
+            updateCategList();
             closeRecipeView();
         });
         recipeViewContent.add(btn, 1, 4);
