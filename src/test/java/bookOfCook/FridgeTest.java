@@ -17,7 +17,7 @@ public class FridgeTest {
     public void setup() {
         cookbook = new Cookbook();
         fridge = new Fridge();
-        cookbook.addDummy();
+        cookbook.addDummyRecipes();
     }
 
     @Test
@@ -39,8 +39,13 @@ public class FridgeTest {
         assertTrue(fridge.filter(cookbook.getRecipes()).size() == 0);
         fridge.addFood("tomat");
         fridge.addFood("ost");
+        fridge.addFood("melk");
         assertTrue(fridge.filter(cookbook.getRecipes()).size() == 1);
         fridge.addFood("hamburgerbrød");
         assertTrue(fridge.filter(cookbook.getRecipes()).size() == 2);
+        fridge.removeFood("tomat");
+        assertTrue(fridge.filter(cookbook.getRecipes()).size() == 1);
+        fridge.addFood("havregryn");
+        assertTrue(fridge.filter(cookbook.getRecipes()).size() == 1);
     }
 }
