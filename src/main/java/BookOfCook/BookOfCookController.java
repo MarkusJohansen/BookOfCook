@@ -113,18 +113,18 @@ public class BookOfCookController{
 
     //*RECIPE CREATOR
     public void addRecipe() {
-            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
-            book.addRecipe(recipe, caloriesBar.getText());
+        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+        book.addRecipe(recipe, caloriesBar.getText());
 
-            categoryCreator.clear();                //clear the list for next use
-            categCreatorList.getItems().clear();    //clear the list for next use
-            ingredCreator.clear();                  //clear the list for next use
-            ingredCreatorList.getItems().clear();   //clear the list for next use
-            stepsCreator.clear();                   //clear the list for next use
-            stepCreatorList.getItems().clear();     //clear the list for next use
+        categoryCreator.clear();                //clear the list for next use
+        categCreatorList.getItems().clear();    //clear the list for next use
+        ingredCreator.clear();                  //clear the list for next use
+        ingredCreatorList.getItems().clear();   //clear the list for next use
+        stepsCreator.clear();                   //clear the list for next use
+        stepCreatorList.getItems().clear();     //clear the list for next use
 
-            updateRecipeList();
-            updateCategList();
+        updateRecipeList();
+        updateCategList();
     }
 
     private void updateIngredCreatorList() { //!her er bug
