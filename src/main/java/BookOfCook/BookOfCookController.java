@@ -128,7 +128,8 @@ public class BookOfCookController{
     }
 
     private void updateIngredCreatorList() { //!her er bug
-        List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList()); 
+        List<String> ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
+        System.out.println("ingredients" + ingredients);
         listUpdater(ingredients, ingredCreatorList, ingredNameBar, ingredAmountBar);                                                                                       
     }
 
