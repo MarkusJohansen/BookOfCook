@@ -4,14 +4,16 @@ package BookOfCook;
 import java.util.*;
 
 public class Cookbook extends Validator {
-    private int recipeAmount, displayedAmount;                                               // amount of recipes in cookbook
-    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();                     // recipes in cookbook
-    private ArrayList<Category> categories = new ArrayList<Category>();              // categories in cookbook
-    private boolean fridgeCheck;                                                     //? fridge check
+    private int recipeAmount, displayedAmount;                                              // amount of recipes in cookbook
+    private ArrayList<Recipe> recipes;                                                      // recipes in cookbook
+    private ArrayList<Category> categories;                                                 // categories in cookbook
+    private boolean fridgeCheck;                                                            //? fridge check
 
     public Cookbook() {                                                              // constructor
         this.recipeAmount = 0;                                                       // amount of recipes in cookbook is always 0 at start
         this.displayedAmount = 0;                                                    // amount of recipes displayed in cookbook is always 0 at start
+        this.recipes = new ArrayList<Recipe>(); 
+        this.categories = new ArrayList<Category>();
     }
 
     public void addDummyRecipes(){                                                 // add dummy recipes to cookbook
@@ -65,6 +67,10 @@ public class Cookbook extends Validator {
         collectCategories();                                                    
     }
 
+    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne  
+        this.fridgeCheck = fridgeCheck;                                                                         //! boolean for å sjekke at friche checkbox er krysset av
+    }
+
     public void addRecipe(Recipe recipe, String calories) {                 // add recipe to cookbook
         duplicateRecipeName(recipes, recipe);                               // checks for recipes with duplicate names
         if (calories == null || calories.equals("")) {                       // checks if calories is empty
@@ -86,6 +92,10 @@ public class Cookbook extends Validator {
         return recipeAmount;                    
     }
 
+    public int getDisplayedAmount() {                                       // returns amount of recipes displayed in cookbook
+        return displayedAmount;
+    }
+
     public ArrayList<Recipe> getRecipes() {                                 // returns recipes in cookbook
         return new ArrayList<Recipe>(recipes);                              //? hvorfor returnere en kopi     
     }                                                                       //! fordi man aldri burde returnere selve arrayListen, da kan man ender på den gjennom getteren
@@ -93,10 +103,6 @@ public class Cookbook extends Validator {
     public ArrayList<Category> getCategories() {
         collectCategories();                                                //? hvorfor collect categories her?
         return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
-    }
-
-    public int getDisplayedAmount() {                                       // returns amount of recipes displayed in cookbook
-        return displayedAmount;
     }
 
     public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
@@ -152,10 +158,6 @@ public class Cookbook extends Validator {
             }
         }
         return searchResults;                                                                                   // return output arraylist
-    }
-
-    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne  
-        this.fridgeCheck = fridgeCheck;                                                                         //! boolean for å sjekke at friche checkbox er krysset av
     }
 
     public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){   //! kan den ikke ta inn recipes feltet i cookbook isteden for array??

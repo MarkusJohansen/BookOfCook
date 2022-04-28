@@ -39,7 +39,7 @@ public class Recipe extends Validator{
         return name;                                                            // returns name of recipe
     } 
 
-    public String getDesc() {
+    public String getDescription() {
         return description;                                                     // returns description of recipe
     }
 

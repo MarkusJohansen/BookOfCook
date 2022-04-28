@@ -18,7 +18,7 @@ public class FileHandler extends Validator implements LoadSave{
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);                                                                 //oppretter en ny bufferedwriter
 
             for (Recipe r : book.getRecipes()) {                                                                                            //for hver recipe i cookbooket (r) 
-                bufferedWriter.write(r.getName() + "," + r.getServings() + "," + r.getDesc() + "," + r.getCal() + "," + r.getPrepTime());   //skriver ut navn, antall personer, beskrivelse, kalorier, og tidsforbruk
+                bufferedWriter.write(r.getName() + "," + r.getServings() + "," + r.getDescription() + "," + r.getCal() + "," + r.getPrepTime());   //skriver ut navn, antall personer, beskrivelse, kalorier, og tidsforbruk
                 bufferedWriter.newLine();                                                                                                   //skriver ny linje
                 bufferedWriter.write(r.getCategories() + "");                                                                               //skriver ut kategorier
                 bufferedWriter.newLine();                                                                                                   //skriver ny linje

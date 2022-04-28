@@ -66,28 +66,36 @@ public class BookOfCookController extends FXcomponents{
 
         updateCategList();  // fyller inn kategorilista 
         initFridgeFood();   // fyller opp fridgeFood arraylista og fxml lista med maten i fridge
-        updateRecipeList(); // oppdaterer fxml recipeLista
+        initRecipeComponents(); // oppdaterer fxml recipeLista
     }
 
-    //*INITIALIZERS
-    private void initFridgeFood(){  // initialiserer maten i fridge
+    public void checkbox(){ // sjekker om checkbox er krysset av, og oppdaterer recipesList
+        book.setFridgeCheck(fridgeCheckbox.isSelected());   // oppdaterer variabelen i fridge etter checkboxen
+        updateRecipeList();                                 // oppdaterer fxml recipeLista
+    }
+
+    public void initFridgeFood(){
+        updateFridgeFood();
+    }
+
+    private void updateFridgeFood(){  // initialiserer maten i fridge
         fridgeFood = new ArrayList<String>();
         fridgeFood.addAll(fridge.getFood());
         for(String food : fridgeFood){
-            fridgeList.getItems().add(foodComponent(food.toString())); 
+            fridgeList.getItems().add(foodComponent(food.toString()));
         }
     }
 
-    private void initRecipeComponents() {   // initialiserer fxml recipeLista. fyller den opp med filtrerte recipes i book
-        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
-            recipeList.getItems().add(recipeComponent(recipe));
-        }
+    public void initRecipeComponents(){
+        updateRecipeList();
     }
 
     //*UPDATERS
     public void updateRecipeList(){ // clearer fxml recipeLista og initialiserer den igjen. oppdaterer recipeamount
         recipeList.getItems().clear();
-        initRecipeComponents();
+        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
+            recipeList.getItems().add(recipeComponent(recipe));
+        }
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
@@ -136,11 +144,10 @@ public class BookOfCookController extends FXcomponents{
             stepsCreator.add(stepsField.getText());                         // legger til teksten fra fxml stepsField til stepsCreator arrayList
             listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding steps to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
             catchLabel.setText("");
-        }                                                                           
+        }
         catch(Exception e){
             catchLabel.setText("Wrong step input, check your input");
         }
-        
     }                                                                                          
 
     private void updateIngredCreatorList() {
@@ -158,7 +165,6 @@ public class BookOfCookController extends FXcomponents{
         catch(Exception e){
             catchLabel.setText("Wrong ingredient input, check your input");
         }
-        
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
@@ -191,7 +197,7 @@ public class BookOfCookController extends FXcomponents{
     //*CATEGORIES
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
-        CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name       
+        CheckBox checkbox = new CheckBox(category.getName()); //creates a checkbox with category name     
         checkbox.setOnAction(e -> {//on checkbox click
             if(checkbox.isSelected()){
                 categoriesClicked.add(category);
@@ -207,7 +213,7 @@ public class BookOfCookController extends FXcomponents{
     
     private void updateCategList(){
         categList.getItems().clear();
-        for(Category category : book.getCategories()){               //! burde ikke dette være i en initialize metode?               
+        for(Category category : book.getCategories()){              
             categList.getItems().add(categComponent(category));
         }
     }
@@ -247,7 +253,7 @@ public class BookOfCookController extends FXcomponents{
 
     private void updateFridge(){
         fridgeList.getItems().clear();
-        initFridgeFood();
+        updateFridgeFood();
         updateRecipeList();
     }
 
@@ -269,7 +275,7 @@ public class BookOfCookController extends FXcomponents{
         styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
+        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
