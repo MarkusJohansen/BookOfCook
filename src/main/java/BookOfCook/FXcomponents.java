@@ -1,10 +1,8 @@
 package BookOfCook;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -14,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 public class FXcomponents extends Validator{
 

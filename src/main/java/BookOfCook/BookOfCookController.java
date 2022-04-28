@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class BookOfCookController extends FXcomponents{
     private Cookbook book;
     private Fridge fridge;
-    private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
+    private ArrayList<Category> categoriesClicked;
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> ingredCreator;
     private FileHandler fileHandler;
@@ -53,6 +53,7 @@ public class BookOfCookController extends FXcomponents{
         categoryCreator = new ArrayList<String>();
         ingredCreator = new ArrayList<HashMap<String, String>>();
         ingredients = new ArrayList<String>();
+        categoriesClicked = new ArrayList<Category>();
 
         book = new Cookbook();
         fridge = new Fridge();        
