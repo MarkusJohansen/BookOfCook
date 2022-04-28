@@ -127,7 +127,7 @@ public class Cookbook extends Validator {
         categories = collectedCategories;
     }
 
-    public ArrayList<Category> createNewCategoriesOnly(ArrayList<String> categNames){                           // creates new categories from a list of names
+    public ArrayList<Category> addNewCategories(ArrayList<String> categNames){                           // creates new categories from a list of names
         ArrayList<Category> outputArray = new ArrayList<Category>();                                            // create an output arraylist
         for(String category : categNames){                                                                      // loops through all names in category names
             if(checkIfCategoryExist(category, getCategories())){                                                // checks if category already exists in cookbook 

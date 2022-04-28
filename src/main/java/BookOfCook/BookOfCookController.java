@@ -107,7 +107,7 @@ public class BookOfCookController extends FXcomponents{
 
     //*RECIPE CREATOR
     public void addRecipe() {
-        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.addNewCategories(categoryCreator), stepsCreator);
         book.addRecipe(recipe, caloriesBar.getText());
 
         categoryCreator.clear();                //clear the list for next use
@@ -142,6 +142,21 @@ public class BookOfCookController extends FXcomponents{
         validateTextField('a', categoryCreator, null, categoryBar);
         categoryCreator.add(categoryBar.getText());
         listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+    }
+
+    public Button removeList(String target, List<String> listView, boolean ingredMode){
+        Button btn = xButton();                        
+        btn.setOnAction(e -> {
+            if(ingredMode){
+                ingredCreator.remove(convertStringToHashMap(target));
+            }else{
+                listView.remove(target);
+            }
+            listUpdater(categoryCreator, categCreatorList, false, categoryBar);
+            listUpdater(stepsCreator, stepCreatorList, false, stepsField);
+            updateIngredCreatorList();                                  
+        }); 
+        return btn;
     }
 
     //*CATEGORIES
@@ -274,23 +289,5 @@ public class BookOfCookController extends FXcomponents{
         Stage stage = new Stage();                                  //creates a new stage 
         File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
-    }
-
-    public Button removeList(String target, List<String> listView, boolean ingredMode){
-        Button btn = xButton();                        
-        btn.setOnAction(e -> {
-            System.out.println("fjerner fra list rcreator");
-
-            if(ingredMode){
-                ingredCreator.remove(convertStringToHashMap(target));
-            }else{
-                listView.remove(target);
-            }
-
-            listUpdater(categoryCreator, categCreatorList, false, categoryBar);
-            listUpdater(stepsCreator, stepCreatorList, false, stepsField);
-            updateIngredCreatorList();                                  
-        }); 
-        return btn;
     }
 }
