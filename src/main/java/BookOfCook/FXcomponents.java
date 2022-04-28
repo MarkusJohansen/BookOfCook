@@ -10,17 +10,17 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.GridPane;
 
-public class FXcomponents extends Validator{
+abstract class FXcomponents extends Validator{
 
     //*STYLING
-    public void styleNode(Node node, String styleClass, Double x, Double y){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED? SIDEN DETTE ER EN SUPERKLASSE?
+    protected void styleNode(Node node, String styleClass, Double x, Double y){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED? SIDEN DETTE ER EN SUPERKLASSE?
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
         node.setLayoutX(x);
         node.setLayoutY(y);
     }
 
-    public void styleRegion(Region region, String styleClass, Double width, Double height){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
+    protected void styleRegion(Region region, String styleClass, Double width, Double height){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
         region.getStyleClass().clear();
         region.getStyleClass().add(styleClass);
         region.setMaxWidth(width);
@@ -28,13 +28,13 @@ public class FXcomponents extends Validator{
     }
 
     //*JAVAFX COMPONENTS
-    public void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
+    protected void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
- //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
-    public void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
+    
+    protected void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
         ListView<String> listView = new ListView<String>();
         viewLabel(label, grid, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)
@@ -43,21 +43,21 @@ public class FXcomponents extends Validator{
         listView.getStyleClass().add("recipe-view-list");
         grid.add(listView, listY, listX);
     }
- //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
-    public Button xButton(){   
+    
+    protected Button xButton(){   
         Button btn = new Button("X");
         btn.getStyleClass().clear();
         styleNode(btn, "standard-button", 10.0, 0.0);
         return btn;
     }
-    //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
-       public Label listLabel(String content){
-           Label label = new Label(content);
-           styleNode(label, "list-label", 80.0, 10.0); 
-           return label;
-       }
-     //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
-    public FileChooser csvFileChooser(String title){
+    
+    protected Label listLabel(String content){
+        Label label = new Label(content);
+        styleNode(label, "list-label", 80.0, 10.0); 
+        return label;
+    }
+    
+    protected FileChooser csvFileChooser(String title){
         FileChooser fileChooser = new FileChooser();                //creates a filechooser
         fileChooser.setTitle(title);                      //sets the title of the filechooser window
         fileChooser.getExtensionFilters().addAll(                   //adds the extension filter for csv files to the filechooser, such that the user can only save the cookbook as a csv file
