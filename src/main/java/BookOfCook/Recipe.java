@@ -94,7 +94,9 @@ public class Recipe extends Validator{
         this.description = description;                                         
     }
 
-    public void setPrepTime(String time) {                                      // prep time in hours
+    public void setPrepTime(String time) {
+        nullOrEmpty(time);  
+        validTime(time);                         // prep time in hours
         prepTime = time;                                                        // sets
     }
 
@@ -120,10 +122,5 @@ public class Recipe extends Validator{
     public void addStep(String step) {
         nullOrEmpty(step);                                                      // checks if step is valid
         steps.add(capitalize(step));                                            // adds step to list of steps in recipe
-    }
-
-    @Override
-    public String toString() {
-        return "Recipe [categories=" + categories + ", name=" + name + "]";
     }
 }

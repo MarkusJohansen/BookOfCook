@@ -20,14 +20,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class BookOfCookController{
+public class BookOfCookController extends FXcomponents{
     private Cookbook book;
     private Fridge fridge;
     private ArrayList<Category> categoriesClicked = new ArrayList<Category>();
     private ArrayList<String> stepsCreator, categoryCreator, fridgeFood;
     private ArrayList<HashMap<String, String>> ingredCreator;
     private FileHandler fileHandler;
-    private FXcomponents fxComponents;
     private List<String> ingredients;
 
     @FXML
@@ -53,7 +52,6 @@ public class BookOfCookController{
         book = new Cookbook();
         fridge = new Fridge();        
         fileHandler = new FileHandler(); // initialize filehandler
-        fxComponents = new FXcomponents();
         ingredients = new ArrayList<String>();
         book.addDummyRecipes();
         fridge.addDummyFood();
@@ -101,7 +99,7 @@ public class BookOfCookController{
         list.getItems().clear();                                                                                 //clear listview
         for(Object element : array){                                                                             //for every element in array                                   
             Pane pane = new Pane();
-            pane.getChildren().add(fxComponents.listLabel(element.toString()));
+            pane.getChildren().add(listLabel(element.toString()));
             pane.getChildren().add(removeList(element.toString(), array, ingredMode));                                
             list.getItems().add(pane);
         }
@@ -129,19 +127,19 @@ public class BookOfCookController{
     }
 
     public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        fxComponents.validateTextField('a',stepsCreator, null, stepsField);
+        validateTextField('a',stepsCreator, null, stepsField);
         stepsCreator.add(stepsField.getText());
         listUpdater(stepsCreator, stepCreatorList, false, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     public void addIngredientCreator(){
-        fxComponents.validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
-        ingredCreator.add(fxComponents.createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue()));
+        validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
+        ingredCreator.add(createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue()));
         updateIngredCreatorList();
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
-        fxComponents.validateTextField('a', categoryCreator, null, categoryBar);
+        validateTextField('a', categoryCreator, null, categoryBar);
         categoryCreator.add(categoryBar.getText());
         listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
@@ -159,7 +157,7 @@ public class BookOfCookController{
             updateRecipeList();
         });
         body.getChildren().add(checkbox);//adds children
-        fxComponents.styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
+        styleRegion(body, "category-body", Double.MAX_VALUE, Double.MAX_VALUE);
         return body;
     }
     
@@ -173,20 +171,20 @@ public class BookOfCookController{
     //*FRIDGE
     private Pane foodComponent(String food){
         Pane foodBody = new Pane();
-        Button btn = fxComponents.xButton();
+        Button btn = xButton();
 
         btn.setOnAction(e -> {
             fridge.removeFood(food);
             updatefridge(); 
         });
 
-        foodBody.getChildren().add(fxComponents.listLabel(food));
+        foodBody.getChildren().add(listLabel(food));
         foodBody.getChildren().add(btn);
         return foodBody;
     }
 
     public void fridgeAddFood() {
-        fxComponents.validateTextField('c',fridge.getFood() , null, fridgeNameInput);
+        validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
         updatefridge();
     }
@@ -200,7 +198,7 @@ public class BookOfCookController{
     //*RECIPE DISPLAY
     private Button recipeComponent(Recipe recipe){
         Button recipeBtn = new Button(recipe.getName());//create button object
-        fxComponents.styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
+        styleRegion(recipeBtn, "recipeBtn", Double.MAX_VALUE, Double.MAX_VALUE);
         recipeBtn.setOnAction(e -> {//event
             viewRecipe(recipe);
         });
@@ -212,21 +210,21 @@ public class BookOfCookController{
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
-        fxComponents.styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
+        styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         
-        fxComponents.viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        fxComponents.viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
-        fxComponents.viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
-        fxComponents.viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
-        fxComponents.viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
+        viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
+        viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
+        viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
+        viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
+        viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
 
         List<String> categories = recipe.getCategories().stream().map(object -> Objects.toString(object, null)).collect(Collectors.toList());
         List<String> steps = recipe.getSteps();
         List<String> Ingredients = recipe.getIngredients().stream().map(object -> object.get("name") + " " + object.get("amount") + object.get("unit")).collect(Collectors.toList());
 
-        fxComponents.viewList(0, 0, 1, 0, "Categories", categories, recipeViewBox2);
-        fxComponents.viewList(4, 0, 5, 0, "steps", steps, recipeViewBox2);
-        fxComponents.viewList(2, 0, 3, 0, "Ingredients", Ingredients, recipeViewBox2);
+        viewList(0, 0, 1, 0, "Categories", categories, recipeViewBox2);
+        viewList(4, 0, 5, 0, "steps", steps, recipeViewBox2);
+        viewList(2, 0, 3, 0, "Ingredients", Ingredients, recipeViewBox2);
 
         closeBtn();
         removeBtn(recipe);
@@ -242,7 +240,7 @@ public class BookOfCookController{
 
     private void closeBtn(){                            //creates a close Btn for closing recipe view
         Button btn = new Button("Close");               //creates button object
-        fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
+        styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             closeRecipeView();
         });
@@ -251,7 +249,7 @@ public class BookOfCookController{
 
     private void removeBtn(Recipe recipe){                  //creates a remove Btn in recipe view, for removing the recipe from the cookbook
         Button btn = new Button("Remove");
-        fxComponents.styleNode(btn, "standard-button", 80.0, 170.0);
+        styleNode(btn, "standard-button", 80.0, 170.0);
         btn.setOnAction(e -> {
             book.removeRecipe(recipe);
             updateRecipeList();
@@ -263,7 +261,7 @@ public class BookOfCookController{
 
     //*FILBEHANDLING
     public void load() {        
-        FileChooser fileChooser = fxComponents.csvFileChooser("Load cookbook");
+        FileChooser fileChooser = csvFileChooser("Load cookbook");
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage); 
         book = fileHandler.load(file);                              //if the user chooses a file, initialize the cookbook
@@ -272,19 +270,19 @@ public class BookOfCookController{
     }
 
     public void save() {                                            //saves the cookbook as a csv file
-        FileChooser fileChooser = fxComponents.csvFileChooser("Save cookbook");                 
+        FileChooser fileChooser = csvFileChooser("Save cookbook");                 
         Stage stage = new Stage();                                  //creates a new stage 
         File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
     }
 
     public Button removeList(String target, List<String> listView, boolean ingredMode){
-        Button btn = fxComponents.xButton();                        
+        Button btn = xButton();                        
         btn.setOnAction(e -> {
             System.out.println("fjerner fra list rcreator");
 
             if(ingredMode){
-                ingredCreator.remove(fxComponents.convertStringToHashMap(target));
+                ingredCreator.remove(convertStringToHashMap(target));
             }else{
                 listView.remove(target);
             }

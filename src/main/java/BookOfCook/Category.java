@@ -7,7 +7,7 @@ public class Category extends Validator {
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();    // recipes in the category
 
     public Category(String name) {                                  // constructor
-        setName(name);                                              // set name of category
+        setName(name.trim());                                              // set name of category
     }
 
     private void setName(String name) {                             // set name of category
@@ -38,7 +38,6 @@ public class Category extends Validator {
         }
         recipes.remove(recipe);                                     // remove recipe from recipes field
     }
-
     @Override
     public String toString() {                                      // toString method
         return name;

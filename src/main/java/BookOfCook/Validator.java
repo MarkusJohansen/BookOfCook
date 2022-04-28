@@ -5,18 +5,12 @@ import java.util.HashMap;
 
 abstract class Validator {
 
-    //*GENERAL METHODS
-    //! validates index sliter med arrayet
-    protected void validIndex(ArrayList<Object> collection, int index) {   
-        if (index < 0 || index > collection.size()) {
-            throw new IllegalArgumentException("index is out of bounds");
-        }
-    }
     protected void isNull(Object o) {
         if (o == null) {
             throw new IllegalArgumentException("object is null");
         }
     }
+
     protected void nullOrEmpty(Object object) {
         if (object == null) {                                      
             throw new NullPointerException("string cannot be null");     
@@ -49,6 +43,14 @@ abstract class Validator {
             nullOrEmpty(ingredient.get(key));
             if (key.equals("amount")) {
                 negativeOrZero(Double.parseDouble(ingredient.get(key)));
+                if (ingredient.get(key).contains(",")) {
+                    throw new IllegalArgumentException("amount cannot contain a comma");
+                }
+                if (ingredient.get(key).contains(".")) {
+                    if (ingredient.get(key).indexOf(".") != ingredient.get(key).lastIndexOf(".")) {
+                        throw new IllegalArgumentException("amount cannot contain more than one decimal point");
+                    }
+                }   
             }
             if (key.equals("name")) {
                 for(HashMap<String, String> i : ingredients) {
@@ -86,6 +88,16 @@ abstract class Validator {
     protected void negativeOrZero(Double numberOfServings) {
         if (numberOfServings <= 0) {                                                                    
             throw new IllegalArgumentException("number cant be negative or zero");           
+        }
+    }
+
+    protected void validTime(String string) {
+        String[] split = string.split(" ");
+        if (!(split[0].matches("[0-9]+"))) {
+            throw new IllegalArgumentException("time must be expressed as a number");
+        }
+        if (split[1] == null || split[1].equals("") || split[1].equals("null")) {
+            throw new IllegalArgumentException("time must have unit");
         }
     }
 
@@ -131,7 +143,6 @@ abstract class Validator {
         return false;
     }
 
-    // *GENERAL TOOLBOX METHODS
     protected String capitalize(String s) {
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();            
     }

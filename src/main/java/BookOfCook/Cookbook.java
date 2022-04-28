@@ -5,13 +5,13 @@ import java.util.*;
 
 public class Cookbook extends Validator {
     private int recipeAmount, displayedAmount;                                               // amount of recipes in cookbook
-    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();            // recipes in cookbook
-    private ArrayList<Category> categories = new ArrayList<Category>();     // categories in cookbook
-    private boolean fridgeCheck;                                            //? fridge check
+    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();                     // recipes in cookbook
+    private ArrayList<Category> categories = new ArrayList<Category>();              // categories in cookbook
+    private boolean fridgeCheck;                                                     //? fridge check
 
-    public Cookbook() {                                                     // constructor
-        this.recipeAmount = 0;                                              // amount of recipes in cookbook is always 0 at start
-        this.displayedAmount = 0;                                           // amount of recipes displayed in cookbook is always 0 at start
+    public Cookbook() {                                                              // constructor
+        this.recipeAmount = 0;                                                       // amount of recipes in cookbook is always 0 at start
+        this.displayedAmount = 0;                                                    // amount of recipes displayed in cookbook is always 0 at start
     }
 
     public void addDummyRecipes(){                                                 // add dummy recipes to cookbook

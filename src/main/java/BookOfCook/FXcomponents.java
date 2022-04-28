@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.scene.layout.GridPane;
 
 public class FXcomponents extends Validator{
+
     //*STYLING
     public void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
@@ -78,13 +79,8 @@ public class FXcomponents extends Validator{
         return ingredient;
     } 
 
-    //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE
+    //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE (GIVES USER CONSTRAINTS FOR INPUT)
     public void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
-        //mode = 's' for steps
-        //mode = 'i' for ingredients
-        //mode = 'c' for categories
-        //mode = 'f' for fridge name
-
         switch (mode) {
             case 'a':
                 isNull(array);
@@ -101,9 +97,6 @@ public class FXcomponents extends Validator{
                     nullOrEmpty(t.getText());
                 }
                 break;
-        
-            default:
-                System.out.println("Error in validateTextFieldInput");
         }
     }
 
