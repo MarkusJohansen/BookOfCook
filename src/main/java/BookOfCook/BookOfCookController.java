@@ -73,15 +73,23 @@ public class BookOfCookController extends FXcomponents{
         updateRecipeList();                                 // oppdaterer fxml recipeLista
     }
 
-    private void initFridgeFood(){  // initialiserer maten i fridge
+    public void initFridgeFood(){
+        updateFridgeFood();
+    }
+
+    private void updateFridgeFood(){  // initialiserer maten i fridge
         fridgeFood = new ArrayList<String>();
         fridgeFood.addAll(fridge.getFood());
         for(String food : fridgeFood){
-            fridgeList.getItems().add(foodComponent(food.toString())); 
+            fridgeList.getItems().add(foodComponent(food.toString()));
         }
     }
 
-    private void initRecipeComponents() {   // initialiserer fxml recipeLista. fyller den opp med filtrerte recipes i book
+    public void initRecipeComponents(){
+        updateRecipeComponents();
+    }
+
+    private void updateRecipeComponents() {   // initialiserer fxml recipeLista. fyller den opp med filtrerte recipes i book
         for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
@@ -89,7 +97,7 @@ public class BookOfCookController extends FXcomponents{
     
     public void updateRecipeList(){ // clearer fxml recipeLista og initialiserer den igjen. oppdaterer recipeamount
         recipeList.getItems().clear();
-        initRecipeComponents();
+        updateRecipeComponents();
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
@@ -245,7 +253,7 @@ public class BookOfCookController extends FXcomponents{
 
     private void updateFridge(){
         fridgeList.getItems().clear();
-        initFridgeFood();
+        updateFridgeFood();
         updateRecipeList();
     }
 
