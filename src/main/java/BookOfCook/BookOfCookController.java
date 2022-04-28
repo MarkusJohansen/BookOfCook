@@ -144,7 +144,7 @@ public class BookOfCookController extends FXcomponents{
         listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
-    public Button removeList(String target, List<String> listView, boolean ingredMode){
+    private Button removeList(String target, List<String> listView, boolean ingredMode){
         Button btn = xButton();                        
         btn.setOnAction(e -> {
             if(ingredMode){
@@ -190,7 +190,7 @@ public class BookOfCookController extends FXcomponents{
 
         btn.setOnAction(e -> {
             fridge.removeFood(food);
-            updatefridge(); 
+            updateFridge(); 
         });
 
         foodBody.getChildren().add(listLabel(food));
@@ -201,10 +201,10 @@ public class BookOfCookController extends FXcomponents{
     public void fridgeAddFood() {
         validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
-        updatefridge();
+        updateFridge();
     }
 
-    public void updatefridge(){
+    private void updateFridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
         updateRecipeList();
@@ -221,7 +221,7 @@ public class BookOfCookController extends FXcomponents{
     }
 
     //*RECIPE VIEW
-    public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
+    private void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
@@ -245,7 +245,7 @@ public class BookOfCookController extends FXcomponents{
         removeBtn(recipe);
     }
 
-    public void closeRecipeView() {//close recipeView
+    private void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
         recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
