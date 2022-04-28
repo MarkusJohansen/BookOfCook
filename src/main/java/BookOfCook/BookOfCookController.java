@@ -89,7 +89,8 @@ public class BookOfCookController extends FXcomponents{
     public void initRecipeComponents(){
         updateRecipeList();
     }
-    
+
+    //*UPDATERS
     public void updateRecipeList(){ // clearer fxml recipeLista og initialiserer den igjen. oppdaterer recipeamount
         recipeList.getItems().clear();
         for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
@@ -121,27 +122,27 @@ public class BookOfCookController extends FXcomponents{
             catchLabel.setText("Error creating the recipe, check all your fields");
         }
 
-        categoryCreator.clear();                //clear the list for next use
-        categCreatorList.getItems().clear();    //clear the fxml list for next use
-        ingredCreator.clear();                  //clear the list for next use
-        ingredCreatorList.getItems().clear();   //clear the fxml list for next use
-        stepsCreator.clear();                   //clear the list for next use
-        stepCreatorList.getItems().clear();     //clear the list for next use
-        recipeNameBar.clear();                  //clear the textfield for next use
-        servesPeopleBar.clear();                //clear the textfield for next use
-        prepTimeBar.clear();                    //clear the textfield for next use
-        caloriesBar.clear();                    //clear the textfield for next use
-        descriptionArea.clear();                //clear the textfield for next use
+        categoryCreator.clear();                                            //clear the list for next use
+        categCreatorList.getItems().clear();                                //clear the fxml list for next use
+        ingredCreator.clear();                                              //clear the list for next use
+        ingredCreatorList.getItems().clear();                               //clear the fxml list for next use
+        stepsCreator.clear();                                               //clear the list for next use
+        stepCreatorList.getItems().clear();                                 //clear the list for next use
+        recipeNameBar.clear();                                              //clear the textfield for next use
+        servesPeopleBar.clear();                                            //clear the textfield for next use
+        prepTimeBar.clear();                                                //clear the textfield for next use
+        caloriesBar.clear();                                                //clear the textfield for next use
+        descriptionArea.clear();                                            //clear the textfield for next use
 
-        updateRecipeList();     // oppdaterer fxml recipeLista med den nye recipen
-        updateCategList();      // oppdaterer fxml kategorilista med evt nye kategorier
+        updateRecipeList();                                                 // oppdaterer fxml recipeLista med den nye recipen
+        updateCategList();                                                  // oppdaterer fxml kategorilista med evt nye kategorier
     }
 
-    public void addStepCreator(){   // metode som kjører når man trykker på "add" steps                  //create step object with name from textfield, then add step to list in creator
+    public void addStepCreator(){                                           // metode som kjører når man trykker på "add" steps                  //create step object with name from textfield, then add step to list in creator
         try{
-            validateTextField('a',stepsCreator, null, stepsField);  // validering
-            stepsCreator.add(stepsField.getText()); // legger til teksten fra fxml stepsField til stepsCreator arrayList
-            listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+            validateTextField('a',stepsCreator, null, stepsField);          // validering
+            stepsCreator.add(stepsField.getText());                         // legger til teksten fra fxml stepsField til stepsCreator arrayList
+            listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding steps to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
             catchLabel.setText("");
         }
         catch(Exception e){
@@ -230,6 +231,11 @@ public class BookOfCookController extends FXcomponents{
         foodBody.getChildren().add(listLabel(food));
         foodBody.getChildren().add(btn);
         return foodBody;
+    }
+
+    public void fridgeCheckbox(){ // sjekker om checkbox er krysset av, og oppdaterer recipesList
+        book.setFridgeCheck(fridgeCheckbox.isSelected());   // oppdaterer variabelen i fridge etter checkboxen
+        updateRecipeList();                                 // oppdaterer fxml recipeLista
     }
 
     public void fridgeAddFood() {

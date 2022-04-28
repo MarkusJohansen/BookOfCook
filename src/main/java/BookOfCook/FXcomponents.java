@@ -1,7 +1,6 @@
 package BookOfCook;
 
 import java.util.List;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

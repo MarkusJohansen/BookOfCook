@@ -33,7 +33,7 @@
                   <Font name="Arial" size="27.0" />
                </font>
             </Label>
-            <CheckBox fx:id="fridgeCheckbox" layoutX="116.0" layoutY="411.0" mnemonicParsing="false" onAction="#checkbox" textFill="WHITE" />
+            <CheckBox fx:id="fridgeCheckbox" layoutX="116.0" layoutY="411.0" mnemonicParsing="false" onAction="#fridgeCheckbox" textFill="WHITE" />
          </children>
       </Pane>
       <Pane layoutX="460.0" layoutY="83.0" prefHeight="824.0" prefWidth="633.0" styleClass="level-1-panes">
