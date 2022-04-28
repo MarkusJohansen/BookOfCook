@@ -113,6 +113,6 @@ public class Recipe extends Validator{
 
     public void addStep(String step) {
         nullOrEmpty(step);                                                      // checks if step is valid
-        steps.add(capitalize(step));                                            // adds step to list of steps in recipe
+        steps.add(capitalize(step.trim()));                                            // adds step to list of steps in recipe
     }
 }
