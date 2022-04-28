@@ -108,7 +108,7 @@ public class BookOfCookController extends FXcomponents{
 
     //*RECIPE CREATOR
     public void addRecipe() {   // lager ny recipe med dataen fyllt inn i tekstfeltene og listene
-        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
+        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.addNewCategories(categoryCreator), stepsCreator);
         book.addRecipe(recipe, caloriesBar.getText());
 
         categoryCreator.clear();                //clear the list for next use
@@ -145,6 +145,21 @@ public class BookOfCookController extends FXcomponents{
         listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
+    private Button removeList(String target, List<String> listView, boolean ingredMode){
+        Button btn = xButton();                        
+        btn.setOnAction(e -> {
+            if(ingredMode){
+                ingredCreator.remove(convertStringToHashMap(target));
+            }else{
+                listView.remove(target);
+            }
+            listUpdater(categoryCreator, categCreatorList, false, categoryBar);
+            listUpdater(stepsCreator, stepCreatorList, false, stepsField);
+            updateIngredCreatorList();                                  
+        }); 
+        return btn;
+    }
+
     //*CATEGORIES
     private Pane categComponent(Category category){
         Pane body = new Pane(); //creates pane for each category
@@ -176,7 +191,7 @@ public class BookOfCookController extends FXcomponents{
 
         btn.setOnAction(e -> {
             fridge.removeFood(food);
-            updatefridge(); 
+            updateFridge(); 
         });
 
         foodBody.getChildren().add(listLabel(food));
@@ -187,11 +202,11 @@ public class BookOfCookController extends FXcomponents{
     public void fridgeAddFood() {
         validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
-        updatefridge();
+        updateFridge();
         fridgeNameInput.clear();
     }
 
-    public void updatefridge(){
+    private void updateFridge(){
         fridgeList.getItems().clear();
         initFridgeFood();
         updateRecipeList();
@@ -208,7 +223,7 @@ public class BookOfCookController extends FXcomponents{
     }
 
     //*RECIPE VIEW
-    public void viewRecipe(Recipe recipe){//opens recipe view and builds the content
+    private void viewRecipe(Recipe recipe){//opens recipe view and builds the content
         recipeList.setVisible(false);//hide grid and show recipeview
         recipeAmount.setVisible(false);
         recipeView.setVisible(true);
@@ -232,7 +247,7 @@ public class BookOfCookController extends FXcomponents{
         removeBtn(recipe);
     }
 
-    public void closeRecipeView() {//close recipeView
+    private void closeRecipeView() {//close recipeView
         recipeView.setVisible(false);
         recipeViewBox1.getChildren().clear();   //løser for  column 1 ved å tømme grid når den stenger og så må rekonstruere
         recipeViewBox2.getChildren().clear();   //løser for column 2 ved å tømme grid når den stenger og så må rekonstruere
@@ -276,23 +291,5 @@ public class BookOfCookController extends FXcomponents{
         Stage stage = new Stage();                                  //creates a new stage 
         File file = fileChooser.showSaveDialog(stage);              //shows the filechooser window and sets the file to the file the user chooses
         fileHandler.save(file, book);                               //saves the cookbook as a csv file
-    }
-
-    public Button removeList(String target, List<String> listView, boolean ingredMode){
-        Button btn = xButton();                        
-        btn.setOnAction(e -> {
-            System.out.println("fjerner fra list rcreator");
-
-            if(ingredMode){
-                ingredCreator.remove(convertStringToHashMap(target));
-            }else{
-                listView.remove(target);
-            }
-
-            listUpdater(categoryCreator, categCreatorList, false, categoryBar);
-            listUpdater(stepsCreator, stepCreatorList, false, stepsField);
-            updateIngredCreatorList();                                  
-        }); 
-        return btn;
     }
 }

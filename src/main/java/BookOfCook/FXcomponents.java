@@ -94,6 +94,10 @@ public class FXcomponents extends Validator{
                 isNull(box);
                 nullOrEmpty(box.getValue());
                 for(TextField t : textField){
+                    //textfield contains spaces
+                    if(t.getText().contains(" ")){
+                        throw new IllegalArgumentException("Textfield contains spaces");
+                    }
                     nullOrEmpty(t.getText());
                 }
                 break;

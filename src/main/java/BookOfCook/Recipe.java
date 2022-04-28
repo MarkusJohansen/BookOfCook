@@ -67,14 +67,6 @@ public class Recipe extends Validator{
         return new ArrayList<String>(steps);                                    // returns steps
     }
 
-    public ArrayList<String> getIngredientsName(){                              // returns ingredients name   
-        ArrayList<String> output = new ArrayList<String>();                     // creates new arraylist to store the names of the ingredients
-        for (HashMap<String, String> ingredient : ingredients) {                // loops through ingredients
-            output.add(ingredient.get("name"));                                 // adds the name of the ingredient to the arraylist
-        }                                                   
-        return output;                                                          // returns the arraylist
-    }
-
     public void setName(String name) {
         numbersOrSpecials(name);                                                // checks if name is valid
         this.name = name.toUpperCase();                                         // sets name of recipe
@@ -94,7 +86,7 @@ public class Recipe extends Validator{
         this.description = description;                                         
     }
 
-    public void setPrepTime(String time) {
+    private void setPrepTime(String time) {
         nullOrEmpty(time);  
         validTime(time);                         // prep time in hours
         prepTime = time;                                                        // sets
