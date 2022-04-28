@@ -48,37 +48,32 @@ public class BookOfCookController extends FXcomponents{
     @FXML
     private CheckBox fridgeCheckbox;
 
-    public void initialize(){//initializes the controller
-        book = new Cookbook();
-        fridge = new Fridge();        
-        fileHandler = new FileHandler(); // initialize filehandler
-        ingredients = new ArrayList<String>();
-        book.addDummyRecipes();
-        fridge.addDummyFood();
-
-        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");
-        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
+    public void initialize(){// initialiserer kontrolleren
         stepsCreator = new ArrayList<String>();
         categoryCreator = new ArrayList<String>();
         ingredCreator = new ArrayList<HashMap<String, String>>();
+        ingredients = new ArrayList<String>();
 
-        updateCategList(); // fyller inn kategorilista 
-        initFridgeFood();
-        updateRecipeList();
+        book = new Cookbook();
+        fridge = new Fridge();        
+        fileHandler = new FileHandler(); // initialiserer filehandleren
+        book.addDummyRecipes();
+        fridge.addDummyFood();
+
+        unitComboBoxRecipe.getItems().addAll("stk", "L", "g", "dL", "kg", "cl");    // fyller inn ComboBoxene
+        timeUnitComboBoxRecipe.getItems().addAll("minutes", "hours", "days");
+
+        updateCategList();  // fyller inn kategorilista 
+        initFridgeFood();   // fyller opp fridgeFood arraylista og fxml lista med maten i fridge
+        updateRecipeList(); // oppdaterer fxml recipeLista
     }
 
-    public void checkbox(){                                                                                     // sjekker om checkbox er krysset av, og oppdaterer recipesList
-        book.setFridgeCheck(fridgeCheckbox.isSelected());
-        updateRecipeList();
+    public void checkbox(){ // sjekker om checkbox er krysset av, og oppdaterer recipesList
+        book.setFridgeCheck(fridgeCheckbox.isSelected());   // oppdaterer variabelen i fridge etter checkboxen
+        updateRecipeList();                                 // oppdaterer fxml recipeLista
     }
 
-    private void initRecipeComponents() {                                                                       //inititializes the recipe components in the GUI, from the cookbook
-        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
-            recipeList.getItems().add(recipeComponent(recipe));
-        }
-    }
-    
-    private void initFridgeFood(){                                                                              //initializes the food in fridge
+    private void initFridgeFood(){  // initialiserer maten i fridge
         fridgeFood = new ArrayList<String>();
         fridgeFood.addAll(fridge.getFood());
         for(String food : fridgeFood){
@@ -86,13 +81,19 @@ public class BookOfCookController extends FXcomponents{
         }
     }
 
-    public void updateRecipeList(){
+    private void initRecipeComponents() {   // initialiserer fxml recipeLista. fyller den opp med filtrerte recipes i book
+        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
+            recipeList.getItems().add(recipeComponent(recipe));
+        }
+    }
+    
+    public void updateRecipeList(){ // clearer fxml recipeLista og initialiserer den igjen. oppdaterer recipeamount
         recipeList.getItems().clear();
         initRecipeComponents();
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));
     }
 
-    private void listUpdater(List<String> array ,ListView<Pane> list, boolean ingredMode, TextField...textControl){         
+    private void listUpdater(List<String> array ,ListView<Pane> list, boolean ingredMode, TextField...textControl){     // metode for å oppdatere fxml lister
         for(TextField text : textControl){                                                                       //for every textcontrol object passed in method
             ((TextInputControl) text).clear();                                                                   //tømmer felter i recipefiels                                                           //clear the textcontrol
         }
@@ -106,30 +107,30 @@ public class BookOfCookController extends FXcomponents{
     }
 
     //*RECIPE CREATOR
-    public void addRecipe() {
+    public void addRecipe() {   // lager ny recipe med dataen fyllt inn i tekstfeltene og listene
         Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.createNewCategoriesOnly(categoryCreator), stepsCreator);
         book.addRecipe(recipe, caloriesBar.getText());
 
         categoryCreator.clear();                //clear the list for next use
-        categCreatorList.getItems().clear();    //clear the list for next use
+        categCreatorList.getItems().clear();    //clear the fxml list for next use
         ingredCreator.clear();                  //clear the list for next use
-        ingredCreatorList.getItems().clear();   //clear the list for next use
+        ingredCreatorList.getItems().clear();   //clear the fxml list for next use
         stepsCreator.clear();                   //clear the list for next use
-        stepCreatorList.getItems().clear();     //clear the list for next use
+        stepCreatorList.getItems().clear();     //clear the fxml list for next use
 
-        updateRecipeList();
-        updateCategList();
+        updateRecipeList();     // oppdaterer fxml recipeLista med den nye recipen
+        updateCategList();      // oppdaterer fxml kategorilista med evt nye kategorier
     }
+
+    public void addStepCreator(){   // metode som kjører når man trykker på "add" steps                  //create step object with name from textfield, then add step to list in creator
+        validateTextField('a',stepsCreator, null, stepsField);  // validering
+        stepsCreator.add(stepsField.getText()); // legger til teksten fra fxml stepsField til stepsCreator arrayList
+        listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+    }                                                                                          //! category??^^
 
     private void updateIngredCreatorList() {
         ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + " " + object.get("unit")).collect(Collectors.toList()); 
         listUpdater(ingredients, ingredCreatorList, true, ingredNameBar, ingredAmountBar);     
-    }
-
-    public void addStepCreator(){                   //create step object with name from textfield, then add step to list in creator
-        validateTextField('a',stepsCreator, null, stepsField);
-        stepsCreator.add(stepsField.getText());
-        listUpdater(stepsCreator, stepCreatorList, false, stepsField);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 
     public void addIngredientCreator(){
@@ -163,7 +164,7 @@ public class BookOfCookController extends FXcomponents{
     
     private void updateCategList(){
         categList.getItems().clear();
-        for(Category category : book.getCategories()){                             
+        for(Category category : book.getCategories()){               //! burde ikke dette være i en initialize metode?               
             categList.getItems().add(categComponent(category));
         }
     }
@@ -187,6 +188,7 @@ public class BookOfCookController extends FXcomponents{
         validateTextField('c',fridge.getFood() , null, fridgeNameInput);
         fridge.addFood(fridgeNameInput.getText());
         updatefridge();
+        fridgeNameInput.clear();
     }
 
     public void updatefridge(){
