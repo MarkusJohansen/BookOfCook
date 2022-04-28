@@ -83,10 +83,13 @@ public class FXcomponents extends Validator{
     public void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
         switch (mode) {
             case 'a':
+                System.out.println("validateTextField: a");
                 isNull(array);
                 for(TextField t : textField){
                     nullOrEmpty(t.getText());
-                    stringExistsArray(t.getText(), array);
+                    if(stringExistsArray(t.getText(), array)){
+                        throw new IllegalArgumentException("Category already exists");
+                    }
                 }
                 break;
 

@@ -146,7 +146,7 @@ public class BookOfCookController extends FXcomponents{
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
         validateTextField('a', categoryCreator, null, categoryBar);
-        categoryCreator.add(categoryBar.getText());
+        categoryCreator.add(categoryBar.getText().toLowerCase());
         listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
     }
 

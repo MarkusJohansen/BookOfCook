@@ -137,6 +137,7 @@ abstract class Validator {
     protected boolean stringExistsArray(String string, ArrayList<String> arraylist){
         for (String i : arraylist) {
             if(i.toUpperCase().equals(string.toUpperCase())){
+                System.out.println(i.toUpperCase().equals(string.toUpperCase()));
                 return true;
             }
         }
