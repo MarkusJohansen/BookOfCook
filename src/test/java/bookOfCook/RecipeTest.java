@@ -63,9 +63,9 @@ public class RecipeTest {
     @Test
     @DisplayName("Test pizza description")
     public void checkpizzaDescription() {
-        assertTrue(pizza.getDesc() == "Pizza er godt");
+        assertTrue(pizza.getDescription() == "Pizza er godt");
         pizza.setDescription("Milkshake is a drink made from milk and sugar.");
-        assertTrue(pizza.getDesc() == "Milkshake is a drink made from milk and sugar.");
+        assertTrue(pizza.getDescription() == "Milkshake is a drink made from milk and sugar.");
     }
 
     @Test

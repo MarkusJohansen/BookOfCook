@@ -3,6 +3,9 @@ package BookOfCook;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+
 abstract class Validator {
 
     protected void isNull(Object o) {
@@ -150,5 +153,49 @@ abstract class Validator {
 
     protected String arrayStripper(String s) {
         return s.replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");                                                   
+    }
+
+    //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE (GIVES USER CONSTRAINTS FOR INPUT)
+    protected void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
+        switch (mode) {
+            case 'a':
+                System.out.println("validateTextField: a");
+                isNull(array);
+                for(TextField t : textField){
+                    nullOrEmpty(t.getText());
+                    if(stringExistsArray(t.getText(), array)){
+                        throw new IllegalArgumentException("Category already exists");
+                    }
+                }
+                break;
+            case 'b':
+                isNull(box);
+                nullOrEmpty(box.getValue());
+                for(TextField t : textField){
+                    //textfield contains spaces
+                    if(t.getText().contains(" ")){
+                        throw new IllegalArgumentException("Textfield contains spaces");
+                    }
+                    nullOrEmpty(t.getText());
+                }
+                break;
+        }
+    }
+
+    protected HashMap<String, String> convertStringToHashMap(String string){
+        String[] targetParts = string.split(" ");
+        HashMap<String, String> ingred = new HashMap<>();
+        ingred.put("name", targetParts[0]);
+        ingred.put("amount", targetParts[1]);
+        ingred.put("unit", targetParts[2]);
+        return ingred;
+    }
+
+    protected HashMap<String,String> createIngredientFromTextFields(String name, String amount, String unit){
+        HashMap<String,String> ingredient = new HashMap<String,String>();
+        ingredient.put("name", name);
+        ingredient.put("amount", amount);
+        ingredient.put("unit", unit);
+        return ingredient;
     }
 }

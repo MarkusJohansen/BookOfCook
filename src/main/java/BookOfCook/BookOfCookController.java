@@ -142,7 +142,7 @@ public class BookOfCookController extends FXcomponents{
             stepsCreator.add(stepsField.getText()); // legger til teksten fra fxml stepsField til stepsCreator arrayList
             listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
             catchLabel.setText("");
-        }                                                                           //! category??^^
+        }
         catch(Exception e){
             catchLabel.setText("Wrong step input, check your input");
         }
@@ -268,7 +268,7 @@ public class BookOfCookController extends FXcomponents{
         styleRegion(recipeView, "recipe-view", Double.MAX_VALUE, Double.MAX_VALUE);
         
         viewLabel(recipe.getName(), recipeViewBox1, 0, 0);
-        viewLabel(recipe.getDesc(), recipeViewBox1, 1, 0); 
+        viewLabel(recipe.getDescription(), recipeViewBox1, 1, 0); 
         viewLabel("Serves: " + recipe.getServings(), recipeViewBox1, 2, 0); 
         viewLabel("Prep time: " + recipe.getPrepTime(), recipeViewBox1, 3, 0);
         viewLabel("Calories: " + recipe.getCal(), recipeViewBox1, 4, 0);
