@@ -116,7 +116,12 @@ public class BookOfCookController extends FXcomponents{
         ingredCreator.clear();                  //clear the list for next use
         ingredCreatorList.getItems().clear();   //clear the fxml list for next use
         stepsCreator.clear();                   //clear the list for next use
-        stepCreatorList.getItems().clear();     //clear the fxml list for next use
+        stepCreatorList.getItems().clear();     //clear the list for next use
+        recipeNameBar.clear();                  //clear the textfield for next use
+        servesPeopleBar.clear();                //clear the textfield for next use
+        prepTimeBar.clear();                    //clear the textfield for next use
+        caloriesBar.clear();                    //clear the textfield for next use
+        descriptionArea.clear();                //clear the textfield for next use
 
         updateRecipeList();     // oppdaterer fxml recipeLista med den nye recipen
         updateCategList();      // oppdaterer fxml kategorilista med evt nye kategorier
