@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="944.0" prefWidth="1613.0" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
+<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="975.0" prefWidth="1613.0" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookOfCook.BookOfCookController">
    <children>
       <Pane layoutX="62.0" layoutY="85.0" prefHeight="824.0" prefWidth="383.0" styleClass="level-1-panes">
          <children>
@@ -121,5 +121,10 @@
             <TextField fx:id="searchBar" layoutX="365.0" layoutY="13.0" onKeyTyped="#updateRecipeList" prefHeight="33.0" prefWidth="870.0" promptText="Search for recipe" />
          </children>
       </Pane>
+      <Label fx:id="catchLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="396.0" layoutY="926.0" prefHeight="36.0" prefWidth="749.0" textAlignment="CENTER" textFill="#ff4343">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

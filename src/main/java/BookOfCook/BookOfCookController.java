@@ -30,7 +30,7 @@ public class BookOfCookController extends FXcomponents{
     private List<String> ingredients;
 
     @FXML
-    private Label number, label, recipeAmount;
+    private Label number, label, recipeAmount, catchLabel;
     @FXML
     private GridPane recipeViewContent, recipeViewBox1, recipeViewBox2;
     @FXML
@@ -108,8 +108,13 @@ public class BookOfCookController extends FXcomponents{
 
     //*RECIPE CREATOR
     public void addRecipe() {   // lager ny recipe med dataen fyllt inn i tekstfeltene og listene
-        Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.addNewCategories(categoryCreator), stepsCreator);
-        book.addRecipe(recipe, caloriesBar.getText());
+        try{
+            Recipe recipe = new Recipe(recipeNameBar.getText().toUpperCase(), Integer.parseInt(servesPeopleBar.getText()),  descriptionArea.getText(), prepTimeBar.getText() + " " + timeUnitComboBoxRecipe.getValue(), ingredCreator, book.addNewCategories(categoryCreator), stepsCreator);   
+            book.addRecipe(recipe, caloriesBar.getText());
+            catchLabel.setText("");
+        } catch(Exception e){
+            catchLabel.setText("Error creating the recipe, check all your fields");
+        }
 
         categoryCreator.clear();                //clear the list for next use
         categCreatorList.getItems().clear();    //clear the fxml list for next use
@@ -128,10 +133,17 @@ public class BookOfCookController extends FXcomponents{
     }
 
     public void addStepCreator(){   // metode som kjører når man trykker på "add" steps                  //create step object with name from textfield, then add step to list in creator
-        validateTextField('a',stepsCreator, null, stepsField);  // validering
-        stepsCreator.add(stepsField.getText()); // legger til teksten fra fxml stepsField til stepsCreator arrayList
-        listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
-    }                                                                                          //! category??^^
+        try{
+            validateTextField('a',stepsCreator, null, stepsField);  // validering
+            stepsCreator.add(stepsField.getText()); // legger til teksten fra fxml stepsField til stepsCreator arrayList
+            listUpdater(stepsCreator, stepCreatorList, false, stepsField);; //adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+            catchLabel.setText("");
+        }                                                                           //! category??^^
+        catch(Exception e){
+            catchLabel.setText("Wrong step input, check your input");
+        }
+        
+    }                                                                                          
 
     private void updateIngredCreatorList() {
         ingredients = ingredCreator.stream().map(object -> object.get("name") + " " + object.get("amount") + " " + object.get("unit")).collect(Collectors.toList()); 
@@ -139,15 +151,29 @@ public class BookOfCookController extends FXcomponents{
     }
 
     public void addIngredientCreator(){
-        validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
-        ingredCreator.add(createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue()));
-        updateIngredCreatorList();
+        try{
+            validateTextField('b', null, unitComboBoxRecipe, ingredNameBar, ingredAmountBar);
+            ingredCreator.add(createIngredientFromTextFields( ingredNameBar.getText(), ingredAmountBar.getText(), unitComboBoxRecipe.getValue()));
+            updateIngredCreatorList();
+            catchLabel.setText("");
+        }
+        catch(Exception e){
+            catchLabel.setText("Wrong ingredient input, check your input");
+        }
+        
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
-        validateTextField('a', categoryCreator, null, categoryBar);
-        categoryCreator.add(categoryBar.getText().toLowerCase());
-        listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+        try{
+            validateTextField('a', categoryCreator, null, categoryBar);
+            categoryCreator.add(categoryBar.getText().toLowerCase());
+            listUpdater(categoryCreator, categCreatorList, false, categoryBar);;//adding category to recipe, must happen through adding recipe function. cause that confirms that the categories in list is correct
+            catchLabel.setText("");
+        }
+        catch(Exception e){
+            catchLabel.setText("Wrong category input, check your input");
+        }
+        
     }
 
     private Button removeList(String target, List<String> listView, boolean ingredMode){
@@ -205,10 +231,16 @@ public class BookOfCookController extends FXcomponents{
     }
 
     public void fridgeAddFood() {
-        validateTextField('c',fridge.getFood() , null, fridgeNameInput);
-        fridge.addFood(fridgeNameInput.getText());
+        try{
+            validateTextField('c',fridge.getFood() , null, fridgeNameInput);
+            fridge.addFood(fridgeNameInput.getText());
+            fridgeNameInput.clear();
+            catchLabel.setText("");
+        }
+        catch(Exception e){
+            catchLabel.setText("Wrong food input, check your input");
+        }
         updateFridge();
-        fridgeNameInput.clear();
     }
 
     private void updateFridge(){

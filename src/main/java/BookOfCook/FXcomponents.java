@@ -77,7 +77,7 @@ public class FXcomponents extends Validator{
         ingredient.put("amount", amount);
         ingredient.put("unit", unit);
         return ingredient;
-    } 
+    }
 
     //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE (GIVES USER CONSTRAINTS FOR INPUT)
     public void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
