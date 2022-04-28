@@ -92,7 +92,6 @@ public class FXcomponents extends Validator{
                     }
                 }
                 break;
-
             case 'b':
                 isNull(box);
                 nullOrEmpty(box.getValue());

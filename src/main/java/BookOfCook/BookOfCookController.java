@@ -150,7 +150,6 @@ public class BookOfCookController extends FXcomponents{
         catch(Exception e){
             catchLabel.setText("Wrong step input, check your input");
         }
-        
     }                                                                                          
 
     private void updateIngredCreatorList() {
@@ -168,7 +167,6 @@ public class BookOfCookController extends FXcomponents{
         catch(Exception e){
             catchLabel.setText("Wrong ingredient input, check your input");
         }
-        
     }
 
     public void addCategoryCreator(){//create category object with name from textfield, then add category to list in creator
@@ -181,7 +179,6 @@ public class BookOfCookController extends FXcomponents{
         catch(Exception e){
             catchLabel.setText("Wrong category input, check your input");
         }
-        
     }
 
     private Button removeList(String target, List<String> listView, boolean ingredMode){
