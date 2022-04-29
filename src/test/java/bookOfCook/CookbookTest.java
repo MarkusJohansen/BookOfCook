@@ -115,17 +115,17 @@ public class CookbookTest {
         ArrayList<Category> hamburgerArray = new ArrayList<Category>(Arrays.asList(burger, kjøtt));
         ArrayList<Category> emptyArray = new ArrayList<Category>(Arrays.asList());
 
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "Pizza", italienskArray, fridge).contains(pizza));
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "burg", hamburgerArray, fridge).contains(hamburger));
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, fridge).contains(hamburger));
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, fridge).contains(pizza));
+        assertTrue(cookbook.filter("Pizza", italienskArray, fridge).contains(pizza));
+        assertTrue(cookbook.filter("burg", hamburgerArray, fridge).contains(hamburger));
+        assertTrue(cookbook.filter("a", emptyArray, fridge).contains(hamburger));
+        assertTrue(cookbook.filter("a", emptyArray, fridge).contains(pizza));
 
         Fridge tomFridge = new Fridge();
-        assertFalse(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, tomFridge).contains(hamburger));
+        assertFalse(cookbook.filter("a", emptyArray, tomFridge).contains(hamburger));
 
         cookbook.setFridgeCheck(false);
         
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "a", emptyArray, tomFridge).contains(hamburger));
-        assertTrue(cookbook.filter(cookbook.getRecipes(), "", emptyArray, tomFridge).contains(pizza));
+        assertTrue(cookbook.filter("a", emptyArray, tomFridge).contains(hamburger));
+        assertTrue(cookbook.filter("", emptyArray, tomFridge).contains(pizza));
     }
 }

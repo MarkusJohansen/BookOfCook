@@ -88,7 +88,7 @@ public class BookOfCookController extends FXcomponents{
     //*UPDATERS
     public void updateRecipeList(){ // clearer fxml recipeLista og initialiserer den igjen. oppdaterer recipeamount
         recipeList.getItems().clear();
-        for (Recipe recipe : book.filter(book.getRecipes(), searchBar.getText(), categoriesClicked, fridge)) {
+        for (Recipe recipe : book.filter(searchBar.getText(), categoriesClicked, fridge)) {
             recipeList.getItems().add(recipeComponent(recipe));
         }
         recipeAmount.setText(String.valueOf("Currently showing " + book.getDisplayedAmount()+ "/" + book.getAmount() + " recipes"));

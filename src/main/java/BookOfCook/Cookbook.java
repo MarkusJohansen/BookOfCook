@@ -7,7 +7,7 @@ public class Cookbook extends Validator {
     private int recipeAmount, displayedAmount;                                              // amount of recipes in cookbook
     private ArrayList<Recipe> recipes;                                                      // recipes in cookbook
     private ArrayList<Category> categories;                                                 // categories in cookbook
-    private boolean fridgeCheck;                                                            //? fridge check
+    private boolean fridgeCheck;                                                            
 
     public Cookbook() {                                                              // constructor
         this.recipeAmount = 0;                                                       // amount of recipes in cookbook is always 0 at start
@@ -159,13 +159,13 @@ public class Cookbook extends Validator {
         return searchResults;                                                                                   // return output arraylist
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){   //! kan den ikke ta inn recipes feltet i cookbook isteden for array??
+    public ArrayList<Recipe> filter(String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
-        for (Recipe recipe : recipes) {                                                                                             //? er det ikke bare å sette filteredrecipes til recipes i cookbook? 
+        for (Recipe recipe : getRecipes()) {                                                               
             filteredRecipes.add(recipe);                        
         }
-        if(fridgeCheck){                                                                                                            //? hva er dette? 
-            filteredRecipes = fridge.filter(recipes);                                                                               //! en boolean verdi som enten er true eller false etter om fridge checkboksen er checked
+        if(fridgeCheck){                                                                                                            
+            filteredRecipes = fridge.filter(recipes);                                                                               
         }
         if(categories.size() > 0){ // KATEGORIER                                                                                    // dersom noen kategorier sendes inn i funksjonen, skal den filtrere på disse
             filteredRecipes = filterByCategories(filteredRecipes, categories);                                                      // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher categories
