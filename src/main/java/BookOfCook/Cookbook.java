@@ -50,8 +50,8 @@ public class Cookbook extends Validator {
             "Lag pizzasaus med å frese løk og hvitløk i olivenolje. Tilsett tomatpurè og la det frese i et par minutter.",
             "Ha i grovhakket tomat timian oregano salt og pepper. Dette skal nå koke inn til en tykk og god saus. Avkjøl og kjør gjerne til en jevn saus med stavmikser.",
             "Ha deigen på en lett melet benkeplate og del den i fire like emner. Trill hvert emne til runde boller. Strø over litt mel og legg over et klede. Emnene skal nå hvile i 20 minutter.", 
-            "Trykk eller kjevle ut emnene til runde tallerkenstore pizzabunner.", 
-            "Fordel tomatsaus på bunnene før du legger på spekeskinke oliven og revet parmesan.", 
+            "Trykk eller kjevle ut emnene til runde tallerkenstore pizzabunner.",
+            "Fordel tomatsaus på bunnene før du legger på spekeskinke oliven og revet parmesan.",
             "Stek pizzaen på 250 °C i 8-10 minutter eller til pizzaen har en gyllen farge og sprø bunn.", 
             "Dryss over rucculasalat før servering."
             ))), "");
