@@ -67,8 +67,8 @@ public class Cookbook extends Validator {
         collectCategories();                                                    
     }
 
-    public void setFridgeCheck(boolean fridgeCheck) {                                                           //? hva gjør denne  
-        this.fridgeCheck = fridgeCheck;                                                                         //! boolean for å sjekke at friche checkbox er krysset av
+    public void setFridgeCheck(boolean fridgeCheck) {                                                             
+        this.fridgeCheck = fridgeCheck;                                                                       
     }
 
     public void addRecipe(Recipe recipe, String calories) {                 // add recipe to cookbook
@@ -105,7 +105,7 @@ public class Cookbook extends Validator {
         return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
     }
 
-    public ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
+    private ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();                                                    // create an output arraylist
         for (Recipe recipe : recipes) {                                                                         // loops through all recipes in cookbook
             boolean containsAllCategories = true;                                                               // sets temporary variable to true
@@ -150,7 +150,7 @@ public class Cookbook extends Validator {
     }
 
 
-    public ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
+    private ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                                    // loops through all recipes
             if (recipe.getName().toLowerCase().contains(searchString.toLowerCase())) {                          // if recipe name contains searchString

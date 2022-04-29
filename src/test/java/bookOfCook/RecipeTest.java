@@ -18,6 +18,7 @@ import BookOfCook.Recipe;
 public class RecipeTest {
     private Recipe pizza;
     private Category italiensk;
+    private HashMap<String, String> ost, melk;
 
     @BeforeEach
     public void setup() {
@@ -39,12 +40,11 @@ public class RecipeTest {
     @Test
     @DisplayName("Test pizza name")
     public void checkpizzaName() {
-        pizza.setName("Fransk løk suppe");
-        assertTrue(pizza.getName().equals("Fransk løk suppe".toUpperCase()));
-        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk123"));
-        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk "));
-        assertThrows(IllegalArgumentException.class, () -> pizza.setName(" Fransk"));
-        assertThrows(IllegalArgumentException.class, () -> pizza.setName("Fransk#@%&!"));
+        assertTrue(pizza.getName().equals("Pizza".toUpperCase()));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe("Fransk123", 3, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe("Fransk ", 3, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe(" Fransk", 3, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe("Fransk#€%&!", 3, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
         assertFalse(pizza.getName().equals("Fransk #@%&!".toUpperCase()));
     }
 
@@ -52,28 +52,20 @@ public class RecipeTest {
     @DisplayName("Test pizza servings")
     public void checkpizzaServings() {
         assertTrue(pizza.getServings() == 3);
-        pizza.setServings(2);
-        assertTrue(pizza.getServings() == 2);
-
-        //test if invalid servings throws exception
-        assertThrows(IllegalArgumentException.class, () -> pizza.setServings(0));
-        assertThrows(IllegalArgumentException.class, () -> pizza.setServings(-1));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe("Pizza", 0, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
+        assertThrows(IllegalArgumentException.class, () -> new Recipe("Pizza", -1, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), new ArrayList<String>(Arrays.asList("Rull deig", "schtek pizza"))));
     }
 
     @Test
     @DisplayName("Test pizza description")
     public void checkpizzaDescription() {
         assertTrue(pizza.getDescription() == "Pizza er godt");
-        pizza.setDescription("Milkshake is a drink made from milk and sugar.");
-        assertTrue(pizza.getDescription() == "Milkshake is a drink made from milk and sugar.");
     }
 
     @Test
     @DisplayName("Test Calorie methods")
     public void checkCalorieMethods() {
         assertTrue(pizza.getCal() == 0);
-        pizza.setCalories(100);
-        assertTrue(pizza.getCal() == 100);
     }
 
     @Test
@@ -102,7 +94,6 @@ public class RecipeTest {
         assertTrue(category.getRecipes().contains(pizza));
         assertTrue(pizza.getCategories().contains(category));
     }
-
 
     @Test
     @DisplayName("Test pizza instructions")
