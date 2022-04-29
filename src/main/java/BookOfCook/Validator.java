@@ -155,6 +155,12 @@ abstract class Validator {
         return s.replace("[", "").replace("]", "").replace("{", "").replace("},", ";").replace("}","");                                                   
     }
 
+    protected void containsComma(String s) {
+        if (s.contains(",")) {
+            throw new IllegalArgumentException("String cannot contain a comma");
+        }
+    }
+
     //*VALIDATION OF USER INPUT IN RECIPE EDITOR AND FRIDGE (GIVES USER CONSTRAINTS FOR INPUT)
     protected void validateTextField(char mode, ArrayList<String> array, ComboBox<String> box, TextField...textField){
         switch (mode) {
