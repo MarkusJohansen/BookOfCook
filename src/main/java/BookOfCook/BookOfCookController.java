@@ -69,11 +69,6 @@ public class BookOfCookController extends FXcomponents{
         initRecipeComponents(); // oppdaterer fxml recipeLista
     }
 
-    public void checkbox(){ // sjekker om checkbox er krysset av, og oppdaterer recipesList
-        book.setFridgeCheck(fridgeCheckbox.isSelected());   // oppdaterer variabelen i fridge etter checkboxen
-        updateRecipeList();                                 // oppdaterer fxml recipeLista
-    }
-
     public void initFridgeFood(){
         updateFridgeFood();
     }
