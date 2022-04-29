@@ -56,7 +56,7 @@ public class Cookbook extends Validator {
             "Dryss over rucculasalat før servering."
             ))), "");
         addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, hamburgerbrød, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList(
-            "Ha kjøttdeig, salt pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge deigen skal ikke bli seig.", 
+            "Ha kjøttdeig salt pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge deigen skal ikke bli seig.", 
             "Ha litt vann på en fjøl og form deigen til runde kaker som klemmes ut til store flate burgere.", 
             "Stek burgere i en stekepanne med margarin eller olje. Bruk sterk varme og stek på den ene siden til det pipler ut kjøttsaft. Snu burgerne og stek videre på den andre siden til det igjen pipler ut kjøttsaft. Da er burgerne medium stekt.",
             "Gjør klar tilbehøret. Varm hamburgerbrød som anvist på pakken. Vask salat. Kutt tomat rødløk og syltet agurk i skiver.",
