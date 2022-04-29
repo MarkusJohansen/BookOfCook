@@ -86,7 +86,7 @@ public class Recipe extends Validator{
         this.description = description;                                         
     }
 
-    private void setPrepTime(String time) {
+    private void setPrepTime(String time) { //! HVORFOR ER DENNE PRIVAT
         nullOrEmpty(time);  
         validTime(time);                         // prep time in hours
         prepTime = time;                                                        // sets
