@@ -33,7 +33,7 @@ abstract class FXcomponents extends Validator{
         ((GridPane)parent).add(label, column, row);
     }
     
-    protected void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
+    protected void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.
         ListView<String> listView = new ListView<String>();
         viewLabel(label, grid, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)
