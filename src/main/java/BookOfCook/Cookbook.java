@@ -7,7 +7,7 @@ public class Cookbook extends Validator {
     private int recipeAmount, displayedAmount;                                              // amount of recipes in cookbook
     private ArrayList<Recipe> recipes;                                                      // recipes in cookbook
     private ArrayList<Category> categories;                                                 // categories in cookbook
-    private boolean fridgeCheck;                                                            //? fridge check
+    private boolean fridgeCheck;                                                            
 
     public Cookbook() {                                                              // constructor
         this.recipeAmount = 0;                                                       // amount of recipes in cookbook is always 0 at start
@@ -46,21 +46,21 @@ public class Cookbook extends Validator {
 
         addRecipe(new Recipe("Pizza", 2, "Pizza er godt", "45 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, melk)), new ArrayList<Category>(Arrays.asList(italiensk)), 
         new ArrayList<String>(Arrays.asList(
-            "Lag pizzadeig først. Rør gjær ut i lunkent vann, og tilsett olje, mel og salt. Elt deigen godt sammen, og la den heve til dobbel størrelse.", 
+            "Lag pizzadeig først. Rør gjær ut i lunkent vann og tilsett olje mel og salt. Elt deigen godt sammen og la den heve til dobbel størrelse.", 
             "Lag pizzasaus med å frese løk og hvitløk i olivenolje. Tilsett tomatpurè og la det frese i et par minutter.",
-            "Ha i grovhakket tomat, timian, oregano, salt og pepper. Dette skal nå koke inn til en tykk og god saus. Avkjøl og kjør gjerne til en jevn saus med stavmikser.",
+            "Ha i grovhakket tomat timian oregano salt og pepper. Dette skal nå koke inn til en tykk og god saus. Avkjøl og kjør gjerne til en jevn saus med stavmikser.",
             "Ha deigen på en lett melet benkeplate og del den i fire like emner. Trill hvert emne til runde boller. Strø over litt mel og legg over et klede. Emnene skal nå hvile i 20 minutter.", 
-            "Trykk eller kjevle ut emnene til runde, tallerkenstore pizzabunner.", 
-            "Fordel tomatsaus på bunnene før du legger på spekeskinke, oliven og revet parmesan.", 
-            "Stek pizzaen på 250 °C i 8-10 minutter, eller til pizzaen har en gyllen farge og sprø bunn.", 
+            "Trykk eller kjevle ut emnene til runde tallerkenstore pizzabunner.", 
+            "Fordel tomatsaus på bunnene før du legger på spekeskinke oliven og revet parmesan.", 
+            "Stek pizzaen på 250 °C i 8-10 minutter eller til pizzaen har en gyllen farge og sprø bunn.", 
             "Dryss over rucculasalat før servering."
             ))), "");
         addRecipe(new Recipe("Hamburger", 1, "Hambur er godt", "30 minutter", new ArrayList<HashMap<String, String>>(Arrays.asList(ost, hamburgerbrød, tomat)), new ArrayList<Category>(Arrays.asList(kjøtt, burger)), new ArrayList<String>(Arrays.asList(
-            "Ha kjøttdeig, salt, pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge, deigen skal ikke bli seig.", 
+            "Ha kjøttdeig, salt pepper og vann i en bolle og rør deigen sammen. Ikke rør for lenge deigen skal ikke bli seig.", 
             "Ha litt vann på en fjøl og form deigen til runde kaker som klemmes ut til store flate burgere.", 
             "Stek burgere i en stekepanne med margarin eller olje. Bruk sterk varme og stek på den ene siden til det pipler ut kjøttsaft. Snu burgerne og stek videre på den andre siden til det igjen pipler ut kjøttsaft. Da er burgerne medium stekt.",
-            "Gjør klar tilbehøret. Varm hamburgerbrød som anvist på pakken. Vask salat. Kutt tomat, rødløk og syltet agurk i skiver.",
-            "Fyll brødene med salatblad, burgere, tomat, rødløk og syltet agurk. Ha gjerne på en dressing du liker godt, eller en hjemmelaget ketchup. Server gjerne med potetchips",
+            "Gjør klar tilbehøret. Varm hamburgerbrød som anvist på pakken. Vask salat. Kutt tomat rødløk og syltet agurk i skiver.",
+            "Fyll brødene med salatblad burgere tomat rødløk og syltet agurk. Ha gjerne på en dressing du liker godt eller en hjemmelaget ketchup. Server gjerne med potetchips",
             "Vil du ha et godt tips til burgertilbehør? Syltet rødløk er superdigg på burgeren!"
             ))), "");
 
@@ -97,12 +97,12 @@ public class Cookbook extends Validator {
     }
 
     public ArrayList<Recipe> getRecipes() {                                 // returns recipes in cookbook
-        return new ArrayList<Recipe>(recipes);                              //? hvorfor returnere en kopi     
-    }                                                                       //! fordi man aldri burde returnere selve arrayListen, da kan man ender på den gjennom getteren
+        return new ArrayList<Recipe>(recipes);                               
+    }                                                                       
 
     public ArrayList<Category> getCategories() {
-        collectCategories();                                                //? hvorfor collect categories her?
-        return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
+        collectCategories();                                                
+        return new ArrayList<Category>(categories);                         
     }
 
     private ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
@@ -121,8 +121,8 @@ public class Cookbook extends Validator {
         return sortedRecipes;
     }
 
-    private void collectCategories(){                                                                           //? er det ikke enklere å bare tømme hele listen og fylle den opp på nytt?
-        ArrayList<Category> collectedCategories = new ArrayList<>();                                            //! ER JO AKKURAT DET SOM GJØRES HER. create an output arraylist
+    private void collectCategories(){                                                                           
+        ArrayList<Category> collectedCategories = new ArrayList<>();                                            
         for (Recipe recipe : recipes) {                                                                         // loops through all recipes
             for (Category category : recipe.getCategories()) {                                                  // loops through all categories in recipe
                 if(!collectedCategories.contains(category)){                                                    // if not category already collected
@@ -149,7 +149,6 @@ public class Cookbook extends Validator {
         return outputArray;                                                                                     // return output array
     }
 
-
     private ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
         for (Recipe recipe : filterTarget) {                                                                    // loops through all recipes
@@ -160,13 +159,13 @@ public class Cookbook extends Validator {
         return searchResults;                                                                                   // return output arraylist
     }
 
-    public ArrayList<Recipe> filter(ArrayList<Recipe> recipes, String searchText, ArrayList<Category> categories, Fridge fridge){   //! kan den ikke ta inn recipes feltet i cookbook isteden for array??
+    public ArrayList<Recipe> filter(String searchText, ArrayList<Category> categories, Fridge fridge){
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
-        for (Recipe recipe : recipes) {                                                                                             //? er det ikke bare å sette filteredrecipes til recipes i cookbook? 
+        for (Recipe recipe : getRecipes()) {                                                               
             filteredRecipes.add(recipe);                        
         }
-        if(fridgeCheck){                                                                                                            //? hva er dette? 
-            filteredRecipes = fridge.filter(recipes);                                                                               //! en boolean verdi som enten er true eller false etter om fridge checkboksen er checked
+        if(fridgeCheck){                                                                                                            
+            filteredRecipes = fridge.filter(recipes);                                                                               
         }
         if(categories.size() > 0){ // KATEGORIER                                                                                    // dersom noen kategorier sendes inn i funksjonen, skal den filtrere på disse
             filteredRecipes = filterByCategories(filteredRecipes, categories);                                                      // filtered recipes settes til resultatet en arraylist med recipes fra filteredRecipes som matcher categories

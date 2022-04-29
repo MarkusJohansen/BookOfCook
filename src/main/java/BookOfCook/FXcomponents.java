@@ -12,14 +12,14 @@ import javafx.scene.layout.GridPane;
 abstract class FXcomponents extends Validator{
 
     //*STYLING
-    protected void styleNode(Node node, String styleClass, Double x, Double y){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED? SIDEN DETTE ER EN SUPERKLASSE?
+    protected void styleNode(Node node, String styleClass, Double x, Double y){
         node.getStyleClass().clear();
         node.getStyleClass().add(styleClass);
         node.setLayoutX(x);
         node.setLayoutY(y);
     }
 
-    protected void styleRegion(Region region, String styleClass, Double width, Double height){ //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
+    protected void styleRegion(Region region, String styleClass, Double width, Double height){
         region.getStyleClass().clear();
         region.getStyleClass().add(styleClass);
         region.setMaxWidth(width);
@@ -27,13 +27,13 @@ abstract class FXcomponents extends Validator{
     }
 
     //*JAVAFX COMPONENTS
-    protected void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode //! BURDE IKKE ALLE DISSE VÆRE PROTECTED?
+    protected void viewLabel(String content, Object parent, int row, int column){//shorthand method for creating labels in recipe viewmode
         Label label = new Label(content);
         styleNode(label, "recipe-view-text", 80.0, 10.0);
         ((GridPane)parent).add(label, column, row);
     }
     
-    protected void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.  https://stackoverflow.com/questions/4581407/how-can-i-convert-arraylistobject-to-arrayliststring
+    protected void viewList(int labelX, int labelY, int listX, int listY, String label, List<String> array, GridPane grid){//shorthand method for creating list and fill them with ingredients in recipe viewmode.
         ListView<String> listView = new ListView<String>();
         viewLabel(label, grid, labelX, labelY);//add steps label to grid 
         for(String o : array){//shorthand method for)

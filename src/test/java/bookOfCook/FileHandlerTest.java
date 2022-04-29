@@ -30,7 +30,7 @@ public class FileHandlerTest {
 		assertEquals(loadedCookbook.getRecipes().get(0).getServings(), cookbook.getRecipes().get(0).getServings());
 		assertEquals(loadedCookbook.getRecipes().get(0).getIngredients(), cookbook.getRecipes().get(0).getIngredients());
 		assertEquals(loadedCookbook.getRecipes().get(0).getSteps(), cookbook.getRecipes().get(0).getSteps());
-		assertEquals(loadedCookbook.getRecipes().get(0).getCategories(), cookbook.getRecipes().get(0).getCategories());
+		assertEquals(loadedCookbook.getRecipes().get(0).getCategories().size(), cookbook.getRecipes().get(0).getCategories().size());
 	}
 
 }
