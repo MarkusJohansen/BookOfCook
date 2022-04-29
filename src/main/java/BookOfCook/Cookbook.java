@@ -97,12 +97,12 @@ public class Cookbook extends Validator {
     }
 
     public ArrayList<Recipe> getRecipes() {                                 // returns recipes in cookbook
-        return new ArrayList<Recipe>(recipes);                              //? hvorfor returnere en kopi     
-    }                                                                       //! fordi man aldri burde returnere selve arrayListen, da kan man ender på den gjennom getteren
+        return new ArrayList<Recipe>(recipes);                               
+    }                                                                       
 
     public ArrayList<Category> getCategories() {
-        collectCategories();                                                //? hvorfor collect categories her?
-        return new ArrayList<Category>(categories);                         //? hvorfor returnere en kopi 
+        collectCategories();                                                
+        return new ArrayList<Category>(categories);                         
     }
 
     private ArrayList<Recipe> filterByCategories(ArrayList<Recipe> recipes, ArrayList<Category> categories){     // metode som returnerer alle recipes som inneholder alle kategoriene
@@ -121,8 +121,8 @@ public class Cookbook extends Validator {
         return sortedRecipes;
     }
 
-    private void collectCategories(){                                                                           //? er det ikke enklere å bare tømme hele listen og fylle den opp på nytt?
-        ArrayList<Category> collectedCategories = new ArrayList<>();                                            //! ER JO AKKURAT DET SOM GJØRES HER. create an output arraylist
+    private void collectCategories(){                                                                           
+        ArrayList<Category> collectedCategories = new ArrayList<>();                                            
         for (Recipe recipe : recipes) {                                                                         // loops through all recipes
             for (Category category : recipe.getCategories()) {                                                  // loops through all categories in recipe
                 if(!collectedCategories.contains(category)){                                                    // if not category already collected
@@ -148,7 +148,6 @@ public class Cookbook extends Validator {
         }
         return outputArray;                                                                                     // return output array
     }
-
 
     private ArrayList<Recipe> searchRecipes(String searchString, ArrayList<Recipe> filterTarget) {               // searches for recipes in cookbook with name containing searchString:
         ArrayList<Recipe> searchResults = new ArrayList<>();                                                    // initializes an output arraylist
