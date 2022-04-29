@@ -67,12 +67,12 @@ public class Recipe extends Validator{
         return new ArrayList<String>(steps);                                    // returns steps
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         numbersOrSpecials(name);                                                // checks if name is valid
         this.name = name.toUpperCase();                                         // sets name of recipe
     }
 
-    public void setServings(int numberOfServings) {
+    private void setServings(int numberOfServings) {
         negativeOrZero((double) numberOfServings);                              // checks if number of servings is valid
         this.numberOfServings = numberOfServings;                               // sets number of servings
     }
@@ -82,7 +82,7 @@ public class Recipe extends Validator{
         this.calories = calories;                                               // sets the total calories of the recipe
     }
 
-    public void setDescription(String description) {                            // sets description of recipe
+    private void setDescription(String description) {                            // sets description of recipe
         this.description = description;                                         
     }
 
