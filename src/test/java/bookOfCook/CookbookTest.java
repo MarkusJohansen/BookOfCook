@@ -99,29 +99,6 @@ public class CookbookTest {
         assertTrue(cookbook.getCategories().containsAll(tCategories));
     }
 
-    //*FILTER TESTS
-    @Test
-    @DisplayName("Test searchRecipes")
-    public void testSearchRecipe() {
-        cookbook.addRecipe(pizza, "");
-        cookbook.addRecipe(hamburger, "");
-        assertTrue(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(pizza));
-        assertFalse(cookbook.searchRecipes("Pizza", cookbook.getRecipes()).contains(hamburger));
-    }
-
-    @Test
-    @DisplayName("Test filterByCategories")
-    public void testfilterByCategories() {
-        pizza.addCategory(italiensk);
-        pizza.addCategory(burger);
-        hamburger.addCategory(italiensk);
-        cookbook.addRecipe(pizza, "");
-        cookbook.addRecipe(hamburger, "");
-        assertFalse(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
-        tCategories.remove(kjøtt);
-        assertTrue(cookbook.filterByCategories(cookbook.getRecipes(), tCategories).contains(pizza));
-    }
-
     @Test
     @DisplayName("Test filter")
     public void testFilter() {
